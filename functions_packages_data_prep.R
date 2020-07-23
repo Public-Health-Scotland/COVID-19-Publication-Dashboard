@@ -37,7 +37,7 @@ agg_rapid <- function(grouper = NULL, split, specialty = F) {
       summarise(count = sum(count)) %>% ungroup() %>%
       mutate(type = type_chosen)
   }
-  
+  # laura is egg
   # Aggregating to obtain totals for each split type and then putting all back together.
   adm_type <- agg_helper(c(grouper, "admission_type")) %>% 
     mutate(spec = "All") 
