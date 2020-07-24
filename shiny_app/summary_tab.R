@@ -38,7 +38,7 @@ observeEvent(input$btn_dataset_modal,
                           "Public Health Scotland (PHS).", class="externallink")),
                  size = "m",
                  easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)")))
-
+               
              } else if (input$measure_select == "ICU") { #ICU MODAL
                showModal(modalDialog(
                  title = "What is the data source?",
@@ -51,8 +51,8 @@ observeEvent(input$btn_dataset_modal,
                           class="externallink")),
                  p("Numbers of ICU Admissions will include....." ),                   
                  p("The  dataset is managed by ", 
-                 tags$a(href="https://www.isdscotland.org/Health-Topics/Emergency-Care/Emergency-Department-Activity/", 
-                        "Public Health Scotland (PHS).", class="externallink")),
+                   tags$a(href="https://www.isdscotland.org/Health-Topics/Emergency-Care/Emergency-Department-Activity/", 
+                          "Public Health Scotland (PHS).", class="externallink")),
                  size = "m",
                  easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)")))
                
@@ -68,11 +68,11 @@ observeEvent(input$btn_dataset_modal,
                           class="externallink")),
                  p("Numbers of NHS24 Calls will include....." ),                   
                  p("The  dataset is managed by ", 
-                 tags$a(href="https://www.isdscotland.org/Health-Topics/Emergency-Care/Emergency-Department-Activity/", 
-                        "Public Health Scotland (PHS).", class="externallink")),
+                   tags$a(href="https://www.isdscotland.org/Health-Topics/Emergency-Care/Emergency-Department-Activity/", 
+                          "Public Health Scotland (PHS).", class="externallink")),
                  size = "m",
                  easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)")))
-
+               
              } else if (input$measure_select == "AssessmentHub") { #NHS24 MODAL
                showModal(modalDialog(
                  title = "What is the data source?",
@@ -85,8 +85,8 @@ observeEvent(input$btn_dataset_modal,
                           class="externallink")),
                  p("Numbers of Assessment Hub Consultations will include....." ),                   
                  p("The  dataset is managed by ", 
-                 tags$a(href="https://www.isdscotland.org/Health-Topics/Emergency-Care/Emergency-Department-Activity/", 
-                        "Public Health Scotland (PHS).", class="externallink")),
+                   tags$a(href="https://www.isdscotland.org/Health-Topics/Emergency-Care/Emergency-Department-Activity/", 
+                          "Public Health Scotland (PHS).", class="externallink")),
                  size = "m",
                  easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)")))
                
@@ -102,12 +102,12 @@ observeEvent(input$btn_dataset_modal,
                           class="externallink")),
                  p("Numbers of SAS incidents will include....." ),                   
                  p("The  dataset is managed by ", 
-                 tags$a(href="https://www.isdscotland.org/Health-Topics/Emergency-Care/Emergency-Department-Activity/", 
-                        "Public Health Scotland (PHS).", class="externallink")),
+                   tags$a(href="https://www.isdscotland.org/Health-Topics/Emergency-Care/Emergency-Department-Activity/", 
+                          "Public Health Scotland (PHS).", class="externallink")),
                  size = "m",
                  easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)")))
              }
-             )
+)
 
 ###############################################.
 # Modal to explain SIMD and deprivation
@@ -148,16 +148,21 @@ output$data_explorer <- renderUI({
                        input$measure_select == "NHS24" ~ "NHS24 calls", 
                        input$measure_select == "AssessmentHub" ~ "consultations", 
                        input$measure_select == "SAS"~ "SAS incidents")
-
+  
   total_title <- paste0("Daily number of ", dataset)
+  agesex_title <- paste0("Rate per 100,000 population by Age/Sex")
+  simd_title <- paste0("Rate per 100,000 population by SIMD")
+  
   
   # Function to create the standard layout for all the different charts/sections
   cut_charts <- function(title, source, data_name) {
     tagList(
       h3(title),
       actionButton("btn_dataset_modal", paste0("Data source: ", source), icon = icon('question-circle')),
-      plot_box(paste0(total_title), paste0(data_name, "_overall"))
-      )}
+      plot_box(paste0(total_title), paste0(data_name, "_overall")),
+      plot_box(paste0(agesex_title), paste0(data_name, "_AgeSex")),
+      plot_box(paste0(simd_title), paste0(data_name, "_SIMD"))
+    )}
   
   # Charts and rest of UI
   if (input$measure_select == "LabCases") { #Positive Cases
@@ -202,6 +207,13 @@ output$ICU_overall <- renderPlotly({plot_overall_chart(ICU, data_name = "ICU")})
 output$NHS24_overall <- renderPlotly({plot_overall_chartNHS24(NHS24, data_name = "NHS24")})
 output$AssessmentHub_overall <- renderPlotly({plot_overall_chartAssessmentHub(AssessmentHub, data_name = "AssessmentHub")})
 output$SAS_overall <- renderPlotly({plot_overall_chartSAS(SAS, data_name = "SAS")})
+
+output$LabCases_AgeSex <- renderPlotly({plot_agesex_chart(LabCases_AgeSex, data_name = "LabCases_AgeSex")})
+output$LabCases_SIMD <- renderPlotly({plot_simd_chart(LabCases_SIMD, data_name = "LabCases_SIMD")})
+output$Admissions_AgeSex <- renderPlotly({plot_agesex_chart(Admissions_AgeSex, data_name = "Admissions_AgeSex")})
+output$Admissions_SIMD <- renderPlotly({plot_simd_chart(Admissions_SIMD, data_name = "Admissions_SIMD")})
+
+
 ## Data downloads ----
 
 
@@ -217,8 +229,8 @@ overall_data_download <- reactive({
     "NHS24" = NHS24, 
     "AssessmentHub" = AssessmentHub,
     "SAS" = SAS) #%>% 
-    #select(area_name, week_ending, count, starts_with("average")) %>% 
-   # mutate(week_ending = format(week_ending, "%d %b %y"))
+  #select(area_name, week_ending, count, starts_with("average")) %>% 
+  # mutate(week_ending = format(week_ending, "%d %b %y"))
 })
 
 output$download_chart_data <- downloadHandler(
@@ -269,9 +281,9 @@ output$summary_commentary <- renderUI({
       tags$li("bullet point 3")),
     
     h4("Future work"),
-          p("Work is under way to broaden the range of data sources available – within the next few weeks 
-            we expect to publish information on ...."
-          ))
+    p("Work is under way to broaden the range of data sources available – within the next few weeks 
+      we expect to publish information on ...."
+    ))
 })
 
 # Positive Cases Commentary -----------------------------------------------
@@ -290,7 +302,7 @@ output$positivecases_commentary <- renderUI({
       tags$li("bullet point 1"),
       tags$li("bullet point 2"),
       tags$li("bullet point 3"))
-  )
+    )
 })
 
 
@@ -328,7 +340,7 @@ output$ICU_commentary <- renderUI({
       tags$li("bullet point 1"),
       tags$li("bullet point 2"),
       tags$li("bullet point 3"))
-  )
+    )
 })
 
 
