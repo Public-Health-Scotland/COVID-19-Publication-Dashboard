@@ -7,7 +7,7 @@ tagList(  #needed for shinyjs
     title = div(
       tags$a(img(src = "phs-logo.png", height = 40), href = "https://www.publichealthscotland.scot/"),
       style = "position: relative; top: -5px;"),
-    windowTitle = "COVID-19 wider impacts",    #title for browser tab
+    windowTitle = "PHS Weekly COVID-19 report",    #title for browser tab
     header = tags$head(includeCSS("www/styles.css"),  # CSS styles
       tags$link(rel = "shortcut icon", href = "favicon_phs.ico"), #Icon for browser tab     
       includeScript("//freddy/DEPT/PHIBCS/PHI/Publications/Health Topic/HPS/Covid-19/COVID19_Dashboard/google-analytics.js")), #Including Google analytics

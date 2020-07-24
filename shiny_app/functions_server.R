@@ -195,7 +195,7 @@ filter_data <- function(dataset, area = T) {
 
 ######################################################################.
 #Function to create plot when no data available
-plot_nodata <- function(height_plot = 450, text_nodata = "Data not available due to small numbers") {
+plot_nodata <- function(height_plot = 450, text_nodata = "Data not available") {
   text_na <- list(x = 5, y = 5, text = text_nodata , size = 20,
                   xref = "x", yref = "y",  showarrow = FALSE)
   
@@ -204,12 +204,12 @@ plot_nodata <- function(height_plot = 450, text_nodata = "Data not available due
            #empty layout
            yaxis = list(showline = FALSE, showticklabels = FALSE, showgrid = FALSE, fixedrange=TRUE),
            xaxis = list(showline = FALSE, showticklabels = FALSE, showgrid = FALSE, fixedrange=TRUE),
-           font = list(family = '"Helvetica Neue", Helvetica, Arial, sans-serif')) %>% 
+           font = list(family = '"Helvetica Neue", Helvetica, Arial, sans-serif', size = 40)) %>% 
     config( displayModeBar = FALSE) # taking out plotly logo and collaborate button
 } 
 
-######################################################################.
-#Function to create plot for AgeSex
+## Function for AgeSex charts ----
+
 plot_agesex_chart <- function(dataset, data_name, yaxis_title, area = T) {
   
   # Filtering dataset to include only overall figures
@@ -217,19 +217,19 @@ plot_agesex_chart <- function(dataset, data_name, yaxis_title, area = T) {
   
   ###############################################.
   # Creating objects that change depending on dataset
-  yaxis_title <- case_when(data_name == "LabCases_AgeSex" ~ "Rate per 100,000 population",
-                           data_name == "Admissions" ~ "Number of admissions",
-                           data_name == "ICU" ~ "Number of ICU admissions", 
-                           data_name == "NHS24" ~ "Number of NHS24 calls")
+  yaxis_title <- case_when(data_name == "LabCases_AgeSex" ~ "Rate of cases per 100,000 population",
+                           data_name == "Admissions_AgeSex" ~ "Rate of admissions per 100,000 population",
+                           data_name == "ICU_AgeSex" ~ "Rate of ICU admissions per 100,000 population", 
+                           data_name == "NHS24_AgeSex" ~ "Number of NHS24 calls")
   
   #Modifying standard layout
   yaxis_plots[["title"]] <- yaxis_title
   xaxis_plots[["title"]] <- "Age group"
   
-  measure_name <- case_when(data_name == "LabCases_AgeSex" ~ "Rate per 100,000 population: ",
-                            data_name == "Admissions" ~ "Admissions: ",
-                            data_name == "ICU" ~ "ICU admissions: ",
-                            data_name == "NHS24" ~ "NHS24 Calls: ")
+  measure_name <- case_when(data_name == "LabCases_AgeSex" ~ "Rate of cases per 100,000 population: ",
+                            data_name == "Admissions_AgeSex" ~ "Rate of admissions per 100,000 population: ",
+                            data_name == "ICU_AgeSex" ~ "Rate of ICU admissions per 100,000 population: ",
+                            data_name == "NHS24_AgeSex" ~ "NHS24 Calls: ")
   
   #remove unknowns from chart
   #make age_group an ordered factor
@@ -238,7 +238,8 @@ plot_agesex_chart <- function(dataset, data_name, yaxis_title, area = T) {
     dplyr::mutate(age_group = forcats::fct_inorder(age_group))
   
   #Text for tooltip
-  tooltip_trend <- c(paste0("Sex: ", trend_data$sex,
+  tooltip_trend <- c(paste0("Age group: ", trend_data$age_group,
+                            "Sex: ", trend_data$sex,
                             "<br>", measure_name, trend_data$rate,
                             "<br>", "Count: ", trend_data$number))
   
@@ -249,7 +250,8 @@ plot_agesex_chart <- function(dataset, data_name, yaxis_title, area = T) {
              #colors = pal_overall[3:4],
              colors = "Dark2",
              color = ~sex,
-             text = tooltip_trend, 
+             text = tooltip_trend,
+             stroke = I("black"),
              hoverinfo = "text",
              name = ~sex) %>%
     #Layout
@@ -261,8 +263,58 @@ plot_agesex_chart <- function(dataset, data_name, yaxis_title, area = T) {
     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove ) 
 }
 
-######################################################################.
-#Function to create plot for SIMD
+## Function for SIMD charts ----
+
+plot_age_chart <- function(dataset, data_name, yaxis_title, area = T) {
+  
+  # Filtering dataset to include only overall figures
+  trend_data <- dataset
+  
+  ###############################################.
+  # Creating objects that change depending on dataset
+  yaxis_title <- case_when(data_name == "NHS24_AgeSex" ~ "Number of NHS24 calls")
+  
+  #Modifying standard layout
+  yaxis_plots[["title"]] <- yaxis_title
+  xaxis_plots[["title"]] <- "Age group"
+  
+  measure_name <- case_when(data_name == "NHS24_AgeSex" ~ "Rate of NHS24 contacts per 100,000 population: ")
+  
+  #remove unknowns from chart
+  #make age_group an ordered factor
+  trend_data <- trend_data %>% 
+    dplyr::filter(age_group != "Unknown") %>% 
+    dplyr::mutate(age_group = forcats::fct_inorder(age_group))
+  
+  #Text for tooltip
+  tooltip_trend <- c(paste0("Age group: ", trend_data$age_group,
+                            "<br>", measure_name, trend_data$rate,
+                            "<br>", "Count: ", trend_data$number))
+  
+  #Creating time trend plot
+  trend_data %>% 
+    plot_ly(x = ~age_group) %>%
+    add_bars(y = ~rate, 
+             #colors = pal_overall[3:4],
+             #colors = "grey",
+             color = I("grey"),
+             stroke = I("black"),
+             text = tooltip_trend, 
+             hoverinfo = "text",
+             name = ~age_group) %>%
+    #Layout
+    layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
+           yaxis = yaxis_plots, xaxis = xaxis_plots,
+           legend = list(x = 100, y = 0.5), #position of legend
+           barmode = "group") %>% #split by group
+    # leaving only save plot button
+    config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove ) 
+}
+
+
+
+## Function for SIMD charts ----
+
 plot_simd_chart <- function(dataset, data_name, yaxis_title, area = T) {
   
   # Filtering dataset to include only overall figures
@@ -270,19 +322,19 @@ plot_simd_chart <- function(dataset, data_name, yaxis_title, area = T) {
   
   ###############################################.
   # Creating objects that change depending on dataset
-  yaxis_title <- case_when(data_name == "LabCases_SIMD" ~ "Rate per 100,000 population",
-                           data_name == "Admissions" ~ "Number of admissions",
-                           data_name == "ICU" ~ "Number of ICU admissions", 
-                           data_name == "NHS24" ~ "Number of NHS24 calls")
+  yaxis_title <- case_when(data_name == "LabCases_SIMD" ~ "Cases (%) by SIMD quintile",
+                           data_name == "Admissions_SIMD" ~ "Admissions (%) by SIMD quintile",
+                           data_name == "ICU_SIMD" ~ "ICU admissions (%) by SIMD quintile", 
+                           data_name == "NHS24_SIMD" ~ "NHS24 contacts (%) by SIMD quintile")
   
   #Modifying standard layout
   yaxis_plots[["title"]] <- yaxis_title
   xaxis_plots[["title"]] <- "SIMD"
   
   measure_name <- case_when(data_name == "LabCases_SIMD" ~ "Rate per 100,000 population: ",
-                            data_name == "Admissions" ~ "Admissions: ",
-                            data_name == "ICU" ~ "ICU admissions: ",
-                            data_name == "NHS24" ~ "NHS24 Calls: ")
+                            data_name == "Admissions_SIMD" ~ "Rate per 100,000 population: ",
+                            data_name == "ICU_SIMD" ~ "Rate per 100,000 population: ",
+                            data_name == "NHS24_SIMD" ~ "Rate per 100,000 population: ")
   
   #remove unknowns from chart
   #make age_group an ordered factor
@@ -302,6 +354,7 @@ plot_simd_chart <- function(dataset, data_name, yaxis_title, area = T) {
              color = ~SIMD,
              text = tooltip_trend, 
              hoverinfo = "text",
+             stroke = I("black"),
              name = ~SIMD) %>%
     #Layout
     layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out

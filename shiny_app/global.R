@@ -58,6 +58,9 @@ LabCases_AgeSex <- read_csv("data/LabCases_AgeSex.csv")
 LabCases_SIMD <- read_csv("data/LabCases_SIMD.csv")
 Admissions_AgeSex <- read_csv("data/Admissions_AgeSex.csv")
 Admissions_SIMD <- read_csv("data/Admissions_SIMD.csv")
+ICU_AgeSex <- read_csv("data/ICU_AgeSex.csv")
+NHS24_AgeSex <- read_csv("data/NHS24_AgeSex.csv")
+
 
 data_list <- c("Positive Cases" = "LabCases", 
                "Admissions" = "Admissions", 

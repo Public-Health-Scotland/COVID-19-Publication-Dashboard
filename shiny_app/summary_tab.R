@@ -150,9 +150,8 @@ output$data_explorer <- renderUI({
                        input$measure_select == "SAS"~ "SAS incidents")
   
   total_title <- paste0("Daily number of ", dataset)
-  agesex_title <- paste0("Rate per 100,000 population by Age/Sex")
-  simd_title <- paste0("Rate per 100,000 population by SIMD")
-  
+  agesex_title <- glue::glue("Rate of {dataset} per 100,000 population by Age/Sex")
+  simd_title <- glue::glue("Percent {dataset} (%) by SIMD quintile")
   
   # Function to create the standard layout for all the different charts/sections
   cut_charts <- function(title, source, data_name) {
@@ -160,9 +159,9 @@ output$data_explorer <- renderUI({
       h3(title),
       actionButton("btn_dataset_modal", paste0("Data source: ", source), icon = icon('question-circle')),
       plot_box(paste0(total_title), paste0(data_name, "_overall")),
-      plot_box(paste0(agesex_title), paste0(data_name, "_AgeSex")),
-      plot_box(paste0(simd_title), paste0(data_name, "_SIMD"))
-    )}
+      plot_cut_box(paste0(agesex_title), paste0(data_name, "_AgeSex"),
+                   paste0(simd_title), paste0(data_name, "_SIMD")))
+      }
   
   # Charts and rest of UI
   if (input$measure_select == "LabCases") { #Positive Cases
@@ -212,6 +211,10 @@ output$LabCases_AgeSex <- renderPlotly({plot_agesex_chart(LabCases_AgeSex, data_
 output$LabCases_SIMD <- renderPlotly({plot_simd_chart(LabCases_SIMD, data_name = "LabCases_SIMD")})
 output$Admissions_AgeSex <- renderPlotly({plot_agesex_chart(Admissions_AgeSex, data_name = "Admissions_AgeSex")})
 output$Admissions_SIMD <- renderPlotly({plot_simd_chart(Admissions_SIMD, data_name = "Admissions_SIMD")})
+output$ICU_AgeSex <- renderPlotly({plot_agesex_chart(ICU_AgeSex, data_name = "ICU_AgeSex")})
+output$ICU_SIMD <- renderPlotly({plot_nodata()})
+output$NHS24_AgeSex <- renderPlotly({plot_age_chart(NHS24_AgeSex, data_name = "NHS_AgeSex")})
+output$NHS24_SIMD <- renderPlotly({plot_nodata()})
 
 
 ## Data downloads ----
