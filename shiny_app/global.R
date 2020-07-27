@@ -21,6 +21,7 @@ library(readr) # for writing/reading csvs
 library(stringr) #for manipulating strings
 library(flextable)
 library(shinyBS) #for collapsible panels in commentary
+library(glue) #for pasting strings
 
 ###############################################.
 ## Functions ----
@@ -42,6 +43,16 @@ plot_cut_box <- function(title_plot1, plot_output1,
   )
 }
 
+#if missing plot (e.g. no SIMD)
+plot_cut_missing <- function(title_plot, plot_output, extra_content = NULL) {
+  tagList(
+    fluidRow(column(6, h4(title_plot))),
+    extra_content,
+    fluidRow(column(6, withSpinner(plotlyOutput(plot_output))))
+  )
+}
+
+
 ###############################################.
 ## Data ----
 ###############################################.
@@ -55,12 +66,15 @@ NHSInform <- readRDS("data/NHSInform.rds")
 SelfHelp <- readRDS("data/SelfHelp.rds")
 
 LabCases_AgeSex <- read_csv("data/LabCases_AgeSex.csv")
-LabCases_SIMD <- read_csv("data/LabCases_SIMD.csv")
+LabCases_SIMD <- read_csv("data/LabCases_SIMD.csv") %>% mutate(cases_pc = cases_pc * 100)
 Admissions_AgeSex <- read_csv("data/Admissions_AgeSex.csv")
-Admissions_SIMD <- read_csv("data/Admissions_SIMD.csv")
+Admissions_SIMD <- read_csv("data/Admissions_SIMD.csv") %>% mutate(cases_pc = cases_pc * 100)
 ICU_AgeSex <- read_csv("data/ICU_AgeSex.csv")
 NHS24_AgeSex <- read_csv("data/NHS24_AgeSex.csv")
-
+AssessmentHub_AgeSex <- read_csv("data/AssessmentHub_AgeSex.csv")
+AssessmentHub_SIMD <- read_csv("data/AssessmentHub_SIMD.csv") %>% mutate(cases_pc = cases_pc * 100)
+SAS_AgeSex <- read_csv("data/SAS_AgeSex.csv")
+SAS_SIMD <- read_csv("data/SAS_SIMD.csv") %>% mutate(cases_pc = cases_pc * 100)
 
 data_list <- c("Positive Cases" = "LabCases", 
                "Admissions" = "Admissions", 
