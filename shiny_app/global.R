@@ -84,9 +84,27 @@ data_list <- c("Positive Cases" = "LabCases",
                "Assessment Hubs" = "AssessmentHub", 
                "Scottish Ambulance Service" = "SAS")
 
+#add
+data_list_data_tab <- c("Positive Cases" = "LabCases",
+                        "Positive Cases by age" = "LabCases_AgeSex",
+                        "Positive Cases by deprivation" = "LabCases_SIMD", 
+                        "Admissions" = "Admissions",
+                        "Admissions by age" = "Admissions_AgeSex",
+                        "Admissions by deprivation" = "Admissions_SIMD", 
+                        "ICU Admissions" = "ICU",
+                        "ICU Admissions by age" = "ICU_AgeSex",
+                        "NHS24 Calls" = "NHS24",
+                        "NHS24 Calls by age" = "NHS24_AgeSex",
+                        "NHS24 Calls by deprivation" = "NHS24_SIMD", 
+                        "Assessment Hubs" = "AssessmentHub",
+                        "Assessment Hubs by age" = "AssessmentHub_AgeSex", 
+                        "Assessment Hubs by deprivation" = "AssessmentHub_SIMD", 
+                        "Scottish Ambulance Service" = "SAS",
+                        "Scottish Ambulance Service by age" = "SAS_AgeSex",
+                        "Scottish Ambulance Service by deprivation" = "SAS_SIMD")
 
 
-data_list_data_tab <- c(data_list)
+#data_list_data_tab <- c(data_list)
 
 ###############################################.
 ## Palettes and plot parameters ----

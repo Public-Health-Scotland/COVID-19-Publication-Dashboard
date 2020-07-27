@@ -6,50 +6,60 @@
 data_table <- reactive({  # Change dataset depending on what user selected
   
   table_data <- switch(input$data_select,
-                       "LabCases" = LabCases %>%  rename (`Number of Cases` = Count), 
+                       "LabCases" = LabCases %>%  rename (`Number of Cases` = Count),
+                       "LabCases_AgeSex" = LabCases_AgeSex,
+                       "LabCases_SIMD" = LabCases_SIMD,
                        "Admissions" = Admissions %>%  rename (`Number of Admissions` = Count),
+                       "Admissions_AgeSex" = Admissions_AgeSex,
+                       "Admissions_SIMD" = Admissions_SIMD,
                        "ICU" = ICU %>%  rename(`Number of ICU Admissions` = Count),
+                       "ICU_AgeSex" = ICU_AgeSex,
                        "NHS24" = NHS24 %>% rename(`Number of NHS Calls` = Count,
                                                   `Number of Corona Virus Helpline` = CoronavirusHelpline),
+                       "NHS24_AgeSex" = NHS24_AgeSex,
+                       "NHS24_SIMD" = NHS24_SIMD,
                        "AssessmentHub" = AssessmentHub %>% rename(`COVID-19 Advice` = CountAdvice,
                                                                   `COVID-19 Assessments` = CountAssessment,
                                                                   `Other` = CountOther),
-                       "SAS" = SAS %>% 
+                       "AssessmentHub_AgeSex" = AssessmentHub_AgeSex,
+                       "AssessmentHub_SIMD" = AssessmentHub_SIMD,
+                       "SAS" = SAS,
+                       "SAS_AgeSex" = SAS_AgeSex,
+                       "SAS_SIMD" = SAS_SIMD) 
+  
+#not sure if this if/else section is needed?
+#  if (input$data_select %in% c("LabData")) {
+#    table_data <- table_data %>% 
+#      select(Date, `Number of Daily Cases`, Cumulative) %>% 
+#      mutate(Date = format(Date, "%d %B %y"))
+
+#  } else if (input$data_select %in% "Admissions") { 
+#    table_data <- table_data %>%
+#      select(Date, `Number of Admissions`) 
     
-    mutate_if(is.character, as.factor))  # Note: character variables are converted to factors in each dataset for use in the table
-    # This is because dropdown prompts on the table filters only appear for factors
+#  } else if (input$data_select %in% "ICU") {
+#    table_data <- table_data %>%
+#      select(Date, `Number of ICU Admissions`)
 
-  if (input$data_select %in% c("LabData")) {
-    table_data <- table_data %>% 
-      select(Date, `Number of Daily Cases`, Cumulative) %>% 
-      mutate(Date = format(Date, "%d %B %y"))
-
-  } else if (input$data_select %in% "Admissions") { 
-    table_data <- table_data %>%
-      select(Date, `Number of Admissions`) 
-    
-  } else if (input$data_select %in% "ICU") {
-    table_data <- table_data %>%
-      select(Date, `Number of ICU Admissions`)
-
-  } else if (input$data_select %in% "NHS24") {
-    table_data <- table_data #%>%
+#  } else if (input$data_select %in% "NHS24") {
+#    table_data <- table_data #%>%
       #select(Date, `Number of Admissions`)
 
-  } else if (input$data_select %in% "AssessmentHub") {
-    table_data <- table_data #%>%
+#  } else if (input$data_select %in% "AssessmentHub") {
+#    table_data <- table_data #%>%
      # select(Date, `Number of Admissions`)
 
-  } else if (input$data_select %in% "SAS") {
-    table_data <- table_data #%>%
+#  } else if (input$data_select %in% "SAS") {
+#    table_data <- table_data #%>%
     #  select(Date, `Number of Admissions`)
-  } 
+#  } 
   
   
   table_data %>% 
     rename_all(list(~str_to_sentence(.))) %>% # initial capital letter
     #select(sort(current_vars())) %>%  # order columns alphabetically
-    mutate_if(is.numeric, round, 1)
+    mutate_if(is.numeric, round, 1) %>% 
+    mutate_if(is.character, as.factor)
 })
 
 ###############################################.
