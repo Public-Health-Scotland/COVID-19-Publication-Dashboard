@@ -71,6 +71,7 @@ Admissions_AgeSex <- read_csv("data/Admissions_AgeSex.csv")
 Admissions_SIMD <- read_csv("data/Admissions_SIMD.csv") %>% mutate(cases_pc = cases_pc * 100)
 ICU_AgeSex <- read_csv("data/ICU_AgeSex.csv")
 NHS24_AgeSex <- read_csv("data/NHS24_AgeSex.csv")
+NHS24_SIMD <- read_csv("data/NHS24_SIMD.csv")
 AssessmentHub_AgeSex <- read_csv("data/AssessmentHub_AgeSex.csv")
 AssessmentHub_SIMD <- read_csv("data/AssessmentHub_SIMD.csv") %>% mutate(cases_pc = cases_pc * 100)
 SAS_AgeSex <- read_csv("data/SAS_AgeSex.csv")
@@ -92,6 +93,12 @@ data_list_data_tab <- c(data_list)
 # ###############################################.
 
 pal_overall <- c('#000000', '#009900','#59144c', '#bdbdbd', '#bdbdbd', '#bdbdbd', '#7fcdbb')
+
+#for female/male split
+pal_sex <- c('#8856a7', '#9ebcda')
+
+#for SIMD
+pal_simd <- c('#2c7fb8', '#bdbdbd', '#bdbdbd', '#bdbdbd', '#7fcdbb')
 
 # Style of x and y axis
 xaxis_plots <- list(title = FALSE, tickfont = list(size=14), titlefont = list(size=14),

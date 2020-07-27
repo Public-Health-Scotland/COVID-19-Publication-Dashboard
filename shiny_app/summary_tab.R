@@ -142,16 +142,16 @@ observeEvent(input$btn_modal_simd, { showModal(simd_modal) })
 output$data_explorer <- renderUI({
   
   # text for titles of cut charts
-  dataset <- case_when(input$measure_select == "LabCases" ~ "cases",
-                       input$measure_select == "Admissions" ~ "admissions",
+  dataset <- case_when(input$measure_select == "LabCases" ~ "Cases",
+                       input$measure_select == "Admissions" ~ "Admissions",
                        input$measure_select == "ICU" ~ "ICU admissions", 
                        input$measure_select == "NHS24" ~ "NHS24 calls", 
-                       input$measure_select == "AssessmentHub" ~ "consultations", 
+                       input$measure_select == "AssessmentHub" ~ "Consultations", 
                        input$measure_select == "SAS"~ "SAS incidents")
   
   total_title <- glue("Daily number of {dataset}")
-  agesex_title <- glue("Number of {dataset} per 100,000 population by Age/Sex")
-  simd_title <- glue("Percent {dataset} (%) by SIMD quintile")
+  agesex_title <- glue("{dataset} per 100,000 population by age")
+  simd_title <- glue("{dataset} by SIMD quintile")
   
   # Function to create the standard layout for all the different charts/sections
   cut_charts <- function(title, source, data_name) {
@@ -185,7 +185,7 @@ output$data_explorer <- renderUI({
                source = "Data Source name goes here", data_name ="ICU")
     
   } else if (input$measure_select == "NHS24") {# NHS 24 calls
-    cut_charts_missing(title= "Daily completed contacts with NHS 24", 
+    cut_charts(title= "Daily completed contacts with NHS 24", 
                source = "Data Source name goes here", data_name ="NHS24")
     
   } else if (input$measure_select == "AssessmentHub") { # Assessment Hub
@@ -222,6 +222,7 @@ output$Admissions_AgeSex <- renderPlotly({plot_agesex_chart(Admissions_AgeSex, d
 output$Admissions_SIMD <- renderPlotly({plot_simd_chart(Admissions_SIMD, data_name = "Admissions_SIMD")})
 output$ICU_AgeSex <- renderPlotly({plot_agesex_chart(ICU_AgeSex, data_name = "ICU_AgeSex")})
 output$NHS24_AgeSex <- renderPlotly({plot_age_chart(NHS24_AgeSex, data_name = "NHS24_AgeSex")})
+output$NHS24_SIMD <- renderPlotly({plot_simd_chart(NHS24_SIMD, data_name = "NHS24_SIMD")})
 output$AssessmentHub_AgeSex <- renderPlotly({plot_age_chart(AssessmentHub_AgeSex, data_name = "AssessmentHub_AgeSex")})
 output$AssessmentHub_SIMD <- renderPlotly({plot_simd_chart(AssessmentHub_SIMD, data_name = "AssessmentHub_SIMD")})
 output$SAS_AgeSex <- renderPlotly({plot_age_chart(SAS_AgeSex, data_name = "SAS_AgeSex")})

@@ -217,17 +217,17 @@ plot_agesex_chart <- function(dataset, data_name, yaxis_title, area = T) {
   
   ###############################################.
   # Creating objects that change depending on dataset
-  yaxis_title <- case_when(data_name == "LabCases_AgeSex" ~ "Number of cases per 100,000 population",
-                           data_name == "Admissions_AgeSex" ~ "Number of admissions per 100,000 population",
-                           data_name == "ICU_AgeSex" ~ "Number of ICU admissions per 100,000 population")
+  yaxis_title <- case_when(data_name == "LabCases_AgeSex" ~ "Cases per 100,000 population",
+                           data_name == "Admissions_AgeSex" ~ "Admissions per 100,000 population",
+                           data_name == "ICU_AgeSex" ~ "ICU admissions per 100,000 population")
   
   #Modifying standard layout
   yaxis_plots[["title"]] <- yaxis_title
   xaxis_plots[["title"]] <- "Age group"
   
-  measure_name <- case_when(data_name == "LabCases_AgeSex" ~ "Number of cases per 100,000 population: ",
-                            data_name == "Admissions_AgeSex" ~ "Number of admissions per 100,000 population: ",
-                            data_name == "ICU_AgeSex" ~ "Number of ICU admissions per 100,000 population: ")
+  measure_name <- case_when(data_name == "LabCases_AgeSex" ~ "Cases per 100,000 population: ",
+                            data_name == "Admissions_AgeSex" ~ "Admissions per 100,000 population: ",
+                            data_name == "ICU_AgeSex" ~ "ICU admissions per 100,000 population: ")
   
   #remove unknowns from chart
   #make age_group an ordered factor
@@ -246,11 +246,12 @@ plot_agesex_chart <- function(dataset, data_name, yaxis_title, area = T) {
     plot_ly(x = ~age_group) %>%
     add_bars(y = ~rate,
              color = ~sex,
-             colors = "Blues",
+             colors = pal_sex,
              text = tooltip_trend,
              stroke = I("black"),
              hoverinfo = "text",
              name = ~sex) %>%
+    add_lines(y = 1000) %>% 
     #Layout
     layout(margin = list(b = 80, t=5), #to avoid labels getting cut out
            yaxis = yaxis_plots, xaxis = xaxis_plots,
@@ -269,18 +270,18 @@ plot_age_chart <- function(dataset, data_name, yaxis_title, area = T) {
   
   ###############################################.
   # Creating objects that change depending on dataset
-  yaxis_title <- case_when(data_name == "NHS24_AgeSex" ~ "Number of NHS24 calls per 100,000 population",
-                           data_name == "AssessmentHub_AgeSex" ~ "Number of consultations per 100,000 population",
-                           data_name == "SAS_AgeSex" ~ "Number of incidents per 100,000 population"
+  yaxis_title <- case_when(data_name == "NHS24_AgeSex" ~ "NHS24 calls per 100,000 population",
+                           data_name == "AssessmentHub_AgeSex" ~ "Consultations per 100,000 population",
+                           data_name == "SAS_AgeSex" ~ "Incidents per 100,000 population"
                            )
   
   #Modifying standard layout
   yaxis_plots[["title"]] <- yaxis_title
   xaxis_plots[["title"]] <- "Age group"
   
-  measure_name <- case_when(data_name == "NHS24_AgeSex" ~ "Number of NHS24 contacts per 100,000 population: ",
-                            data_name == "AssessmentHub_AgeSex" ~ "Number of consultations per 100,000 population",
-                            data_name == "SAS_AgeSex" ~ "Number of incidents per 100,000 population")
+  measure_name <- case_when(data_name == "NHS24_AgeSex" ~ "NHS24 contacts per 100,000 population: ",
+                            data_name == "AssessmentHub_AgeSex" ~ "Consultations per 100,000 population",
+                            data_name == "SAS_AgeSex" ~ "Incidents per 100,000 population")
   
   #remove unknowns from chart
   #make age_group an ordered factor
@@ -299,7 +300,7 @@ plot_age_chart <- function(dataset, data_name, yaxis_title, area = T) {
     add_bars(y = ~rate, 
              #color = I("grey"),
              color = ~age_group, #color group
-             colors = "Blues", #palette
+             colors = pal_sex[1], #palette
              stroke = I("black"), #outline
              text = tooltip_trend, 
              hoverinfo = "text",
@@ -307,7 +308,8 @@ plot_age_chart <- function(dataset, data_name, yaxis_title, area = T) {
     #Layout
     layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
            yaxis = yaxis_plots, xaxis = xaxis_plots,
-           legend = list(x = 100, y = 0.5), #position of legend
+           legend = list(x = 100, y = 0.5), #position of legend,
+           showlegend = FALSE,
            barmode = "group") %>% #split by group
     # leaving only save plot button
     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove ) 
@@ -323,21 +325,21 @@ plot_simd_chart <- function(dataset, data_name, yaxis_title, area = T) {
   
   ###############################################.
   # Creating objects that change depending on dataset
-  yaxis_title <- case_when(data_name == "LabCases_SIMD" ~ "Cases (%) by SIMD quintile",
-                           data_name == "Admissions_SIMD" ~ "Admissions (%) by SIMD quintile",
-                           data_name == "ICU_SIMD" ~ "ICU admissions (%) by SIMD quintile", 
-                           data_name == "NHS24_SIMD" ~ "NHS24 contacts (%) by SIMD quintile",
-                           data_name == "SAS_SIMD" ~ "SAS contacts (%) by SIMD quintile")
+  yaxis_title <- case_when(data_name == "LabCases_SIMD" ~ "Cases by SIMD quintile",
+                           data_name == "Admissions_SIMD" ~ "Admissions by SIMD quintile",
+                           data_name == "ICU_SIMD" ~ "ICU admissions by SIMD quintile", 
+                           data_name == "NHS24_SIMD" ~ "NHS24 contacts by SIMD quintile",
+                           data_name == "SAS_SIMD" ~ "SAS contacts by SIMD quintile")
   
   #Modifying standard layout
   yaxis_plots[["title"]] <- yaxis_title
   xaxis_plots[["title"]] <- "SIMD"
   
-  measure_name <- case_when(data_name == "LabCases_SIMD" ~ "Rate per 100,000 population: ",
-                            data_name == "Admissions_SIMD" ~ "Rate per 100,000 population: ",
-                            data_name == "ICU_SIMD" ~ "Rate per 100,000 population: ",
-                            data_name == "NHS24_SIMD" ~ "Rate per 100,000 population: ",
-                            data_name == "SAS_SIMD" ~ "SAS contacts (%) by SIMD quintile: ")
+  measure_name <- case_when(data_name == "LabCases_SIMD" ~ "Percent of cases: ",
+                            data_name == "Admissions_SIMD" ~ "Percent of cases: ",
+                            data_name == "ICU_SIMD" ~ "Percent of cases: ",
+                            data_name == "NHS24_SIMD" ~ "Percent of cases: ",
+                            data_name == "SAS_SIMD" ~ "Percent of cases: ")
   
   #remove unknowns from chart
   #make age_group an ordered factor
@@ -352,9 +354,9 @@ plot_simd_chart <- function(dataset, data_name, yaxis_title, area = T) {
   
   #Creating SIMD plot
   trend_data %>% 
-    plot_ly(x = ~SIMD, y = ~cases_pc) %>% 
+    plot_ly(x = ~SIMD, y = ~cases) %>% 
     add_bars(color = ~SIMD, #colour group
-             colors = "Dark2", #palette
+             colors = pal_simd, #palette
              stroke = I("black"), #outline
              text = tooltip_trend, 
              hoverinfo = "text",
