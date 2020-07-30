@@ -20,51 +20,65 @@ tabPanel("Introduction",
          icon = icon("info-circle"),
          value = "intro",
          column(4,
-             h3("COVID-19 Title goes here")),
+             h3("COVID-19 Statistical Report")),
          column(8,
-                tags$br(), 
-          p("Write introduction Stuff here"),
-          p("This is a new paragraph"),
-          tags$ul(
-            tags$li(
-            "bullet point 1"),
-            tags$li(
-            "bullet point 2"),
-            tags$li(
-            "bullet point 3")),
+                tags$br(),
+          h3("Background"),
+          p("On 1 March 2020, the first person in Scotland was tested positive for COVID-19. 
+            On 17 March NHS Scotland was placed in an emergency footing by the Cabinet Secretary. 
+            Schools have been closed since 20 March and the country has been in lockdown since 23 March. 
+            Scotland entered phase one of easing out of lockdown on Friday 29 May, phase two on 
+            Friday 19 June and phase three on Friday 10 July."),
+          p("Since 15 June 2020, Public Health Scotland publishes the total number of results, positive and 
+            negative, carried out across any NHSScotland Laboratories and UK Government Regional Testing Centres."),
+          p("Since the start of the outbreak Public Health Scotland (PHS) has been working closely with 
+            Scottish Government and health and care colleagues in supporting the surveillance and 
+            monitoring of COVID-19 amongst the population."),
+          p("This report shows the trends of the number of positive COVID-19 tests in Scotland, 
+            and looks at some of the wider impacts of the virus on the healthcare system,
+            comparing recent trends in activity with historic norms. 
+            Since 17 June 2020 the report includes data on Test and Protect."),
+          h3("Main Points"),
+          tags$ul( 
+            tags$li("Between 28 May to 26 July 2020, 1,049 individuals were recorded in the 
+                    contact tracing software, from which 3,101 contacts have been traced."),
+            tags$li("As at 26 July 2020, there have been 18,554 confirmed COVID-19 cases, 
+                    equating to 339.6 confirmed cases per 100,000 population."),
+            tags$li("Between 1 March 2020 and 22 July 2020, there had been 5,949 admissions to 
+                    hospital with a laboratory confirmed test of COVID-19."),
+            tags$li("As at 26 July 2020, 531 confirmed COVID-19 patients have been treated in an 
+                    Intensive Care Unit. There have been 3 confirmed COVID-19 patients admitted 
+                    to ICU in the last week."),
+            tags$li("As at 26 July 2020, 327,701 people in Scotland have tested negative.")),
           
           p(
-          "This information tool provides an overview of changes in health and use of healthcare during the COVID-19
-          pandemic in Scotland, drawing on a range of national data sources."),
-          p(
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas nec finibus arcu. 
-          Suspendisse vitae nunc velit. Nunc fringilla cursus nunc. Nulla nec neque mauris. Nunc a nisl vitae erat egestas dictum sed tempus tortor. Suspendisse elit urna, tincidunt at mauris in, maximus egestas tellus. Nulla eleifend erat a congue congue. 
-          Nunc sed purus sit amet metus cursus egestas at et nunc. "),
-          p(
-          "Morbi imperdiet nunc odio, non congue lorem efficitur sed. Curabitur gravida ex a tempor vestibulum. 
-          Aenean non aliquet nisi, at malesuada nibh. 
-          Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut et dictum sapien."),
-          p(
           "Interactive charts on each of the topics are available in the ",
-          actionLink("jump_summary", "'Summary trends' tab.")),
+          actionLink("jump_to_summary", "'Summary trends' tab.")),
           p(
           "The underlying data used to create the interactive charts can be downloaded using the ",
-          actionLink("jump_table", "'Data' tab."),
+          actionLink("jump_to_table", "'Data' tab."),
           "Note that some numbers may not sum to the total as disclosure control methods have been applied
           to the data in order to protect patient confidentiality."),
           p(
-          "This tool will be updated ??weekly?? New releases will be published at the same time as the Public Health Scotland ",
+          "This tool will be updated weekly. New releases will be published at the same time as the Public Health Scotland ",
           tags$a(
             href = "https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/",
             "COVID-19 weekly report for Scotland.",
             class = "externallink")),
           p(
-          "If you have any questions relating to the data presented please contact us at: ",
+          "If you have any questions relating to this data please contact: ",
           tags$b(
             tags$a(
-              href = "mailto:phs.covid19analytics@nhs.net",
-              "phs.covid19analytics@nhs.net",
+              href = "mailto:phs.statsgov@nhs.net",
+              "phs.statsgov@nhs.net",
               class = "externallink")),"."),
+          p(
+            "If you have a media query please contact: ",
+            tags$b(
+              tags$a(
+                href = "mailto:phs.comms@nhs.net",
+                "phs.comms@nhs.net",
+                class = "externallink")),"."),
           ".")
          ), #tabPanel bracket
 
