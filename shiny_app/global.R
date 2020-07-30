@@ -1,6 +1,14 @@
 
 setwd("//freddy/DEPT/PHIBCS/PHI/Publications/Health Topic/HPS/Covid-19/COVID19_Dashboard/")
 
+#update extraction dates here
+labcases_extract_date <- "2020-07-27" #ECOSS
+
+admission_extract_date <- as.Date("2020-07-26") #change date here
+admission_extract_date <- format(admission_extract_date, "%A %d %B %Y") #format date
+
+ICU_extract_date <- as.Date("2020-07-27")
+ICU_extract_date <- format(ICU_extract_date, "%A %d %B %Y") #format date
 
 # Global
 
@@ -65,22 +73,29 @@ SAS <- readRDS("data/SAS.rds")
 NHSInform <- readRDS("data/NHSInform.rds")
 SelfHelp <- readRDS("data/SelfHelp.rds")
 
-LabCases_AgeSex <- read_csv("data/LabCases_AgeSex.csv")
-LabCases_SIMD <- read_csv("data/LabCases_SIMD.csv") %>% mutate(cases_pc = cases_pc * 100)
-Admissions_AgeSex <- read_csv("data/Admissions_AgeSex.csv")
-Admissions_SIMD <- read_csv("data/Admissions_SIMD.csv") %>% mutate(cases_pc = cases_pc * 100)
-ICU_AgeSex <- read_csv("data/ICU_AgeSex.csv")
-NHS24_AgeSex <- read_csv("data/NHS24_AgeSex.csv")
-NHS24_SIMD <- read_csv("data/NHS24_SIMD.csv")
-AssessmentHub_AgeSex <- read_csv("data/AssessmentHub_AgeSex.csv")
-AssessmentHub_SIMD <- read_csv("data/AssessmentHub_SIMD.csv") %>% mutate(cases_pc = cases_pc * 100)
-SAS_AgeSex <- read_csv("data/SAS_AgeSex.csv")
-SAS_SIMD <- read_csv("data/SAS_SIMD.csv") %>% mutate(cases_pc = cases_pc * 100)
+#read age/sex/deprivation data
+LabCases_AgeSex <- readRDS("data/LabCases_AgeSex.rds")
+LabCases_SIMD <- readRDS("data/LabCases_SIMD.rds")
+Admissions_AgeSex <- readRDS("data/Admissions_AgeSex.rds")
+Admissions_SIMD <- readRDS("data/Admissions_SIMD.rds")
+ICU_AgeSex <- readRDS("data/ICU_AgeSex.rds")
+NHS24_AgeSex <- readRDS("data/NHS24_AgeSex.rds")
+NHS24_SIMD <- readRDS("data/NHS24_SIMD.rds")
+AssessmentHub_AgeSex <- readRDS("data/AssessmentHub_AgeSex.rds")
+AssessmentHub_SIMD <- readRDS("data/AssessmentHub_SIMD.rds")
+SAS_AgeSex <- readRDS("data/SAS_AgeSex.rds")
+SAS_SIMD <- readRDS("data/SAS_SIMD.rds")
+
+#read SAS/NHS24 other data
+NHS24_inform <- readRDS("data/NHS24_inform.rds")
+NHS24_selfhelp <- readRDS("data/NHS24_selfhelp.rds")
+NHS24_community <- readRDS("data/NHS24_community.rds")
+SAS_all <- readRDS("data/SAS_all.rds")
 
 data_list <- c("Positive Cases" = "LabCases", 
                "Admissions" = "Admissions", 
                "ICU Admissions" = "ICU",
-               "NHS24 Calls" = "NHS24", 
+               "NHS24 Contacts" = "NHS24", 
                "Assessment Hubs" = "AssessmentHub", 
                "Scottish Ambulance Service" = "SAS")
 
@@ -93,15 +108,19 @@ data_list_data_tab <- c("Positive Cases" = "LabCases",
                         "Admissions by deprivation" = "Admissions_SIMD", 
                         "ICU Admissions" = "ICU",
                         "ICU Admissions by age" = "ICU_AgeSex",
-                        "NHS24 Calls" = "NHS24",
-                        "NHS24 Calls by age" = "NHS24_AgeSex",
-                        "NHS24 Calls by deprivation" = "NHS24_SIMD", 
+                        "NHS24 Contacts" = "NHS24",
+                        "NHS24 Contacts by age" = "NHS24_AgeSex",
+                        "NHS24 Contacts by deprivation" = "NHS24_SIMD",
+                        "NHS Inform hits" = "NHS24_inform",
+                        "NHS24 Self Help guides" = "NHS24_selfhelp",
+                        "NHS24 community outcomes"  = "NHS24_community",
                         "Assessment Hubs" = "AssessmentHub",
                         "Assessment Hubs by age" = "AssessmentHub_AgeSex", 
                         "Assessment Hubs by deprivation" = "AssessmentHub_SIMD", 
                         "Scottish Ambulance Service" = "SAS",
                         "Scottish Ambulance Service by age" = "SAS_AgeSex",
-                        "Scottish Ambulance Service by deprivation" = "SAS_SIMD")
+                        "Scottish Ambulance Service by deprivation" = "SAS_SIMD",
+                        "Scottish Ambulance Service - all incidents" = "SAS_all")
 
 
 #data_list_data_tab <- c(data_list)
@@ -112,8 +131,11 @@ data_list_data_tab <- c("Positive Cases" = "LabCases",
 
 pal_overall <- c('#000000', '#009900','#59144c', '#bdbdbd', '#bdbdbd', '#bdbdbd', '#7fcdbb')
 
+pal_comm <- c('#543005', '#8c510a', '#bf812d',  '#d0d1e6',
+             '#74add1', '#4575b4', '#313695')
+
 #for female/male split
-pal_sex <- c('#8856a7', '#9ebcda')
+pal_sex <- c('#8856a7', '#9ebcda', "#000000")
 
 #for SIMD
 pal_simd <- c('#2c7fb8', '#bdbdbd', '#bdbdbd', '#bdbdbd', '#7fcdbb')
