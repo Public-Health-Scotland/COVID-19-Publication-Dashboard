@@ -5,54 +5,66 @@
 #modal to describe dataset
 # Link action button click to modal launch 
 observeEvent(input$btn_dataset_modal, 
-             
+              
              if (input$measure_select == "LabCases") { # Positive Cases MODAL
                showModal(modalDialog(
                  title = "What is the data source?",
-                 p("Information about data source goes here"),
-                 p("text goes here",
-                   tags$a(href="https://www.ndc.scot.nhs.uk/National-Datasets/data.asp?ID=1&SubID=37",
-                          "link text goes here ",class="externallink"), "words words words ",
-                   tags$a(href="https://www.ndc.scot.nhs.uk/National-Datasets/data.asp?ID=1&SubID=5",
-                          "SMR01 (general inpatient and day cases) return.",class="externallink"), "words words words"),
-                 p("words words"),
-                 p("The dataset is managed by ", 
-                   tags$a(href="https://www.isdscotland.org/Health-Topics/Emergency-Care/Predicting-Hospital-Activity/", 
-                          "Public Health Scotland (PHS).", class="externallink")),
+                 p("ECOSS (Electronic Communication of Surveillance in Scotland) Database"),
+                 p(glue("Date extracted: {labcases_extract_date}")),
+                 p("For a small number of laboratory results initially reported as positive on 
+                    subsequent additional testing the laboratory result may be amended to negative,
+                    and the individual no longer managed as a confirmed case.") ,                                   
+                  p("Note: Specimen date was not available for historical UK Government Regional 
+                    Testing centres data between 15 and 25 April. As a sample date is required 
+                    to report in ECOSS these samples were assigned a specimen date in the mid-point
+                    within this date range (20 April). Date refers to the date the sample was 
+                    received into the PHS Surveillance System."),
                  size = "m",
                  easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)")))
                
              } else if (input$measure_select == "Admissions") { #Admissions MODAL
                showModal(modalDialog(
                  title = "What is the data source?",
-                 p("Information about Admissions data source goes here ", 
-                   tags$a(href="https://www.isdscotland.org/Health-Topics/Emergency-Care/Emergency-Department-Activity/Hospital-Site-List/",
-                          "link text to show.", class="externallink")),
-                 p("Additional information relating to Admissions is available from the ", 
-                   tags$a(href="https://beta.isdscotland.org/find-publications-and-data/health-services/hospital-care/nhs-performs-weekly-update-of-emergency-department-activity-and-waiting-time-statistics/", 
-                          "link text to show.", 
-                          class="externallink")),
-                 p("Numbers of Admissions will include....." ),                   
-                 p("The  dataset is managed by ", 
-                   tags$a(href="https://www.isdscotland.org/Health-Topics/Emergency-Care/Emergency-Department-Activity/", 
-                          "Public Health Scotland (PHS).", class="externallink")),
+                 p("ECOSS (Electronic Communication of Surveillance in Scotland) and 
+                   RAPID (Rapid Preliminary Inpatient Data"), 
+                p(glue("Data are correct as at the time of data extract at 9am on {admission_extract_date}.
+                       Data are reviewed and validated on a continuous basis and 
+                       so may be subject to change")),
+                  p("Note that there may be a time lag with some data for the most recent days 
+                    and some of the above figures may change as more data is submitted. 
+                    Data now includes any positive cases from NHS Laboratories or 
+                    UK Government regional testing sites."),               
                  size = "m",
                  easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)")))
                
              } else if (input$measure_select == "ICU") { #ICU MODAL
                showModal(modalDialog(
                  title = "What is the data source?",
-                 p("Information about ICU data source goes here ", 
-                   tags$a(href="https://www.isdscotland.org/Health-Topics/Emergency-Care/Emergency-Department-Activity/Hospital-Site-List/",
-                          "link text to show.", class="externallink")),
-                 p("Additional information relating to ICU is available from the ", 
-                   tags$a(href="https://beta.isdscotland.org/find-publications-and-data/health-services/hospital-care/nhs-performs-weekly-update-of-emergency-department-activity-and-waiting-time-statistics/", 
-                          "link text to show.", 
-                          class="externallink")),
-                 p("Numbers of ICU Admissions will include....." ),                   
-                 p("The  dataset is managed by ", 
-                   tags$a(href="https://www.isdscotland.org/Health-Topics/Emergency-Care/Emergency-Department-Activity/", 
-                          "Public Health Scotland (PHS).", class="externallink")),
+                 p("Data excludes any patient under the age 15."), 
+                 p("Data collection for the SICSAG core dataset is by the bespoke Wardwatcher 
+                    data collecting platform. SICSAG data is subject to ongoing validation and 
+                    must be regarded as dynamic. Therefore if this analysis was to be to re-run 
+                    at a later stage it may be subject to change."), 
+                 p("In the first report published (6th May), counts shown included any patient 
+                    who had contact with ICU since 1st March 2020 and had a positive COVID-19 
+                    test at any time. This definition was adjusted to reflect reports from SICSAG 
+                    to only include patients with a positive COVID-19 specimen date prior to 
+                    discharge from an intensive care unit. Therefore, current data are only 
+                    comparable to figures previously reported by PHS since 13th May 2020."), 
+                 p("Counts include any patient with a confirmed positive COVID-19 test 
+                    (confirmed by linkage to ECOSS) taken prior to discharge from an ICU in Scotland. 
+                    Counts do not include any COVID-19 suspected cases who have not yet been lab 
+                    confirmed. Therefore there may be a lag for recent days where patients may 
+                    still be awaiting the results of COVID-19 tests. Counts do not include any 
+                    re-admissions from COVID-19 patients previously admitted to an ICU and re-admitted 
+                    post discharge; counts are unique patients only. Individual patients are 
+                    identified using their CHI number as recorded within the ICU admissions system.
+                    There may be a very small number of patients where CHI was not recorded, for whom 
+                    linkage to ECOSS for COVID-19 status may not have been possible."), 
+                    p(glue("Data are correct as at the time of data extract at {ICU_extract_date}. 
+                    Data are reviewed and validated on a continuous basis and so may be subject to change. 
+                    The COVID-19 pandemic is a rapidly evolving situation.")),
+                 
                  size = "m",
                  easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)")))
                
@@ -66,7 +78,7 @@ observeEvent(input$btn_dataset_modal,
                    tags$a(href="https://beta.isdscotland.org/find-publications-and-data/health-services/hospital-care/nhs-performs-weekly-update-of-emergency-department-activity-and-waiting-time-statistics/", 
                           "link text to show.", 
                           class="externallink")),
-                 p("Numbers of NHS24 Calls will include....." ),                   
+                 p("Numbers of NHS24 Contacts will include....." ),                   
                  p("The  dataset is managed by ", 
                    tags$a(href="https://www.isdscotland.org/Health-Topics/Emergency-Care/Emergency-Department-Activity/", 
                           "Public Health Scotland (PHS).", class="externallink")),
@@ -145,13 +157,23 @@ output$data_explorer <- renderUI({
   dataset <- case_when(input$measure_select == "LabCases" ~ "Cases",
                        input$measure_select == "Admissions" ~ "Admissions",
                        input$measure_select == "ICU" ~ "ICU admissions", 
-                       input$measure_select == "NHS24" ~ "NHS24 calls", 
+                       input$measure_select == "NHS24" ~ "NHS24 contacts", 
                        input$measure_select == "AssessmentHub" ~ "Consultations", 
                        input$measure_select == "SAS"~ "SAS incidents")
   
   total_title <- glue("Daily number of {dataset}")
   agesex_title <- glue("{dataset} per 100,000 population by age")
-  simd_title <- glue("{dataset} by SIMD quintile")
+  simd_title <- glue("{dataset} by deprivation category (SIMD)")
+  
+  # data sources
+  data_source <- case_when(input$measure_select == "LabCases" ~ "ECOSS",
+                       input$measure_select == "Admissions" ~ "ECOSS/RAPID",
+                       input$measure_select == "ICU" ~ "SICSAG", 
+                       input$measure_select == "NHS24" ~ "DATA SOURCE NEEDED", 
+                       input$measure_select == "AssessmentHub" ~ "DATA SOURCE NEEDED", 
+                       input$measure_select == "SAS"~ "DATA SOURCE NEEDED")
+  
+  
   
   # Function to create the standard layout for all the different charts/sections
   cut_charts <- function(title, source, data_name) {
@@ -171,34 +193,47 @@ output$data_explorer <- renderUI({
       plot_cut_missing(paste0(agesex_title), paste0(data_name, "_AgeSex")))
   }
   
+  cut_charts_nhs24 <- function(title, source, data_name) {
+    tagList(
+      h3(title),
+      actionButton("btn_dataset_modal", paste0("Data source: ", source), icon = icon('question-circle')),
+      plot_box(paste0(total_title), paste0(data_name, "_overall")),
+      plot_cut_box(paste0(agesex_title), paste0(data_name, "_AgeSex"),
+                   paste0(simd_title), paste0(data_name, "_SIMD")),
+      plot_box("NHS inform hits", paste0(data_name, "_inform")),
+      plot_box("NHS24 self help guides completed", paste0(data_name, "_selfhelp")),
+      plot_box("NHS24 community hub outcomes", paste0(data_name, "_community")))
+  }
+  
   # Charts and rest of UI
   if (input$measure_select == "LabCases") { #Positive Cases
     cut_charts(title= "Daily number of positive cases", 
-               source = "Data Source name goes here", data_name = "LabCases")
+               source = data_source, data_name = "LabCases")
     
   } else if (input$measure_select == "Admissions") { #Admissions
     cut_charts(title= "Daily number of Acute Hospital Admissions", 
-               source = "Data Source name goes here", data_name = "Admissions")
+               source = data_source, data_name = "Admissions")
     
   } else if (input$measure_select == "ICU") {# ICU 
     cut_charts_missing(title= "Daily number of ICU Admissions",
-               source = "Data Source name goes here", data_name ="ICU")
+               source = data_source, data_name ="ICU")
     
-  } else if (input$measure_select == "NHS24") {# NHS 24 calls
-    cut_charts(title= "Daily completed contacts with NHS 24", 
-               source = "Data Source name goes here", data_name ="NHS24")
-    
+  } else if (input$measure_select == "NHS24") {# NHS 24 contacts
+    cut_charts_nhs24(title= "Daily completed contacts with NHS24", 
+               source = data_source, data_name ="NHS24")
+  
   } else if (input$measure_select == "AssessmentHub") { # Assessment Hub
     cut_charts(title= "Daily number of consultations", 
-               source = "Data Source name goes here", data_name ="AssessmentHub")
+               source = data_source, data_name ="AssessmentHub")
     
   } else if (input$measure_select == "SAS") { # SAS data
-    cut_charts(title= "Daily attended incidents by Scottish Ambulance Service", 
-               source = "Data Source name goes here", data_name ="SAS")
-    
+    c(cut_charts(title= "Daily attended incidents by Scottish Ambulance Service", 
+               source = data_source, data_name ="SAS"),
+    plot_box("SAS - all incidents", plot_output = "SAS_all")
+    )
   } else if (input$measure_select == "deaths") { # Deaths data
     cut_charts(title= "Weekly number of deaths", 
-               source = "NRS Death Registrations", data_name ="deaths")
+               source = data_source, data_name ="deaths")
   }
 }) 
 
@@ -227,6 +262,12 @@ output$AssessmentHub_AgeSex <- renderPlotly({plot_age_chart(AssessmentHub_AgeSex
 output$AssessmentHub_SIMD <- renderPlotly({plot_simd_chart(AssessmentHub_SIMD, data_name = "AssessmentHub_SIMD")})
 output$SAS_AgeSex <- renderPlotly({plot_age_chart(SAS_AgeSex, data_name = "SAS_AgeSex")})
 output$SAS_SIMD <- renderPlotly({plot_simd_chart(SAS_SIMD, data_name = "SAS_SIMD")})
+
+#extra NHS24/SAS charts
+output$NHS24_inform <- renderPlotly({plot_singletrace_chart(NHS24_inform, data_name = "NHS24_inform")})
+output$NHS24_selfhelp <- renderPlotly({plot_nhs24_selfhelp_chart(NHS24_selfhelp, data_name = "NHS24_selfhelp")})
+output$NHS24_community <- renderPlotly({plot_nhs24_community_chart(NHS24_community, data_name = "NHS24_community")})
+output$SAS_all <- renderPlotly({plot_singletrace_chart(SAS_all, data_name = "SAS_all")})
 
 
 ## Data downloads ----
@@ -364,7 +405,7 @@ output$ICU_commentary <- renderUI({
 
 output$NHS24_commentary <- renderUI({
   tagList(
-    h2("NHS24 Calls - Updated: 10th June 2020"),
+    h2("NHS24 Contacts - Updated: 10th June 2020"),
     p("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas nec finibus arcu. Suspendisse vitae nunc velit. 
       Nunc fringilla cursus nunc. Nulla nec neque mauris. Nunc a nisl vitae erat egestas dictum sed tempus tortor."),
     
