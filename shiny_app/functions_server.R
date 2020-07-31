@@ -35,15 +35,15 @@ plot_overall_chart <- function(dataset, data_name, yaxis_title, area = T) {
                             "<br>", "7 Day Average: ", trend_data$Average7))
   
   #Creating time trend plot
-  plot_ly(data=trend_data, x=~Date) %>%
+  plot_ly(data = trend_data, x = ~Date) %>%
     add_lines(y = ~Count, line = list(color = pal_overall[1]),
-              text=tooltip_trend, hoverinfo="text",
+              text = tooltip_trend, hoverinfo = "text",
               name = "Count") %>%
     add_lines(y = ~Average7, line = list(color = pal_overall[2], dash = 'dash'),
-              text=tooltip_trend, hoverinfo="text",
+              text = tooltip_trend, hoverinfo = "text",
               name = "7 Day Average") %>%
     #Layout
-    layout(margin = list(b = 80, t=5), #to avoid labels getting cut out
+    layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
            yaxis = yaxis_plots, xaxis = xaxis_plots,
            legend = list(x = 100, y = 0.5)) %>% #position of legend
     # leaving only save plot button
@@ -62,7 +62,6 @@ plot_overall_chartNHS24 <- function(dataset, data_name, yaxis_title, area = T) {
   # Creating objects that change depending on dataset
   yaxis_title <- case_when(data_name == "NHS24" ~ "Number of NHS24 contacts")
   
-  
   #Modifying standard layout
   yaxis_plots[["title"]] <- yaxis_title
   
@@ -74,12 +73,12 @@ plot_overall_chartNHS24 <- function(dataset, data_name, yaxis_title, area = T) {
                             "<br>", "Number of calls to helpline: ", trend_data$CoronavirusHelpline))
   
   #Creating time trend plot
-  plot_ly(data=trend_data, x=~Date) %>%
+  plot_ly(data = trend_data, x = ~Date) %>%
     add_lines(y = ~Count, line = list(color = pal_overall[1]),
-              text=tooltip_trend, hoverinfo="text",
+              text = tooltip_trend, hoverinfo="text",
               name = "NHS24 contacts") %>%
     add_lines(y = ~CoronavirusHelpline, line = list(color = pal_overall[2]),
-              text=tooltip_trend, hoverinfo="text",
+              text = tooltip_trend, hoverinfo="text",
               name = "Coronavirus Helpline") %>%
     #Layout
     layout(margin = list(b = 80, t=5), #to avoid labels getting cut out
@@ -114,15 +113,15 @@ plot_overall_chartSAS <- function(dataset, data_name, yaxis_title, area = T) {
                             "<br>", "Conveyed syspected COVID-19 incidents: ", trend_data$`Suspected Covid - Conveyed`))
   
   #Creating time trend plot
-  plot_ly(data=trend_data, x=~Date) %>%
+  plot_ly(data = trend_data, x = ~Date) %>%
     add_lines(y = ~`Suspected Covid - All`, line = list(color = pal_overall[1]),
-              text=tooltip_trend, hoverinfo="text",
+              text = tooltip_trend, hoverinfo = "text",
               name = "All suspected COVID-19") %>%
     add_lines(y = ~`Suspected Covid - Attended`, line = list(color = pal_overall[2]),
-              text=tooltip_trend, hoverinfo="text",
+              text = tooltip_trend, hoverinfo = "text",
               name = "Attended suspected COVID-19") %>%
     add_lines(y = ~`Suspected Covid - Conveyed`, line = list(color = pal_overall[3]),
-              text=tooltip_trend, hoverinfo="text",
+              text = tooltip_trend, hoverinfo = "text",
               name = "Conveyed suspected COVID-19") %>%
     #Layout
     layout(margin = list(b = 80, t=5), #to avoid labels getting cut out
@@ -157,18 +156,18 @@ plot_overall_chartAssessmentHub <- function(dataset, data_name, yaxis_title, are
                             "<br>", "COVID-19 other consultations: ", trend_data$CountOther))
   
   #Creating time trend plot
-  plot_ly(data=trend_data, x=~Date) %>%
+  plot_ly(data = trend_data, x = ~Date) %>%
     add_lines(y = ~`CountAdvice`, line = list(color = pal_overall[1]),
-              text=tooltip_trend, hoverinfo="text",
+              text = tooltip_trend, hoverinfo="text",
               name = "Advice") %>%
     add_lines(y = ~trend_data$CountAssessment, line = list(color = pal_overall[2]),
-              text=tooltip_trend, hoverinfo="text",
+              text = tooltip_trend, hoverinfo = "text",
               name = "Assessments") %>%
     add_lines(y = ~trend_data$CountOther, line = list(color = pal_overall[3]),
-              text=tooltip_trend, hoverinfo="text",
+              text = tooltip_trend, hoverinfo = "text",
               name = "Other") %>%
     #Layout
-    layout(margin = list(b = 80, t=5), #to avoid labels getting cut out
+    layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
            yaxis = yaxis_plots, xaxis = xaxis_plots,
            legend = list(x = 100, y = 0.5)) %>% #position of legend
     # leaving only save plot button
@@ -190,7 +189,6 @@ filter_data <- function(dataset, area = T) {
       filter(category == "All")
   }
 }
-
 
 
 ######################################################################.
@@ -236,10 +234,10 @@ plot_agesex_chart <- function(dataset, data_name, yaxis_title, area = T) {
                   mutate(age_group = fct_inorder(age_group))
   
   #Text for tooltip
-  tooltip_trend <- c(paste0("Age group: ", trend_data$age_group,
-                            "<br>", "Sex: ", trend_data$sex,
-                            "<br>", measure_name," per 100,000 population: ", round(trend_data$rate, 2),
-                            "<br>", "Count: ", trend_data$number))
+  tooltip_trend <- glue("Age group: {trend_data$age_group}<br>",
+                        "Sex: {trend_data$sex}<br>",
+                        "Count: {trend_data$number}<br>",
+                        "{measure_name} per 100,000 population: {round(trend_data$rate, 2)}")
   
   #Creating age/sex plot
   trend_data %>% 
@@ -252,7 +250,7 @@ plot_agesex_chart <- function(dataset, data_name, yaxis_title, area = T) {
              hoverinfo = "text",
              name = ~sex) %>%
     #Layout
-    layout(margin = list(b = 80, t=5), #to avoid labels getting cut out
+    layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
            yaxis = yaxis_plots, xaxis = xaxis_plots,
            legend = list(x = 100, y = 0.5), #position of legend
            barmode = "group") %>% #split by group
@@ -293,10 +291,9 @@ plot_simd_chart <- function(dataset, data_name, yaxis_title, area = T) {
                     filter(SIMD != "Unknown") %>% 
                     mutate(SIMD = fct_inorder(SIMD))
   
-  #Text for tooltip
-  tooltip_trend <- c(paste0("Deprivation category: ", trend_data$SIMD,
-                            "<br>Percent of ", measure_name, ": ", round(trend_data$cases_pc, 2),
-                            "<br>", "Count: ", trend_data$cases))
+  tooltip_trend <- glue("Deprivation category: {trend_data$SIMD}<br>",
+                        "Count: {trend_data$cases}<br>",
+                        "Percent of {measure_name}: {round(trend_data$cases_pc, 2)}")
   
   #Creating SIMD plot
   trend_data %>% 
@@ -333,8 +330,9 @@ plot_singletrace_chart <- function(dataset, data_name, yaxis_title, area = T) {
                             data_name == "SAS_all" ~ "SAS incidents: ")
   
   #Text for tooltip
-  tooltip_trend <- c(paste0("Date: ", format(trend_data$date, "%d %b %y"),
-                            "<br>", measure_name, trend_data$count))
+  tooltip_trend <- glue("Date: {format(trend_data$date, '%d %b %y')}<br>",
+                        "{measure_name}: {trend_data$count}")
+  
   #Creating time trend plot
   plot_ly(data = trend_data, x = ~date) %>%
     add_lines(y = ~count, line = list(color = pal_overall[1]),
@@ -362,9 +360,10 @@ plot_nhs24_selfhelp_chart <- function(dataset, data_name, yaxis_title, area = T)
   measure_name <- case_when(data_name == "NHS24_selfhelp" ~ "Number of self help guides completed: ")
   
   #Text for tooltip
-  tooltip_trend <- c(paste0("Date: ", format(trend_data$date, "%d %b %y"),
-                            "<br> Self help guides completed: ", trend_data$selfhelp,
-                            "<br> Users advised to isolate: ", trend_data$isolate))
+  tooltip_trend <- glue("Date: {format(trend_data$date, '%d %b %y')}<br> ",
+                        "Self help guides completed: {trend_data$selfhelp}<br>",
+                        "Users advised to isolate: {trend_data$isolate}")
+  
   #Creating time trend plot
   plot_ly(data = trend_data, x = ~date) %>%
     add_lines(y = ~selfhelp, line = list(color = pal_overall[1]),
@@ -400,8 +399,8 @@ plot_nhs24_community_chart <- function(dataset, data_name, yaxis_title, area = T
                                       outcome = fct_inorder(outcome))
   
   #Text for tooltip
-  tooltip_trend <- c(paste0("Date: ", trend_data$date,
-                            "<br>", trend_data$outcome, ": ", trend_data$count))
+  tooltip_trend <- glue("Date: {trend_data$date}<br>",
+                      "{trend_data$outcome}: {trend_data$count}")
  
   #Creating community hub plot
   trend_data %>% 
@@ -420,9 +419,5 @@ plot_nhs24_community_chart <- function(dataset, data_name, yaxis_title, area = T
     # leaving only save plot button
     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove ) 
 }
-
-
-
-
 
 ### END

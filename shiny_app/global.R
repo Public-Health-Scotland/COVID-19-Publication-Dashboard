@@ -1,16 +1,23 @@
 
 setwd("//freddy/DEPT/PHIBCS/PHI/Publications/Health Topic/HPS/Covid-19/COVID19_Dashboard/")
 
-#update extraction dates here
-labcases_extract_date <- "2020-07-27" #ECOSS
-
-admission_extract_date <- as.Date("2020-07-26") #change date here
-admission_extract_date <- format(admission_extract_date, "%A %d %B %Y") #format date
-
-ICU_extract_date <- as.Date("2020-07-27")
-ICU_extract_date <- format(ICU_extract_date, "%A %d %B %Y") #format date
-
 # Global
+
+###############################################.
+## Data extraction dates ----
+###############################################.
+
+#publication date
+pub_date <- as.Date("2020-07-29")
+
+#ECOSS, for LabCases
+labcases_extract_date <- format(pub_date - 2, "%d %B %Y") #format date
+
+#For Hospital Admissions
+admission_extract_date <- format(pub_date - 3, "%A %d %B %Y") #format date
+
+#For ICU Admissions
+ICU_extract_date <- format(pub_date - 2, "%A %d %B %Y") #format date
 
 ###############################################.
 ## Packages ----
@@ -40,7 +47,6 @@ plot_box <- function(title_plot, plot_output) {
           withSpinner(plotlyOutput(plot_output)))
 }
 
-
 plot_cut_box <- function(title_plot1, plot_output1,
                          title_plot2, plot_output2, extra_content = NULL) {
   tagList(
@@ -60,7 +66,6 @@ plot_cut_missing <- function(title_plot, plot_output, extra_content = NULL) {
     fluidRow(column(6, withSpinner(plotlyOutput(plot_output))))
   )
 }
-
 
 ###############################################.
 ## Data ----
@@ -93,6 +98,7 @@ NHS24_selfhelp <- readRDS("data/NHS24_selfhelp.rds")
 NHS24_community <- readRDS("data/NHS24_community.rds")
 SAS_all <- readRDS("data/SAS_all.rds")
 
+#data lists
 data_list <- c("Positive Cases" = "LabCases", 
                "Admissions" = "Admissions", 
                "ICU Admissions" = "ICU",
@@ -100,7 +106,7 @@ data_list <- c("Positive Cases" = "LabCases",
                "Assessment Hubs" = "AssessmentHub", 
                "Scottish Ambulance Service" = "SAS")
 
-#add
+#extra choices for data tables
 data_list_data_tab <- c("Positive Cases" = "LabCases",
                         "Positive Cases by age" = "LabCases_AgeSex",
                         "Positive Cases by deprivation" = "LabCases_SIMD", 
@@ -122,9 +128,6 @@ data_list_data_tab <- c("Positive Cases" = "LabCases",
                         "Scottish Ambulance Service by age" = "SAS_AgeSex",
                         "Scottish Ambulance Service by deprivation" = "SAS_SIMD",
                         "Scottish Ambulance Service - all incidents" = "SAS_all")
-
-
-#data_list_data_tab <- c(data_list)
 
 ###############################################.
 ## Palettes and plot parameters ----

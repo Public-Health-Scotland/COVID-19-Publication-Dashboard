@@ -1,5 +1,3 @@
-
-
 ## Reactive data ----
 
 ##reactive data to show in app
@@ -14,8 +12,9 @@ data_table <- reactive({  # Change dataset depending on what user selected
                        "Admissions_SIMD" = Admissions_SIMD %>% rename(Percent = cases_pc),
                        "ICU" = ICU %>%  rename(`Number of ICU Admissions` = Count),
                        "ICU_AgeSex" = ICU_AgeSex,
-                       "NHS24" = NHS24 %>% rename(`Number of NHS Calls` = Count,
-                                                  `Number of Corona Virus Helpline` = CoronavirusHelpline),
+                       "NHS24" = NHS24 %>% 
+                                  rename(`Number of NHS Calls` = Count,
+                                          `Number of Corona Virus Helpline` = CoronavirusHelpline),
                        "NHS24_AgeSex" = NHS24_AgeSex,
                        "NHS24_SIMD" = NHS24_SIMD %>% rename(Percent = cases_pc),
                        "NHS24_inform" = NHS24_inform %>% rename(Hits = count),
@@ -25,9 +24,10 @@ data_table <- reactive({  # Change dataset depending on what user selected
                        "NHS24_community" = NHS24_community %>% 
                                             rename(`Community hub outcome` = outcome,
                                                    Count = count),
-                       "AssessmentHub" = AssessmentHub %>% rename(`COVID-19 Advice` = CountAdvice,
-                                                                  `COVID-19 Assessments` = CountAssessment,
-                                                                  `Other` = CountOther),
+                       "AssessmentHub" = AssessmentHub %>% 
+                                          rename(`COVID-19 Advice` = CountAdvice,
+                                                 `COVID-19 Assessments` = CountAssessment,
+                                                 `Other` = CountOther),
                        "AssessmentHub_AgeSex" = AssessmentHub_AgeSex,
                        "AssessmentHub_SIMD" = AssessmentHub_SIMD %>% rename(Percent = cases_pc),
                        "SAS" = SAS,
@@ -35,7 +35,6 @@ data_table <- reactive({  # Change dataset depending on what user selected
                        "SAS_SIMD" = SAS_SIMD %>% rename(Percent = cases_pc),
                        "SAS_all" = SAS_all %>% rename(Incidents = count)) 
   
-#not sure if this if/else section is needed?
   if (input$data_select %in% c("LabData")) {
     table_data <- table_data %>% 
       select(Date, `Number of Daily Cases`, Cumulative) %>% 
@@ -64,7 +63,6 @@ data_table <- reactive({  # Change dataset depending on what user selected
   
 table_data %>% 
     rename_all(list(~str_to_sentence(.))) %>% # initial capital letter
-    #rename_with(.fn = toupper, .cols = matches("Simd")) %>% #make SIMD all caps
     rename_with(.cols = matches("Simd"),
                 .fn = str_replace, 
                 pattern = "Simd", 
