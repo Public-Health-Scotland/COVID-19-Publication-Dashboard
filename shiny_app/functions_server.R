@@ -117,13 +117,13 @@ plot_overall_chartSAS <- function(dataset, data_name, yaxis_title, area = T) {
   plot_ly(data=trend_data, x=~Date) %>%
     add_lines(y = ~`Suspected Covid - All`, line = list(color = pal_overall[1]),
               text=tooltip_trend, hoverinfo="text",
-              name = "All") %>%
+              name = "All suspected COVID-19") %>%
     add_lines(y = ~`Suspected Covid - Attended`, line = list(color = pal_overall[2]),
               text=tooltip_trend, hoverinfo="text",
-              name = "Attended") %>%
+              name = "Attended suspected COVID-19") %>%
     add_lines(y = ~`Suspected Covid - Conveyed`, line = list(color = pal_overall[3]),
               text=tooltip_trend, hoverinfo="text",
-              name = "Conveyed") %>%
+              name = "Conveyed suspected COVID-19") %>%
     #Layout
     layout(margin = list(b = 80, t=5), #to avoid labels getting cut out
            yaxis = yaxis_plots, xaxis = xaxis_plots,
@@ -216,24 +216,24 @@ plot_agesex_chart <- function(dataset, data_name, yaxis_title, area = T) {
   trend_data <- dataset
   
   ###############################################.
-  # Creating objects that change depending on dataset
-  yaxis_title <- case_when(data_name == "LabCases_AgeSex" ~ "Cases per 100,000 population",
-                           data_name == "Admissions_AgeSex" ~ "Admissions per 100,000 population",
-                           data_name == "ICU_AgeSex" ~ "ICU admissions per 100,000 population")
+  measure_name <- case_when(data_name == "LabCases_AgeSex" ~ "Cases",
+                            data_name == "Admissions_AgeSex" ~ "Admissions",
+                            data_name == "ICU_AgeSex" ~ "ICU admissions",
+                            data_name == "NHS24_AgeSex" ~ "NHS24 contacts",
+                            data_name == "SAS_AgeSex" ~ "SAS incidents",
+                            data_name == "AssessmentHub_AgeSex" ~ "Consultations")
+  
+  yaxis_title <- glue("{measure_name} per 100,000 population")
   
   #Modifying standard layout
   yaxis_plots[["title"]] <- yaxis_title
   xaxis_plots[["title"]] <- "Age group"
   
-  measure_name <- case_when(data_name == "LabCases_AgeSex" ~ "Cases",
-                            data_name == "Admissions_AgeSex" ~ "Admissions",
-                            data_name == "ICU_AgeSex" ~ "ICU admissions")
-  
   #remove unknowns from chart
   #make age_group an ordered factor
   trend_data <- trend_data %>% 
-    dplyr::filter(sex != "unknown", age_group != "Unknown") %>% 
-    dplyr::mutate(age_group = forcats::fct_inorder(age_group))
+                  filter(sex != "unknown", age_group != "Unknown") %>% 
+                  mutate(age_group = fct_inorder(age_group))
   
   #Text for tooltip
   tooltip_trend <- c(paste0("Age group: ", trend_data$age_group,
@@ -259,61 +259,6 @@ plot_agesex_chart <- function(dataset, data_name, yaxis_title, area = T) {
     # leaving only save plot button
     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove ) 
 }
-
-## Function for Age only charts ----
-
-plot_age_chart <- function(dataset, data_name, yaxis_title, area = T) {
-  
-  # Filtering dataset to include only overall figures
-  trend_data <- dataset
-  
-  ###############################################.
-  # Creating objects that change depending on dataset
-  yaxis_title <- case_when(data_name == "NHS24_AgeSex" ~ "NHS24 contacts per 100,000 population",
-                           data_name == "AssessmentHub_AgeSex" ~ "Consultations per 100,000 population",
-                           data_name == "SAS_AgeSex" ~ "Incidents per 100,000 population"
-                           )
-  
-  #Modifying standard layout
-  yaxis_plots[["title"]] <- yaxis_title
-  xaxis_plots[["title"]] <- "Age group"
-  
-  measure_name <- case_when(data_name == "NHS24_AgeSex" ~ "NHS24 contacts",
-                            data_name == "AssessmentHub_AgeSex" ~ "Consultations",
-                            data_name == "SAS_AgeSex" ~ "SAS incidents")
-  
-  #remove unknowns from chart
-  #make age_group an ordered factor
-  trend_data <- trend_data %>% 
-    dplyr::filter(age_group != "Unknown") %>% 
-    dplyr::mutate(age_group = forcats::fct_inorder(age_group))
-  
-  #Text for tooltip
-  tooltip_trend <- c(paste0("Age group: ", trend_data$age_group,
-                            "<br>", measure_name," per 100,000 population: ", round(trend_data$rate, 2),
-                            "<br>", "Count: ", trend_data$number))
-  
-  #Creating time trend plot
-  trend_data %>% 
-    plot_ly(x = ~age_group) %>%
-    add_bars(y = ~rate, 
-             #color = I("grey"),
-             color = ~age_group, #color group
-             colors = pal_sex[1], #palette
-             stroke = I("black"), #outline
-             text = tooltip_trend, 
-             hoverinfo = "text",
-             name = ~age_group) %>%
-    #Layout
-    layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
-           yaxis = yaxis_plots, xaxis = xaxis_plots,
-           legend = list(x = 100, y = 0.5), #position of legend,
-           showlegend = FALSE,
-           barmode = "group") %>% #split by group
-    # leaving only save plot button
-    config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove ) 
-}
-
 
 ## Function for SIMD charts ----
 
@@ -345,8 +290,8 @@ plot_simd_chart <- function(dataset, data_name, yaxis_title, area = T) {
   #remove unknowns from chart
   #make age_group an ordered factor
   trend_data <- trend_data %>% 
-    dplyr::filter(SIMD != "Unknown") %>% 
-    dplyr::mutate(SIMD = forcats::fct_inorder(SIMD))
+                    filter(SIMD != "Unknown") %>% 
+                    mutate(SIMD = fct_inorder(SIMD))
   
   #Text for tooltip
   tooltip_trend <- c(paste0("Deprivation category: ", trend_data$SIMD,
@@ -409,12 +354,12 @@ plot_nhs24_selfhelp_chart <- function(dataset, data_name, yaxis_title, area = T)
   
   ###############################################.
   # Creating objects that change depending on dataset
-  yaxis_title <- case_when(data_name == "NHS24" ~ "Number of self help guides completed")
+  yaxis_title <- case_when(data_name == "NHS24_selfhelp" ~ "Number of self help guides completed")
   
   #Modifying standard layout
   yaxis_plots[["title"]] <- yaxis_title
   
-  measure_name <- case_when(data_name == "NHS24" ~ "Number of self help guides completed: ")
+  measure_name <- case_when(data_name == "NHS24_selfhelp" ~ "Number of self help guides completed: ")
   
   #Text for tooltip
   tooltip_trend <- c(paste0("Date: ", format(trend_data$date, "%d %b %y"),
@@ -451,8 +396,8 @@ plot_nhs24_community_chart <- function(dataset, data_name, yaxis_title, area = T
   measure_name <- case_when(data_name == "NHS24_community" ~ "NHS24 community outcomes")
   
   #make factor
-  trend_data <- trend_data %>% dplyr::mutate(date = forcats::fct_inorder(date),
-                                             outcome = forcats::fct_inorder(outcome))
+  trend_data <- trend_data %>% mutate(date = fct_inorder(date),
+                                      outcome = fct_inorder(outcome))
   
   #Text for tooltip
   tooltip_trend <- c(paste0("Date: ", trend_data$date,
