@@ -27,6 +27,7 @@ library(shinycssloaders) #for loading icons, see line below
 library(shinyjs) # for enable/disable functions
 library(readr) # for writing/reading csvs
 library(stringr) #for manipulating strings
+library(forcats) #manipulating factors
 library(flextable)
 library(shinyBS) #for collapsible panels in commentary
 library(glue) #for pasting strings
@@ -131,10 +132,11 @@ data_list_data_tab <- c("Positive Cases" = "LabCases",
 
 pal_overall <- c('#000000', '#009900','#59144c', '#bdbdbd', '#bdbdbd', '#bdbdbd', '#7fcdbb')
 
+#for nhs24 community outcomes
 pal_comm <- c('#543005', '#8c510a', '#bf812d',  '#d0d1e6',
              '#74add1', '#4575b4', '#313695')
 
-#for female/male split
+#for female/male/total sex
 pal_sex <- c('#8856a7', '#9ebcda', "#000000")
 
 #for SIMD
