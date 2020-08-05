@@ -307,44 +307,44 @@ output$download_chart_data <- downloadHandler(
 
 # Summary Commentary ------------------------------------------------------
 
-output$summary_commentary <- renderUI({
-  tagList(
-    bsButton("jump_to_summary",label = "Go to data"), #this button can only be used once
-    
-    h2("Summary - DATE UPDATED 2020"), 
-    p("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas nec finibus arcu. Suspendisse vitae nunc velit. 
-      Nunc fringilla cursus nunc. Nulla nec neque mauris. Nunc a nisl vitae erat egestas dictum sed tempus tortor."),
-    
-    h4("Background"),
-    p("Suspendisse elit urna, tincidunt at mauris in, maximus egestas tellus. Nulla eleifend erat a congue congue. 
-      Nunc sed purus sit amet metus cursus egestas at et nunc. Morbi imperdiet nunc odio, non congue lorem efficitur sed:"),
-    tags$ul( 
-      tags$li("bullet point 1"),
-      tags$li("bullet point 2"),
-      tags$li("bullet point 3")),
-    
-    p("Public Health Scotland aims to provide information and intelligence on the wider 
-      impacts of COVID-19 on health, healthcare and health inequalities that are not directly due to COVID-19."),
-    
-    p("The work to date has made use of the following data sources:"),
-    tags$ul(
-      tags$li("Positive Cases"),
-      tags$li("Admissions"),
-      tags$li("ICU"),
-      tags$li("NHS 24 completed contacts."),
-      tags$li("Scottish Ambulance Service data.")),
-    
-    h4("Header"),
-    tags$ul( 
-      tags$li("bullet point 1"),
-      tags$li("bullet point 2"),
-      tags$li("bullet point 3")),
-    
-    h4("Future work"),
-    p("Work is under way to broaden the range of data sources available – within the next few weeks 
-      we expect to publish information on ...."
-    ))
-})
+# output$summary_commentary <- renderUI({
+#   tagList(
+#     bsButton("jump_to_summary",label = "Go to data"), #this button can only be used once
+#     
+#     h2("Summary - DATE UPDATED 2020"), 
+#     p("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas nec finibus arcu. Suspendisse vitae nunc velit. 
+#       Nunc fringilla cursus nunc. Nulla nec neque mauris. Nunc a nisl vitae erat egestas dictum sed tempus tortor."),
+#     
+#     h4("Background"),
+#     p("Suspendisse elit urna, tincidunt at mauris in, maximus egestas tellus. Nulla eleifend erat a congue congue. 
+#       Nunc sed purus sit amet metus cursus egestas at et nunc. Morbi imperdiet nunc odio, non congue lorem efficitur sed:"),
+#     tags$ul( 
+#       tags$li("bullet point 1"),
+#       tags$li("bullet point 2"),
+#       tags$li("bullet point 3")),
+#     
+#     p("Public Health Scotland aims to provide information and intelligence on the wider 
+#       impacts of COVID-19 on health, healthcare and health inequalities that are not directly due to COVID-19."),
+#     
+#     p("The work to date has made use of the following data sources:"),
+#     tags$ul(
+#       tags$li("Positive Cases"),
+#       tags$li("Admissions"),
+#       tags$li("ICU"),
+#       tags$li("NHS 24 completed contacts."),
+#       tags$li("Scottish Ambulance Service data.")),
+#     
+#     h4("Header"),
+#     tags$ul( 
+#       tags$li("bullet point 1"),
+#       tags$li("bullet point 2"),
+#       tags$li("bullet point 3")),
+#     
+#     h4("Future work"),
+#     p("Work is under way to broaden the range of data sources available – within the next few weeks 
+#       we expect to publish information on ...."
+#     ))
+# })
 
 # Positive Cases Commentary -----------------------------------------------
 

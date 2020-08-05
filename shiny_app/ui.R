@@ -10,10 +10,8 @@ tagList(  #needed for shinyjs
     windowTitle = "PHS Weekly COVID-19 report",    #title for browser tab
     header = tags$head(includeCSS("www/styles.css"),  # CSS styles
       tags$link(rel = "shortcut icon", href = "favicon_phs.ico"), #Icon for browser tab     
-      includeScript("//freddy/DEPT/PHIBCS/PHI/Publications/Health Topic/HPS/Covid-19/COVID19_Dashboard/google-analytics.js")), #Including Google analytics
-    
-    
-
+      includeScript("/PHI_conf/PrimaryCare/Megan/COVID-19-Publication-Dashboard2/google-analytics.js")), #Including Google analytics
+  
 ## Introduction ----
 
 tabPanel("Introduction",
@@ -34,46 +32,45 @@ tabPanel("Introduction",
           p("Since the start of the outbreak Public Health Scotland (PHS) has been working closely with 
             Scottish Government and health and care colleagues in supporting the surveillance and 
             monitoring of COVID-19 amongst the population."),
-          p("This report shows the trends of the number of positive COVID-19 tests in Scotland, 
-            and looks at some of the wider impacts of the virus on the healthcare system,
-            comparing recent trends in activity with historic norms. 
-            Since 17 June 2020 the report includes data on Test and Protect."),
-          h3("Main Points"),
-          tags$ul( 
-            tags$li("Between 28 May to 26 July 2020, 1,049 individuals were recorded in the 
-                    contact tracing software, from which 3,101 contacts have been traced."),
-            tags$li("As at 26 July 2020, there have been 18,554 confirmed COVID-19 cases, 
-                    equating to 339.6 confirmed cases per 100,000 population."),
-            tags$li("Between 1 March 2020 and 22 July 2020, there had been 5,949 admissions to 
-                    hospital with a laboratory confirmed test of COVID-19."),
-            tags$li("As at 26 July 2020, 531 confirmed COVID-19 patients have been treated in an 
-                    Intensive Care Unit. There have been 3 confirmed COVID-19 patients admitted 
-                    to ICU in the last week."),
-            tags$li("As at 26 July 2020, 327,701 people in Scotland have tested negative.")),
-          
-          p(
-          "Interactive charts on each of the topics are available in the ",
+          p("Interactive charts on each of the topics are available in the ",
           actionLink("jump_to_summary", "'Summary trends' tab.")),
-          p(
-          "The underlying data used to create the interactive charts can be downloaded using the ",
+          p("The underlying data used to create the interactive charts can be downloaded using the ",
           actionLink("jump_to_table", "'Data' tab."),
           "Note that some numbers may not sum to the total as disclosure control methods have been applied
           to the data in order to protect patient confidentiality."),
-          p(
-          "This tool will be updated weekly. New releases will be published at the same time as the Public Health Scotland ",
+          
+          h3("Further information"),
+          p("There is a large amount of data being regularly published regarding COVID-19. 
+            This dashboard complements the range of existing data currently available."),
+          p("New releases will be published at the same time as the Public Health Scotland ",
           tags$a(
             href = "https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/",
             "COVID-19 weekly report for Scotland.",
             class = "externallink")),
-          p(
-          "If you have any questions relating to this data please contact: ",
+          p("Information on the wider impacts on the health care system from COVID-19 are available on the ",
+            tags$a(
+              href = "https://scotland.shinyapps.io/phs-covid-wider-impact/",
+              "Wider Impacts dashboard.",
+              class = "externallink")),
+          p("Information and support on a range of topics in regards to COVID-19 are available on the ",
+            tags$a(
+              href = "https://www.gov.scot/coronavirus-covid-19/",
+              "Scottish Government website.",
+              class = "externallink")),
+          p("Information on deaths involving COVID-19 is available on the ",
+            tags$a(
+              href = "https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/vital-events/general-publications/weekly-and-monthly-data-on-births-and-deaths/deaths-involving-coronavirus-covid-19-in-scotland/",
+              "National Records Scotland website.",
+              class = "externallink")),
+         
+          h3("Contact"),         
+           p("If you have any questions relating to this data please contact: ",
           tags$b(
             tags$a(
               href = "mailto:phs.statsgov@nhs.net",
               "phs.statsgov@nhs.net",
               class = "externallink")),"."),
-          p(
-            "If you have a media query please contact: ",
+          p("If you have a media query please contact: ",
             tags$b(
               tags$a(
                 href = "mailto:phs.comms@nhs.net",
@@ -84,16 +81,16 @@ tabPanel("Introduction",
 
 ## Commentary ----
 
-tabPanel(title = "Commentary",
+tabPanel(title = "Definitions",
   icon = icon("list-ul"),
   value = "comment",
   wellPanel(column(12,
-                   p("Select topic areas to find commentary relating to data presented in this tool."))),
+                   p("Select topic areas to find definitions relating to data presented in this tool."))),
   wellPanel(
     column(2,
            p("Select topic:"),
-           actionLink("summary_button", "Summary", width = "150px"),
-           br(),
+          # actionLink("summary_button", "Summary", width = "150px"),
+          # br(),
            actionLink("positivecases_button", "Positive Cases", width = "150px"),
            br(),
            actionLink("admissions_button", "Admissions", width = "150px"),
@@ -111,7 +108,7 @@ tabPanel(title = "Commentary",
            bsCollapse(
              id = "collapse_commentary",
              open = "Panel 1",  ##PanelSet id
-             bsCollapsePanel("Summary", uiOutput("summary_commentary")),  ##collapsible panel for summary tab
+             #bsCollapsePanel("Summary", uiOutput("summary_commentary")),  ##collapsible panel for summary tab
              bsCollapsePanel("Positive Cases", uiOutput("positivecases_commentary")),  ##collapsible panel for cardiovascular tab
              bsCollapsePanel("Admissions", uiOutput("admissions_commentary")),
              bsCollapsePanel("ICU", uiOutput("ICU_commentary")),

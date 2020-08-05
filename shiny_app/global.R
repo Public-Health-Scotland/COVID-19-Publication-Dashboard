@@ -1,5 +1,5 @@
 
-setwd("//freddy/DEPT/PHIBCS/PHI/Publications/Health Topic/HPS/Covid-19/COVID19_Dashboard/")
+#setwd("//freddy/DEPT/PHIBCS/PHI/Publications/Health Topic/HPS/Covid-19/COVID19_Dashboard/")
 
 # Global
 
@@ -36,6 +36,7 @@ library(readr) # for writing/reading csvs
 library(stringr) #for manipulating strings
 library(forcats) #manipulating factors
 library(flextable)
+library(tidytable)
 library(shinyBS) #for collapsible panels in commentary
 library(glue) #for pasting strings
 

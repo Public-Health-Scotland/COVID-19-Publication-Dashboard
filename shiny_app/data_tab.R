@@ -63,10 +63,10 @@ data_table <- reactive({  # Change dataset depending on what user selected
   
 table_data %>% 
     rename_all(list(~str_to_sentence(.))) %>% # initial capital letter
-    rename_with(.cols = matches("Simd"),
-                .fn = str_replace, 
-                pattern = "Simd", 
-                replacement = "Deprivation category (SIMD)") %>% #change SIMD
+    # tidytable::rename_with(.cols = matches("Simd"),
+    #             .fn = str_replace, 
+    #             pattern = "Simd", 
+    #             replacement = "Deprivation category (SIMD)") %>% #change SIMD
     mutate_if(is.numeric, round, 1) %>% 
     mutate_if(is.character, as.factor)
 
