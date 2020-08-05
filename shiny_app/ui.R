@@ -7,79 +7,90 @@ tagList(  #needed for shinyjs
     title = div(
       tags$a(img(src = "phs-logo.png", height = 40), href = "https://www.publichealthscotland.scot/"),
       style = "position: relative; top: -5px;"),
-    windowTitle = "COVID-19 wider impacts",    #title for browser tab
+    windowTitle = "PHS Weekly COVID-19 report",    #title for browser tab
     header = tags$head(includeCSS("www/styles.css"),  # CSS styles
       tags$link(rel = "shortcut icon", href = "favicon_phs.ico"), #Icon for browser tab     
-      includeScript("google-analytics.js")), #Including Google analytics
-    
-    
-
+      includeScript("/PHI_conf/PrimaryCare/Megan/COVID-19-Publication-Dashboard2/google-analytics.js")), #Including Google analytics
+  
 ## Introduction ----
 
 tabPanel("Introduction",
          icon = icon("info-circle"),
          value = "intro",
          column(4,
-             h3("COVID-19 Title goes here")),
+             h3("COVID-19 Statistical Report")),
          column(8,
-                tags$br(), 
-          p("Write introduction Stuff here"),
-          p("This is a new paragraph"),
-          tags$ul(
-            tags$li(
-            "bullet point 1"),
-            tags$li(
-            "bullet point 2"),
-            tags$li(
-            "bullet point 3")),
-          
-          p(
-          "This information tool provides an overview of changes in health and use of healthcare during the COVID-19
-          pandemic in Scotland, drawing on a range of national data sources."),
-          p(
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas nec finibus arcu. 
-          Suspendisse vitae nunc velit. Nunc fringilla cursus nunc. Nulla nec neque mauris. Nunc a nisl vitae erat egestas dictum sed tempus tortor. Suspendisse elit urna, tincidunt at mauris in, maximus egestas tellus. Nulla eleifend erat a congue congue. 
-          Nunc sed purus sit amet metus cursus egestas at et nunc. "),
-          p(
-          "Morbi imperdiet nunc odio, non congue lorem efficitur sed. Curabitur gravida ex a tempor vestibulum. 
-          Aenean non aliquet nisi, at malesuada nibh. 
-          Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut et dictum sapien."),
-          p(
-          "Interactive charts on each of the topics are available in the ",
-          actionLink("jump_summary", "'Summary trends' tab.")),
-          p(
-          "The underlying data used to create the interactive charts can be downloaded using the ",
-          actionLink("jump_table", "'Data' tab."),
+                tags$br(),
+          h3("Background"),
+          p("On 1 March 2020, the first person in Scotland was tested positive for COVID-19. 
+            On 17 March NHS Scotland was placed in an emergency footing by the Cabinet Secretary. 
+            Schools have been closed since 20 March and the country has been in lockdown since 23 March. 
+            Scotland entered phase one of easing out of lockdown on Friday 29 May, phase two on 
+            Friday 19 June and phase three on Friday 10 July."),
+          p("Since 15 June 2020, Public Health Scotland publishes the total number of results, positive and 
+            negative, carried out across any NHSScotland Laboratories and UK Government Regional Testing Centres."),
+          p("Since the start of the outbreak Public Health Scotland (PHS) has been working closely with 
+            Scottish Government and health and care colleagues in supporting the surveillance and 
+            monitoring of COVID-19 amongst the population."),
+          p("Interactive charts on each of the topics are available in the ",
+          actionLink("jump_to_summary", "'Summary trends' tab.")),
+          p("The underlying data used to create the interactive charts can be downloaded using the ",
+          actionLink("jump_to_table", "'Data' tab."),
           "Note that some numbers may not sum to the total as disclosure control methods have been applied
           to the data in order to protect patient confidentiality."),
-          p(
-          "This tool will be updated ??weekly?? New releases will be published at the same time as the Public Health Scotland ",
+          
+          h3("Further information"),
+          p("There is a large amount of data being regularly published regarding COVID-19. 
+            This dashboard complements the range of existing data currently available."),
+          p("New releases will be published at the same time as the Public Health Scotland ",
           tags$a(
             href = "https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/",
             "COVID-19 weekly report for Scotland.",
             class = "externallink")),
-          p(
-          "If you have any questions relating to the data presented please contact us at: ",
+          p("Information on the wider impacts on the health care system from COVID-19 are available on the ",
+            tags$a(
+              href = "https://scotland.shinyapps.io/phs-covid-wider-impact/",
+              "Wider Impacts dashboard.",
+              class = "externallink")),
+          p("Information and support on a range of topics in regards to COVID-19 are available on the ",
+            tags$a(
+              href = "https://www.gov.scot/coronavirus-covid-19/",
+              "Scottish Government website.",
+              class = "externallink")),
+          p("Information on deaths involving COVID-19 is available on the ",
+            tags$a(
+              href = "https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/vital-events/general-publications/weekly-and-monthly-data-on-births-and-deaths/deaths-involving-coronavirus-covid-19-in-scotland/",
+              "National Records Scotland website.",
+              class = "externallink")),
+         
+          h3("Contact"),         
+           p("If you have any questions relating to this data please contact: ",
           tags$b(
             tags$a(
-              href = "mailto:phs.covid19analytics@nhs.net",
-              "phs.covid19analytics@nhs.net",
+              href = "mailto:phs.statsgov@nhs.net",
+              "phs.statsgov@nhs.net",
               class = "externallink")),"."),
+          p("If you have a media query please contact: ",
+            tags$b(
+              tags$a(
+                href = "mailto:phs.comms@nhs.net",
+                "phs.comms@nhs.net",
+                class = "externallink")),"."),
           ".")
          ), #tabPanel bracket
 
 ## Commentary ----
 
-tabPanel(title = "Commentary",
+tabPanel(title = "Definitions",
   icon = icon("list-ul"),
   value = "comment",
   wellPanel(column(12,
-                   p("Select topic areas to find commentary relating to data presented in this tool."))),
+                   p("Select topic areas to find definitions relating to data presented in this tool."))),
   wellPanel(
     column(2,
            p("Select topic:"),
-           actionLink("summary_button", "Summary", width = "150px"),
-           br(),
+          # actionLink("summary_button", "Summary", width = "150px"),
+          # br(),
            actionLink("positivecases_button", "Positive Cases", width = "150px"),
            br(),
            actionLink("admissions_button", "Admissions", width = "150px"),
@@ -97,7 +108,7 @@ tabPanel(title = "Commentary",
            bsCollapse(
              id = "collapse_commentary",
              open = "Panel 1",  ##PanelSet id
-             bsCollapsePanel("Summary", uiOutput("summary_commentary")),  ##collapsible panel for summary tab
+             #bsCollapsePanel("Summary", uiOutput("summary_commentary")),  ##collapsible panel for summary tab
              bsCollapsePanel("Positive Cases", uiOutput("positivecases_commentary")),  ##collapsible panel for cardiovascular tab
              bsCollapsePanel("Admissions", uiOutput("admissions_commentary")),
              bsCollapsePanel("ICU", uiOutput("ICU_commentary")),

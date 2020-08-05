@@ -1,24 +1,40 @@
-
-
 ## Reactive data ----
 
 ##reactive data to show in app
 data_table <- reactive({  # Change dataset depending on what user selected
   
   table_data <- switch(input$data_select,
-                       "LabCases" = LabCases %>%  rename (`Number of Cases` = Count), 
+                       "LabCases" = LabCases %>%  rename (`Number of Cases` = Count),
+                       "LabCases_AgeSex" = LabCases_AgeSex,
+                       "LabCases_SIMD" = LabCases_SIMD %>% rename(Percent = cases_pc),
                        "Admissions" = Admissions %>%  rename (`Number of Admissions` = Count),
+                       "Admissions_AgeSex" = Admissions_AgeSex,
+                       "Admissions_SIMD" = Admissions_SIMD %>% rename(Percent = cases_pc),
                        "ICU" = ICU %>%  rename(`Number of ICU Admissions` = Count),
-                       "NHS24" = NHS24 %>% rename(`Number of NHS Calls` = Count,
-                                                  `Number of Corona Virus Helpline` = CoronavirusHelpline),
-                       "AssessmentHub" = AssessmentHub %>% rename(`COVID-19 Advice` = CountAdvice,
-                                                                  `COVID-19 Assessments` = CountAssessment,
-                                                                  `Other` = CountOther),
-                       "SAS" = SAS %>% 
-    
-    mutate_if(is.character, as.factor))  # Note: character variables are converted to factors in each dataset for use in the table
-    # This is because dropdown prompts on the table filters only appear for factors
-
+                       "ICU_AgeSex" = ICU_AgeSex,
+                       "NHS24" = NHS24 %>% 
+                                  rename(`Number of NHS Calls` = Count,
+                                          `Number of Corona Virus Helpline` = CoronavirusHelpline),
+                       "NHS24_AgeSex" = NHS24_AgeSex,
+                       "NHS24_SIMD" = NHS24_SIMD %>% rename(Percent = cases_pc),
+                       "NHS24_inform" = NHS24_inform %>% rename(Hits = count),
+                       "NHS24_selfhelp" = NHS24_selfhelp %>% 
+                                            rename(`Self Help guides completed` = selfhelp,
+                                                   `Advised to self isolate` = isolate),
+                       "NHS24_community" = NHS24_community %>% 
+                                            rename(`Community hub outcome` = outcome,
+                                                   Count = count),
+                       "AssessmentHub" = AssessmentHub %>% 
+                                          rename(`COVID-19 Advice` = CountAdvice,
+                                                 `COVID-19 Assessments` = CountAssessment,
+                                                 `Other` = CountOther),
+                       "AssessmentHub_AgeSex" = AssessmentHub_AgeSex,
+                       "AssessmentHub_SIMD" = AssessmentHub_SIMD %>% rename(Percent = cases_pc),
+                       "SAS" = SAS,
+                       "SAS_AgeSex" = SAS_AgeSex,
+                       "SAS_SIMD" = SAS_SIMD %>% rename(Percent = cases_pc),
+                       "SAS_all" = SAS_all %>% rename(Incidents = count)) 
+  
   if (input$data_select %in% c("LabData")) {
     table_data <- table_data %>% 
       select(Date, `Number of Daily Cases`, Cumulative) %>% 
@@ -45,11 +61,15 @@ data_table <- reactive({  # Change dataset depending on what user selected
     #  select(Date, `Number of Admissions`)
   } 
   
-  
-  table_data %>% 
+table_data %>% 
     rename_all(list(~str_to_sentence(.))) %>% # initial capital letter
-    #select(sort(current_vars())) %>%  # order columns alphabetically
-    mutate_if(is.numeric, round, 1)
+    # tidytable::rename_with(.cols = matches("Simd"),
+    #             .fn = str_replace, 
+    #             pattern = "Simd", 
+    #             replacement = "Deprivation category (SIMD)") %>% #change SIMD
+    mutate_if(is.numeric, round, 1) %>% 
+    mutate_if(is.character, as.factor)
+
 })
 
 ###############################################.
@@ -60,7 +80,7 @@ output$table_filtered <- DT::renderDataTable({
   
   # Remove the underscore from column names in the table
   table_colnames  <-  gsub("_", " ", colnames(data_table()))
-  
+
   DT::datatable(data_table(), style = 'bootstrap',
                 class = 'table-bordered table-condensed',
                 rownames = FALSE,
