@@ -9,8 +9,8 @@ tagList(  #needed for shinyjs
       style = "position: relative; top: -5px;"),
     windowTitle = "PHS Weekly COVID-19 report",    #title for browser tab
     header = tags$head(includeCSS("www/styles.css"),  # CSS styles
-      tags$link(rel = "shortcut icon", href = "favicon_phs.ico"), #Icon for browser tab     
-      includeScript("/PHI_conf/PrimaryCare/Megan/COVID-19-Publication-Dashboard2/google-analytics.js")), #Including Google analytics
+      tags$link(rel = "shortcut icon", href = "favicon_phs.ico")), #Icon for browser tab     
+     # includeScript("data/google-analytics.js")), #Including Google analytics
   
 ## Introduction ----
 

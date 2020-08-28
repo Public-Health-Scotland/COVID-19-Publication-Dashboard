@@ -100,20 +100,20 @@ NHS24_community <- readRDS("data/NHS24_community.rds")
 SAS_all <- readRDS("data/SAS_all.rds")
 
 #data lists
-data_list <- c("Positive Cases" = "LabCases", 
-               "Admissions" = "Admissions", 
+data_list <- c("Positive Cases" = "LabCases",
+               "Admissions" = "Admissions",
                "ICU Admissions" = "ICU",
-               "NHS24 Contacts" = "NHS24", 
-               "Assessment Hubs" = "AssessmentHub", 
+               "NHS24 Contacts" = "NHS24",
+               "Assessment Hubs" = "AssessmentHub",
                "Scottish Ambulance Service" = "SAS")
 
 #extra choices for data tables
 data_list_data_tab <- c("Positive Cases" = "LabCases",
                         "Positive Cases by age" = "LabCases_AgeSex",
-                        "Positive Cases by deprivation" = "LabCases_SIMD", 
+                        "Positive Cases by deprivation" = "LabCases_SIMD",
                         "Admissions" = "Admissions",
                         "Admissions by age" = "Admissions_AgeSex",
-                        "Admissions by deprivation" = "Admissions_SIMD", 
+                        "Admissions by deprivation" = "Admissions_SIMD",
                         "ICU Admissions" = "ICU",
                         "ICU Admissions by age" = "ICU_AgeSex",
                         "NHS24 Contacts" = "NHS24",
@@ -123,8 +123,8 @@ data_list_data_tab <- c("Positive Cases" = "LabCases",
                         "NHS24 Self Help guides" = "NHS24_selfhelp",
                         "NHS24 community outcomes"  = "NHS24_community",
                         "Assessment Hubs" = "AssessmentHub",
-                        "Assessment Hubs by age" = "AssessmentHub_AgeSex", 
-                        "Assessment Hubs by deprivation" = "AssessmentHub_SIMD", 
+                        "Assessment Hubs by age" = "AssessmentHub_AgeSex",
+                        "Assessment Hubs by deprivation" = "AssessmentHub_SIMD",
                         "Scottish Ambulance Service" = "SAS",
                         "Scottish Ambulance Service by age" = "SAS_AgeSex",
                         "Scottish Ambulance Service by deprivation" = "SAS_SIMD",
@@ -154,8 +154,8 @@ yaxis_plots <- list(title = FALSE, rangemode="tozero", fixedrange=TRUE, size = 4
                     tickfont = list(size=14), titlefont = list(size=14))
 
 # Buttons to remove
-bttn_remove <-  list('select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d',  
-                     'autoScale2d',   'toggleSpikelines',  'hoverCompareCartesian',  
+bttn_remove <-  list('select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d',
+                     'autoScale2d',   'toggleSpikelines',  'hoverCompareCartesian',
                      'hoverClosestCartesian')
 
 ## END

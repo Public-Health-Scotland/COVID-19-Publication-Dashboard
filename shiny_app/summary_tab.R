@@ -356,8 +356,7 @@ output$positivecases_commentary <- renderUI({
 output$admissions_commentary <- renderUI({
   tagList(
     h2("Acute Hospital Admissions - Updated: 10th June 2020"),
-    p("Admissions into hospital for patients who were either COVID-19 positive up to 14 days before their admission or
-      had a positive result during their stay. COVID-19 related admissions have been identified as the following: 
+    p("COVID-19 related admissions have been identified as the following: 
       A patient may have tested positive for COVID-19 14 days prior to admission to hospital, on the day of their admission or during their stay in hospital."),
     p("If a patient has tested positive after their date of discharge from hospital, they have not been included in the analysis."),
     p("On 1st July 2020, NSS as part of the PHS COVID-19 response published a report on COVID-19 hospital onset cases in Scotland.
@@ -375,7 +374,8 @@ output$admissions_commentary <- renderUI({
 output$ICU_commentary <- renderUI({
   tagList(
     h2("ICU - Updated: 10th June 2020"),
-    p("COVID-19 varies in severity from very mild symptoms through to those requiring hospital admission and the most ill who require intensive care treatment and supported ventilation."),
+    p("COVID-19 varies in severity from very mild symptoms through to those requiring hospital admission and 
+      the most ill who require admission to the Intesive Care Unit (ICU) for treatment and supported ventilation."),
     p("ICU counts include:"),
     tags$ul( 
       tags$li("Adult ICU information only"),
@@ -405,12 +405,12 @@ output$ICU_commentary <- renderUI({
 output$NHS24_commentary <- renderUI({
   tagList(
     h2("NHS24 Contacts - Updated: 10th June 2020"),
-    p("In response to COVID-19, NHS 24 adapted their service provision. 
-      Contacts to NHS 24 (Monday to Friday 8am – 6pm) which are non COVID-19 related are now referred directly to the patient’s GP. 
+    p("In response to COVID-19, NHS24 adapted their service provision. 
+      Contacts to NHS24 (Monday to Friday 8am – 6pm) which are non COVID-19 related are now referred directly to the patient’s GP. 
       Calls received by NHS24 'for information' only are not included in the dataset received by PHS. 
       People who are concerned about COVID-19, or who experience symptoms, are advised to seek advice from NHS Inform website, 
-      the COVID-19 advice helpline or to contact NHS 24’s 111 service if their symptoms worsen and they need clinical advice, 
-      following which they may be;"),
+      the COVID-19 advice helpline or to contact NHS24’s 111 service if their symptoms worsen and they need clinical advice, 
+      following which they may be:"),
     tags$ul( 
       tags$li("provided with self-care advice or be asked to contact their own GP"),
       tags$li("referred to a COVID-19 community hub for further clinical telephone triage, they may then be asked to attend assessment centre or receive a home visit by a Nurse or Doctor"),
@@ -427,7 +427,7 @@ output$NHS24_commentary <- renderUI({
     p("This website is available worldwide and not all contacts are made from within the United Kingdom/Scotland."),
     
     h4("Self Help Guides"),
-    p("NHS 24 have developed Coronavirus Self Help Guides in response to the pandemic – a short assessment for initial COVID-19 symptoms 
+    p("NHS24 have developed Coronavirus Self Help Guides in response to the pandemic – a short assessment for initial COVID-19 symptoms 
       with directions for accessing further information or into a service as appropriate.  This information is aligned to the 111 triage model.")
     
     ) # end taglist
@@ -440,7 +440,7 @@ output$AssessmentHub_commentary <- renderUI({
   tagList(
     h2("Assessment Hubs - Updated: 10th June 2020"),
     p("People may have multiple consultations with a COVID-19 Community Hub and Assessment Centre depending on their pathway of care. 
-      For example, upon referral by NHS 24 (or other services) they will be clinically triaged over the telephone by the community hub and 
+      For example, upon referral by NHS24 (or other services) they will be clinically triaged over the telephone by the community hub and 
       they may then go on to have a consultation in person at an assessment centre; this would result in one person having two consultations."),
     p("NHS Grampian data included from 01 May 2020.")
     
@@ -459,7 +459,7 @@ output$SAS_commentary <- renderUI({
       tags$li("redirecting and referring suitable people to alternative pathways, following telephone triage and advanced triage through a SAS practitioner."),
       tags$li("attended incidents, where a SAS resource (e.g. ambulance, paramedic in a car, specialist paramedic) has arrived at the scene of the incident. 
               Some incidents may be attended by more than one resource. Following assessment and treatment by SAS crews some patients do not require to be taken to hospital. 
-              These patients can be safely left at home with follow up provided by other services including their own GP or GP OOH Services. 
+              These patients can be safely left at home with follow up provided by other services including their own GP or GP Out of Hours Services. 
               It is in the patient’s best interest to get the care they require as close to their own home as is feasible."))
     
     
