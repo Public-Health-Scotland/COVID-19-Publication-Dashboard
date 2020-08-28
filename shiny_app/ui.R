@@ -13,18 +13,14 @@ tagList(  #needed for shinyjs
      # includeScript("data/google-analytics.js")), #Including Google analytics
   
 ## Introduction ----
-
 tabPanel("Introduction",
          icon = icon("info-circle"),
          value = "intro",
-         column(4,
-             h3("COVID-19 Statistical Report")),
-         column(8,
-                tags$br(),
-          h3("Background"),
+         h3("COVID-19 Statistical Report"),
+         h3("Background"),
           p("On 1 March 2020, the first person in Scotland was tested positive for COVID-19. 
             On 17 March NHS Scotland was placed in an emergency footing by the Cabinet Secretary. 
-            Schools have been closed since 20 March and the country has been in lockdown since 23 March. 
+            Schools were closed from 20 March and reopened in August, and the country has been in lockdown since 23 March. 
             Scotland entered phase one of easing out of lockdown on Friday 29 May, phase two on 
             Friday 19 June and phase three on Friday 10 July."),
           p("Since 15 June 2020, Public Health Scotland publishes the total number of results, positive and 
@@ -33,7 +29,7 @@ tabPanel("Introduction",
             Scottish Government and health and care colleagues in supporting the surveillance and 
             monitoring of COVID-19 amongst the population."),
           p("Interactive charts on each of the topics are available in the ",
-          actionLink("jump_to_summary", "'Summary trends' tab.")),
+          actionLink("jump_to_summary", "'Trend Charts' tab."),
           p("The underlying data used to create the interactive charts can be downloaded using the ",
           actionLink("jump_to_table", "'Data' tab."),
           "Note that some numbers may not sum to the total as disclosure control methods have been applied
@@ -120,7 +116,7 @@ tabPanel(title = "Definitions",
      )#wellPanel bracket
   ),#tab panel
    
-## Summary trends ----
+## Trend Charts ----
 
 tabPanel(
   title = "Trend Charts",

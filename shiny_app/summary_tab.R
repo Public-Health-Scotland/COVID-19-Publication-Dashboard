@@ -40,6 +40,7 @@ observeEvent(input$btn_dataset_modal,
              } else if (input$measure_select == "ICU") { #ICU MODAL
                showModal(modalDialog(
                  title = "What is the data source?",
+                 p("SICSAG"),
                  p("Data excludes any patient under the age 15."), 
                  p("Data collection for the SICSAG core dataset is by the bespoke Wardwatcher 
                    data collecting platform. SICSAG data is subject to ongoing validation and 
@@ -71,51 +72,40 @@ observeEvent(input$btn_dataset_modal,
              } else if (input$measure_select == "NHS24") { #NHS24 MODAL
                showModal(modalDialog(
                  title = "What is the data source?",
-                 p("Information about NHS24 data source goes here ", 
-                   tags$a(href="https://www.isdscotland.org/Health-Topics/Emergency-Care/Emergency-Department-Activity/Hospital-Site-List/",
-                          "link text to show.", class="externallink")),
-                 p("Additional information relating to NHS24 is available from the ", 
-                   tags$a(href="https://beta.isdscotland.org/find-publications-and-data/health-services/hospital-care/nhs-performs-weekly-update-of-emergency-department-activity-and-waiting-time-statistics/", 
-                          "link text to show.", 
-                          class="externallink")),
-                 p("Numbers of NHS24 Contacts will include....." ),                   
-                 p("The  dataset is managed by ", 
-                   tags$a(href="https://www.isdscotland.org/Health-Topics/Emergency-Care/Emergency-Department-Activity/", 
-                          "Public Health Scotland (PHS).", class="externallink")),
+                 p("NHS24 Systems Applications and Products Business Warehouse", 
+                 p("In response to COVID-19, NHS 24 adapted their service provision. People who are concerned about COVID-19, 
+                    or who experience symptoms, are advised to seek advice from NHS Inform website, the COVID-19 advice helpline 
+                    or to contact NHS 24’s 111 service if their symptoms worsen and they need clinical advice, following which they may be;"),
+                tags$li("provided with self-care advice or be asked to contact their own GP"),
+                tags$li("referred to a COVID-19 community hub for further clinical telephone triage, they may then be asked to attend assessment centre or receive a home visit by a Nurse or Doctor"),
+                tags$li("referred to acute services via the Scottish Ambulance Service or advised to attend hospital, depending on their symptoms."),
                  size = "m",
-                 easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)")))
+                 easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)"))))
                
              } else if (input$measure_select == "AssessmentHub") { #NHS24 MODAL
                showModal(modalDialog(
                  title = "What is the data source?",
-                 p("Information about Assessment Hubs data source goes here ", 
-                   tags$a(href="https://www.isdscotland.org/Health-Topics/Emergency-Care/Emergency-Department-Activity/Hospital-Site-List/",
-                          "link text to show.", class="externallink")),
-                 p("Additional information relating to Assessment Hubs is available from the ", 
-                   tags$a(href="https://beta.isdscotland.org/find-publications-and-data/health-services/hospital-care/nhs-performs-weekly-update-of-emergency-department-activity-and-waiting-time-statistics/", 
-                          "link text to show.", 
-                          class="externallink")),
-                 p("Numbers of Assessment Hub Consultations will include....." ),                   
-                 p("The  dataset is managed by ", 
-                   tags$a(href="https://www.isdscotland.org/Health-Topics/Emergency-Care/Emergency-Department-Activity/", 
-                          "Public Health Scotland (PHS).", class="externallink")),
+                 p("GP Out of Hours (OOH) ", 
+                 p("People may have multiple consultations with a COVID-19 Community Hub and Assessment Centre depending 
+                    on their pathway of care. For example, upon referral by NHS 24 (or other services) they will be 
+                    clinically triaged over the telephone by the community hub and they may then go on to have a 
+                    consultation in person at an assessment centre; this would result in one person having two consultations." ),                   
                  size = "m",
-                 easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)")))
+                 easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)"))))
                
              } else if (input$measure_select == "SAS") { #SAS MODAL
                showModal(modalDialog(
                  title = "What is the data source?",
-                 p("Information about SAS data source goes here ", 
-                   tags$a(href="https://www.isdscotland.org/Health-Topics/Emergency-Care/Emergency-Department-Activity/Hospital-Site-List/",
-                          "link text to show.", class="externallink")),
-                 p("Additional information relating to SAS is available from the ", 
-                   tags$a(href="https://beta.isdscotland.org/find-publications-and-data/health-services/hospital-care/nhs-performs-weekly-update-of-emergency-department-activity-and-waiting-time-statistics/", 
-                          "link text to show.", 
-                          class="externallink")),
-                 p("Numbers of SAS incidents will include....." ),                   
-                 p("The  dataset is managed by ", 
-                   tags$a(href="https://www.isdscotland.org/Health-Topics/Emergency-Care/Emergency-Department-Activity/", 
-                          "Public Health Scotland (PHS).", class="externallink")),
+                 p("SAS and Unscheduled Care Datamart"),
+                 p("When someone telephones 999 and requests an ambulance, the Scottish Ambulance Service (SAS) record 
+                    this as an incident. In some cases, multiple phone calls can be received for one incident. 
+                    The total number of incidents includes:"),
+                 tags$li("redirecting and referring suitable people to alternative pathways, following telephone triage and advanced triage through a SAS practitioner."),
+                 tags$li("attended incidents, where a SAS resource (e.g. ambulance, paramedic in a car, specialist paramedic) has arrived at the scene of the incident. Some incidents may be attended by more than one resource."),
+                   
+                  p("Following assessment and treatment by SAS crews some patients do not require to be taken to hospital. 
+                    These patients can be safely left at home with follow up provided by other services including their own GP or GP OOH Services. 
+                    It is in the patient’s best interest to get the care they require as close to their own home as is feasible."),
                  size = "m",
                  easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)")))
              }
@@ -145,15 +135,6 @@ simd_modal <- modalDialog(
 # Link action button click to modal launch 
 observeEvent(input$btn_modal_simd, { showModal(simd_modal) }) 
 
-#NHS Inform data sources
-inform_modal <- modalDialog(
-  title = "What is the data source?",
-  p("Some text here"), 
-  p("Some more text here"),
-  size = "l", 
-  easyClose = TRUE, fade=TRUE, footer = modalButton("Close (Esc)")
-)
-
 # Link action button click to modal launch 
 observeEvent(input$btn_dataset_inform, { showModal(inform_modal) }) 
 
@@ -181,9 +162,9 @@ output$data_explorer <- renderUI({
   data_source <- case_when(input$measure_select == "LabCases" ~ "ECOSS",
                            input$measure_select == "Admissions" ~ "ECOSS/RAPID",
                            input$measure_select == "ICU" ~ "SICSAG", 
-                           input$measure_select == "NHS24" ~ "DATA SOURCE NEEDED", 
-                           input$measure_select == "AssessmentHub" ~ "DATA SOURCE NEEDED", 
-                           input$measure_select == "SAS"~ "DATA SOURCE NEEDED")
+                           input$measure_select == "NHS24" ~ "NHS 24 SAP BW", 
+                           input$measure_select == "AssessmentHub" ~ "GP Out of Hours (OOH)", 
+                           input$measure_select == "SAS"~ "SAS and Unscheduled Care Datamart")
   
   # Function to create the standard layout for all the different charts/sections
   cut_charts <- function(title, source, data_name) {
@@ -420,10 +401,10 @@ output$NHS24_commentary <- renderUI({
     h4("NHS Inform"),  
     p(("NHS Inform is Scotland’s digital health and care resource, providing the up to date standardised information on COVID-19 
        from a health perspective.  Information is provided in a range of languages and alternative formats on the"),
-      tags$a(
-        href = "www.nhsinform.scot/coronavirus",
+      tags$a(href = "https://www.nhsinform.scot/coronavirus",
         "NHS inform website.",
         class = "externallink")),
+
     p("This website is available worldwide and not all contacts are made from within the United Kingdom/Scotland."),
     
     h4("Self Help Guides"),
