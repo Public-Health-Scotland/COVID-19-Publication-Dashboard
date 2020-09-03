@@ -8,7 +8,7 @@
 ###############################################.
 
 #publication date
-pub_date <- as.Date("2020-07-29")
+pub_date <- as.Date("2020-09-02")
 
 #ECOSS, for LabCases
 labcases_extract_date <- format(pub_date - 2, "%d %B %Y") #format date

@@ -36,23 +36,34 @@ tabPanel("Introduction",
           to the data in order to protect patient confidentiality."),
           
           h3("Further information"),
+          
+          p("Metadata for this dashboard can be downloaded from the ",
+          tags$a(
+            href = "https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/",
+            "weekly statistical report page.",
+            class = "externallink")),
+            
           p("There is a large amount of data being regularly published regarding COVID-19. 
             This dashboard complements the range of existing data currently available."),
+          
           p("New releases will be published at the same time as the Public Health Scotland ",
           tags$a(
             href = "https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/",
             "COVID-19 weekly report for Scotland.",
             class = "externallink")),
+          
           p("Information on the wider impacts on the health care system from COVID-19 are available on the ",
             tags$a(
               href = "https://scotland.shinyapps.io/phs-covid-wider-impact/",
               "Wider Impacts dashboard.",
               class = "externallink")),
+          
           p("Information and support on a range of topics in regards to COVID-19 are available on the ",
             tags$a(
               href = "https://www.gov.scot/coronavirus-covid-19/",
               "Scottish Government website.",
               class = "externallink")),
+          
           p("Information on deaths involving COVID-19 is available on the ",
             tags$a(
               href = "https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/vital-events/general-publications/weekly-and-monthly-data-on-births-and-deaths/deaths-involving-coronavirus-covid-19-in-scotland/",
@@ -76,45 +87,45 @@ tabPanel("Introduction",
          ), #tabPanel bracket
 
 ## Commentary ----
-
-tabPanel(title = "Definitions",
-  icon = icon("list-ul"),
-  value = "comment",
-  wellPanel(column(12,
-                   p("Select topic areas to find definitions relating to data presented in this tool."))),
-  wellPanel(
-    column(2,
-           p("Select topic:"),
-          # actionLink("summary_button", "Summary", width = "150px"),
-          # br(),
-           actionLink("positivecases_button", "Positive Cases", width = "150px"),
-           br(),
-           actionLink("admissions_button", "Admissions", width = "150px"),
-           br(),
-           actionLink("ICU_button", "ICU", width = "150px"),
-           br(),
-           actionLink("NHS24_button", "NHS24", width = "150px"),
-           br(),           
-           actionLink("AssessmentHub_button", "Assessment Hub", width = "150px"),
-           br(),
-           actionLink("SAS_button", "SAS", width = "150px"))
-    ,
-
-    column(10,
-           bsCollapse(
-             id = "collapse_commentary",
-             open = "Panel 1",  ##PanelSet id
-             #bsCollapsePanel("Summary", uiOutput("summary_commentary")),  ##collapsible panel for summary tab
-             bsCollapsePanel("Positive Cases", uiOutput("positivecases_commentary")),  ##collapsible panel for cardiovascular tab
-             bsCollapsePanel("Admissions", uiOutput("admissions_commentary")),
-             bsCollapsePanel("ICU", uiOutput("ICU_commentary")),
-             bsCollapsePanel("NHS24", uiOutput("NHS24_commentary")),
-             bsCollapsePanel("Assessment Hubs", uiOutput("AssessmentHub_commentary")),
-             bsCollapsePanel("SAS", uiOutput("SAS_commentary"))
-             ))
-
-     )#wellPanel bracket
-  ),#tab panel
+# 
+# tabPanel(title = "Definitions",
+#   icon = icon("list-ul"),
+#   value = "comment",
+#   wellPanel(column(12,
+#                    p("Select topic areas to find definitions relating to data presented in this tool."))),
+#   wellPanel(
+#     column(2,
+#            p("Select topic:"),
+#           # actionLink("summary_button", "Summary", width = "150px"),
+#           # br(),
+#            actionLink("positivecases_button", "Positive Cases", width = "150px"),
+#            br(),
+#            actionLink("admissions_button", "Admissions", width = "150px"),
+#            br(),
+#            actionLink("ICU_button", "ICU", width = "150px"),
+#            br(),
+#            actionLink("NHS24_button", "NHS24", width = "150px"),
+#            br(),           
+#            actionLink("AssessmentHub_button", "Assessment Hub", width = "150px"),
+#            br(),
+#            actionLink("SAS_button", "SAS", width = "150px"))
+#     ,
+# 
+#     column(10,
+#            bsCollapse(
+#              id = "collapse_commentary",
+#              open = "Panel 1",  ##PanelSet id
+#              #bsCollapsePanel("Summary", uiOutput("summary_commentary")),  ##collapsible panel for summary tab
+#              bsCollapsePanel("Positive Cases", uiOutput("positivecases_commentary")),  ##collapsible panel for cardiovascular tab
+#              bsCollapsePanel("Admissions", uiOutput("admissions_commentary")),
+#              bsCollapsePanel("ICU", uiOutput("ICU_commentary")),
+#              bsCollapsePanel("NHS24", uiOutput("NHS24_commentary")),
+#              bsCollapsePanel("Assessment Hubs", uiOutput("AssessmentHub_commentary")),
+#              bsCollapsePanel("SAS", uiOutput("SAS_commentary"))
+#              ))
+# 
+#      )#wellPanel bracket
+#   ),#tab panel
    
 ## Trend Charts ----
 
@@ -134,8 +145,18 @@ tabPanel(
     column(4,
            downloadButton('download_chart_data', 'Download data'),
            fluidRow(br()),
-           actionButton('jump_commentary_summary', 'Go to commentary'))
+           actionButton(inputId='ab1', label='Metadata',
+                        icon = icon("th"), 
+                        onclick ="window.open('https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/',
+                        '_blank')"))
+          # ))
    
+    # 
+    # shiny::actionButton(inputId='ab1', label="Learn More", 
+    #                     icon = icon("th"), 
+    #                     onclick ="window.open('http://google.com', '_blank')")
+    
+    
      ), #wellPanel bracket
   
 mainPanel(width = 12,

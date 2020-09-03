@@ -294,34 +294,34 @@ output$download_chart_data <- downloadHandler(
 
 # Positive Cases Commentary -----------------------------------------------
 
-
-output$positivecases_commentary <- renderUI({
-  tagList(
-    h2("Positive Cases - Updated: 10th June 2020"),
-    p("Positive cases of COVID-19 are those that have been confirmed by testing carried out through NHSScotland laboratories and 
-      now include those testing at a Regional Testing Centre (RTCs) as part of the UK Government testing programme. 
-      This includes tests done at the drive through centres, mobile units, and home testing kits."), 
-    p("A person can have multiple tests but will only ever be counted once."), 
-    
-    p("The total number of people within Scotland who have, or have had COVID-19, since the coronavirus outbreak began is 
-      unknown. The number of confirmed cases is likely to be an underestimate of the total number who have, or have had, COVID-19.
-      This data is monitored and published daily on the ",
-      tags$a(
-        href = "https://www.gov.scot/coronavirus-covid-19/",
-        "Scottish Government Coronavirus website.",
-        class = "externallink")),
-    
-    h4("Notes"),
-    p("The drop in the number of confirmed cases at weekends likely reflects that laboratories are doing fewer tests at the weekend."), 
-    p("Note that the number of confirmed cases shown for each day may differ slightly from data published on the Scottish Government website. 
-      This is because the data has some cases added retrospectively and assigned to days based on the most up to date records. 
-      This has no impact on the overall number of confirmed cases."), 
-    p("Specimen date was not available for historical UK Government Regional Testing centres data between 15 and 25 April. 
-      As a sample date is required to report in ECOSS (Electronic Communication of Surveillance in Scotland) 
-      these samples were assigned a specimen date in the mid-point within this date range (20 April).")
-    
-    ) # end of tag list
-}) # end of render UI
+# 
+# output$positivecases_commentary <- renderUI({
+#   tagList(
+#     h2("Positive Cases - Updated: 10th June 2020"),
+#     p("Positive cases of COVID-19 are those that have been confirmed by testing carried out through NHSScotland laboratories and 
+#       now include those testing at a Regional Testing Centre (RTCs) as part of the UK Government testing programme. 
+#       This includes tests done at the drive through centres, mobile units, and home testing kits."), 
+#     p("A person can have multiple tests but will only ever be counted once."), 
+#     
+#     p("The total number of people within Scotland who have, or have had COVID-19, since the coronavirus outbreak began is 
+#       unknown. The number of confirmed cases is likely to be an underestimate of the total number who have, or have had, COVID-19.
+#       This data is monitored and published daily on the ",
+#       tags$a(
+#         href = "https://www.gov.scot/coronavirus-covid-19/",
+#         "Scottish Government Coronavirus website.",
+#         class = "externallink")),
+#     
+#     h4("Notes"),
+#     p("The drop in the number of confirmed cases at weekends likely reflects that laboratories are doing fewer tests at the weekend."), 
+#     p("Note that the number of confirmed cases shown for each day may differ slightly from data published on the Scottish Government website. 
+#       This is because the data has some cases added retrospectively and assigned to days based on the most up to date records. 
+#       This has no impact on the overall number of confirmed cases."), 
+#     p("Specimen date was not available for historical UK Government Regional Testing centres data between 15 and 25 April. 
+#       As a sample date is required to report in ECOSS (Electronic Communication of Surveillance in Scotland) 
+#       these samples were assigned a specimen date in the mid-point within this date range (20 April).")
+#     
+#     ) # end of tag list
+# }) # end of render UI
 
 
 # Admissions Commentary ---------------------------------------------------
@@ -333,117 +333,117 @@ output$positivecases_commentary <- renderUI({
 #       
 #     ) # end taglist
 #   }) # end renderUI
-
-output$admissions_commentary <- renderUI({
-  tagList(
-    h2("Acute Hospital Admissions - Updated: 10th June 2020"),
-    p("COVID-19 related admissions have been identified as the following: 
-      A patient may have tested positive for COVID-19 14 days prior to admission to hospital, on the day of their admission or during their stay in hospital."),
-    p("If a patient has tested positive after their date of discharge from hospital, they have not been included in the analysis."),
-    p("On 1st July 2020, NSS as part of the PHS COVID-19 response published a report on COVID-19 hospital onset cases in Scotland.
-      Please note that babies admitted to neonatal care or pregnant women admitted to maternity/obstetric settings are not included in this analyses
-      as they are not captured via the RAPID dataset. Data now includes admission to Golden Jubilee National Hospital.
-      Note that there may be a time lag with some data for the most recent days and some of the figures may change as more data is submitted.
-      Data now includes any positive cases from NHS Laboratories or UK Government regional testing sites.")
-    
-    ) # end taglist
-}) # end renderUI
+# 
+# output$admissions_commentary <- renderUI({
+#   tagList(
+#     h2("Acute Hospital Admissions - Updated: 10th June 2020"),
+#     p("COVID-19 related admissions have been identified as the following: 
+#       A patient may have tested positive for COVID-19 14 days prior to admission to hospital, on the day of their admission or during their stay in hospital."),
+#     p("If a patient has tested positive after their date of discharge from hospital, they have not been included in the analysis."),
+#     p("On 1st July 2020, NSS as part of the PHS COVID-19 response published a report on COVID-19 hospital onset cases in Scotland.
+#       Please note that babies admitted to neonatal care or pregnant women admitted to maternity/obstetric settings are not included in this analyses
+#       as they are not captured via the RAPID dataset. Data now includes admission to Golden Jubilee National Hospital.
+#       Note that there may be a time lag with some data for the most recent days and some of the figures may change as more data is submitted.
+#       Data now includes any positive cases from NHS Laboratories or UK Government regional testing sites.")
+#     
+#     ) # end taglist
+# }) # end renderUI
 
 
 # ICU Commentary ----------------------------------------------------------
-
-output$ICU_commentary <- renderUI({
-  tagList(
-    h2("ICU - Updated: 10th June 2020"),
-    p("COVID-19 varies in severity from very mild symptoms through to those requiring hospital admission and 
-      the most ill who require admission to the Intesive Care Unit (ICU) for treatment and supported ventilation."),
-    p("ICU counts include:"),
-    tags$ul( 
-      tags$li("Adult ICU information only"),
-      tags$li("Patients with a confirmed positive COVID-19 test (confirmed by linkage to ECOSS) taken prior to discharge from an ICU in Scotland. ")),
-    p("ICU counts do not include:"),
-    tags$ul( 
-      tags$li("Patients in High Dependency Unit (HDU) wards. As this data becomes available, this will be further analysed and published."), 
-      tags$li("Counts do not include any COVID-19 suspected cases who have not yet been lab confirmed. Therefore, there may be a lag for recent days where patients may still be awaiting the results of COVID-19 tests."),
-      tags$li("Counts do not include any re-admissions from COVID-19 patients previously admitted to an ICU and re-admitted post discharge; counts are unique patients only.  ")),
-    
-    h4("Notes"),
-    p("A report by the Scottish Intensive Care Audit Group (SICSAG) has been published on the Public Health Scotland website."), 
-    p("This report provides a more detailed analysis of patients being treated in intensive care units."), 
-    p("In the first report published (6th May), counts shown included any patient who had contact with ICU since 1st March 2020 and had a positive COVID-19 test at any time. 
-      This definition was adjusted to reflect reports from SICSAG to only include patients with a positive COVID-19 specimen date prior to discharge from an intensive care unit. 
-      Therefore, current data are only comparable to figures previously reported by PHS since 13th May 2020."),
-    p("Individual patients are identified using their CHI number as recorded within the ICU admissions system. There may be a very small number of patients where CHI was not recorded, 
-      for whom linkage to ECOSS for COVID-19 status may not have been possible.")
-    
-    ) # end tag list 
-}) # end RenderUI
+# 
+# output$ICU_commentary <- renderUI({
+#   tagList(
+#     h2("ICU - Updated: 10th June 2020"),
+#     p("COVID-19 varies in severity from very mild symptoms through to those requiring hospital admission and 
+#       the most ill who require admission to the Intesive Care Unit (ICU) for treatment and supported ventilation."),
+#     p("ICU counts include:"),
+#     tags$ul( 
+#       tags$li("Adult ICU information only"),
+#       tags$li("Patients with a confirmed positive COVID-19 test (confirmed by linkage to ECOSS) taken prior to discharge from an ICU in Scotland. ")),
+#     p("ICU counts do not include:"),
+#     tags$ul( 
+#       tags$li("Patients in High Dependency Unit (HDU) wards. As this data becomes available, this will be further analysed and published."), 
+#       tags$li("Counts do not include any COVID-19 suspected cases who have not yet been lab confirmed. Therefore, there may be a lag for recent days where patients may still be awaiting the results of COVID-19 tests."),
+#       tags$li("Counts do not include any re-admissions from COVID-19 patients previously admitted to an ICU and re-admitted post discharge; counts are unique patients only.  ")),
+#     
+#     h4("Notes"),
+#     p("A report by the Scottish Intensive Care Audit Group (SICSAG) has been published on the Public Health Scotland website."), 
+#     p("This report provides a more detailed analysis of patients being treated in intensive care units."), 
+#     p("In the first report published (6th May), counts shown included any patient who had contact with ICU since 1st March 2020 and had a positive COVID-19 test at any time. 
+#       This definition was adjusted to reflect reports from SICSAG to only include patients with a positive COVID-19 specimen date prior to discharge from an intensive care unit. 
+#       Therefore, current data are only comparable to figures previously reported by PHS since 13th May 2020."),
+#     p("Individual patients are identified using their CHI number as recorded within the ICU admissions system. There may be a very small number of patients where CHI was not recorded, 
+#       for whom linkage to ECOSS for COVID-19 status may not have been possible.")
+#     
+#     ) # end tag list 
+# }) # end RenderUI
 
 
 # NHS24 Commentary --------------------------------------------------------
-
-
-output$NHS24_commentary <- renderUI({
-  tagList(
-    h2("NHS24 Contacts - Updated: 10th June 2020"),
-    p("In response to COVID-19, NHS24 adapted their service provision. 
-      Contacts to NHS24 (Monday to Friday 8am – 6pm) which are non COVID-19 related are now referred directly to the patient’s GP. 
-      Calls received by NHS24 'for information' only are not included in the dataset received by PHS. 
-      People who are concerned about COVID-19, or who experience symptoms, are advised to seek advice from NHS Inform website, 
-      the COVID-19 advice helpline or to contact NHS24’s 111 service if their symptoms worsen and they need clinical advice, 
-      following which they may be:"),
-    tags$ul( 
-      tags$li("provided with self-care advice or be asked to contact their own GP"),
-      tags$li("referred to a COVID-19 community hub for further clinical telephone triage, they may then be asked to attend assessment centre or receive a home visit by a Nurse or Doctor"),
-      tags$li("referred to acute services via the Scottish Ambulance Service or advised to attend hospital")),    
-    p(" Individuals can have multiple consultations with a COVID-19 Community Hub and Assessment Centre."),
-    
-    h4("NHS Inform"),  
-    p(("NHS Inform is Scotland’s digital health and care resource, providing the up to date standardised information on COVID-19 
-       from a health perspective.  Information is provided in a range of languages and alternative formats on the"),
-      tags$a(href = "https://www.nhsinform.scot/coronavirus",
-        "NHS inform website.",
-        class = "externallink")),
-
-    p("This website is available worldwide and not all contacts are made from within the United Kingdom/Scotland."),
-    
-    h4("Self Help Guides"),
-    p("NHS24 have developed Coronavirus Self Help Guides in response to the pandemic – a short assessment for initial COVID-19 symptoms 
-      with directions for accessing further information or into a service as appropriate.  This information is aligned to the 111 triage model.")
-    
-    ) # end taglist
-})# end renderUI
+# 
+# 
+# output$NHS24_commentary <- renderUI({
+#   tagList(
+#     h2("NHS24 Contacts - Updated: 10th June 2020"),
+#     p("In response to COVID-19, NHS24 adapted their service provision. 
+#       Contacts to NHS24 (Monday to Friday 8am – 6pm) which are non COVID-19 related are now referred directly to the patient’s GP. 
+#       Calls received by NHS24 'for information' only are not included in the dataset received by PHS. 
+#       People who are concerned about COVID-19, or who experience symptoms, are advised to seek advice from NHS Inform website, 
+#       the COVID-19 advice helpline or to contact NHS24’s 111 service if their symptoms worsen and they need clinical advice, 
+#       following which they may be:"),
+#     tags$ul( 
+#       tags$li("provided with self-care advice or be asked to contact their own GP"),
+#       tags$li("referred to a COVID-19 community hub for further clinical telephone triage, they may then be asked to attend assessment centre or receive a home visit by a Nurse or Doctor"),
+#       tags$li("referred to acute services via the Scottish Ambulance Service or advised to attend hospital")),    
+#     p(" Individuals can have multiple consultations with a COVID-19 Community Hub and Assessment Centre."),
+#     
+#     h4("NHS Inform"),  
+#     p(("NHS Inform is Scotland’s digital health and care resource, providing the up to date standardised information on COVID-19 
+#        from a health perspective.  Information is provided in a range of languages and alternative formats on the"),
+#       tags$a(href = "https://www.nhsinform.scot/coronavirus",
+#         "NHS inform website.",
+#         class = "externallink")),
+# 
+#     p("This website is available worldwide and not all contacts are made from within the United Kingdom/Scotland."),
+#     
+#     h4("Self Help Guides"),
+#     p("NHS24 have developed Coronavirus Self Help Guides in response to the pandemic – a short assessment for initial COVID-19 symptoms 
+#       with directions for accessing further information or into a service as appropriate.  This information is aligned to the 111 triage model.")
+#     
+#     ) # end taglist
+# })# end renderUI
 
 # Assessment Hub Commentary --------------------------------------------------------
 
 
-output$AssessmentHub_commentary <- renderUI({
-  tagList(
-    h2("Assessment Hubs - Updated: 10th June 2020"),
-    p("People may have multiple consultations with a COVID-19 Community Hub and Assessment Centre depending on their pathway of care. 
-      For example, upon referral by NHS24 (or other services) they will be clinically triaged over the telephone by the community hub and 
-      they may then go on to have a consultation in person at an assessment centre; this would result in one person having two consultations."),
-    p("NHS Grampian data included from 01 May 2020.")
-    
-    
-    )# end tag list
-}) # end renderUI
+# output$AssessmentHub_commentary <- renderUI({
+#   tagList(
+#     h2("Assessment Hubs - Updated: 10th June 2020"),
+#     p("People may have multiple consultations with a COVID-19 Community Hub and Assessment Centre depending on their pathway of care. 
+#       For example, upon referral by NHS24 (or other services) they will be clinically triaged over the telephone by the community hub and 
+#       they may then go on to have a consultation in person at an assessment centre; this would result in one person having two consultations."),
+#     p("NHS Grampian data included from 01 May 2020.")
+#     
+#     
+#     )# end tag list
+# }) # end renderUI
 
-# SAS Commentary ----------------------------------------------------------
-
-output$SAS_commentary <- renderUI({
-  tagList(
-    h2("SAS - Updated: 10th June 2020"),
-    p("When someone telephones 999 and requests an ambulance, the Scottish Ambulance Service (SAS) record this as an incident. In some cases, multiple phone calls can be received for one incident.
-      The total number of incidents includes:"),
-    tags$ul( 
-      tags$li("redirecting and referring suitable people to alternative pathways, following telephone triage and advanced triage through a SAS practitioner."),
-      tags$li("attended incidents, where a SAS resource (e.g. ambulance, paramedic in a car, specialist paramedic) has arrived at the scene of the incident. 
-              Some incidents may be attended by more than one resource. Following assessment and treatment by SAS crews some patients do not require to be taken to hospital. 
-              These patients can be safely left at home with follow up provided by other services including their own GP or GP Out of Hours Services. 
-              It is in the patient’s best interest to get the care they require as close to their own home as is feasible."))
-    
-    
-  )# end tag lsit
-}) # end renderUI
+# # SAS Commentary ----------------------------------------------------------
+# 
+# output$SAS_commentary <- renderUI({
+#   tagList(
+#     h2("SAS - Updated: 10th June 2020"),
+#     p("When someone telephones 999 and requests an ambulance, the Scottish Ambulance Service (SAS) record this as an incident. In some cases, multiple phone calls can be received for one incident.
+#       The total number of incidents includes:"),
+#     tags$ul( 
+#       tags$li("redirecting and referring suitable people to alternative pathways, following telephone triage and advanced triage through a SAS practitioner."),
+#       tags$li("attended incidents, where a SAS resource (e.g. ambulance, paramedic in a car, specialist paramedic) has arrived at the scene of the incident. 
+#               Some incidents may be attended by more than one resource. Following assessment and treatment by SAS crews some patients do not require to be taken to hospital. 
+#               These patients can be safely left at home with follow up provided by other services including their own GP or GP Out of Hours Services. 
+#               It is in the patient’s best interest to get the care they require as close to their own home as is feasible."))
+#     
+#     
+#   )# end tag lsit
+# }) # end renderUI
 #END
