@@ -30,26 +30,26 @@ function(input, output, session) {
   observeEvent(input$jump_commentary_summary, {updateTabsetPanel(session, "intabset", selected = "comment")})  
 
   
-  ## ObserveEvents to open collapsepanels in commentary tab when sidepanel option clicked
-  observeEvent(input$summary_button, ({
-    updateCollapse(session, "collapse_commentary", open = "Key trends")}))
-
-  observeEvent(input$positivecases_button, ({
-    updateCollapse(session, "collapse_commentary", open = "Positive Cases")}))
-
-  observeEvent(input$admissions_button, ({
-    updateCollapse(session, "collapse_commentary", open = "Admissions")}))
-
-  observeEvent(input$ICU_button, ({
-    updateCollapse(session, "collapse_commentary", open = "ICU")}))
-
-  observeEvent(input$NHS24_button, ({
-    updateCollapse(session, "collapse_commentary", open = "NHS24")}))
-  
-  observeEvent(input$AssessmentHub_button, ({
-    updateCollapse(session, "collapse_commentary", open = "Assessment Hubs")}))
-  
-  observeEvent(input$SAS_button, ({
-    updateCollapse(session, "collapse_commentary", open = "SAS")}))
+  # ## ObserveEvents to open collapsepanels in commentary tab when sidepanel option clicked
+  # observeEvent(input$summary_button, ({
+  #   updateCollapse(session, "collapse_commentary", open = "Key trends")}))
+  # 
+  # observeEvent(input$positivecases_button, ({
+  #   updateCollapse(session, "collapse_commentary", open = "Positive Cases")}))
+  # 
+  # observeEvent(input$admissions_button, ({
+  #   updateCollapse(session, "collapse_commentary", open = "Admissions")}))
+  # 
+  # observeEvent(input$ICU_button, ({
+  #   updateCollapse(session, "collapse_commentary", open = "ICU")}))
+  # 
+  # observeEvent(input$NHS24_button, ({
+  #   updateCollapse(session, "collapse_commentary", open = "NHS24")}))
+  # 
+  # observeEvent(input$AssessmentHub_button, ({
+  #   updateCollapse(session, "collapse_commentary", open = "Assessment Hubs")}))
+  # 
+  # observeEvent(input$SAS_button, ({
+  #   updateCollapse(session, "collapse_commentary", open = "SAS")}))
   
 } # server end
