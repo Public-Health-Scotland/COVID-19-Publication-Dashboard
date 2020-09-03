@@ -61,7 +61,9 @@ data_table <- reactive({  # Change dataset depending on what user selected
                        "SAS_SIMD" = SAS_SIMD %>% rename(`Number of Cases` = cases,
                                                         Percent = cases_pc),
                        "SAS_all" = SAS_all %>% rename(Date = date,
-                                                      `Total SAS Incidents` = count)) 
+                                                      `Total SAS Incidents` = count),
+                       "ChildCases" = ChildCases, 
+                       "ChildTests" = ChildTests) 
   
   if (input$data_select %in% c("LabData")) {
     table_data <- table_data %>% 

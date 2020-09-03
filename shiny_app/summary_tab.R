@@ -152,11 +152,26 @@ output$data_explorer <- renderUI({
                        input$measure_select == "ICU" ~ "ICU admissions", 
                        input$measure_select == "NHS24" ~ "NHS24 contacts", 
                        input$measure_select == "AssessmentHub" ~ "Consultations", 
-                       input$measure_select == "SAS"~ "SAS incidents")
+                       input$measure_select == "SAS" ~ "SAS incidents")
   
+  start_date <- case_when(input$measure_select == "LabCases" ~ "28 February",
+                          input$measure_select == "Admissions" ~ "1 March",
+                          input$measure_select == "ICU" ~ "11 March",
+                          input$measure_select == "NHS24" ~ "13 February",
+                          input$measure_select == "AssessmentHub" ~ "23 March",
+                          input$measure_select == "SAS" ~ "22 January")
+
+  end_date <- case_when(input$measure_select == "LabCases" ~ Labcases_date,
+                        input$measure_select == "Admissions" ~ Admissions_date,
+                        input$measure_select == "ICU" ~ ICU_date,
+                        input$measure_select == "NHS24" ~ NHS24_date,
+                        input$measure_select == "AssessmentHub" ~ AssessmentHub_date,
+                        input$measure_select == "SAS" ~ SAS_date)
+
   total_title <- glue("Daily number of {dataset}")
-  agesex_title <- glue("{dataset} per 100,000 population by age")
-  simd_title <- glue("{dataset} by deprivation category (SIMD)")
+  agesex_title <- paste0(dataset, " per 100,000 population by age \n(", start_date, " to ", end_date, ")")
+  simd_title <- paste0(dataset, " by deprivation category (SIMD) \n(", start_date, " to ", end_date, ")")
+  
   
   # data sources
   data_source <- case_when(input$measure_select == "LabCases" ~ "ECOSS",
@@ -199,26 +214,31 @@ output$data_explorer <- renderUI({
                        source = data_source, data_name ="ICU")
     
   } else if (input$measure_select == "NHS24") {# NHS 24 contacts
-    tagList(cut_charts(title = "Daily completed contacts with NHS24", 
+    
+    NHS_Inform_title <- paste0("NHS inform hits (",start_date, " to ", end_date, ")" )
+    SelfHelpTitle <- paste0("NHS24 self help guides completed (",start_date, " to ", end_date, ")" )
+    OutcomesTitle <- paste0("NHS24 community hub outcomes (",start_date, " to ", end_date, ")" )
+   
+     tagList(cut_charts(title = "Daily completed contacts with NHS24", 
                        source = data_source, data_name ="NHS24"),
             h3("NHS Inform"),
             actionButton("btn_dataset_inform", "Data source: INFORM", icon = icon('question-circle')),
-            plot_box("NHS inform hits", "NHS24_inform"),
-            plot_box("NHS24 self help guides completed", "NHS24_selfhelp"),
-            plot_box("NHS24 community hub outcomes", "NHS24_community")
+            
+            plot_box(NHS_Inform_title, "NHS24_inform"),
+            plot_box(SelfHelpTitle, "NHS24_selfhelp"),
+            plot_box(OutcomesTitle, "NHS24_community")
     )
   } else if (input$measure_select == "AssessmentHub") { # Assessment Hub
     cut_charts(title= "Daily number of consultations", 
                source = data_source, data_name ="AssessmentHub")
     
   } else if (input$measure_select == "SAS") { # SAS data
+    
     c(cut_charts(title= "Daily attended incidents by Scottish Ambulance Service", 
                  source = data_source, data_name ="SAS"),
       plot_box("SAS - all incidents", plot_output = "SAS_all")
     )
-  } else if (input$measure_select == "deaths") { # Deaths data
-    cut_charts(title= "Weekly number of deaths", 
-               source = data_source, data_name ="deaths")
+
   }
 }) 
 

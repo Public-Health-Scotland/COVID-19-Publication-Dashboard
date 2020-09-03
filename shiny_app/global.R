@@ -10,6 +10,16 @@
 #publication date
 pub_date <- as.Date("2020-09-02")
 
+Labcases_date <- format(pub_date - 3, "%d %B %Y")
+ICU_date <- format(pub_date - 3, "%d %B %Y")
+NHS24_date <- format(pub_date - 3, "%d %B %Y")
+ICU_date <- format(pub_date - 3, "%d %B %Y")
+
+SAS_date <- format(pub_date - 5, "%d %B %Y")
+
+AssessmentHub_date <- format(pub_date - 7, "%d %B %Y")
+Admissions_date <- format(pub_date - 7, "%d %B %Y")
+
 #ECOSS, for LabCases
 labcases_extract_date <- format(pub_date - 2, "%d %B %Y") #format date
 
@@ -99,6 +109,11 @@ NHS24_selfhelp <- readRDS("data/NHS24_selfhelp.rds")
 NHS24_community <- readRDS("data/NHS24_community.rds")
 SAS_all <- readRDS("data/SAS_all.rds")
 
+# read in children data
+ChildCases <- readRDS("data/ChildCases.rds")
+ChildTests <- readRDS("data/ChildTests.rds")
+
+
 #data lists
 data_list <- c("Positive Cases" = "LabCases",
                "Admissions" = "Admissions",
@@ -128,7 +143,9 @@ data_list_data_tab <- c("Positive Cases" = "LabCases",
                         "Scottish Ambulance Service" = "SAS",
                         "Scottish Ambulance Service by age" = "SAS_AgeSex",
                         "Scottish Ambulance Service by deprivation" = "SAS_SIMD",
-                        "Scottish Ambulance Service - all incidents" = "SAS_all")
+                        "Scottish Ambulance Service - all incidents" = "SAS_all", 
+                        "COVID-19 cases among children and young people" = "ChildCases", 
+                        "COVID-19 testing among children and young people" = "ChildTests")
 
 ###############################################.
 ## Palettes and plot parameters ----

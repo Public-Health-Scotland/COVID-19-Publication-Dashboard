@@ -87,7 +87,6 @@ tabPanel("Introduction",
          ), #tabPanel bracket
 
 ## Commentary ----
-# 
 # tabPanel(title = "Definitions",
 #   icon = icon("list-ul"),
 #   value = "comment",
