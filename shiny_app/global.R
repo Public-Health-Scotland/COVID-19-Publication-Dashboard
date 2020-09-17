@@ -1,14 +1,11 @@
 
-#setwd("//freddy/DEPT/PHIBCS/PHI/Publications/Health Topic/HPS/Covid-19/COVID19_Dashboard/")
-
 # Global
+###############################################.
 
-###############################################.
 ## Data extraction dates ----
-###############################################.
 
 #publication date
-pub_date <- as.Date("2020-09-02")
+pub_date <- as.Date("2020-09-16")
 
 Labcases_date <- format(pub_date - 3, "%d %B %Y")
 ICU_date <- format(pub_date - 3, "%d %B %Y")
@@ -31,7 +28,6 @@ ICU_extract_date <- format(pub_date - 2, "%A %d %B %Y") #format date
 
 ###############################################.
 ## Packages ----
-###############################################.
 
 library(shiny)
 library(plotly) # for charts
@@ -52,7 +48,7 @@ library(glue) #for pasting strings
 
 ###############################################.
 ## Functions ----
-###############################################.
+
 plot_box <- function(title_plot, plot_output) {
   tagList(h4(title_plot),
           withSpinner(plotlyOutput(plot_output)))
@@ -80,15 +76,15 @@ plot_cut_missing <- function(title_plot, plot_output, extra_content = NULL) {
 
 ###############################################.
 ## Data ----
-###############################################.
+
 LabCases <-readRDS("data/LabCases.rds")
 Admissions <-readRDS("data/Admissions.rds")
 ICU <- readRDS("data/ICU.rds")
 NHS24 <- readRDS("data/NHS24.rds")
 AssessmentHub <- readRDS("data/AssessmentHub.rds")
 SAS <- readRDS("data/SAS.rds")
-NHSInform <- readRDS("data/NHSInform.rds")
-SelfHelp <- readRDS("data/SelfHelp.rds")
+NHS24_inform <- readRDS("data/NHSInform.rds")
+NHS24_selfhelp <- readRDS("data/SelfHelp.rds")
 
 #read age/sex/deprivation data
 LabCases_AgeSex <- readRDS("data/LabCases_AgeSex.rds")
@@ -104,8 +100,6 @@ SAS_AgeSex <- readRDS("data/SAS_AgeSex.rds")
 SAS_SIMD <- readRDS("data/SAS_SIMD.rds")
 
 #read SAS/NHS24 other data
-NHS24_inform <- readRDS("data/NHS24_inform.rds")
-NHS24_selfhelp <- readRDS("data/NHS24_selfhelp.rds")
 NHS24_community <- readRDS("data/NHS24_community.rds")
 SAS_all <- readRDS("data/SAS_all.rds")
 
@@ -113,8 +107,10 @@ SAS_all <- readRDS("data/SAS_all.rds")
 ChildCases <- readRDS("data/ChildCases.rds")
 ChildTests <- readRDS("data/ChildTests.rds")
 
+###############################################.
+## Data lists --------------------------------------------------------------
 
-#data lists
+
 data_list <- c("Positive Cases" = "LabCases",
                "Admissions" = "Admissions",
                "ICU Admissions" = "ICU",
@@ -148,8 +144,7 @@ data_list_data_tab <- c("Positive Cases" = "LabCases",
                         "COVID-19 testing among children and young people" = "ChildTests")
 
 ###############################################.
-## Palettes and plot parameters ----
-# ###############################################.
+## Palettes  ----
 
 pal_overall <- c('#000000', '#009900','#59144c', '#bdbdbd', '#bdbdbd', '#bdbdbd', '#7fcdbb')
 
@@ -162,6 +157,9 @@ pal_sex <- c('#8856a7', '#9ebcda', "#000000")
 
 #for SIMD
 pal_simd <- c('#2c7fb8', '#bdbdbd', '#bdbdbd', '#bdbdbd', '#7fcdbb')
+
+###############################################.
+## Plot Parameters ---------------------------------------------------------
 
 # Style of x and y axis
 xaxis_plots <- list(title = FALSE, tickfont = list(size=14), titlefont = list(size=14),

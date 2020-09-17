@@ -18,32 +18,33 @@ tabPanel("Introduction",
          value = "intro",
          h3("COVID-19 Statistical Report"),
          h3("Background"),
-          p("On 1 March 2020, the first person in Scotland was tested positive for COVID-19. 
-            On 17 March NHS Scotland was placed in an emergency footing by the Cabinet Secretary. 
-            Schools were closed from 20 March and reopened in August, and the country has been in lockdown since 23 March. 
-            Scotland entered phase one of easing out of lockdown on Friday 29 May, phase two on 
-            Friday 19 June and phase three on Friday 10 July."),
-          p("Since 15 June 2020, Public Health Scotland publishes the total number of results, positive and 
-            negative, carried out across any NHSScotland Laboratories and UK Government Regional Testing Centres."),
-          p("Since the start of the outbreak Public Health Scotland (PHS) has been working closely with 
-            Scottish Government and health and care colleagues in supporting the surveillance and 
-            monitoring of COVID-19 amongst the population."),
-          p("Interactive charts on each of the topics are available in the ",
-          actionLink("jump_to_summary", "'Trend Charts' tab."),
-          p("The underlying data used to create the interactive charts can be downloaded using the ",
-          actionLink("jump_to_table", "'Data' tab."),
+         p("Since the start of the COVID-19 outbreak Public Health Scotland (PHS) has been working closely 
+            with Scottish Government and health and care colleagues in supporting the surveillance and monitoring 
+            of COVID-19 amongst the population. This interactive dashboard contains charts and data on the following topics:"),
+         tags$li("Positive Cases"),
+         tags$li("Acute Hospital Admissions"),
+         tags$li("ICU Admissions"),
+         tags$li("NHS24 Contacts"),
+         tags$li("Assessment Hubs"),
+         tags$li("Scottish Ambulance Service"),
+         tags$li("COVID-19 in children and young people"),
+         p(""),
+         p("Interactive charts on each of the topics are available in the ",
+         actionLink("jump_to_summary", "'Trend Charts' tab."),
+         p("The underlying data used to create the interactive charts can be downloaded using the ",
+         actionLink("jump_to_table", "'Data' tab."),
           "Note that some numbers may not sum to the total as disclosure control methods have been applied
           to the data in order to protect patient confidentiality."),
           
-          h3("Further information"),
+         h3("Further information"),
           
-          p("Metadata for this dashboard can be downloaded from the ",
+         p("Metadata for this dashboard can be downloaded from the ",
           tags$a(
             href = "https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/",
             "weekly statistical report page.",
             class = "externallink")),
             
-          p("There is a large amount of data being regularly published regarding COVID-19. 
+         p("There is a large amount of data being regularly published regarding COVID-19. 
             This dashboard complements the range of existing data currently available."),
           
           p("New releases will be published at the same time as the Public Health Scotland ",
@@ -86,46 +87,7 @@ tabPanel("Introduction",
           ".")
          ), #tabPanel bracket
 
-## Commentary ----
-# tabPanel(title = "Definitions",
-#   icon = icon("list-ul"),
-#   value = "comment",
-#   wellPanel(column(12,
-#                    p("Select topic areas to find definitions relating to data presented in this tool."))),
-#   wellPanel(
-#     column(2,
-#            p("Select topic:"),
-#           # actionLink("summary_button", "Summary", width = "150px"),
-#           # br(),
-#            actionLink("positivecases_button", "Positive Cases", width = "150px"),
-#            br(),
-#            actionLink("admissions_button", "Admissions", width = "150px"),
-#            br(),
-#            actionLink("ICU_button", "ICU", width = "150px"),
-#            br(),
-#            actionLink("NHS24_button", "NHS24", width = "150px"),
-#            br(),           
-#            actionLink("AssessmentHub_button", "Assessment Hub", width = "150px"),
-#            br(),
-#            actionLink("SAS_button", "SAS", width = "150px"))
-#     ,
-# 
-#     column(10,
-#            bsCollapse(
-#              id = "collapse_commentary",
-#              open = "Panel 1",  ##PanelSet id
-#              #bsCollapsePanel("Summary", uiOutput("summary_commentary")),  ##collapsible panel for summary tab
-#              bsCollapsePanel("Positive Cases", uiOutput("positivecases_commentary")),  ##collapsible panel for cardiovascular tab
-#              bsCollapsePanel("Admissions", uiOutput("admissions_commentary")),
-#              bsCollapsePanel("ICU", uiOutput("ICU_commentary")),
-#              bsCollapsePanel("NHS24", uiOutput("NHS24_commentary")),
-#              bsCollapsePanel("Assessment Hubs", uiOutput("AssessmentHub_commentary")),
-#              bsCollapsePanel("SAS", uiOutput("SAS_commentary"))
-#              ))
-# 
-#      )#wellPanel bracket
-#   ),#tab panel
-   
+
 ## Trend Charts ----
 
 tabPanel(
@@ -148,14 +110,7 @@ tabPanel(
                         icon = icon("th"), 
                         onclick ="window.open('https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/',
                         '_blank')"))
-          # ))
-   
-    # 
-    # shiny::actionButton(inputId='ab1', label="Learn More", 
-    #                     icon = icon("th"), 
-    #                     onclick ="window.open('http://google.com', '_blank')")
-    
-    
+
      ), #wellPanel bracket
   
 mainPanel(width = 12,
