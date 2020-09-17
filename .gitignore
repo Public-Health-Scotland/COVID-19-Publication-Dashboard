@@ -9,6 +9,7 @@ rsconnect
 .Ruserdata
 *.Rproj
 testing.R
+app_data_preparation.R
 
 # packrat library folder (automatically added due to packract being initialised)
 packrat/lib*/
