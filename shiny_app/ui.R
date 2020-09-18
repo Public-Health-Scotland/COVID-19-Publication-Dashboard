@@ -115,7 +115,7 @@ tabPanel(
   
 mainPanel(width = 12,
           uiOutput("data_explorer")
-          )# mainPanel bracket
+          ) # mainPanel bracket
 
 ),# tabpanel bracket
 

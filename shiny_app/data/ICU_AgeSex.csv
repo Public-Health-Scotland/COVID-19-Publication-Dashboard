@@ -1,0 +1,19 @@
+sex,age_group,number,  rate  
+Male,15-44,35,3.4
+Male,45-64,205,28.2
+Male,65-74,117,42.3
+Male,75-84,33,22.3
+Male,85+,2,4.5
+Male,All,392,17.7
+Female,15-44,20,1.9
+Female,45-64,92,11.9
+Female,65-74,33,10.9
+Female,75-84,7,3.7
+Female,85+,0,0.0
+Female,All,152,6.4
+Total,15-44,55,2.7
+Total,45-64,297,19.8
+Total,65-74,150,25.9
+Total,75-84,40,11.8
+Total,85+,2,1.6
+Total,All,544,11.8

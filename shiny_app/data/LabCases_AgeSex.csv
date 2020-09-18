@@ -1,0 +1,45 @@
+sex,age_group, number , rate 
+Male,0-4,65,46.43
+Male,5-14,139,45.76
+Male,15-19,279,193.52
+Male,20-24,573,325.45
+Male,25-44,"2,087",296.79
+Male,45-64,"2,741",377.35
+Male,65-74,980,354.05
+Male,75-84,"1,261",853.56
+Male,85+,910,2027.04
+Male,Unknown,6,
+Male,All Ages,"9,041",339.50
+Female,0-4,67,50.86
+Female,5-14,156,53.75
+Female,15-19,378,274.34
+Female,20-24,933,544.37
+Female,25-44,"3,608",500.78
+Female,45-64,"4,319",558.02
+Female,65-74,808,267.99
+Female,75-84,"1,384",724.52
+Female,85+,"1,922",2338.37
+Female,Unknown,,
+Female,All Ages,"13,575",484.77
+Unknown,0-4,,
+Unknown,5-14,,
+Unknown,15-19,2,
+Unknown,20-24,7,
+Unknown,25-44,59,
+Unknown,45-64,60,
+Unknown,65-74,5,
+Unknown,75-84,,
+Unknown,85+,,
+Unknown,Unknown,,
+Unknown,All Ages,133,
+Total,0-4,132,48.58
+Total,5-14,295,49.66
+Total,15-19,659,233.72
+Total,20-24,"1,513",435.45
+Total,25-44,"5,754",404.17
+Total,45-64,"7,120",474.55
+Total,65-74,"1,793",310.05
+Total,75-84,"2,645",780.79
+Total,85+,"2,832",2228.39
+Total,Unknown,6,
+Total,All Ages,"22,749",416.40
