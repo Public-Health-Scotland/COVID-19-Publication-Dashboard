@@ -8,8 +8,9 @@ gc()
 
 library(lubridate)#dates
 library(tidyverse)
-source("functions_packages_data_prep.R")
-setwd("//freddy/DEPT/PHIBCS/PHI/Publications/Health Topic/HPS/Covid-19/COVID19_Dashboard/")
+
+#source("functions_packages_data_prep.R")
+setwd("/PHI_conf/PrimaryCare/Megan/COVID-19-Publication-Dashboard2/shiny_app")
 
 # Lab Cases
 LabCases <- read_csv("data/LabCases.csv")
@@ -54,13 +55,13 @@ saveRDS(AssessmentHub, "data/AssessmentHub.rds")
 #NHS Inform
 NHSInform <- read_csv("data/NHSInform.csv")
 NHSInform <- NHSInform %>% 
-  mutate(Date = as.Date(Date, "%d/%B/%y"))
+  mutate(date = as.Date(date, "%d/%B/%y")) 
 saveRDS(NHSInform, "data/NHSInform.rds")
 
 #NHS24 Self Help Guides
 SelfHelp <- read_csv("data/SelfHelpGuides.csv")
 SelfHelp <- SelfHelp %>% 
-  mutate(Date = as.Date(Date, "%d/%B/%y"))
+  mutate(Date = as.Date(Date, "%d/%B/%y")) 
 saveRDS(SelfHelp, "data/SelfHelp.rds")
 
 
@@ -98,19 +99,38 @@ saveRDS(SAS_AgeSex, "data/SAS_AgeSex.rds")
 SAS_SIMD <- read_csv("data/SAS_SIMD.csv") %>% mutate(cases_pc = cases_pc * 100)
 saveRDS(SAS_SIMD, "data/SAS_SIMD.rds")
 
-#read NHS24/SAS other data
-NHS24_inform <- read_csv("data/NHS24_inform.csv") %>% mutate(date = as.Date(date, "%d/%m/%y"))
-saveRDS(NHS24_inform, "data/NHS24_inform.rds")
+# #read NHS24/SAS other data
+# NHS24_inform <- read_csv("data/NHS24_inform.csv") %>% mutate(date = as.Date(date, "%d/%m/%y"))
+# saveRDS(NHS24_inform, "data/NHS24_inform.rds")
+# 
+# NHS24_selfhelp <- read_csv("data/NHS24_selfhelp.csv") %>% mutate(date = as.Date(date, "%d/%m/%y"))
+# saveRDS(NHS24_selfhelp, "data/NHS24_selfhelp.rds")
 
-NHS24_selfhelp <- read_csv("data/NHS24_selfhelp.csv") %>% mutate(date = as.Date(date, "%d/%m/%y"))
-saveRDS(NHS24_selfhelp, "data/NHS24_selfhelp.rds")
-
-NHS24_community <- read_csv("data/NHS24_community.csv") %>% 
+NHS24_community <- read_csv("data/NHS24_community.csv") 
+NHS24_community <- NHS24_community %>% 
                     pivot_longer(-date, 
-                                names_to = "outcome", 
-                                values_to = "count")
+                                 names_to = "outcome",
+                                 values_to = "count")
+
 saveRDS(NHS24_community, "data/NHS24_community.rds")
 
 SAS_all <- read_csv("data/SAS_all.csv") %>% mutate(date = as.Date(date, "%d-%b-%y"))
 saveRDS(SAS_all, "data/SAS_all.rds")
 
+
+# Children  Cases
+ChildCases <- read_csv("data/cases_children.csv")
+ChildCases <- ChildCases %>% 
+  #rename(Count = NumberCasesperDay) %>% 
+  mutate(`Week ending` = as.Date(`Week ending`, "%d/%B/%y"), 
+         `% of patients testing positive` = `% of patients testing positive`*100)
+saveRDS(ChildCases, "data/ChildCases.rds")
+
+
+# Children  tests
+ChildTests <- read_csv("data/tests_children.csv")
+ChildTests <- ChildTests %>% 
+  #rename(Count = NumberCasesperDay) %>% 
+  mutate(`Week ending` = as.Date(`Week ending`, "%d/%B/%y"), 
+         `%Positive` = `%Positive`*100)
+saveRDS(ChildTests, "data/ChildTests.rds")
