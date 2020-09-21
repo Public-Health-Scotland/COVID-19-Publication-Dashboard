@@ -118,6 +118,9 @@ SAS_all <- read_csv("data/SAS_all.csv") %>% mutate(date = as.Date(date, "%d-%b-%
 saveRDS(SAS_all, "data/SAS_all.rds")
 
 
+# Child Data --------------------------------------------------------------
+
+
 # Children  Cases
 ChildCases <- read_csv("data/cases_children.csv")
 ChildCases <- ChildCases %>% 
@@ -134,3 +137,28 @@ ChildTests <- ChildTests %>%
   mutate(`Week ending` = as.Date(`Week ending`, "%d/%B/%y"), 
          `%Positive` = `%Positive`*100)
 saveRDS(ChildTests, "data/ChildTests.rds")
+
+
+# This is simplified data for child testing
+ChildDataCases <- ChildCases %>% 
+  gather(`Number of Patients tested`, `Number of patients tested positive`, `Number of patients tested negative`,
+         `% of patients testing positive`, `Rate per 100,000`, 
+         key = Indicator, value = "value") %>% 
+  spread(key = `Age Group`, value="value")
+
+ChildDataTests <- ChildTests %>% 
+  gather(`Total Tests`, `Positives`, `Negatives`,
+         `%Positive`, 
+         key = Indicator, value = "value") %>% 
+  spread(key = `Age Group`, value="value")
+
+ChildData  <- ChildDataCases %>% 
+  rbind(ChildDataTests)
+saveRDS(ChildData, "data/Child.rds")
+
+ChildTestsStacked <- read_csv("data/tests_stacked.csv")
+ChildTestsStacked <- ChildTestsStacked %>% 
+  pivot_longer(-`Week ending`, 
+               names_to = "outcome",
+               values_to = "count")
+saveRDS(ChildTestsStacked, "data/ChildTestsStacked.rds")
