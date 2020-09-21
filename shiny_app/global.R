@@ -107,6 +107,9 @@ SAS_all <- readRDS("data/SAS_all.rds")
 ChildCases <- readRDS("data/ChildCases.rds")
 ChildTests <- readRDS("data/ChildTests.rds")
 
+Child <- readRDS("data/Child.rds")
+ChildTestsStacked <- readRDS("data/ChildTestsStacked.rds")
+
 ###############################################.
 ## Data lists --------------------------------------------------------------
 
@@ -116,7 +119,9 @@ data_list <- c("Positive Cases" = "LabCases",
                "ICU Admissions" = "ICU",
                "NHS24 Contacts" = "NHS24",
                "Assessment Hubs" = "AssessmentHub",
-               "Scottish Ambulance Service" = "SAS")
+               "Scottish Ambulance Service" = "SAS",
+               "Cases and Testing among children" = "Child")
+
 
 #extra choices for data tables
 data_list_data_tab <- c("Positive Cases" = "LabCases",

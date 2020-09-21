@@ -107,7 +107,15 @@ observeEvent(input$btn_dataset_modal,
                     It is in the patient’s best interest to get the care they require as close to their own home as is feasible."),
                  size = "m",
                  easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)")))
-             }
+             } else if (input$measure_select == "Child") { #NHS24 MODAL
+               showModal(modalDialog(
+                 title = "What is the data source?",
+                 p("TO BE FILLED IN", 
+                   p(""),
+                   size = "m",
+                   easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)"))))
+               
+             } 
                )
 
 ###############################################.
@@ -143,14 +151,14 @@ observeEvent(input$btn_dataset_inform, { showModal(inform_modal) })
 ## Reactive Charts  ----
 # The charts and text shown on the app will depend on what the user wants to see
 output$data_explorer <- renderUI({
-  
+
   # text for titles of cut charts
   datasettrend <- case_when(input$measure_select == "LabCases" ~ "Positive COVID-19 cases",
-                       input$measure_select == "Admissions" ~ "COVID-19 admissions to hospital",
-                       input$measure_select == "ICU" ~ "COVID-19 admissions to ICU", 
-                       input$measure_select == "NHS24" ~ "COVID-19 related NHS24 contacts", 
-                       input$measure_select == "AssessmentHub" ~ "Consultations", 
-                       input$measure_select == "SAS" ~ "SAS incidents (suspected COVID-19)")
+                            input$measure_select == "Admissions" ~ "COVID-19 admissions to hospital",
+                            input$measure_select == "ICU" ~ "COVID-19 admissions to ICU", 
+                            input$measure_select == "NHS24" ~ "COVID-19 related NHS24 contacts", 
+                            input$measure_select == "AssessmentHub" ~ "Consultations", 
+                            input$measure_select == "SAS" ~ "SAS incidents (suspected COVID-19)")
   
   # text for titles of cut charts
   dataset <- case_when(input$measure_select == "LabCases" ~ "Positive COVID-19 cases",
@@ -206,7 +214,7 @@ output$data_explorer <- renderUI({
       plot_cut_missing(paste0(agesex_title), paste0(data_name, "_AgeSex")))
   }
   
-  # Charts and rest of UI
+ # Charts and rest of UI
   if (input$measure_select == "LabCases") { #Positive Cases
     cut_charts(title= "Daily number of positive COVID-19 cases", 
                source = data_source, data_name = "LabCases")
@@ -239,12 +247,17 @@ output$data_explorer <- renderUI({
                source = data_source, data_name ="AssessmentHub")
     
   } else if (input$measure_select == "SAS") { # SAS data
-    
     c(cut_charts(title= "Daily attended incidents by Scottish Ambulance Service (suspected COVID-19)", 
                  source = data_source, data_name ="SAS"),
-      plot_box("SAS - all incidents", plot_output = "SAS_all")
-    )
-  }
+      plot_box("SAS - all incidents", plot_output = "SAS_all"))
+    
+  }  else if (input$measure_select == "Child") { # Child data
+    tagList(h3("title"),
+            actionButton("btn_dataset_modal", paste0("Data source: ", "FILLED IN"), icon = icon('question-circle')),
+            plot_box("CASES", plot_output = "ChildDataCases"),
+            plot_box("TESTS", plot_output = "ChildDataTests"))
+    }  
+    
 }) 
 
 ###############################################.
@@ -277,8 +290,8 @@ output$NHS24_inform <- renderPlotly({plot_singletrace_chart(NHS24_inform, data_n
 output$NHS24_selfhelp <- renderPlotly({plot_nhs24_selfhelp_chart(NHS24_selfhelp, data_name = "NHS24_selfhelp")})
 output$NHS24_community <- renderPlotly({plot_nhs24_community_chart(NHS24_community, data_name = "NHS24_community")})
 output$SAS_all <- renderPlotly({plot_singletrace_chart(SAS_all, data_name = "SAS_all")})
-
-
+output$ChildDataCases <- renderPlotly({plot_overall_chartChildCases(Child, data_name = "Child")})
+output$ChildDataTests <- renderPlotly({plot_overall_chartChildTests(Child, data_name = "Child")})
 ## Data downloads ----
 
 
@@ -293,7 +306,8 @@ overall_data_download <- reactive({
     "ICU" = ICU,
     "NHS24" = NHS24, 
     "AssessmentHub" = AssessmentHub,
-    "SAS" = SAS) #%>% 
+    "SAS" = SAS, 
+    "Child" = Child) #%>% 
   #select(area_name, week_ending, count, starts_with("average")) %>% 
   # mutate(week_ending = format(week_ending, "%d %b %y"))
 })
