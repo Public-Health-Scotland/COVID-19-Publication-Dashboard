@@ -311,7 +311,6 @@ plot_simd_chart <- function(dataset, data_name, yaxis_title, area = T) {
 
 ## Function for other charts -----------------------------------------------
 
-
 plot_singletrace_chart <- function(dataset, data_name, yaxis_title, area = T) {
   
   # Filtering dataset to include only overall figures
@@ -379,45 +378,45 @@ plot_nhs24_selfhelp_chart <- function(dataset, data_name, yaxis_title, area = T)
     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove ) 
 }
 
-# plot_nhs24_community_chart <- function(dataset, data_name, yaxis_title, area = T) {
-#   
-#   # Filtering dataset to include only overall figures
-#   trend_data <- dataset
-#   
-#   ###############################################.
-#   # Creating objects that change depending on dataset
-#   yaxis_title <- case_when(data_name == "NHS24_community" ~ "Number of NHS24 COVID-19 records")
-# 
-#   #Modifying standard layout
-#   yaxis_plots[["title"]] <- yaxis_title
-# 
-#   measure_name <- case_when(data_name == "NHS24_community" ~ "NHS24 community outcomes")
-#   
-#   #make factor
-#   trend_data <- trend_data %>% mutate(#date = fct_inorder(date),
-#                                       outcome = fct_inorder(outcome))
-# 
-#   #Text for tooltip
-#   tooltip_trend <- glue("Date: {trend_data$date}<br>",
-#                       "{trend_data$outcome}: {trend_data$count}")
-#  
-#   #Creating community hub plot
-#   trend_data %>% 
-#     plot_ly(x = ~date, y = ~count) %>% 
-#     add_bars(color = ~outcome, #colour group
-#              colors = pal_comm, #palette
-#              stroke = I("black"), #outline
-#              text = tooltip_trend, 
-#              hoverinfo = "text",
-#              name = ~outcome) %>%
-#     #Layout
-#     layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
-#            yaxis = yaxis_plots, xaxis = xaxis_plots,
-#            legend = list(x = 100, y = 0.5), #position of legend
-#            barmode = "stack") %>% #split by group
-#     # leaving only save plot button
-#     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove ) 
-# }
+plot_nhs24_community_chart <- function(dataset, data_name, yaxis_title, area = T) {
+  
+  # Filtering dataset to include only overall figures
+  trend_data <- dataset
+  
+  ###############################################.
+  # Creating objects that change depending on dataset
+  yaxis_title <- case_when(data_name == "NHS24_community" ~ "Number of NHS24 COVID-19 records")
+  
+  #Modifying standard layout
+  yaxis_plots[["title"]] <- yaxis_title
+  
+  measure_name <- case_when(data_name == "NHS24_community" ~ "NHS24 community outcomes")
+  
+  #make factor
+  trend_data <- trend_data %>% mutate(#date = fct_inorder(date),
+    outcome = fct_inorder(outcome))
+  
+  #Text for tooltip
+  tooltip_trend <- glue("Date: {trend_data$date}<br>",
+                        "{trend_data$outcome}: {trend_data$count}")
+  
+  #Creating community hub plot
+  trend_data %>%
+    plot_ly(x = ~date, y = ~count) %>%
+    add_bars(color = ~outcome, #colour group
+             colors = pal_comm, #palette
+             stroke = I("black"), #outline
+             text = tooltip_trend,
+             hoverinfo = "text",
+             name = ~outcome) %>%
+    #Layout
+    layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
+           yaxis = yaxis_plots, xaxis = xaxis_plots,
+           legend = list(x = 100, y = 0.5), #position of legend
+           barmode = "stack") %>% #split by group
+    # leaving only save plot button
+    config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
+}
 
 
 ## Child Charts ------------------------------------------------------------
@@ -443,13 +442,13 @@ plot_overall_chartChildCases <- function(dataset, data_name, yaxis_title, area =
   
   #Creating time trend plot
   plot_ly(data = trend_data, x = ~`Week ending`) %>%
-    add_lines(y = ~`Age 2 - 4`, line = list(color = pal_overall[1]),
+    add_lines(y = ~`Age 2 - 4`, line = list(color = pal_child[1]),
               text = tooltip_trend, hoverinfo="text",
               name = "Age 2-4") %>%
-    add_lines(y = ~trend_data$`Age 5 - 11`, line = list(color = pal_overall[2]),
+    add_lines(y = ~trend_data$`Age 5 - 11`, line = list(color = pal_child[2]),
               text = tooltip_trend, hoverinfo = "text",
               name = "Age 5-11") %>%
-    add_lines(y = ~trend_data$`Age 12 - 17`, line = list(color = pal_overall[3]),
+    add_lines(y = ~trend_data$`Age 12 - 17`, line = list(color = pal_child[3]),
               text = tooltip_trend, hoverinfo = "text",
               name = "Age 12-17") %>%
     #Layout
@@ -460,7 +459,7 @@ plot_overall_chartChildCases <- function(dataset, data_name, yaxis_title, area =
     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove ) 
 }
 
-plot_overall_chartChildTests <- function(dataset, data_name, yaxis_title, area = T) {
+plot_overall_chartChildPositive <- function(dataset, data_name, yaxis_title, area = T) {
   
   # Filtering dataset to include only overall figures
   
@@ -475,20 +474,20 @@ plot_overall_chartChildTests <- function(dataset, data_name, yaxis_title, area =
   
   #Text for tooltip
   tooltip_trend <- c(paste0("Week ending: ", format(trend_data$`Week ending`, "%d %b %y"),
-                            "<br>", "Number of patients testing positive ages 2-4: ", trend_data$`Age 2 - 4`,
-                            "<br>", "Number of patients testing positive ages 5-11: ", trend_data$`Age 5 - 11`,
-                            "<br>", "Number of patients testing positive ages 12-17: ", trend_data$`Age 12 - 17`,
-                            "<br>", "Number of children and young people testing positive aged 2-17: ", trend_data$`All children aged 2 - 17`))
+                            "<br>", "Number of patients aged 2-4 testing positive: ", trend_data$`Age 2 - 4`,
+                            "<br>", "Number of patients aged 5-11 testing positive: ", trend_data$`Age 5 - 11`,
+                            "<br>", "Number of patients aged 12-17 testing positive: ", trend_data$`Age 12 - 17`,
+                            "<br>", "Total number of children aged 2-17 testing positive: ", trend_data$`All children aged 2 - 17`))
   
   #Creating time trend plot
   plot_ly(data = trend_data, x = ~`Week ending`) %>%
-    add_lines(y = ~`Age 2 - 4`, line = list(color = pal_overall[1]),
+    add_lines(y = ~`Age 2 - 4`, line = list(color = pal_child[1]),
               text = tooltip_trend, hoverinfo="text",
               name = "Age 2-4") %>%
-    add_lines(y = ~trend_data$`Age 5 - 11`, line = list(color = pal_overall[2]),
+    add_lines(y = ~trend_data$`Age 5 - 11`, line = list(color = pal_child[2]),
               text = tooltip_trend, hoverinfo = "text",
               name = "Age 5-11") %>%
-    add_lines(y = ~trend_data$`Age 12 - 17`, line = list(color = pal_overall[3]),
+    add_lines(y = ~trend_data$`Age 12 - 17`, line = list(color = pal_child[3]),
               text = tooltip_trend, hoverinfo = "text",
               name = "Age 12-17") %>%
     #Layout
@@ -499,42 +498,41 @@ plot_overall_chartChildTests <- function(dataset, data_name, yaxis_title, area =
     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove ) 
 }
 
-plot_overall_chartChildTestStacked <- function(dataset, data_name, yaxis_title, area = T) {
+plot_overall_chartChildNegative <- function(dataset, data_name, yaxis_title, area = T) {
   
   # Filtering dataset to include only overall figures
-  trend_data <- dataset
   
-  ###############################################.
+  trend_data <- dataset %>% 
+    filter(Indicator == "Number of patients tested negative")  
+  
   # Creating objects that change depending on dataset
-  yaxis_title <- case_when(data_name == "ChildTestsStacked" ~ "Number of NHS24 COVID-19 records")
+  yaxis_title <- case_when(data_name == "Child" ~ "Number of Patients testing negative")
   
   #Modifying standard layout
   yaxis_plots[["title"]] <- yaxis_title
   
-  measure_name <- case_when(data_name == "ChildTestsStacked" ~ "NHS24 community outcomes")
-  
-  #make factor
-  trend_data <- trend_data %>% mutate(#date = fct_inorder(date),
-    outcome = fct_inorder(outcome))
-  
   #Text for tooltip
-  tooltip_trend <- glue("Date: {trend_data$date}<br>",
-                        "{trend_data$outcome}: {trend_data$count}")
+  tooltip_trend <- c(paste0("Week ending: ", format(trend_data$`Week ending`, "%d %b %y"),
+                            "<br>", "Number of patients aged 2-4 testing negative: ", trend_data$`Age 2 - 4`,
+                            "<br>", "Number of patients aged 5-11 testing negative: ", trend_data$`Age 5 - 11`,
+                            "<br>", "Number of patients aged 12-17 testing negative: ", trend_data$`Age 12 - 17`,
+                            "<br>", "Total number of children aged 2-17 testing negative: ", trend_data$`All children aged 2 - 17`))
   
-  #Creating community hub plot
-  trend_data %>% 
-    plot_ly(x = ~date, y = ~count) %>% 
-    add_bars(color = ~outcome, #colour group
-             colors = pal_comm, #palette
-             stroke = I("black"), #outline
-             text = tooltip_trend, 
-             hoverinfo = "text",
-             name = ~outcome) %>%
+  #Creating time trend plot
+  plot_ly(data = trend_data, x = ~`Week ending`) %>%
+    add_lines(y = ~`Age 2 - 4`, line = list(color = pal_child[1]),
+              text = tooltip_trend, hoverinfo="text",
+              name = "Age 2-4") %>%
+    add_lines(y = ~trend_data$`Age 5 - 11`, line = list(color = pal_child[2]),
+              text = tooltip_trend, hoverinfo = "text",
+              name = "Age 5-11") %>%
+    add_lines(y = ~trend_data$`Age 12 - 17`, line = list(color = pal_child[3]),
+              text = tooltip_trend, hoverinfo = "text",
+              name = "Age 12-17") %>%
     #Layout
     layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
            yaxis = yaxis_plots, xaxis = xaxis_plots,
-           legend = list(x = 100, y = 0.5), #position of legend
-           barmode = "stack") %>% #split by group
+           legend = list(x = 100, y = 0.5)) %>% #position of legend
     # leaving only save plot button
     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove ) 
 }
