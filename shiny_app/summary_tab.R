@@ -72,42 +72,50 @@ observeEvent(input$btn_dataset_modal,
                showModal(modalDialog(
                  title = "What is the data source?",
                  p("NHS24 Systems Applications and Products Business Warehouse", 
-                 p("In response to COVID-19, NHS 24 adapted their service provision. People who are concerned about COVID-19, 
-                    or who experience symptoms, are advised to seek advice from NHS Inform website, the COVID-19 advice helpline 
-                    or to contact NHS 24’s 111 service if their symptoms worsen and they need clinical advice, following which they may be;"),
-                tags$li("provided with self-care advice or be asked to contact their own GP"),
-                tags$li("referred to a COVID-19 community hub for further clinical telephone triage, they may then be asked to attend assessment centre or receive a home visit by a Nurse or Doctor"),
-                tags$li("referred to acute services via the Scottish Ambulance Service or advised to attend hospital, depending on their symptoms."),
-                 size = "m",
-                 easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)"))))
+                   p("In response to COVID-19, NHS 24 adapted their service provision. People who are concerned about COVID-19, 
+                     or who experience symptoms, are advised to seek advice from NHS Inform website, the COVID-19 advice helpline 
+                     or to contact NHS 24’s 111 service if their symptoms worsen and they need clinical advice, following which they may be;"),
+                   tags$li("provided with self-care advice or be asked to contact their own GP"),
+                   tags$li("referred to a COVID-19 community hub for further clinical telephone triage, they may then be asked to attend assessment centre or receive a home visit by a Nurse or Doctor"),
+                   tags$li("referred to acute services via the Scottish Ambulance Service or advised to attend hospital, depending on their symptoms."),
+                   size = "m",
+                   easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)"))))
                
              } else if (input$measure_select == "AssessmentHub") { #NHS24 MODAL
                showModal(modalDialog(
                  title = "What is the data source?",
                  p("GP Out of Hours (OOH) ", 
-                 p("People may have multiple consultations with a COVID-19 Community Hub and Assessment Centre depending 
-                    on their pathway of care. For example, upon referral by NHS 24 (or other services) they will be 
-                    clinically triaged over the telephone by the community hub and they may then go on to have a 
-                    consultation in person at an assessment centre; this would result in one person having two consultations." ),                   
-                 size = "m",
-                 easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)"))))
+                   p("People may have multiple consultations with a COVID-19 Community Hub and Assessment Centre depending 
+                     on their pathway of care. For example, upon referral by NHS 24 (or other services) they will be 
+                     clinically triaged over the telephone by the community hub and they may then go on to have a 
+                     consultation in person at an assessment centre; this would result in one person having two consultations." ),                   
+                   size = "m",
+                   easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)"))))
                
              } else if (input$measure_select == "SAS") { #SAS MODAL
                showModal(modalDialog(
                  title = "What is the data source?",
                  p("SAS and Unscheduled Care Datamart"),
                  p("When someone telephones 999 and requests an ambulance, the Scottish Ambulance Service (SAS) record 
-                    this as an incident. In some cases, multiple phone calls can be received for one incident. 
-                    The total number of incidents includes:"),
+                   this as an incident. In some cases, multiple phone calls can be received for one incident. 
+                   The total number of incidents includes:"),
                  tags$li("redirecting and referring suitable people to alternative pathways, following telephone triage and advanced triage through a SAS practitioner."),
                  tags$li("attended incidents, where a SAS resource (e.g. ambulance, paramedic in a car, specialist paramedic) has arrived at the scene of the incident. Some incidents may be attended by more than one resource."),
-                   
-                  p("Following assessment and treatment by SAS crews some patients do not require to be taken to hospital. 
-                    These patients can be safely left at home with follow up provided by other services including their own GP or GP OOH Services. 
-                    It is in the patient’s best interest to get the care they require as close to their own home as is feasible."),
+                 
+                 p("Following assessment and treatment by SAS crews some patients do not require to be taken to hospital. 
+                   These patients can be safely left at home with follow up provided by other services including their own GP or GP OOH Services. 
+                   It is in the patient’s best interest to get the care they require as close to their own home as is feasible."),
                  size = "m",
                  easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)")))
-             }
+             } else if (input$measure_select == "Child") { #NHS24 MODAL
+               showModal(modalDialog(
+                 title = "What is the data source?",
+                 p("TO BE FILLED IN", 
+                   p(""),
+                   size = "m",
+                   easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)"))))
+               
+             } 
                )
 
 ###############################################.
@@ -146,11 +154,11 @@ output$data_explorer <- renderUI({
   
   # text for titles of cut charts
   datasettrend <- case_when(input$measure_select == "LabCases" ~ "Positive COVID-19 cases",
-                       input$measure_select == "Admissions" ~ "COVID-19 admissions to hospital",
-                       input$measure_select == "ICU" ~ "COVID-19 admissions to ICU", 
-                       input$measure_select == "NHS24" ~ "COVID-19 related NHS24 contacts", 
-                       input$measure_select == "AssessmentHub" ~ "Consultations", 
-                       input$measure_select == "SAS" ~ "SAS incidents (suspected COVID-19)")
+                            input$measure_select == "Admissions" ~ "COVID-19 admissions to hospital",
+                            input$measure_select == "ICU" ~ "COVID-19 admissions to ICU", 
+                            input$measure_select == "NHS24" ~ "COVID-19 related NHS24 contacts", 
+                            input$measure_select == "AssessmentHub" ~ "Consultations", 
+                            input$measure_select == "SAS" ~ "SAS incidents (suspected COVID-19)")
   
   # text for titles of cut charts
   dataset <- case_when(input$measure_select == "LabCases" ~ "Positive COVID-19 cases",
@@ -166,14 +174,14 @@ output$data_explorer <- renderUI({
                           input$measure_select == "NHS24" ~ "13 February",
                           input$measure_select == "AssessmentHub" ~ "23 March",
                           input$measure_select == "SAS" ~ "22 January")
-
+  
   end_date <- case_when(input$measure_select == "LabCases" ~ Labcases_date,
                         input$measure_select == "Admissions" ~ Admissions_date,
                         input$measure_select == "ICU" ~ ICU_date,
                         input$measure_select == "NHS24" ~ NHS24_date,
                         input$measure_select == "AssessmentHub" ~ AssessmentHub_date,
                         input$measure_select == "SAS" ~ SAS_date)
-
+  
   total_title <- glue("Daily number of {datasettrend}")
   agesex_title <- paste0(dataset, " per 100,000 population by age \n(", start_date, " to ", end_date, ")")
   simd_title <- paste0(dataset, " by deprivation category (SIMD) \n(", start_date, " to ", end_date, ")")
@@ -224,11 +232,11 @@ output$data_explorer <- renderUI({
     NHS_Inform_title <- paste0("NHS Inform hits to COVID-19 section (",start_date, " to ", end_date, ")" )
     SelfHelpTitle <- paste0("NHS24 COVID-19 self help guides completed (",start_date, " to ", end_date, ")" )
     OutcomesTitle <- paste0("NHS24 COVID-19 outcomes (",start_date, " to ", end_date, ")" )
-   
-     tagList(cut_charts(title = "Daily number of COVID-19 related NHS24 contacts", 
+    
+    tagList(cut_charts(title = "Daily number of COVID-19 related NHS24 contacts", 
                        source = data_source, data_name ="NHS24"),
             h3("NHS Inform"),
-           # actionButton("btn_dataset_inform", "Data source: INFORM", icon = icon('question-circle')),
+            # actionButton("btn_dataset_inform", "Data source: INFORM", icon = icon('question-circle')),
             
             plot_box(NHS_Inform_title, "NHS24_inform"),
             plot_box(SelfHelpTitle, "NHS24_selfhelp"),
@@ -239,12 +247,17 @@ output$data_explorer <- renderUI({
                source = data_source, data_name ="AssessmentHub")
     
   } else if (input$measure_select == "SAS") { # SAS data
-    
     c(cut_charts(title= "Daily attended incidents by Scottish Ambulance Service (suspected COVID-19)", 
                  source = data_source, data_name ="SAS"),
-      plot_box("SAS - all incidents", plot_output = "SAS_all")
-    )
-  }
+      plot_box("SAS - all incidents", plot_output = "SAS_all"))
+    
+  }  else if (input$measure_select == "Child") { # Child data
+    tagList(h3("title"),
+            actionButton("btn_dataset_modal", paste0("Data source: ", "FILLED IN"), icon = icon('question-circle')),
+            plot_box("CASES", plot_output = "ChildDataCases"),
+            plot_box("TESTS", plot_output = "ChildDataTests"))
+  }  
+  
 }) 
 
 ###############################################.
@@ -277,8 +290,8 @@ output$NHS24_inform <- renderPlotly({plot_singletrace_chart(NHS24_inform, data_n
 output$NHS24_selfhelp <- renderPlotly({plot_nhs24_selfhelp_chart(NHS24_selfhelp, data_name = "NHS24_selfhelp")})
 output$NHS24_community <- renderPlotly({plot_nhs24_community_chart(NHS24_community, data_name = "NHS24_community")})
 output$SAS_all <- renderPlotly({plot_singletrace_chart(SAS_all, data_name = "SAS_all")})
-
-
+output$ChildDataCases <- renderPlotly({plot_overall_chartChildCases(Child, data_name = "Child")})
+output$ChildDataTests <- renderPlotly({plot_overall_chartChildTests(Child, data_name = "Child")})
 ## Data downloads ----
 
 
@@ -293,7 +306,8 @@ overall_data_download <- reactive({
     "ICU" = ICU,
     "NHS24" = NHS24, 
     "AssessmentHub" = AssessmentHub,
-    "SAS" = SAS) #%>% 
+    "SAS" = SAS, 
+    "Child" = Child) #%>% 
   #select(area_name, week_ending, count, starts_with("average")) %>% 
   # mutate(week_ending = format(week_ending, "%d %b %y"))
 })
@@ -304,4 +318,3 @@ output$download_chart_data <- downloadHandler(
     write_csv(overall_data_download(),
               file) } 
 )
-
