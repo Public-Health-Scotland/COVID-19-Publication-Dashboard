@@ -74,7 +74,7 @@ observeEvent(input$btn_dataset_modal,
                  p("NHS24 Systems Applications and Products Business Warehouse", 
                    p("In response to COVID-19, NHS 24 adapted their service provision. People who are concerned about COVID-19, 
                      or who experience symptoms, are advised to seek advice from NHS Inform website, the COVID-19 advice helpline 
-                     or to contact NHS 24’s 111 service if their symptoms worsen and they need clinical advice, following which they may be;"),
+                     or to contact NHS 24âs 111 service if their symptoms worsen and they need clinical advice, following which they may be;"),
                    tags$li("provided with self-care advice or be asked to contact their own GP"),
                    tags$li("referred to a COVID-19 community hub for further clinical telephone triage, they may then be asked to attend assessment centre or receive a home visit by a Nurse or Doctor"),
                    tags$li("referred to acute services via the Scottish Ambulance Service or advised to attend hospital, depending on their symptoms."),
@@ -104,7 +104,7 @@ observeEvent(input$btn_dataset_modal,
                  
                  p("Following assessment and treatment by SAS crews some patients do not require to be taken to hospital. 
                    These patients can be safely left at home with follow up provided by other services including their own GP or GP OOH Services. 
-                   It is in the patient’s best interest to get the care they require as close to their own home as is feasible."),
+                   It is in the patientâs best interest to get the care they require as close to their own home as is feasible."),
                  size = "m",
                  easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)")))
              } else if (input$measure_select == "Child") { #NHS24 MODAL
@@ -148,7 +148,7 @@ observeEvent(input$btn_dataset_inform, { showModal(inform_modal) })
 
 ###############################################.
 
-## Reactive Charts  ----
+## Reactive Charts  ---- 
 # The charts and text shown on the app will depend on what the user wants to see
 output$data_explorer <- renderUI({
   
@@ -254,10 +254,10 @@ output$data_explorer <- renderUI({
   }  else if (input$measure_select == "Child") { # Child data
     tagList(h3("title"),
             actionButton("btn_dataset_modal", paste0("Data source: ", "FILLED IN"), icon = icon('question-circle')),
-            plot_box("CASES", plot_output = "ChildDataCases"),
-            plot_box("TESTS", plot_output = "ChildDataTests"))
+            plot_box("POSITIVE CASES", plot_output = "ChildDataPositives"),
+            plot_box("NEGATIVE CASES", "ChildDataNegatives"),
+            plot_box("CASES % POSITIVE", plot_output = "ChildDataCases"))
   }  
-  
 }) 
 
 ###############################################.
@@ -290,8 +290,10 @@ output$NHS24_inform <- renderPlotly({plot_singletrace_chart(NHS24_inform, data_n
 output$NHS24_selfhelp <- renderPlotly({plot_nhs24_selfhelp_chart(NHS24_selfhelp, data_name = "NHS24_selfhelp")})
 output$NHS24_community <- renderPlotly({plot_nhs24_community_chart(NHS24_community, data_name = "NHS24_community")})
 output$SAS_all <- renderPlotly({plot_singletrace_chart(SAS_all, data_name = "SAS_all")})
+output$ChildDataPositives <- renderPlotly({plot_overall_chartChildPositive(Child, data_name = "Child")})
+output$ChildDataNegatives <- renderPlotly({plot_overall_chartChildNegative(Child, data_name = "Child")})
 output$ChildDataCases <- renderPlotly({plot_overall_chartChildCases(Child, data_name = "Child")})
-output$ChildDataTests <- renderPlotly({plot_overall_chartChildTests(Child, data_name = "Child")})
+
 ## Data downloads ----
 
 
