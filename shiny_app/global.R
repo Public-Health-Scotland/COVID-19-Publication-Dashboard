@@ -1,4 +1,3 @@
-
 # Global
 ###############################################.
 
@@ -107,6 +106,9 @@ SAS_all <- readRDS("data/SAS_all.rds")
 ChildCases <- readRDS("data/ChildCases.rds")
 ChildTests <- readRDS("data/ChildTests.rds")
 
+Child <- readRDS("data/Child.rds")
+ChildTestsStacked <- readRDS("data/ChildTestsStacked.rds")
+
 ###############################################.
 ## Data lists --------------------------------------------------------------
 
@@ -116,7 +118,9 @@ data_list <- c("Positive Cases" = "LabCases",
                "ICU Admissions" = "ICU",
                "NHS24 Contacts" = "NHS24",
                "Assessment Hubs" = "AssessmentHub",
-               "Scottish Ambulance Service" = "SAS")
+               "Scottish Ambulance Service" = "SAS",
+               "Cases and Testing among children" = "Child")
+
 
 #extra choices for data tables
 data_list_data_tab <- c("Positive Cases" = "LabCases",
@@ -150,7 +154,7 @@ pal_overall <- c('#000000', '#009900','#59144c', '#bdbdbd', '#bdbdbd', '#bdbdbd'
 
 #for nhs24 community outcomes
 pal_comm <- c('#543005', '#8c510a', '#bf812d',  '#d0d1e6',
-             '#74add1', '#4575b4', '#313695')
+              '#74add1', '#4575b4', '#313695')
 
 #for female/male/total sex
 pal_sex <- c('#8856a7', '#9ebcda', "#000000")
