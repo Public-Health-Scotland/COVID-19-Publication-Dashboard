@@ -4,7 +4,7 @@
 ## Data extraction dates ----
 
 #publication date
-pub_date <- as.Date("2020-09-16")
+pub_date <- as.Date("2020-09-23")
 
 Labcases_date <- format(pub_date - 3, "%d %B %Y")
 ICU_date <- format(pub_date - 3, "%d %B %Y")
@@ -107,7 +107,7 @@ ChildCases <- readRDS("data/ChildCases.rds")
 ChildTests <- readRDS("data/ChildTests.rds")
 
 Child <- readRDS("data/Child.rds")
-ChildTestsStacked <- readRDS("data/ChildTestsStacked.rds")
+
 
 ###############################################.
 ## Data lists --------------------------------------------------------------
@@ -158,6 +158,9 @@ pal_comm <- c('#543005', '#8c510a', '#bf812d',  '#d0d1e6',
 
 #for female/male/total sex
 pal_sex <- c('#8856a7', '#9ebcda', "#000000")
+
+#for child charts
+pal_child <- c('#090C9B', '#2374AB', "#BBBDF6")
 
 #for SIMD
 pal_simd <- c('#2c7fb8', '#bdbdbd', '#bdbdbd', '#bdbdbd', '#7fcdbb')
