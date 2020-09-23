@@ -107,10 +107,11 @@ observeEvent(input$btn_dataset_modal,
                    It is in the patientâs best interest to get the care they require as close to their own home as is feasible."),
                  size = "m",
                  easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)")))
+               
              } else if (input$measure_select == "Child") { #NHS24 MODAL
                showModal(modalDialog(
                  title = "What is the data source?",
-                 p("TO BE FILLED IN", 
+                 p("ECOSS (Electronic Communication of Surveillance in Scotland) Database", 
                    p(""),
                    size = "m",
                    easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)"))))
@@ -186,6 +187,11 @@ output$data_explorer <- renderUI({
   agesex_title <- paste0(dataset, " per 100,000 population by age \n(", start_date, " to ", end_date, ")")
   simd_title <- paste0(dataset, " by deprivation category (SIMD) \n(", start_date, " to ", end_date, ")")
   
+  subheading <- case_when(input$measure_select == "Admissions" ~ "COVID-19 related admissions have been identified as the following: A patient may have tested positive 
+                                                                  for COVID-19 14 days prior to admission to hospital, on the day of their admission or during their 
+                                                                  stay in hospital.",
+                          input$measure_select == "NHS24" ~ "Since 5 September figures for the COVID helpline include calls made to the new flu helpline.", 
+                          input$measure_select == "AssessmentHub" ~ "COVID-19 advice calls from September 13 is missing data from NHS Greater Glasgow & Clyde.") 
   
   # data sources
   data_source <- case_when(input$measure_select == "LabCases" ~ "ECOSS",
@@ -194,8 +200,10 @@ output$data_explorer <- renderUI({
                            input$measure_select == "NHS24" ~ "NHS 24 SAP BW", 
                            input$measure_select == "AssessmentHub" ~ "GP Out of Hours (OOH)", 
                            input$measure_select == "SAS"~ "SAS and Unscheduled Care Datamart")
-  
-  # Function to create the standard layout for all the different charts/sections
+ 
+
+# Functions for Chart Layouts ---------------------------------------------
+# Function to create the standard layout for all the different charts/sections
   cut_charts <- function(title, source, data_name) {
     tagList(
       h3(title),
@@ -204,47 +212,63 @@ output$data_explorer <- renderUI({
       plot_cut_box(paste0(agesex_title), paste0(data_name, "_AgeSex"),
                    paste0(simd_title), paste0(data_name, "_SIMD")))
   }
-  
+
   #for e.g. ICU admissions where no SIMD data
   cut_charts_missing <- function(title, source, data_name) {
     tagList(
       h3(title),
+      p("Includes any patient with a confirmed positive COVID-19 test taken prior to discharge from an Intensive Care Unit 
+        in Scotland. Does not include any COVID-19 suspected cases who have not yet been lab confirmed or any 
+        re-admissions from COVID-19 patients previously admitted to an ICU."),
       actionButton("btn_dataset_modal", paste0("Data source: ", source), icon = icon('question-circle')),
       plot_box(paste0(total_title), paste0(data_name, "_overall")),
       plot_cut_missing(paste0(agesex_title), paste0(data_name, "_AgeSex")))
   }
+
+  # Function to create the standard layout for all the different charts/sections
+  cut_charts_subheading <- function(title, source, data_name) {
+    tagList(
+      h3(title),
+      p(subheading),
+      actionButton("btn_dataset_modal", paste0("Data source: ", source), icon = icon('question-circle')),
+      plot_box(paste0(total_title), paste0(data_name, "_overall")),
+      plot_cut_box(paste0(agesex_title), paste0(data_name, "_AgeSex"),
+                   paste0(simd_title), paste0(data_name, "_SIMD")))
+  }
   
+
+# Set up Charts for each section ------------------------------------------
+
   # Charts and rest of UI
   if (input$measure_select == "LabCases") { #Positive Cases
     cut_charts(title= "Daily number of positive COVID-19 cases", 
                source = data_source, data_name = "LabCases")
     
   } else if (input$measure_select == "Admissions") { #Admissions
-    cut_charts(title= "Daily number of COVID-19 admissions to hospital", 
-               source = data_source, data_name = "Admissions")
+    cut_charts_subheading(title= "Daily number of COVID-19 admissions to hospital", 
+                          source = data_source, data_name = "Admissions")
     
   } else if (input$measure_select == "ICU") {# ICU 
     cut_charts_missing(title= "Daily number of COVID-19 admissions to ICU",
                        source = data_source, data_name ="ICU")
     
   } else if (input$measure_select == "NHS24") {# NHS 24 contacts
-    
     NHS_Inform_title <- paste0("NHS Inform hits to COVID-19 section (",start_date, " to ", end_date, ")" )
     SelfHelpTitle <- paste0("NHS24 COVID-19 self help guides completed (",start_date, " to ", end_date, ")" )
     OutcomesTitle <- paste0("NHS24 COVID-19 outcomes (",start_date, " to ", end_date, ")" )
     
-    tagList(cut_charts(title = "Daily number of COVID-19 related NHS24 contacts", 
-                       source = data_source, data_name ="NHS24"),
+    tagList(cut_charts_subheading(title = "Daily number of COVID-19 related NHS24 contacts", 
+                                  source = data_source, data_name ="NHS24"),
             h3("NHS Inform"),
             # actionButton("btn_dataset_inform", "Data source: INFORM", icon = icon('question-circle')),
             
             plot_box(NHS_Inform_title, "NHS24_inform"),
             plot_box(SelfHelpTitle, "NHS24_selfhelp"),
-            plot_box(OutcomesTitle, "NHS24_community")
-    )
+            plot_box(OutcomesTitle, "NHS24_community"))
+    
   } else if (input$measure_select == "AssessmentHub") { # Assessment Hub
-    cut_charts(title= "Daily number of COVID-19 consultations", 
-               source = data_source, data_name ="AssessmentHub")
+    cut_charts_subheading(title= "Daily number of COVID-19 consultations", 
+                          source = data_source, data_name ="AssessmentHub")
     
   } else if (input$measure_select == "SAS") { # SAS data
     c(cut_charts(title= "Daily attended incidents by Scottish Ambulance Service (suspected COVID-19)", 
@@ -252,11 +276,11 @@ output$data_explorer <- renderUI({
       plot_box("SAS - all incidents", plot_output = "SAS_all"))
     
   }  else if (input$measure_select == "Child") { # Child data
-    tagList(h3("title"),
-            actionButton("btn_dataset_modal", paste0("Data source: ", "FILLED IN"), icon = icon('question-circle')),
-            plot_box("POSITIVE CASES", plot_output = "ChildDataPositives"),
-            plot_box("NEGATIVE CASES", "ChildDataNegatives"),
-            plot_box("CASES % POSITIVE", plot_output = "ChildDataCases"))
+    tagList(h3("COVID-19 cases and testing among children"),
+            actionButton("btn_dataset_modal", paste0("Data source: ", "ECOSS"), icon = icon('question-circle')),
+            plot_box("Number of positive COVID-19 tests in children", plot_output = "ChildDataPositives"),
+            plot_box("Number of negative COVID-19 tests in children", "ChildDataNegatives"),
+            plot_box("Percentage of children testing positive for COVID-19", plot_output = "ChildDataCases"))
   }  
 }) 
 

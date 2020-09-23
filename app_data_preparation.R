@@ -156,9 +156,3 @@ ChildData  <- ChildDataCases %>%
   rbind(ChildDataTests)
 saveRDS(ChildData, "data/Child.rds")
 
-ChildTestsStacked <- read_csv("data/tests_stacked.csv")
-ChildTestsStacked <- ChildTestsStacked %>% 
-  pivot_longer(-`Week ending`, 
-               names_to = "outcome",
-               values_to = "count")
-saveRDS(ChildTestsStacked, "data/ChildTestsStacked.rds")
