@@ -108,6 +108,7 @@ ChildTests <- readRDS("data/ChildTests.rds")
 
 Child <- readRDS("data/Child.rds")
 
+ContactTracing<- readRDS("data/ContactTracingWeekly.rds")
 
 ###############################################.
 ## Data lists --------------------------------------------------------------
@@ -120,6 +121,8 @@ data_list <- c("Positive Cases" = "LabCases",
                "Community Hubs and Assessment Centres" = "AssessmentHub",
                "Scottish Ambulance Service" = "SAS",
                "Cases and Testing among children and young people" = "Child")
+
+HB_list <- sort(c(unique(ContactTracing$`NHS Board`)))
 
 
 #extra choices for data tables
