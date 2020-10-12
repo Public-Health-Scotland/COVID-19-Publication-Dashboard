@@ -437,8 +437,11 @@ plot_overall_chartChildCases <- function(dataset, data_name, yaxis_title, area =
   tooltip_trend <- c(paste0("Week ending: ", format(trend_data$`Week ending`, "%d %b %y"),
                             "<br>", "% of patients aged 2-4 testing positive: ", trend_data$`Age 2 - 4`,
                             "<br>", "% of patients aged 5-11 testing positive: ", trend_data$`Age 5 - 11`,
-                            "<br>", "% of patients aged 12-17 testing positive: ", trend_data$`Age 12 - 17`,
-                            "<br>", "% of all children and young people aged 2-17 testing positive: ", trend_data$`All children aged 2 - 17`))
+                            "<br>", "% of patients aged 12-13 testing positive: ", trend_data$`Age 12 - 13`,
+                            "<br>", "% of patients aged 14-15 testing positive: ", trend_data$`Age 14 - 15`,
+                            "<br>", "% of patients aged 16-17 testing positive: ", trend_data$`Age 16 - 17`,
+                            "<br>", "% of patients aged 18-19 testing positive: ", trend_data$`Age 18 - 19`,
+                            "<br>", "% of all children and young people aged 2-19 testing positive: ", trend_data$`All children and young people aged 2-19`))
   
   #Creating time trend plot
   plot_ly(data = trend_data, x = ~`Week ending`) %>%
@@ -448,9 +451,18 @@ plot_overall_chartChildCases <- function(dataset, data_name, yaxis_title, area =
     add_lines(y = ~trend_data$`Age 5 - 11`, line = list(color = pal_child[2]),
               text = tooltip_trend, hoverinfo = "text",
               name = "Age 5-11") %>%
-    add_lines(y = ~trend_data$`Age 12 - 17`, line = list(color = pal_child[3]),
+    add_lines(y = ~trend_data$`Age 12 - 13`, line = list(color = pal_child[3]),
               text = tooltip_trend, hoverinfo = "text",
-              name = "Age 12-17") %>%
+              name = "Age 12-13") %>%
+    add_lines(y = ~trend_data$`Age 14 - 15`, line = list(color = pal_child[4]),
+              text = tooltip_trend, hoverinfo = "text",
+              name = "Age 14-15") %>%
+    add_lines(y = ~trend_data$`Age 16 - 17`, line = list(color = pal_child[5]),
+              text = tooltip_trend, hoverinfo = "text",
+              name = "Age 16-17") %>%
+    add_lines(y = ~trend_data$`Age 18 - 19`, line = list(color = pal_child[6]),
+              text = tooltip_trend, hoverinfo = "text",
+              name = "Age 18-19") %>%
     #Layout
     layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
            yaxis = yaxis_plots, xaxis = xaxis_plots,
@@ -476,8 +488,11 @@ plot_overall_chartChildPositive <- function(dataset, data_name, yaxis_title, are
   tooltip_trend <- c(paste0("Week ending: ", format(trend_data$`Week ending`, "%d %b %y"),
                             "<br>", "Number of patients aged 2-4 testing positive: ", trend_data$`Age 2 - 4`,
                             "<br>", "Number of patients aged 5-11 testing positive: ", trend_data$`Age 5 - 11`,
-                            "<br>", "Number of patients aged 12-17 testing positive: ", trend_data$`Age 12 - 17`,
-                            "<br>", "Total number of children aged 2-17 testing positive: ", trend_data$`All children aged 2 - 17`))
+                            "<br>", "Number of patients aged 12-13 testing positive: ", trend_data$`Age 12 - 13`,
+                            "<br>", "Number of patients aged 14-15 testing positive: ", trend_data$`Age 14 - 15`,
+                            "<br>", "Number of patients aged 16-17 testing positive: ", trend_data$`Age 16 - 17`,
+                            "<br>", "Number of patients aged 18-19 testing positive: ", trend_data$`Age 18 - 19`,
+                            "<br>", "Total number of children and young people aged 2-19 testing positive: ", trend_data$`All children and young people aged 2-19`))
   
   #Creating time trend plot
   plot_ly(data = trend_data, x = ~`Week ending`) %>%
@@ -487,9 +502,18 @@ plot_overall_chartChildPositive <- function(dataset, data_name, yaxis_title, are
     add_lines(y = ~trend_data$`Age 5 - 11`, line = list(color = pal_child[2]),
               text = tooltip_trend, hoverinfo = "text",
               name = "Age 5-11") %>%
-    add_lines(y = ~trend_data$`Age 12 - 17`, line = list(color = pal_child[3]),
+    add_lines(y = ~trend_data$`Age 12 - 13`, line = list(color = pal_child[3]),
               text = tooltip_trend, hoverinfo = "text",
-              name = "Age 12-17") %>%
+              name = "Age 12-13") %>%
+    add_lines(y = ~trend_data$`Age 14 - 15`, line = list(color = pal_child[4]),
+              text = tooltip_trend, hoverinfo = "text",
+              name = "Age 14-15") %>%
+    add_lines(y = ~trend_data$`Age 16 - 17`, line = list(color = pal_child[5]),
+              text = tooltip_trend, hoverinfo = "text",
+              name = "Age 16-17") %>%
+    add_lines(y = ~trend_data$`Age 18 - 19`, line = list(color = pal_child[6]),
+              text = tooltip_trend, hoverinfo = "text",
+              name = "Age 18-19") %>%
     #Layout
     layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
            yaxis = yaxis_plots, xaxis = xaxis_plots,
@@ -515,8 +539,11 @@ plot_overall_chartChildNegative <- function(dataset, data_name, yaxis_title, are
   tooltip_trend <- c(paste0("Week ending: ", format(trend_data$`Week ending`, "%d %b %y"),
                             "<br>", "Number of patients aged 2-4 testing negative: ", trend_data$`Age 2 - 4`,
                             "<br>", "Number of patients aged 5-11 testing negative: ", trend_data$`Age 5 - 11`,
-                            "<br>", "Number of patients aged 12-17 testing negative: ", trend_data$`Age 12 - 17`,
-                            "<br>", "Total number of children aged 2-17 testing negative: ", trend_data$`All children aged 2 - 17`))
+                            "<br>", "Number of patients aged 12-13 testing negative: ", trend_data$`Age 12 - 13`,
+                            "<br>", "Number of patients aged 14-15 testing negative: ", trend_data$`Age 14 - 15`,
+                            "<br>", "Number of patients aged 16-17 testing negative: ", trend_data$`Age 16 - 17`,
+                            "<br>", "Number of patients aged 18-19 testing negative: ", trend_data$`Age 18 - 19`,
+                            "<br>", "Total number of children and young people aged 2-19 testing negative: ", trend_data$`All children and young people aged 2-19`))
   
   #Creating time trend plot
   plot_ly(data = trend_data, x = ~`Week ending`) %>%
@@ -526,9 +553,18 @@ plot_overall_chartChildNegative <- function(dataset, data_name, yaxis_title, are
     add_lines(y = ~trend_data$`Age 5 - 11`, line = list(color = pal_child[2]),
               text = tooltip_trend, hoverinfo = "text",
               name = "Age 5-11") %>%
-    add_lines(y = ~trend_data$`Age 12 - 17`, line = list(color = pal_child[3]),
+    add_lines(y = ~trend_data$`Age 12 - 13`, line = list(color = pal_child[3]),
               text = tooltip_trend, hoverinfo = "text",
-              name = "Age 12-17") %>%
+              name = "Age 12-13") %>%
+    add_lines(y = ~trend_data$`Age 14 - 15`, line = list(color = pal_child[4]),
+              text = tooltip_trend, hoverinfo = "text",
+              name = "Age 14-15") %>%
+    add_lines(y = ~trend_data$`Age 16 - 17`, line = list(color = pal_child[5]),
+              text = tooltip_trend, hoverinfo = "text",
+              name = "Age 16-17") %>%
+    add_lines(y = ~trend_data$`Age 18 - 19`, line = list(color = pal_child[6]),
+              text = tooltip_trend, hoverinfo = "text",
+              name = "Age 18-19") %>%
     #Layout
     layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
            yaxis = yaxis_plots, xaxis = xaxis_plots,

@@ -187,11 +187,13 @@ output$data_explorer <- renderUI({
   agesex_title <- paste0(dataset, " per 100,000 population by age \n(", start_date, " to ", end_date, ")")
   simd_title <- paste0(dataset, " by deprivation category (SIMD) \n(", start_date, " to ", end_date, ")")
   
-  subheading <- case_when(input$measure_select == "Admissions" ~ "COVID-19 related admissions have been identified as the following: A patient may have tested positive 
+  subheading <- case_when(input$measure_select == "Admissions" ~ "Admissions data in the dashboard will be updated daily this week and may differ slightly to that published in the written report.
+                                                                  COVID-19 related admissions have been identified as the following: A patient may have tested positive 
                                                                   for COVID-19 14 days prior to admission to hospital, on the day of their admission or during their 
                                                                   stay in hospital.",
-                          input$measure_select == "NHS24" ~ "Since 5 September figures for the COVID helpline include calls made to the new flu helpline.", 
-                          input$measure_select == "AssessmentHub" ~ "COVID-19 advice calls from September 13 is missing data from NHS Greater Glasgow & Clyde.") 
+                          input$measure_select == "NHS24" ~ "Since 15 September figures for the COVID helpline include calls made to the new flu helpline. 
+                                                              In late September, the first batch of flu vaccination letters sent to those eligible by NHS Health Boards included the coronavirus number. 
+                                                              The peaks in calls are consistent with the timing of those letters being sent.") 
   
   # data sources
   data_source <- case_when(input$measure_select == "LabCases" ~ "ECOSS",
@@ -267,7 +269,7 @@ output$data_explorer <- renderUI({
             plot_box(OutcomesTitle, "NHS24_community"))
     
   } else if (input$measure_select == "AssessmentHub") { # Assessment Hub
-    cut_charts_subheading(title= "Daily number of COVID-19 consultations", 
+    cut_charts(title= "Daily number of COVID-19 consultations", 
                           source = data_source, data_name ="AssessmentHub")
     
   } else if (input$measure_select == "SAS") { # SAS data
@@ -276,11 +278,11 @@ output$data_explorer <- renderUI({
       plot_box("SAS - all incidents", plot_output = "SAS_all"))
     
   }  else if (input$measure_select == "Child") { # Child data
-    tagList(h3("COVID-19 cases and testing among children"),
+    tagList(h3("COVID-19 cases and testing among children and young people"),
             actionButton("btn_dataset_modal", paste0("Data source: ", "ECOSS"), icon = icon('question-circle')),
-            plot_box("Number of positive COVID-19 tests in children", plot_output = "ChildDataPositives"),
-            plot_box("Number of negative COVID-19 tests in children", "ChildDataNegatives"),
-            plot_box("Percentage of children testing positive for COVID-19", plot_output = "ChildDataCases"))
+            plot_box("Number of positive COVID-19 tests in children and young people", plot_output = "ChildDataPositives"),
+            plot_box("Number of negative COVID-19 tests in children and young people", "ChildDataNegatives"),
+            plot_box("Percentage of children and young people testing positive for COVID-19", plot_output = "ChildDataCases"))
   }  
 }) 
 

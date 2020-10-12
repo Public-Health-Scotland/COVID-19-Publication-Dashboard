@@ -4,7 +4,7 @@
 ## Data extraction dates ----
 
 #publication date
-pub_date <- as.Date("2020-09-23")
+pub_date <- as.Date("2020-10-07")
 
 Labcases_date <- format(pub_date - 3, "%d %B %Y")
 ICU_date <- format(pub_date - 3, "%d %B %Y")
@@ -14,7 +14,7 @@ ICU_date <- format(pub_date - 3, "%d %B %Y")
 SAS_date <- format(pub_date - 5, "%d %B %Y")
 
 AssessmentHub_date <- format(pub_date - 7, "%d %B %Y")
-Admissions_date <- format(pub_date - 7, "%d %B %Y")
+Admissions_date <- format(pub_date - 5, "%d %B %Y")
 
 #ECOSS, for LabCases
 labcases_extract_date <- format(pub_date - 2, "%d %B %Y") #format date
@@ -117,9 +117,9 @@ data_list <- c("Positive Cases" = "LabCases",
                "Admissions" = "Admissions",
                "ICU Admissions" = "ICU",
                "NHS24 Contacts" = "NHS24",
-               "Assessment Hubs" = "AssessmentHub",
+               "Community Hubs and Assessment Centres" = "AssessmentHub",
                "Scottish Ambulance Service" = "SAS",
-               "Cases and Testing among children" = "Child")
+               "Cases and Testing among children and young people" = "Child")
 
 
 #extra choices for data tables
@@ -137,9 +137,9 @@ data_list_data_tab <- c("Positive Cases" = "LabCases",
                         "NHS Inform hits" = "NHS24_inform",
                         "NHS24 Self Help guides" = "NHS24_selfhelp",
                         "NHS24 community outcomes"  = "NHS24_community",
-                        "Assessment Hubs" = "AssessmentHub",
-                        "Assessment Hubs by age" = "AssessmentHub_AgeSex",
-                        "Assessment Hubs by deprivation" = "AssessmentHub_SIMD",
+                        "Community Hubs and Assessment Centres" = "AssessmentHub",
+                        "Community Hubs and Assessment Centres by age" = "AssessmentHub_AgeSex",
+                        "Community Hubs and Assessment Centres by deprivation" = "AssessmentHub_SIMD",
                         "Scottish Ambulance Service" = "SAS",
                         "Scottish Ambulance Service by age" = "SAS_AgeSex",
                         "Scottish Ambulance Service by deprivation" = "SAS_SIMD",
@@ -160,7 +160,7 @@ pal_comm <- c('#543005', '#8c510a', '#bf812d',  '#d0d1e6',
 pal_sex <- c('#8856a7', '#9ebcda', "#000000")
 
 #for child charts
-pal_child <- c('#090C9B', '#2374AB', "#BBBDF6")
+pal_child <- c("#D8D6FB", "#A39EFC", "#4A40FD", "#181289", "#F8C76D", "#FEA602")
 
 #for SIMD
 pal_simd <- c('#2c7fb8', '#bdbdbd', '#bdbdbd', '#bdbdbd', '#7fcdbb')
