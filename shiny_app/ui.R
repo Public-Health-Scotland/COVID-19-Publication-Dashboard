@@ -78,8 +78,8 @@ tabPanel("Introduction",
            p("If you have any questions relating to this data please contact: ",
           tags$b(
             tags$a(
-              href = "mailto:phs.statsgov@nhs.net",
-              "phs.statsgov@nhs.net",
+              href = "mailto:phs.covidweeklyreport@phs.scot",
+              "phs.covidweeklyreport@phs.scot",
               class = "externallink")),"."),
           p("If you have a media query please contact: ",
             tags$b(

@@ -4,16 +4,16 @@
 ## Data extraction dates ----
 
 #publication date
-pub_date <- as.Date("2020-10-07")
+pub_date <- as.Date("2020-10-21")
 
 Labcases_date <- format(pub_date - 3, "%d %B %Y")
 ICU_date <- format(pub_date - 3, "%d %B %Y")
 NHS24_date <- format(pub_date - 3, "%d %B %Y")
 ICU_date <- format(pub_date - 3, "%d %B %Y")
 
-SAS_date <- format(pub_date - 5, "%d %B %Y")
+SAS_date <- format(pub_date - 3, "%d %B %Y")
 
-AssessmentHub_date <- format(pub_date - 7, "%d %B %Y")
+AssessmentHub_date <- format(pub_date - 6, "%d %B %Y")
 Admissions_date <- format(pub_date - 5, "%d %B %Y")
 
 #ECOSS, for LabCases
@@ -125,8 +125,8 @@ data_list <- c("Positive Cases" = "LabCases",
 
 HB_list <- c("Scotland", sort(unique(ContactTracing$`NHS Board`)))
 
-CTdata_list_data_tab <- c ("Contact Tracing Numbers" = "ContactTracing", 
-                           "Time Taken to contact trace" = "ContactTime")
+CTdata_list_data_tab <- c ("Contact Tracing Weekly by Health Board" = "ContactTracing", 
+                           "Contact Tracing time performance measures" = "ContactTime")
 
 
 #extra choices for data tables
