@@ -12,7 +12,7 @@ tagList(  #needed for shinyjs
       tags$link(rel = "shortcut icon", href = "favicon_phs.ico")), #Icon for browser tab     
      # includeScript("data/google-analytics.js")), #Including Google analytics
   
-## Introduction ----
+#################### Introduction ----
 tabPanel("Introduction",
          icon = icon("info-circle"),
          value = "intro",
@@ -28,13 +28,16 @@ tabPanel("Introduction",
          tags$li("Community Hubs and Assessment Centres"),
          tags$li("Scottish Ambulance Service"),
          tags$li("COVID-19 in children and young people"),
+         tags$li("Contact Tracing"),
          p(""),
          p("Interactive charts on each of the topics are available in the ",
-         actionLink("jump_to_summary", "'Trend Charts' tab."),
+         actionLink("jump_to_summary", "'Trend Charts' tab.")),
          p("The underlying data used to create the interactive charts can be downloaded using the ",
          actionLink("jump_to_table", "'Data' tab."),
           "Note that some numbers may not sum to the total as disclosure control methods have been applied
           to the data in order to protect patient confidentiality."),
+         p("The contact tracing data can be downloaded using the ",
+           actionLink("jump_to_CTtable", "'Contact Tracing Data' tab.")),
           
          h3("Further information"),
           
@@ -75,8 +78,8 @@ tabPanel("Introduction",
            p("If you have any questions relating to this data please contact: ",
           tags$b(
             tags$a(
-              href = "mailto:phs.statsgov@nhs.net",
-              "phs.statsgov@nhs.net",
+              href = "mailto:phs.covidweeklyreport@phs.scot",
+              "phs.covidweeklyreport@phs.scot",
               class = "externallink")),"."),
           p("If you have a media query please contact: ",
             tags$b(
@@ -84,11 +87,11 @@ tabPanel("Introduction",
                 href = "mailto:phs.comms@nhs.net",
                 "phs.comms@nhs.net",
                 class = "externallink")),"."),
-          ".")
+          # ".")
          ), #tabPanel bracket
 
 
-## Trend Charts ----
+#################### Trend Charts ----
 
 tabPanel(
   title = "Trend Charts",
@@ -119,7 +122,7 @@ mainPanel(width = 12,
 
 ),# tabpanel bracket
 
-## Data ----
+#################### Data ----
 tabPanel(
   title = "Data",
   icon = icon("table"),
@@ -137,7 +140,63 @@ tabPanel(
   column(6, downloadButton('download_table_csv', 'Download data')),
   mainPanel(width = 12,
             DT::dataTableOutput("table_filtered"))
-  ) # tabpanel bracket
+  ),# tabpanel bracket
+
+
+#################### Contact Tracing Charts ----
+# 
+# tabPanel(
+#   title = "Contact Tracing",
+#   icon = icon("address-book"),
+#   value = "contacttracing",
+#   wellPanel(
+#     column(4,
+#            div(title = "Select the data you want to explore.", # tooltip
+#                pickerInput("ContactTracing_select",
+#                            label = "Select the NHS Board you want to explore.",
+#                            choices = HB_list))),
+#     column(4,
+#            downloadButton('download_CT_data', 'Download data'),
+#            fluidRow(br()),
+#            actionButton(inputId='ab2', label='Metadata',
+#                         icon = icon("th"),
+#                         onclick ="window.open('https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/',
+#                         '_blank')"))
+# 
+#    ), #wellPanel bracket
+# 
+#   mainPanel(width = 12,
+#             uiOutput("ContactTracing_explorer")
+#        )# mainPanel bracket
+# 
+# ),# tabpanel bracket
+
+#################### Contact Tracing Data ----
+tabPanel(
+  title = "Contact Tracing Data",
+  icon = icon("table"),
+  value = "CTtable",
+  p("This sections allow you to view the contact tracing data and time performance indicators 
+    in a table format. This section is being developed and will show further information/graphics 
+    on these statistics. Please note these are developmental statistics and ongoing work is in place 
+    to improve recording and use of fields within the CMS to increase accuracy 
+    (further information available in the metadata). 
+    You can use the filters to select the data you are interested in.
+    You can also download the data as a csv using the download button."),
+  
+  column(6,        
+         selectInput("CTdata_select", "Select the data you want to explore.",
+                     choices = CTdata_list_data_tab)),      
+  column(6, downloadButton('CTdownload_table_csv', 'Download data'),
+  fluidRow(br()),
+  actionButton(inputId='ab1', label='Metadata',
+               icon = icon("th"), 
+               onclick ="window.open('https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/',
+                        '_blank')")),
+  
+  mainPanel(width = 12,
+            DT::dataTableOutput("CTtable_filtered"))
+) # tabpanel bracket
 
 ## End -----------
 

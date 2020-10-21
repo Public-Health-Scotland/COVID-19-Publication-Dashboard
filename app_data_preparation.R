@@ -156,3 +156,10 @@ ChildData  <- ChildDataCases %>%
   rbind(ChildDataTests)
 saveRDS(ChildData, "data/Child.rds")
 
+
+# Contact Tracing ---------------------------------------------------------
+ContactTracing <- read_csv("data/ContactTracingWeekly.csv")
+saveRDS(ContactTracing, "data/ContactTracingWeekly.rds")
+
+ContactTime <- read_csv("data/ContactTime.csv")
+saveRDS(ContactTime, "data/ContactTime.rds")

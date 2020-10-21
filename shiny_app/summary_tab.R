@@ -219,9 +219,7 @@ output$data_explorer <- renderUI({
   cut_charts_missing <- function(title, source, data_name) {
     tagList(
       h3(title),
-      p("Includes any patient with a confirmed positive COVID-19 test taken prior to discharge from an Intensive Care Unit 
-        in Scotland. Does not include any COVID-19 suspected cases who have not yet been lab confirmed or any 
-        re-admissions from COVID-19 patients previously admitted to an ICU."),
+      p("SICSAG data is a dynamic database and subject to ongoing validations therefore on a week to week basis the data may change."),
       actionButton("btn_dataset_modal", paste0("Data source: ", source), icon = icon('question-circle')),
       plot_box(paste0(total_title), paste0(data_name, "_overall")),
       plot_cut_missing(paste0(agesex_title), paste0(data_name, "_AgeSex")))
@@ -279,6 +277,7 @@ output$data_explorer <- renderUI({
     
   }  else if (input$measure_select == "Child") { # Child data
     tagList(h3("COVID-19 cases and testing among children and young people"),
+            p("Please note due to the data being based on specimen date of the COVID-19 test the latest week is provisional and may be subject to change."),
             actionButton("btn_dataset_modal", paste0("Data source: ", "ECOSS"), icon = icon('question-circle')),
             plot_box("Number of positive COVID-19 tests in children and young people", plot_output = "ChildDataPositives"),
             plot_box("Number of negative COVID-19 tests in children and young people", "ChildDataNegatives"),
