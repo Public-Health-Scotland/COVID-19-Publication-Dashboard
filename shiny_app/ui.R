@@ -144,32 +144,32 @@ tabPanel(
 
 
 #################### Contact Tracing Charts ----
-# 
-# tabPanel(
-#   title = "Contact Tracing",
-#   icon = icon("address-book"),
-#   value = "contacttracing",
-#   wellPanel(
-#     column(4,
-#            div(title = "Select the data you want to explore.", # tooltip
-#                pickerInput("ContactTracing_select",
-#                            label = "Select the NHS Board you want to explore.",
-#                            choices = HB_list))),
-#     column(4,
-#            downloadButton('download_CT_data', 'Download data'),
-#            fluidRow(br()),
-#            actionButton(inputId='ab2', label='Metadata',
-#                         icon = icon("th"),
-#                         onclick ="window.open('https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/',
-#                         '_blank')"))
-# 
-#    ), #wellPanel bracket
-# 
-#   mainPanel(width = 12,
-#             uiOutput("ContactTracing_explorer")
-#        )# mainPanel bracket
-# 
-# ),# tabpanel bracket
+
+tabPanel(
+  title = "Contact Tracing",
+  icon = icon("address-book"),
+  value = "contacttracing",
+  wellPanel(
+    # column(4,
+    #        div(title = "Select the data you want to explore.", # tooltip
+    #            pickerInput("ContactTracing_select",
+    #                        label = "Select the NHS Board you want to explore.",
+    #                        choices = HB_list))),
+    column(4,
+           downloadButton('download_CT_data', 'Download data'),
+           fluidRow(br()),
+           actionButton(inputId='ab2', label='Metadata',
+                        icon = icon("th"),
+                        onclick ="window.open('https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/',
+                        '_blank')"))
+
+   ), #wellPanel bracket
+
+  mainPanel(width = 12,
+            uiOutput("ContactTracing_explorer")
+       )# mainPanel bracket
+
+),# tabpanel bracket
 
 #################### Contact Tracing Data ----
 tabPanel(

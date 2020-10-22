@@ -16,9 +16,9 @@ function(input, output, session) {
   source(file.path("data_tab.R"),  local = TRUE)$value
   
   
-  # ###############################################.
-  # # Contact Tracing tab  
-  # source(file.path("contact_tracing_tab.R"),  local = TRUE)$value 
+  ###############################################.
+  # Contact Tracing tab
+  source(file.path("contact_tracing_tab.R"),  local = TRUE)$value
   
   
   ###############################################.
