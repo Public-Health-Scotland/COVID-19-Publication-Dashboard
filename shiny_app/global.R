@@ -123,7 +123,7 @@ data_list <- c("Positive Cases" = "LabCases",
                "Scottish Ambulance Service" = "SAS",
                "Cases and Testing among children and young people" = "Child")
 
-HB_list <- c("Scotland", sort(unique(ContactTracing$`NHS Board`)))
+#HB_list <- c(sort(unique(ContactTime$`NHS Board`)))
 
 CTdata_list_data_tab <- c ("Contact Tracing Weekly by Health Board" = "ContactTracing", 
                            "Contact Tracing time performance measures" = "ContactTime")
