@@ -150,11 +150,15 @@ tabPanel(
   icon = icon("address-book"),
   value = "contacttracing",
   wellPanel(
-    # column(4,
-    #        div(title = "Select the data you want to explore.", # tooltip
-    #            pickerInput("ContactTracing_select",
-    #                        label = "Select the NHS Board you want to explore.",
-    #                        choices = HB_list))),
+    column(4,
+           div(title = "Select the measure you want to view.", # tooltip
+               radioGroupButtons("ContactTracing_select",
+                                 label = "Select the measure you want to view.",
+                                 choices = CTdata_list_chart_tab,
+                                 status = "primary",
+                                 direction = "vertical",
+                                 justified = T))),
+
     column(4,
            downloadButton('download_CT_data', 'Download data'),
            fluidRow(br()),
@@ -184,10 +188,10 @@ tabPanel(
     You can use the filters to select the data you are interested in.
     You can also download the data as a csv using the download button."),
   
-  column(6,        
+  column(8,        
          selectInput("CTdata_select", "Select the data you want to explore.",
                      choices = CTdata_list_data_tab)),      
-  column(6, downloadButton('CTdownload_table_csv', 'Download data'),
+  column(4, downloadButton('CTdownload_table_csv', 'Download data'),
   fluidRow(br()),
   actionButton(inputId='ab1', label='Metadata',
                icon = icon("th"), 
