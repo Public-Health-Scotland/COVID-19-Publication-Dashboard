@@ -576,12 +576,178 @@ plot_overall_chartChildNegative <- function(dataset, data_name, yaxis_title, are
 
 # 
 ## Contact Tracing Charts --------------------------------------------------
-# plot_contacttrace_chart(ContactTracing, data_name = "ContactTracing")
+# % stacked bar charts
+plot_contacttrace_TestIndexPer_chart <- function(dataset, data_name, yaxis_title, area = T) {
+  
+  # Filtering dataset to include only overall figures
+  trend_data <- dataset %>% 
+    filter(Measure== "Test to index created")
+  
+  
+  ###############################################.
+  # Creating objects that change depending on dataset
+  yaxis_title <- "% of Cases"
+  
+  #Modifying standard layout
+  yaxis_plots[["title"]] <- yaxis_title
+  
+  #make factor
+  trend_data <- trend_data %>% 
+    mutate(#date = fct_inorder(date),
+      `Hours taken` = fct_inorder(`Hours taken`))
+  
+  #Text for tooltip
+  tooltip_trend <- glue("{trend_data$Measure}<br>",
+                        "Week ending: {trend_data$week_ending}<br>",
+                        "{trend_data$`Hours taken`} hours: {trend_data$`Number of Index Cases`} cases ({trend_data$`% of Total Index Cases`}%)")
+  
+  #Creating contact tracing time
+  trend_data %>%
+    plot_ly(x = ~week_ending, y = ~`% of Total Index Cases`) %>%
+    add_bars(color = ~`Hours taken`, #colour group
+             colors = pal_CT, #palette
+             stroke = I("black"), #outline
+             text = tooltip_trend,
+             hoverinfo = "text",
+             name = ~`Hours taken`) %>%
+    #Layout
+    layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
+           yaxis = yaxis_plots, xaxis = xaxis_plots,
+           legend = list(x = 100, y = 0.5), #position of legend
+           barmode = "stack") %>% #split by group
+    # leaving only save plot button
+    config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
+
+}
+plot_contacttrace_TestInterviewPer_chart <- function(dataset, data_name, yaxis_title, area = T) {
+  
+  # Filtering dataset to include only overall figures
+  trend_data <- dataset %>% 
+    filter(Measure== "Test to interview completed")
+  
+  ###############################################.
+  # Creating objects that change depending on dataset
+  yaxis_title <- "% of Cases"
+  
+  #Modifying standard layout
+  yaxis_plots[["title"]] <- yaxis_title
+  
+  
+  #make factor
+  trend_data <- trend_data %>% 
+    mutate(#date = fct_inorder(date),
+      `Hours taken` = fct_inorder(`Hours taken`))
+  
+  #Text for tooltip
+  tooltip_trend <- glue("{trend_data$Measure}<br>",
+                        "Week ending: {trend_data$week_ending}<br>",
+                        "{trend_data$`Hours taken`} hours: {trend_data$`Number of Index Cases`} cases ({trend_data$`% of Total Index Cases`}%)")
+  
+  #Creating contact tracing time
+  trend_data %>%
+    plot_ly(x = ~week_ending, y = ~`% of Total Index Cases`) %>%
+    add_bars(color = ~`Hours taken`, #colour group
+             colors = pal_CT, #palette
+             stroke = I("black"), #outline
+             text = tooltip_trend,
+             hoverinfo = "text",
+             name = ~`Hours taken`) %>%
+    #Layout
+    layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
+           yaxis = yaxis_plots, xaxis = xaxis_plots,
+           legend = list(x = 100, y = 0.5), #position of legend
+           barmode = "stack") %>% #split by group
+    # leaving only save plot button
+    config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
+}
+plot_contacttrace_CaseInterviewPer_chart <- function(dataset, data_name, yaxis_title, area = T) {
+  
+  # Filtering dataset to include only overall figures
+  trend_data <- dataset %>% 
+    filter(Measure== "Case created to interview completed")
+  
+  ###############################################.
+  # Creating objects that change depending on dataset
+  yaxis_title <- "% of Cases"
+  
+  #Modifying standard layout
+  yaxis_plots[["title"]] <- yaxis_title
+  
+  #make factor
+  trend_data <- trend_data %>% 
+    mutate(#date = fct_inorder(date),
+      `Hours taken` = fct_inorder(`Hours taken`))
+  
+  #Text for tooltip
+  tooltip_trend <- glue("{trend_data$Measure}<br>",
+                        "Week ending: {trend_data$week_ending}<br>",
+                        "{trend_data$`Hours taken`} hours: {trend_data$`Number of Index Cases`} cases ({trend_data$`% of Total Index Cases`}%)")
+  
+  #Creating contact tracing time
+  trend_data %>%
+    plot_ly(x = ~week_ending, y = ~`% of Total Index Cases`) %>%
+    add_bars(color = ~`Hours taken`, #colour group
+             colors = pal_CT, #palette
+             stroke = I("black"), #outline
+             text = tooltip_trend,
+             hoverinfo = "text",
+             name = ~`Hours taken`) %>%
+    #Layout
+    layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
+           yaxis = yaxis_plots, xaxis = xaxis_plots,
+           legend = list(x = 100, y = 0.5), #position of legend
+           barmode = "stack") %>% #split by group
+    # leaving only save plot button
+    config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
+}
+plot_contacttrace_CaseClosePer_chart <- function(dataset, data_name, yaxis_title, area = T) {
+  
+  # Filtering dataset to include only overall figures
+  trend_data <- dataset %>% 
+    filter(Measure== "Case created to case closed")
+  
+  ###############################################.
+  # Creating objects that change depending on dataset
+  yaxis_title <- "% of Cases"
+  
+  #Modifying standard layout
+  yaxis_plots[["title"]] <- yaxis_title
+  
+  #make factor
+  trend_data <- trend_data %>% 
+    mutate(#date = fct_inorder(date),
+      `Hours taken` = fct_inorder(`Hours taken`))
+  
+  #Text for tooltip
+  tooltip_trend <- glue("{trend_data$Measure}<br>",
+                        "Week ending: {trend_data$week_ending}<br>",
+                        "{trend_data$`Hours taken`} hours: {trend_data$`Number of Index Cases`} cases ({trend_data$`% of Total Index Cases`}%)")
+  
+  #Creating contact tracing time
+  trend_data %>%
+    plot_ly(x = ~week_ending, y = ~`% of Total Index Cases`) %>%
+    add_bars(color = ~`Hours taken`, #colour group
+             colors = pal_CT, #palette
+             stroke = I("black"), #outline
+             text = tooltip_trend,
+             hoverinfo = "text",
+             name = ~`Hours taken`) %>%
+    #Layout
+    layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
+           yaxis = yaxis_plots, xaxis = xaxis_plots,
+           legend = list(x = 100, y = 0.5), #position of legend
+           barmode = "stack") %>% #split by group
+    # leaving only save plot button
+    config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
+}
+
+# cases stacked bar chart
 plot_contacttrace_TestIndex_chart <- function(dataset, data_name, yaxis_title, area = T) {
 
   # Filtering dataset to include only overall figures
   trend_data <- dataset %>% 
     filter(Measure== "Test to index created")
+
   
   ###############################################.
   # Creating objects that change depending on dataset
@@ -604,7 +770,7 @@ plot_contacttrace_TestIndex_chart <- function(dataset, data_name, yaxis_title, a
   trend_data %>%
     plot_ly(x = ~week_ending, y = ~`Number of Index Cases`) %>%
     add_bars(color = ~`Hours taken`, #colour group
-             colors = pal_comm, #palette
+             colors = pal_CT, #palette
              stroke = I("black"), #outline
              text = tooltip_trend,
              hoverinfo = "text",
@@ -645,7 +811,7 @@ plot_contacttrace_TestInterview_chart <- function(dataset, data_name, yaxis_titl
   trend_data %>%
     plot_ly(x = ~week_ending, y = ~`Number of Index Cases`) %>%
     add_bars(color = ~`Hours taken`, #colour group
-             colors = pal_comm, #palette
+             colors = pal_CT, #palette
              stroke = I("black"), #outline
              text = tooltip_trend,
              hoverinfo = "text",
@@ -685,7 +851,7 @@ plot_contacttrace_CaseInterview_chart <- function(dataset, data_name, yaxis_titl
   trend_data %>%
     plot_ly(x = ~week_ending, y = ~`Number of Index Cases`) %>%
     add_bars(color = ~`Hours taken`, #colour group
-             colors = pal_comm, #palette
+             colors = pal_CT, #palette
              stroke = I("black"), #outline
              text = tooltip_trend,
              hoverinfo = "text",
@@ -725,7 +891,7 @@ plot_contacttrace_CaseClose_chart <- function(dataset, data_name, yaxis_title, a
   trend_data %>%
     plot_ly(x = ~week_ending, y = ~`Number of Index Cases`) %>%
     add_bars(color = ~`Hours taken`, #colour group
-             colors = pal_comm, #palette
+             colors = pal_CT, #palette
              stroke = I("black"), #outline
              text = tooltip_trend,
              hoverinfo = "text",

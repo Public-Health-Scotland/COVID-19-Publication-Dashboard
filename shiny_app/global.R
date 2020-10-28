@@ -4,7 +4,7 @@
 ## Data extraction dates ----
 
 #publication date
-pub_date <- as.Date("2020-10-21")
+pub_date <- as.Date("2020-10-28")
 
 Labcases_date <- format(pub_date - 3, "%d %B %Y")
 ICU_date <- format(pub_date - 3, "%d %B %Y")
@@ -105,11 +105,13 @@ SAS_all <- readRDS("data/SAS_all.rds")
 # read in children data
 ChildCases <- readRDS("data/ChildCases.rds")
 ChildTests <- readRDS("data/ChildTests.rds")
-
 Child <- readRDS("data/Child.rds")
 
+#Contact Tracing 
 ContactTracing<- readRDS("data/ContactTracingWeekly.rds")
-ContactTime<- readRDS("data/ContactTime.rds")
+ContactTime <- readRDS("data/ContactTime.rds")
+ContactEC <- readRDS("data/ContactTracingEducation.csv.rds")
+
 
 ###############################################.
 ## Data lists --------------------------------------------------------------
@@ -124,9 +126,13 @@ data_list <- c("Positive Cases" = "LabCases",
                "Cases and Testing among children and young people" = "Child")
 
 #HB_list <- c(sort(unique(ContactTime$`NHS Board`)))
+CTdata_list_chart_tab <- c ("Contact Tracing time performance %", 
+                            "Contact Tracing time performance cases")
+
 
 CTdata_list_data_tab <- c ("Contact Tracing Weekly by Health Board" = "ContactTracing", 
-                           "Contact Tracing time performance measures" = "ContactTime")
+                           "Contact Tracing time performance measures" = "ContactTime",
+                           "Cases reporting an occupation in the Education and Childcare sector" = "ContactEC")
 
 
 #extra choices for data tables
@@ -157,20 +163,22 @@ data_list_data_tab <- c("Positive Cases" = "LabCases",
 ###############################################.
 ## Palettes  ----
 
-pal_overall <- c('#000000', '#009900','#59144c', '#bdbdbd', '#bdbdbd', '#bdbdbd', '#7fcdbb')
+pal_overall <- c('#000000', '#0078D4','#9B4393', '#bdbdbd', '#bdbdbd', '#bdbdbd', '#7fcdbb')
 
 #for nhs24 community outcomes
-pal_comm <- c('#543005', '#8c510a', '#bf812d',  '#d0d1e6',
-              '#74add1', '#4575b4', '#313695')
+pal_comm <- c("#3F3685", "#9B4393", "#0078D4", "#83BB26", "#C73918", "#6B5C85","#1E7F84")
 
 #for female/male/total sex
-pal_sex <- c('#8856a7', '#9ebcda', "#000000")
+pal_sex <- c('#9B4393', '#0078D4', "#000000")
 
 #for child charts
-pal_child <- c("#D8D6FB", "#A39EFC", "#4A40FD", "#181289", "#F8C76D", "#FEA602")
+pal_child <- c("#3F3685", "#9B4393", "#0078D4", "#83BB26", "#C73918", "#6B5C85")
+
+#for contact tracing charts
+pal_CT <- c('#0078D4', '#3393DD', '#80BCEA',  '#B3D7F2','#000000')
 
 #for SIMD
-pal_simd <- c('#2c7fb8', '#bdbdbd', '#bdbdbd', '#bdbdbd', '#7fcdbb')
+pal_simd <- c('#0078D4', '#DFDDE3', '#DFDDE3', '#DFDDE3', '#83BB26')
 
 ###############################################.
 ## Plot Parameters ---------------------------------------------------------
