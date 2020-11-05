@@ -220,6 +220,9 @@ output$data_explorer <- renderUI({
     tagList(
       h3(title),
       p("SICSAG data is a dynamic database and subject to ongoing validations therefore on a week to week basis the data may change."),
+      p("On 30 October 2020, Public Health Scotland became aware of an ongoing issue when linking ICU data to laboratory data for COVID-19 test results. 
+        Any COVID-19 positive patients with a missing a CHI number that had a first positive test in the community are unable to be linked to ICU data. 
+        As a result, the COVID-19 positive ICU patients could be underreported by up to 10%. This is currently being investigated and figures may change in future reports."),
       actionButton("btn_dataset_modal", paste0("Data source: ", source), icon = icon('question-circle')),
       plot_box(paste0(total_title), paste0(data_name, "_overall")),
       plot_cut_missing(paste0(agesex_title), paste0(data_name, "_AgeSex")))
@@ -315,9 +318,13 @@ output$NHS24_inform <- renderPlotly({plot_singletrace_chart(NHS24_inform, data_n
 output$NHS24_selfhelp <- renderPlotly({plot_nhs24_selfhelp_chart(NHS24_selfhelp, data_name = "NHS24_selfhelp")})
 output$NHS24_community <- renderPlotly({plot_nhs24_community_chart(NHS24_community, data_name = "NHS24_community")})
 output$SAS_all <- renderPlotly({plot_singletrace_chart(SAS_all, data_name = "SAS_all")})
-output$ChildDataPositives <- renderPlotly({plot_overall_chartChildPositive(Child, data_name = "Child")})
-output$ChildDataNegatives <- renderPlotly({plot_overall_chartChildNegative(Child, data_name = "Child")})
-output$ChildDataCases <- renderPlotly({plot_overall_chartChildCases(Child, data_name = "Child")})
+output$ChildDataPositives <- renderPlotly({plot_overall_chartChild(Child, data_name = "Child", childdata = "ChildPositive")})
+output$ChildDataNegatives <- renderPlotly({plot_overall_chartChild(Child, data_name = "Child", childdata = "ChildNegative")})
+output$ChildDataCases <- renderPlotly({plot_overall_chartChild(Child, data_name = "Child", childdata = "ChildPer")})
+
+# output$ChildDataPositives <- renderPlotly({plot_overall_chartChildPositive(Child, data_name = "Child")})
+# output$ChildDataNegatives <- renderPlotly({plot_overall_chartChildNegative(Child, data_name = "Child")})
+# output$ChildDataCases <- renderPlotly({plot_overall_chartChildCases(Child, data_name = "Child")})
 
 ## Data downloads ----
 

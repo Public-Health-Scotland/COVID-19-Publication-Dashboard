@@ -8,7 +8,9 @@ CTdata_table <- reactive({  # Change dataset depending on what user selected
   table_data <- switch(input$CTdata_select,
                        "ContactTracing" = ContactTracing,
                        "ContactTime" = ContactTime,
-                       "ContactEC" = ContactEC)
+                       "ContactEC" = ContactEC,
+                       "ContactWeeklyCases" = ContactWeeklyCases,
+                       "ContactTracingWeeklyCumulative" = ContactTracingWeeklyCumulative )
 
   # if (input$data_select %in% c("ContactTracing")) {
   #   table_data <- table_data

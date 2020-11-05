@@ -35,16 +35,16 @@ output$ContactTracing_explorer <- renderUI({
     plot_box("Time (hours) between case created in CMS and case closed - Cases", plot_output = "ContactTracingCaseClose"))
   }  
 }) 
-  
-output$ContactTracingTestIndexPercentage <- renderPlotly({plot_contacttrace_TestIndexPer_chart(ContactTime, data_name = "ContactTime")})
-output$ContactTracingTestInterviewPercentage <- renderPlotly({plot_contacttrace_TestInterviewPer_chart(ContactTime, data_name = "ContactTime")})
-output$ContactTracingCaseInterviewPercentage <- renderPlotly({plot_contacttrace_CaseInterviewPer_chart(ContactTime, data_name = "ContactTime")})
-output$ContactTracingCaseClosePercentage <- renderPlotly({plot_contacttrace_CaseClosePer_chart(ContactTime, data_name = "ContactTime")})
+ 
+output$ContactTracingTestIndexPercentage <- renderPlotly({plot_contacttrace_Per_chart(ContactTime, data_name = "ContactTime", CTdata = "TestIndex" )})
+output$ContactTracingTestInterviewPercentage <- renderPlotly({plot_contacttrace_Per_chart(ContactTime, data_name = "ContactTime", CTdata = "TestInterview" )})
+output$ContactTracingCaseInterviewPercentage <- renderPlotly({plot_contacttrace_Per_chart(ContactTime, data_name = "ContactTime", CTdata = "CaseInterview" )})
+output$ContactTracingCaseClosePercentage <- renderPlotly({plot_contacttrace_Per_chart(ContactTime, data_name = "ContactTime", CTdata = "CaseClose" )})
 
-output$ContactTracingTestIndex <- renderPlotly({plot_contacttrace_TestIndex_chart(ContactTime, data_name = "ContactTime")})
-output$ContactTracingTestInterview <- renderPlotly({plot_contacttrace_TestInterview_chart(ContactTime, data_name = "ContactTime")})
-output$ContactTracingCaseInterview <- renderPlotly({plot_contacttrace_CaseInterview_chart(ContactTime, data_name = "ContactTime")})
-output$ContactTracingCaseClose <- renderPlotly({plot_contacttrace_CaseClose_chart(ContactTime, data_name = "ContactTime")})
+output$ContactTracingTestIndex <- renderPlotly({plot_contacttrace_chart(ContactTime, data_name = "ContactTime", CTdata = "TestIndex" )})
+output$ContactTracingTestInterview <- renderPlotly({plot_contacttrace_chart(ContactTime, data_name = "ContactTime", CTdata = "TestInterview" )})
+output$ContactTracingCaseInterview <- renderPlotly({plot_contacttrace_chart(ContactTime, data_name = "ContactTime", CTdata = "CaseInterview" )})
+output$ContactTracingCaseClose <- renderPlotly({plot_contacttrace_chart(ContactTime, data_name = "ContactTime", CTdata = "CaseClose" )})
 
 
 ## Data downloads ----

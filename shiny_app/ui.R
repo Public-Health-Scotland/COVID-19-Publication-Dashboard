@@ -143,7 +143,7 @@ tabPanel(
   ),# tabpanel bracket
 
 
-#################### Contact Tracing Charts ----
+# #################### Contact Tracing Charts ----
 
 tabPanel(
   title = "Contact Tracing",
@@ -187,6 +187,7 @@ tabPanel(
     (further information available in the metadata). 
     You can use the filters to select the data you are interested in.
     You can also download the data as a csv using the download button."),
+  p("Please note that time analysis data is currently unavailable as at Wednesday 1200. A planned revision will be published on Friday 6 November at 1200."),
   
   column(8,        
          selectInput("CTdata_select", "Select the data you want to explore.",
@@ -200,8 +201,32 @@ tabPanel(
   
   mainPanel(width = 12,
             DT::dataTableOutput("CTtable_filtered"))
-) # tabpanel bracket
+), # tabpanel bracket
 
+
+#################### Setting Charts ----
+
+tabPanel(
+  title = "Setting",
+  icon = icon("address-book"),
+  value = "settingchart",
+  
+    column(4,        
+             selectInput("Setting_select", "Select the setting type you want to view.",
+                         choices = SettingList)),  
+    column(4,
+           downloadButton('download_setting_data', 'Download data'),
+           fluidRow(br()),
+           actionButton(inputId='ab3', label='Metadata',
+                        icon = icon("th"),
+                        onclick ="window.open('https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/',
+                        '_blank')")), 
+  
+  mainPanel(width = 12,
+            uiOutput("Setting_explorer")  
+            )# mainPanel bracket
+  
+)# tabpanel bracket
 ## End -----------
 
 ) # page bracket
