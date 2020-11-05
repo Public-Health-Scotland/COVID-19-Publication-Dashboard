@@ -4,10 +4,10 @@
 ## Data extraction dates ----
 
 #publication date
-pub_date <- as.Date("2020-10-28")
+pub_date <- as.Date("2020-11-04")
 
 Labcases_date <- format(pub_date - 3, "%d %B %Y")
-ICU_date <- format(pub_date - 3, "%d %B %Y")
+ICU_date <- format(pub_date - 4, "%d %B %Y")
 NHS24_date <- format(pub_date - 3, "%d %B %Y")
 ICU_date <- format(pub_date - 3, "%d %B %Y")
 
@@ -110,8 +110,10 @@ Child <- readRDS("data/Child.rds")
 #Contact Tracing 
 ContactTracing<- readRDS("data/ContactTracingWeekly.rds")
 ContactTime <- readRDS("data/ContactTime.rds")
-ContactEC <- readRDS("data/ContactTracingEducation.csv.rds")
-
+ContactEC <- readRDS("data/ContactTracingEducation.rds")
+ContactWeeklyCases <- readRDS("data/ContactTracingWeeklyCases.rds")
+ContactTracingWeeklyCumulative <- readRDS("data/ContactTracingWeeklyCumulative.rds")
+Settings <- readRDS("data/Settings.rds")
 
 ###############################################.
 ## Data lists --------------------------------------------------------------
@@ -125,14 +127,18 @@ data_list <- c("Positive Cases" = "LabCases",
                "Scottish Ambulance Service" = "SAS",
                "Cases and Testing among children and young people" = "Child")
 
-#HB_list <- c(sort(unique(ContactTime$`NHS Board`)))
-CTdata_list_chart_tab <- c ("Contact Tracing time performance %", 
-                            "Contact Tracing time performance cases")
+
+ CTdata_list_chart_tab <- c ("Contact Tracing time performance %", 
+                             "Contact Tracing time performance cases")
 
 
 CTdata_list_data_tab <- c ("Contact Tracing Weekly by Health Board" = "ContactTracing", 
                            "Contact Tracing time performance measures" = "ContactTime",
-                           "Cases reporting an occupation in the Education and Childcare sector" = "ContactEC")
+                           "Cases reporting an occupation in the Education and Childcare sector" = "ContactEC",
+                           "Cases recorded in contact tracing software" = "ContactWeeklyCases",
+                           "Cumulative cases recorded in contact tracing software" ="ContactTracingWeeklyCumulative")
+
+SettingList <- c(sort(unique(Settings$`Setting Type`)))
 
 
 #extra choices for data tables

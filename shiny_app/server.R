@@ -25,7 +25,9 @@ function(input, output, session) {
   # Contact Tracing Data tab  
   source(file.path("contact_tracing_data_tab.R"),  local = TRUE)$value  
   
-  
+  ###############################################.
+  # Settings tab  
+  source(file.path("setting_tab.R"),  local = TRUE)$value  
   ###############################################.
   
   ## Observe events to improve navigation between tabs of the app
