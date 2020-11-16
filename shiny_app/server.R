@@ -28,6 +28,11 @@ function(input, output, session) {
   ###############################################.
   # Settings tab  
   source(file.path("setting_tab.R"),  local = TRUE)$value  
+  
+  ###############################################.
+  # Settings tab  
+  source(file.path("health_care_workers_data_tab.R"),  local = TRUE)$value
+  
   ###############################################.
   
   ## Observe events to improve navigation between tabs of the app

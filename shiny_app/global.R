@@ -115,6 +115,11 @@ ContactWeeklyCases <- readRDS("data/ContactTracingWeeklyCases.rds")
 ContactTracingWeeklyCumulative <- readRDS("data/ContactTracingWeeklyCumulative.rds")
 Settings <- readRDS("data/Settings.rds")
 
+# Health Care Workers
+HealthCareWorkerCancer <- readRDS("data/HCW_SpecialistCancer.rds")
+HealthCareWorkerElderly <- readRDS("data/HCW_CareOfElderly.rds")
+HealthCareWorkerPsychiatry <- readRDS("data/HCW_Psychiatry.rds")
+
 ###############################################.
 ## Data lists --------------------------------------------------------------
 
@@ -139,6 +144,10 @@ CTdata_list_data_tab <- c ("Contact Tracing Weekly by Health Board" = "ContactTr
                            "Cumulative cases recorded in contact tracing software" ="ContactTracingWeeklyCumulative")
 
 SettingList <- c(sort(unique(Settings$`Setting Type`)))
+
+HCWdata_list_data_tab <- c ("Specialist Cancer Wards and Treatment Areas" = "HealthCareWorkerCancer",
+                            "Long Stay Care of the Elderly" = "HealthCareWorkerElderly",
+                            "Long Stay Old Age Psychiatry and Learning Disability Wards" = "HealthCareWorkerPsychiatry")
 
 
 #extra choices for data tables
