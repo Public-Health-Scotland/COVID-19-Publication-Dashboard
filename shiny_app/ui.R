@@ -226,7 +226,35 @@ tabPanel(
             uiOutput("Setting_explorer")  
             )# mainPanel bracket
   
-)# tabpanel bracket
+),# tabpanel bracket
+
+#################### Health Care Worker Data ----
+tabPanel(
+  title = "Health Care Worker Data",
+  icon = icon("table"),
+  value = "HCWtable",
+  p("This sections allow you to view data on the number of health care workers being tested each week within
+     each Health Board. This section is being developed and will show further information/graphics 
+    on these statistics. Please note these are developmental statistics and ongoing work is in place 
+    to improve recording of data to increase accuracy 
+    (further information available in the metadata). 
+    You can use the filters to select the data you are interested in.
+    You can also download the data as a csv using the download button."), 
+  
+  column(8,        
+         selectInput("HCWdata_select", "Select the data you want to explore.",
+                     choices = HCWdata_list_data_tab)),      
+  column(4, downloadButton('HCWdownload_table_csv', 'Download data'),
+         fluidRow(br()),
+         actionButton(inputId='ab1', label='Metadata',
+                      icon = icon("th"), 
+                      onclick ="window.open('https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/',
+                        '_blank')")),
+  
+  mainPanel(width = 12,
+            DT::dataTableOutput("HCWtable_filtered"))
+  )# tabpanel bracket
+
 ## End -----------
 
 ) # page bracket

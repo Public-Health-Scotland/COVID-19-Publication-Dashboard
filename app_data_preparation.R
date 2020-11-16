@@ -163,3 +163,15 @@ saveRDS(ContactTracing, "data/ContactTracingWeekly.rds")
 
 ContactTime <- read_csv("data/ContactTime.csv")
 saveRDS(ContactTime, "data/ContactTime.rds")
+
+
+# Health Care Workers -----------------------------------------------------
+
+HCW_SpecialistCancer <- read_csv("data/HCW_SpecialistCancer.csv")
+saveRDS(HCW_SpecialistCancer, "data/HCW_SpecialistCancer.rds")
+
+HCW_CareOfElderly <- read_csv("data/HCW_CareOfElderly.csv")
+saveRDS(HCW_CareOfElderly, "data/HCW_CareOfElderly.rds")
+
+HCW_Psychiatry <- read_csv("data/HCW_Psychiatry.csv")
+saveRDS(HCW_Psychiatry, "data/HCW_Psychiatry.rds")
