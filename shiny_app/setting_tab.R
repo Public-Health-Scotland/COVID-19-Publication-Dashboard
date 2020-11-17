@@ -5,8 +5,8 @@ observeEvent(input$btn_dataset_modal3,
 
                showModal(modalDialog(
                  title = "What is the data source?",
-                 p("XXXXXXXXXXXX"),
-                 p("XXXXXXXXXXXXXXXXXXXXXXXX. ") ,
+                 p("Case Management System"),
+                 p("Contacting Tracing data is extracted from the Case management System on the Sunday at 8pm prior to publication. ") ,
                  size = "m",
                  easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)"))))
 
@@ -16,7 +16,7 @@ observeEvent(input$btn_dataset_modal3,
 output$Setting_explorer <- renderUI({
 
    tagList(h3("Setting"),
-          actionButton("btn_dataset_modal3", paste0("Data source: XXXXXXXXXX"), icon = icon('question-circle'))) 
+          actionButton("btn_dataset_modal3", paste0("Data source: Data source: Case Management System"), icon = icon('question-circle'))) 
           
   # Charts and rest of UI
   if (input$Setting_select == "All setting types") { #  

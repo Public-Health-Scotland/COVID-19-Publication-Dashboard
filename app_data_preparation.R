@@ -165,6 +165,39 @@ ContactTime <- read_csv("data/ContactTime.csv")
 saveRDS(ContactTime, "data/ContactTime.rds")
 
 
+#Cases reporting an occupation in the Education and Childcare sector
+ContactEC <- read_csv("data/ContactTracingEducation.csv")
+saveRDS(ContactEC, "data/ContactTracingEducation.rds")
+
+
+ContactTracingWeeklyCases <- read_csv("data/ContactTracingWeeklyCases.csv")
+saveRDS(ContactTracingWeeklyCases, "data/ContactTracingWeeklyCases.rds")
+
+
+ContactTracingWeeklyCumulative <- read_csv("data/ContactTracingWeeklyCumulative.csv")
+saveRDS(ContactTracingWeeklyCumulative, "data/ContactTracingWeeklyCumulative.rds")
+
+
+
+# Settings ----------------------------------------------------------------
+
+Settings <- read_csv("data/Settings.csv")
+
+#Settings <- read_csv(file.choose())
+
+AllSettings <- Settings %>% 
+  select(-`Setting Location`) %>% 
+  group_by(week_ending, `Setting Type`) %>% 
+  summarise(`Number of  Cases` = sum(`Number of  Cases`)) %>% 
+  rename(`Setting Location` = `Setting Type`) %>% 
+  mutate(`Setting Type` = "All setting types")
+
+Settings <- Settings %>% 
+  full_join(AllSettings) %>% 
+  arrange(desc(`Setting Type`, `Number of  Cases`))
+
+saveRDS(Settings, "data/Settings.rds")
+
 # Health Care Workers -----------------------------------------------------
 
 HCW_SpecialistCancer <- read_csv("data/HCW_SpecialistCancer.csv")

@@ -10,9 +10,11 @@ HCWdata_table <- reactive({  # Change dataset depending on what user selected
                        "HealthCareWorkerElderly" = HealthCareWorkerElderly,
                        "HealthCareWorkerPsychiatry" = HealthCareWorkerPsychiatry)
   
-  table_data %>% 
-    mutate_if(is.numeric, round, 1) %>% 
-    mutate_if(is.character, as.factor)
+  
+  table_data <- table_data
+  # table_data %>% 
+  #   mutate_if(is.numeric, round, 1) %>% 
+  #   mutate_if(is.character, as.factor)
 })
 
 

@@ -4,7 +4,7 @@
 ## Data extraction dates ----
 
 #publication date
-pub_date <- as.Date("2020-11-04")
+pub_date <- as.Date("2020-11-18")
 
 Labcases_date <- format(pub_date - 3, "%d %B %Y")
 ICU_date <- format(pub_date - 4, "%d %B %Y")
@@ -133,7 +133,7 @@ data_list <- c("Positive Cases" = "LabCases",
                "Cases and Testing among children and young people" = "Child")
 
 
- CTdata_list_chart_tab <- c ("Contact Tracing time performance %", 
+CTdata_list_chart_tab <- c ("Contact Tracing time performance %", 
                              "Contact Tracing time performance cases")
 
 
