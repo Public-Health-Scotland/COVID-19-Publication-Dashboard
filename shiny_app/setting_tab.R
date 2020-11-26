@@ -37,10 +37,17 @@ output$SettingLocation <- renderPlotly({plot_settings_chart(Settings, data_name 
 
 
 ## Data downloads ----
+
+Settings_data_download <- reactive({
+  Settings
+})
 # For the charts at the moment the data download is for the overall one,
 output$download_setting_data <- downloadHandler(
   filename ="data_extract.csv",
   content = function(file) {
-    write_csv(Settings(),
+    write_csv(Settings_data_download(),
               file)
     })
+
+
+

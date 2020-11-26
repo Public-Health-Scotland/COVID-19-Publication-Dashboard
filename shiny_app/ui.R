@@ -272,13 +272,18 @@ tagList(  #needed for shinyjs
       title = "Health Care Worker Data",
       icon = icon("table"),
       value = "HCWtable",
-      p("This sections allow you to view data on the number of health care workers being tested each week within
+      p("This sections allow you to view data on the number of health care workers being tested* each week within
         each Health Board. This section is being developed and will show further information/graphics 
         on these statistics. Please note these are developmental statistics and ongoing work is in place 
-        to improve recording of data to increase accuracy 
-        (further information available in the metadata). 
-        You can use the filters to select the data you are interested in.
-        You can also download the data as a csv using the download button."), 
+        to improve recording of data to increase accuracy (further information available in the metadata)." ),
+      p("*the number of staff tested excludes those who have declined to test and those who have not been tested for operational reasons."),
+      p("Please note NHS Borders and NHS Fife advised they do not have any Long Stay Care of the Elderly units that meet the 3 month criteria NHS Highland, 
+        NHS Tayside, NHS Orkney, NHS Shetland, and NHS Western Isles advised they do not have any long stay care of the elderly wards. NHS Glasgow advised that over recent 
+        years they have significantly reduced the number of long stay beds for older people and invested in care at home and care homes hence the low number of wards affected 
+        compared to other NHS Boards. NHS Lanarkshire include one of the Care of the Elderly Units for reporting purposes. 
+        NHS Lanarkshire confirmed this does not represent a full week of testing since some was done after the reporting period."),
+       p("You can use the filters to select the data you are interested in.
+        You can also download the data as a csv using the download button."),
       
       column(8,        
              selectInput("HCWdata_select", "Select the data you want to explore.",

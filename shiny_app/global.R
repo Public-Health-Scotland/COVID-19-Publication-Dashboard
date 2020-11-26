@@ -4,7 +4,7 @@
 ## Data extraction dates ----
 
 #publication date
-pub_date <- as.Date("2020-11-18")
+pub_date <- as.Date("2020-11-25")
 
 Labcases_date <- format(pub_date - 3, "%d %B %Y")
 ICU_date <- format(pub_date - 4, "%d %B %Y")

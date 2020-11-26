@@ -193,7 +193,8 @@ output$data_explorer <- renderUI({
                                                                   stay in hospital.",
                           input$measure_select == "NHS24" ~ "Since 15 September figures for the COVID helpline include calls made to the new flu helpline. 
                                                               In late September, the first batch of flu vaccination letters sent to those eligible by NHS Health Boards included the coronavirus number. 
-                                                              The peaks in calls are consistent with the timing of those letters being sent.") 
+                                                              The peaks in calls are consistent with the timing of those letters being sent.",
+                          input$measure_select == "AssessmentHub" ~  "Please note that data is provisional and may be updated in future publications as further information is supplied and validated from health boards.")
   
   # data sources
   data_source <- case_when(input$measure_select == "LabCases" ~ "ECOSS",
@@ -270,9 +271,9 @@ output$data_explorer <- renderUI({
             plot_box(OutcomesTitle, "NHS24_community"))
     
   } else if (input$measure_select == "AssessmentHub") { # Assessment Hub
-    cut_charts(title= "Daily number of COVID-19 consultations", 
-                          source = data_source, data_name ="AssessmentHub")
-    
+    cut_charts_subheading(title= "Daily number of COVID-19 consultations", 
+                          source = data_source, data_name = "AssessmentHub")
+ 
   } else if (input$measure_select == "SAS") { # SAS data
     c(cut_charts(title= "Daily attended incidents by Scottish Ambulance Service (suspected COVID-19)", 
                  source = data_source, data_name ="SAS"),
