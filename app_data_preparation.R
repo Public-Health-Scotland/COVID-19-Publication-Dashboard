@@ -208,3 +208,11 @@ saveRDS(HCW_CareOfElderly, "data/HCW_CareOfElderly.rds")
 
 HCW_Psychiatry <- read_csv("data/HCW_Psychiatry.csv")
 saveRDS(HCW_Psychiatry, "data/HCW_Psychiatry.rds")
+
+# Ethnicity -----------------------------------------------------------------
+
+Ethnicity <- read_csv("data/Ethnicity.csv")
+saveRDS(Ethnicity, "data/Ethnicity.rds")
+
+Ethnicity_Chart <- read_csv("data/Ethnicity_Chart.csv")
+saveRDS(Ethnicity_Chart, "data/Ethnicity_Chart.rds")

@@ -597,3 +597,54 @@ plot_settings_chart <- function(dataset, data_name, settingdata, yaxis_title, ar
 }
 
 ### END
+
+## Ethnicity Chart ------------------------------------------------------------
+
+plot_overall_chartEthnicity <- function(dataset, data_name, yaxis_title, area = T) {
+  
+  
+  trend_data <- Ethnicity_Chart
+  
+  yaxis_title <- "Inpatient Admissions"
+  
+  yaxis_plots[["title"]] <- yaxis_title
+  
+  #Text for tooltip
+  tooltip_trend <- c(paste0("Date: ", format(trend_data$`Date`, "%d %b %y"),
+                            "<br>",yaxis_title, " White: ", trend_data$`White_c`,
+                            "<br>",yaxis_title, " Black/Caribbean/African: ", trend_data$`Black/Caribbean/African_c`,
+                            "<br>",yaxis_title, " South Asian: ", trend_data$`South Asian_c`,
+                            "<br>",yaxis_title, " Chinese: ", trend_data$`Chinese_c`,
+                            "<br>",yaxis_title, " Other: ", trend_data$`Other_c`,
+                            "<br>",yaxis_title, " Not Available: ", trend_data$`Not Available_c`))
+  
+  
+  #Creating time trend plot
+  plot_ly(data = trend_data, x = ~`Date`) %>%
+    add_lines(y = ~`White_c`, line = list(color = pal_ETH[1]),
+              text = tooltip_trend, hoverinfo="text",
+              name = "White") %>%
+    add_lines(y = ~trend_data$`Black/Caribbean/African_c`, line = list(color = pal_ETH[2]),
+              text = tooltip_trend, hoverinfo = "text",
+              name = "Black/Caribbean/African") %>%
+    add_lines(y = ~trend_data$`South Asian_c`, line = list(color = pal_ETH[3]),
+              text = tooltip_trend, hoverinfo = "text",
+              name = "South Asian") %>%
+    add_lines(y = ~trend_data$`Chinese_c`, line = list(color = pal_ETH[4]),
+              text = tooltip_trend, hoverinfo = "text",
+              name = "Chinese") %>%
+    add_lines(y = ~trend_data$`Other_c`, line = list(color = pal_ETH[5]),
+              text = tooltip_trend, hoverinfo = "text",
+              name = "Other") %>%
+    add_lines(y = ~trend_data$`Not Available_c`, line = list(color = pal_ETH[6]),
+              text = tooltip_trend, hoverinfo = "text",
+              name = "Not Available") %>%
+    #Layout
+    layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
+           yaxis = yaxis_plots, xaxis = xaxis_plots,
+           legend = list(x = 100, y = 0.5)) %>% #position of legend
+    # leaving only save plot button
+    config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
+}
+
+
