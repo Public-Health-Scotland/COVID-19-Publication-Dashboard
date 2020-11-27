@@ -297,9 +297,56 @@ tagList(  #needed for shinyjs
       
       mainPanel(width = 12,
                 DT::dataTableOutput("HCWtable_filtered"))
-      )# tabpanel bracket
+    ),# tabpanel bracket
+    #################### Ethnicity Chart ----
     
-    ## End -----------
+    tabPanel(
+      title = "Ethnicity",
+      icon = icon("address-book"),
+      value = "Ethnicity_Chart",
+      
+      # column(4,
+      #        downloadButton('download_setting_data', 'Download data'),
+      #        fluidRow(br()),
+      #        actionButton(inputId='ab6', label='Metadata',
+      #                     icon = icon("th"),
+      #                     onclick ="window.open('https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/',
+      #                     '_blank')")),
+      
+      mainPanel(width = 12,
+                uiOutput("Ethnicity_explorer"))
+      
+    ),# tabpanel bracket
+    
+    
+    
+    
+    
+    
+    
+    
+        
+    #################### Ethnicity Table Data ----
+    tabPanel(
+      title = "Ethnicity - Data",
+      icon = icon("table"),
+      value = "Ethnicitytable",
+      p("This sections allow you to view data on the number and percentage of inpatient admissions by ethnicity each month. 
+        This section is being developed and will show further information/graphics 
+        on these statistics. " ),
+      p("You can download the data as a csv using the download button."),
+      column(4, downloadButton('ETHdownload_table_csv', 'Download data'),
+             fluidRow(br()),
+             actionButton(inputId='ab5', label='Metadata',
+                          icon = icon("th"), 
+                          onclick ="window.open('https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/',
+                          '_blank')")),
+      
+      mainPanel(width = 12,
+                DT::dataTableOutput("ETHtable"))
+    )# tabpanel bracket
+    
+
     ## End -----------
     
       ) # page bracket

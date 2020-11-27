@@ -120,8 +120,12 @@ HealthCareWorkerCancer <- readRDS("data/HCW_SpecialistCancer.rds")
 HealthCareWorkerElderly <- readRDS("data/HCW_CareOfElderly.rds")
 HealthCareWorkerPsychiatry <- readRDS("data/HCW_Psychiatry.rds")
 
+# Ethnicity
+Ethnicity <- readRDS("data/Ethnicity.rds")
+Ethnicity_Chart <- readRDS("data/Ethnicity_Chart.rds")
+
 ###############################################.
-## Data lists --------------------------------------------------------------
+## Data lists -------------------------------------------------------------- 
 
 
 data_list <- c("Positive Cases" = "LabCases",
@@ -133,8 +137,9 @@ data_list <- c("Positive Cases" = "LabCases",
                "Cases and Testing among children and young people" = "Child")
 
 
+
 CTdata_list_chart_tab <- c ("Contact Tracing time performance %", 
-                             "Contact Tracing time performance cases")
+                            "Contact Tracing time performance cases")
 
 
 CTdata_list_data_tab <- c ("Contact Tracing Weekly by Health Board" = "ContactTracing", 
@@ -142,6 +147,10 @@ CTdata_list_data_tab <- c ("Contact Tracing Weekly by Health Board" = "ContactTr
                            "Cases reporting an occupation in the Education and Childcare sector" = "ContactEC",
                            "Cases recorded in contact tracing software" = "ContactWeeklyCases",
                            "Cumulative cases recorded in contact tracing software" ="ContactTracingWeeklyCumulative")
+
+#ETHdata_list_chart_tab <- c ("Inpatient Admissions per Ethnicity %", 
+#                            "Inpatient Admissions per Ethnicity cases")
+
 
 SettingList <- c(sort(unique(Settings$`Setting Type`)))
 
@@ -191,6 +200,9 @@ pal_child <- c("#3F3685", "#9B4393", "#0078D4", "#83BB26", "#C73918", "#6B5C85")
 
 #for contact tracing charts
 pal_CT <- c('#0078D4', '#3393DD', '#80BCEA',  '#B3D7F2','#000000')
+
+#for contact tracing charts
+pal_ETH <- c('#0078D4', '#3393DD', '#80BCEA',  '#B3D7F2','#000000')
 
 #for SIMD
 pal_simd <- c('#0078D4', '#DFDDE3', '#DFDDE3', '#DFDDE3', '#83BB26')

@@ -34,6 +34,14 @@ function(input, output, session) {
   source(file.path("health_care_workers_data_tab.R"),  local = TRUE)$value
   
   ###############################################.
+  # Ethnicity tab  
+  source(file.path("ethnicity_data_tab.R"),  local = TRUE)$value
+  
+  ###############################################.
+  # Ethnicity chart tab  
+  source(file.path("ethnicity_tab.R"),  local = TRUE)$value
+  
+  ###############################################.
   
   ## Observe events to improve navigation between tabs of the app
   # To jump to data pages    
