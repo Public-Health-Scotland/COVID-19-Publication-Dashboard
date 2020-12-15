@@ -24,17 +24,12 @@ output$EthnicityChart <- renderPlotly({plot_overall_chartEthnicity(Ethnicity_Cha
 
 
 ## Data downloads ----
-
-# Ethnicity_data_download <- reactive({
-#   Ethnicity
-# })
-# # For the charts at the moment the data download is for the overall one,
-# output$download_setting_data <- downloadHandler(
-#   filename ="data_extract.csv",
-#   content = function(file) {
-#     write_csv(Ethnicity_data_download(),
-#               file)
-#   })
-
+# For the charts at the moment the data download is for the overall one,
+output$download_ethnicity_data <- downloadHandler(
+  filename ="Ethnicity_extract.csv",
+  content = function(file) {
+    write_csv(Ethnicity,
+              file)
+  })
 
 

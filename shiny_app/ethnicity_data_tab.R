@@ -27,6 +27,6 @@ output$ETHdownload_table_csv <- downloadHandler(
   filename ="ETHdata_extract.csv",
   content = function(file) {
     # This downloads only the data the user has selected using the table filters
-    write_csv(Ethnicity()[input[["ETHtable_filtered_rows_all"]], ], file)
+    write_csv(Ethnicity_Chart, file)
   }
 )
