@@ -4,16 +4,16 @@
 ## Data extraction dates ----
 
 #publication date
-pub_date <- as.Date("2020-11-25")
+pub_date <- as.Date("2020-12-16")
 
 Labcases_date <- format(pub_date - 3, "%d %B %Y")
 ICU_date <- format(pub_date - 4, "%d %B %Y")
 NHS24_date <- format(pub_date - 3, "%d %B %Y")
 ICU_date <- format(pub_date - 3, "%d %B %Y")
 
-SAS_date <- format(pub_date - 3, "%d %B %Y")
+SAS_date <- format(pub_date - 27, "%d %B %Y")
 
-AssessmentHub_date <- format(pub_date - 6, "%d %B %Y")
+AssessmentHub_date <- format(pub_date - 20, "%d %B %Y")
 Admissions_date <- format(pub_date - 5, "%d %B %Y")
 
 #ECOSS, for LabCases
@@ -130,6 +130,7 @@ Ethnicity_Chart <- readRDS("data/Ethnicity_Chart.rds")
 
 data_list <- c("Positive Cases" = "LabCases",
                "Admissions" = "Admissions",
+               "Admissions by Ethnicity" = "Ethnicity_Chart",
                "ICU Admissions" = "ICU",
                "NHS24 Contacts" = "NHS24",
                "Community Hubs and Assessment Centres" = "AssessmentHub",
@@ -148,9 +149,6 @@ CTdata_list_data_tab <- c ("Contact Tracing Weekly by Health Board" = "ContactTr
                            "Cases recorded in contact tracing software" = "ContactWeeklyCases",
                            "Cumulative cases recorded in contact tracing software" ="ContactTracingWeeklyCumulative")
 
-#ETHdata_list_chart_tab <- c ("Inpatient Admissions per Ethnicity %", 
-#                            "Inpatient Admissions per Ethnicity cases")
-
 
 SettingList <- c(sort(unique(Settings$`Setting Type`)))
 
@@ -166,6 +164,7 @@ data_list_data_tab <- c("Positive Cases" = "LabCases",
                         "Admissions" = "Admissions",
                         "Admissions by age" = "Admissions_AgeSex",
                         "Admissions by deprivation" = "Admissions_SIMD",
+                        "Admissions by ethnicity" = "Ethnicity",
                         "ICU Admissions" = "ICU",
                         "ICU Admissions by age" = "ICU_AgeSex",
                         "NHS24 Contacts" = "NHS24",
@@ -202,7 +201,7 @@ pal_child <- c("#3F3685", "#9B4393", "#0078D4", "#83BB26", "#C73918", "#6B5C85")
 pal_CT <- c('#0078D4', '#3393DD', '#80BCEA',  '#B3D7F2','#000000')
 
 #for contact tracing charts
-pal_ETH <- c('#0078D4', '#3393DD', '#80BCEA',  '#B3D7F2','#000000')
+pal_ETH <- c('#3F3685', '#9B4393', '#0078D4',  '#83BB26','#C73918')
 
 #for SIMD
 pal_simd <- c('#0078D4', '#DFDDE3', '#DFDDE3', '#DFDDE3', '#83BB26')
