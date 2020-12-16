@@ -187,13 +187,12 @@ output$data_explorer <- renderUI({
   agesex_title <- paste0(dataset, " per 100,000 population by age \n(", start_date, " to ", end_date, ")")
   simd_title <- paste0(dataset, " by deprivation category (SIMD) \n(", start_date, " to ", end_date, ")")
   
-  subheading <- case_when(input$measure_select == "Admissions" ~ "Admissions data in the dashboard will be updated daily this week and may differ slightly to that published in the written report.
-                                                                  COVID-19 related admissions have been identified as the following: A patient may have tested positive 
+  subheading <- case_when(input$measure_select == "Admissions" ~ "COVID-19 related admissions have been identified as the following: A patient may have tested positive 
                                                                   for COVID-19 14 days prior to admission to hospital, on the day of their admission or during their 
                                                                   stay in hospital.",
-                          input$measure_select == "NHS24" ~ "Since 15 September figures for the COVID helpline include calls made to the new flu helpline. 
-                                                              In late September, the first batch of flu vaccination letters sent to those eligible by NHS Health Boards included the coronavirus number. 
-                                                              The peaks in calls are consistent with the timing of those letters being sent.",
+                          input$measure_select == "NHS24" ~ "The launch of the Redesign of Urgent Care programme will see an increase in NHS 24 activity from the 1st of December onwards as a result of the launch of the programme. 
+                                                            For more information see: https://www.gov.scot/policies/healthcare-standards/unscheduled-care/. Since 15 September figures for the COVID helpline include calls made to the new flu helpline.
+                                                            In late September, the first batch of flu vaccination letters sent to those eligible by NHS Health Boards included the coronavirus number.The peaks in calls are consistent with the timing of those letters being sent.",
                           input$measure_select == "AssessmentHub" ~  "Please note that data is provisional and may be updated in future publications as further information is supplied and validated from health boards.")
   
   # data sources
