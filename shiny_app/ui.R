@@ -17,20 +17,6 @@ tagList(  #needed for shinyjs
              icon = icon("info-circle"),
              value = "intro",
              h3("COVID-19 Statistical Report"),
-             h3("Note"),
-             p("Public Health Scotland (PHS) undertook a review of the index case time analysis figures within the Contact Management System (CMS) 
-               as part of a data quality assurance exercise. A coding error was identified which has now been rectified and the previously published figures 
-               have been revised on 6 November 2020. The impact of the error is shown in a ",
-               tags$a(
-                 href = "https://beta.isdscotland.org/media/6344/revision_document.xlsx",
-                 "detailed excel document",
-                 class = "externallink"),
-               " which presents the previously published index case numbers and percentages and the revised index case numbers and percentages. 
-               In each table (4,5 and 6) the weekly proportion within 24 hours has reduced and 24-48, 48-72 and over 72 hours has increased. 
-               The total number of index cases remains unchanged. This impacts only on data included within this publication and no other outputs produced 
-               by PHS are affected."),
-             p("The coding error has not affected any strategic or operational decision-making on the contact tracing programme."),
-             
              h3("Background"),
              p("Since the start of the COVID-19 outbreak Public Health Scotland (PHS) has been working closely 
                with Scottish Government and health and care colleagues in supporting the surveillance and monitoring 
@@ -141,6 +127,7 @@ tagList(  #needed for shinyjs
       title = "Data",
       icon = icon("table"),
       value = "table",
+      p("Data from the Unscheduled Care Datamart (UCD) is not available this week due to an IT issue. This will be updated when available."),
       p("This section allows you to view the data in table format.
         You can use the filters to select the data you are interested in.
         You can also download the data as a csv using the download button.
@@ -157,25 +144,12 @@ tagList(  #needed for shinyjs
     ),# tabpanel bracket
     
     
-    # #################### Contact Tracing Charts ----
+    ##################### Contact Tracing Charts ----
     
     tabPanel(
       title = "Contact Tracing",
       icon = icon("address-book"),
       value = "contacttracing",
-      p("Public Health Scotland (PHS) undertook a review of the index case time analysis figures within the Contact Management System (CMS) 
-        as part of a data quality assurance exercise. A coding error was identified which has now been rectified and the previously published figures 
-        have been revised on 6 November 2020. The impact of the error is shown in a ",
-        tags$a(
-          href = "https://beta.isdscotland.org/media/6344/revision_document.xlsx",
-          "detailed excel document",
-          class = "externallink"),
-        " which presents the previously published index case numbers and percentages and the revised index case numbers and percentages. 
-        In each table (4,5 and 6) the weekly proportion within 24 hours has reduced and 24-48, 48-72 and over 72 hours has increased. 
-        The total number of index cases remains unchanged. This impacts only on data included within this publication and no other outputs produced 
-        by PHS are affected."),
-      p("The coding error has not affected any strategic or operational decision-making on the contact tracing programme."),
-      
       wellPanel(
         column(4,
                div(title = "Select the measure you want to view.", # tooltip
@@ -211,22 +185,10 @@ tagList(  #needed for shinyjs
         in a table format. This section is being developed and will show further information/graphics 
         on these statistics. Please note these are developmental statistics and ongoing work is in place 
         to improve recording and use of fields within the CMS to increase accuracy 
-        (further information available in the metadata). 
-        You can use the filters to select the data you are interested in.
+        (further information available in the metadata)."),
+      p("Please note that during a data quality exercise some historic figures have been revised."),
+      p("You can use the filters to select the data you are interested in.
         You can also download the data as a csv using the download button."),
-      
-      p("Public Health Scotland (PHS) undertook a review of the index case time analysis figures within the Contact Management System (CMS) 
-        as part of a data quality assurance exercise. A coding error was identified which has now been rectified and the previously published figures 
-        have been revised on 6 November 2020. The impact of the error is shown in a ",
-        tags$a(
-          href = "https://beta.isdscotland.org/media/6344/revision_document.xlsx",
-          "detailed excel document",
-          class = "externallink"),
-        " which presents the previously published index case numbers and percentages and the revised index case numbers and percentages. 
-        In each table (4,5 and 6) the weekly proportion within 24 hours has reduced and 24-48, 48-72 and over 72 hours has increased. 
-        The total number of index cases remains unchanged. This impacts only on data included within this publication and no other outputs produced 
-        by PHS are affected."),
-      p("The coding error has not affected any strategic or operational decision-making on the contact tracing programme."),
       
       column(8,        
              selectInput("CTdata_select", "Select the data you want to explore.",
@@ -277,10 +239,11 @@ tagList(  #needed for shinyjs
         on these statistics. Please note these are developmental statistics and ongoing work is in place 
         to improve recording of data to increase accuracy (further information available in the metadata)." ),
       p("*the number of staff tested excludes those who have declined to test and those who have not been tested for operational reasons."),
-      p("Please note NHS Borders and NHS Fife advised they do not have any Long Stay Care of the Elderly units that meet the 3 month criteria NHS Highland, 
-        NHS Tayside, NHS Orkney, NHS Shetland, and NHS Western Isles advised they do not have any long stay care of the elderly wards. NHS Glasgow advised that over recent 
-        years they have significantly reduced the number of long stay beds for older people and invested in care at home and care homes hence the low number of wards affected 
-        compared to other NHS Boards. NHS Lanarkshire include one of the Care of the Elderly Units for reporting purposes. 
+      p("Please note some of the data is suppressed due to disclosure methodology being applied to protect patient/staff confidentiality"),
+      p("Please note NHS Borders, NHS Fife and NHS Forth Valley advised they do not have any Long Stay Care of the Elderly units 
+        that meet the 3 month criteria NHS Highland, NHS Tayside, NHS Orkney, NHS Shetland, and NHS Western Isles advised they do not have any long stay care of the elderly wards. 
+        NHS Greater Glasgow & Clyde advised that over recent years they have significantly reduced the number of long stay beds for older people and invested in care at home and care homes 
+        hence the low number of wards affected compared to other NHS Boards. NHS Lanarkshire include one of the Care of the Elderly Units for reporting purposes. 
         NHS Lanarkshire confirmed this does not represent a full week of testing since some was done after the reporting period."),
        p("You can use the filters to select the data you are interested in.
         You can also download the data as a csv using the download button."),
@@ -297,9 +260,30 @@ tagList(  #needed for shinyjs
       
       mainPanel(width = 12,
                 DT::dataTableOutput("HCWtable_filtered"))
-      )# tabpanel bracket
+    )# tabpanel bracket
+    #################### Ethnicity Chart ----
     
-    ## End -----------
+    # tabPanel(
+    #   title = "Ethnicity",
+    #   icon = icon("address-book"),
+    #   value = "Ethnicity_Chart",
+    #   
+    #   column(4,
+    #          downloadButton('download_ethnicity_data', 'Download data'),
+    #          fluidRow(br()),
+    #          actionButton(inputId='ab6', label='Metadata',
+    #                       icon = icon("th"),
+    #                       onclick ="window.open('https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/',
+    #                       '_blank')")),
+    #   
+    #   mainPanel(width = 12,
+    #             uiOutput("Ethnicity_explorer"))
+    #   
+    # )# tabpanel bracket
+   
+ 
+    
+
     ## End -----------
     
       ) # page bracket
