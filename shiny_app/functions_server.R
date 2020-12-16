@@ -173,19 +173,6 @@ plot_overall_chartAssessmentHub <- function(dataset, data_name, yaxis_title, are
 
 
 
-## Function for filtering ----
-
-# # Function to filter the datasets for the overall charts and download data based on user input
-# filter_data <- function(dataset, area = T) {
-#   if (area == T) {
-#     dataset 
-#      } else { 
-#     dataset %>% 
-#       filter(category == "All")
-#   }
-# }
-
-
 ######################################################################.
 #Function to create plot when no data available
 plot_nodata <- function(height_plot = 450, text_nodata = "Data not available") {
@@ -422,10 +409,10 @@ plot_nhs24_community_chart <- function(dataset, data_name, yaxis_title, area = T
 ## Child Charts ------------------------------------------------------------
 
 plot_overall_chartChild <- function(dataset, data_name, childdata, yaxis_title, area = T) {
-
+  
   #Filtering dataset to include only overall figures
- 
- 
+  
+  
   yaxis_title <- case_when(childdata == "ChildPositive" ~ "Number of patients tested positive",
                            childdata == "ChildNegative" ~"Number of patients tested negative" ,
                            childdata == "ChildPer" ~ "% of patients testing positive")
@@ -483,12 +470,12 @@ plot_contacttrace_Per_chart <- function(dataset, data_name, CTdata, yaxis_title,
                            CTdata == "TestInterview" ~ "Test to interview completed" ,
                            CTdata == "CaseInterview" ~ "Case created to interview completed",
                            CTdata == "CaseClose" ~ "Case created to case closed")
-
+  
   # Filtering dataset to include only overall figures
   trend_data <- dataset %>% 
     filter(Measure == yaxis_title) %>% 
     mutate(`Hours taken` = fct_inorder(`Hours taken`))
- 
+  
   #Modifying standard layout
   yaxis_plots[["title"]] <- yaxis_title
   
@@ -513,7 +500,7 @@ plot_contacttrace_Per_chart <- function(dataset, data_name, CTdata, yaxis_title,
            barmode = "stack") %>% #split by group
     # leaving only save plot button
     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
-
+  
 }
 
 # cases stacked bar chart
@@ -564,7 +551,7 @@ plot_settings_chart <- function(dataset, data_name, settingdata, yaxis_title, ar
   # data_name <- Settings 
   # 
   yaxis_title <- case_when(data_name == "Settings" ~ "Number of Cases")
-
+  
   # Filtering dataset to include only overall figures
   trend_data <- dataset %>% 
     filter(`Setting Type` == input$Setting_select)  %>% 
@@ -595,5 +582,101 @@ plot_settings_chart <- function(dataset, data_name, settingdata, yaxis_title, ar
     # leaving only save plot button
     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
 }
+
+
+## Ethnicity Chart ------------------------------------------------------------
+
+plot_overall_chartEthnicity <- function(dataset, data_name, yaxis_title, area = T) {
+  trend_data <- Ethnicity_Chart
+  
+  yaxis_title <- "COVID-19 Admissions"
+  
+  yaxis_plots[["title"]] <- yaxis_title
+  
+  #Text for tooltip
+  tooltip_trend <- c(paste0("Month: ", trend_data$`Date`, " 2020",
+                            "<br>",yaxis_title, " - White: ", trend_data$`White_c`, " (", trend_data$`White_p`,"%)",
+                            "<br>",yaxis_title, " - Black/Caribbean/African: ", trend_data$`Black/Caribbean/African_c`," (", trend_data$`Black/Caribbean/African_p`,"%)",
+                            "<br>",yaxis_title, " - South Asian: ", trend_data$`South Asian_c`," (", trend_data$`South Asian_p`,"%)",
+                            "<br>",yaxis_title, " - Chinese: ", trend_data$`Chinese_c`," (", trend_data$`Chinese_p`,"%)",
+                            "<br>",yaxis_title, " - Other: ", trend_data$`Other_c`," (", trend_data$`Other_p`,"%)",
+                            "<br>",yaxis_title, " - Not Available: ", trend_data$`Not Available_c`," (", trend_data$`Not Available_p`,"%)"))
+  
+  
+  
+  #Creating time trend plot
+  plot_ly(data = trend_data, x = ~`Date`) %>%
+    add_lines(y = ~`White_c`, line = list(color = pal_ETH[1]),
+              text = tooltip_trend, hoverinfo="text",
+              name = "White") %>%
+    add_lines(y = ~trend_data$`Black/Caribbean/African_c`, line = list(color = pal_ETH[2]),
+              text = tooltip_trend, hoverinfo = "text",
+              name = "Black/Caribbean/African") %>%
+    add_lines(y = ~trend_data$`South Asian_c`, line = list(color = pal_ETH[3]),
+              text = tooltip_trend, hoverinfo = "text",
+              name = "South Asian") %>%
+    add_lines(y = ~trend_data$`Chinese_c`, line = list(color = pal_ETH[4]),
+              text = tooltip_trend, hoverinfo = "text",
+              name = "Chinese") %>%
+    add_lines(y = ~trend_data$`Other_c`, line = list(color = pal_ETH[5]),
+              text = tooltip_trend, hoverinfo = "text",
+              name = "Other") %>%
+    add_lines(y = ~trend_data$`Not Available_c`, line = list(color = pal_ETH[6]),
+              text = tooltip_trend, hoverinfo = "text",
+              name = "Not Available") %>%
+    #Layout
+    layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
+           yaxis = yaxis_plots, xaxis = xaxis_plots,
+           legend = list(x = 100, y = 0.5)) %>% #position of legend
+    # leaving only save plot button
+    config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
+}
+
+plot_overall_chartEthnicityPercent <- function(dataset, data_name, yaxis_title, area = T) {
+  trend_data <- Ethnicity_Chart
+  
+  yaxis_title <- "% of COVID-19 Admissions"
+  
+  yaxis_plots[["title"]] <- yaxis_title
+  
+  #Text for tooltip
+  tooltip_trend <- c(paste0("Month: ", trend_data$`Date`, " 2020",
+                            "<br>COVID-19 Admissions -  White: ", trend_data$`White_c`, " (", trend_data$`White_p`,"%)",
+                            "<br>COVID-19 Admissions -  Black/Caribbean/African: ", trend_data$`Black/Caribbean/African_c`," (", trend_data$`Black/Caribbean/African_p`,"%)",
+                            "<br>COVID-19 Admissions -  South Asian: ", trend_data$`South Asian_c`," (", trend_data$`South Asian_p`,"%)",
+                            "<br>COVID-19 Admissions -  Chinese: ", trend_data$`Chinese_c`," (", trend_data$`Chinese_p`,"%)",
+                            "<br>COVID-19 Admissions -  Other: ", trend_data$`Other_c`," (", trend_data$`Other_p`,"%)",
+                            "<br>COVID-19 Admissions -  Not Available: ", trend_data$`Not Available_c`," (", trend_data$`Not Available_p`,"%)"))
+  
+  
+  #Creating time trend plot
+  plot_ly(data = trend_data, x = ~`Date`) %>%
+    add_lines(y = ~`White_p`, line = list(color = pal_ETH[1]),
+              text = tooltip_trend, hoverinfo="text",
+              name = "White") %>%
+    add_lines(y = ~trend_data$`Black/Caribbean/African_p`, line = list(color = pal_ETH[2]),
+              text = tooltip_trend, hoverinfo = "text",
+              name = "Black/Caribbean/African") %>%
+    add_lines(y = ~trend_data$`South Asian_p`, line = list(color = pal_ETH[3]),
+              text = tooltip_trend, hoverinfo = "text",
+              name = "South Asian") %>%
+    add_lines(y = ~trend_data$`Chinese_p`, line = list(color = pal_ETH[4]),
+              text = tooltip_trend, hoverinfo = "text",
+              name = "Chinese") %>%
+    add_lines(y = ~trend_data$`Other_p`, line = list(color = pal_ETH[5]),
+              text = tooltip_trend, hoverinfo = "text",
+              name = "Other") %>%
+    add_lines(y = ~trend_data$`Not Available_p`, line = list(color = pal_ETH[6]),
+              text = tooltip_trend, hoverinfo = "text",
+              name = "Not Available") %>%
+    #Layout
+    layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
+           yaxis = yaxis_plots, xaxis = xaxis_plots,
+           legend = list(x = 100, y = 0.5)) %>% #position of legend
+    # leaving only save plot button
+    config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
+}
+
+
 
 ### END
