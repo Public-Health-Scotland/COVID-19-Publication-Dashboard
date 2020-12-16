@@ -197,13 +197,14 @@ output$data_explorer <- renderUI({
   subheading <- case_when(input$measure_select == "Admissions" ~ "COVID-19 related admissions have been identified as the following: A patient may have tested positive 
                                                                   for COVID-19 14 days prior to admission to hospital, on the day of their admission or during their 
                                                                   stay in hospital.",
+
                           input$measure_select == "NHS24" ~ paste0("The launch of the Redesign of Urgent Care programme will see an increase in NHS 24 activity from the 1st of December onwards as a result of the launch of the programme. For more information see: https://www.gov.scot/policies/healthcare-standards/unscheduled-care/ 
                                                                   Since 15 September figures for the COVID helpline include calls made to the new flu helpline. 
                                                                   In late September, the first batch of flu vaccination letters sent to those eligible by NHS Health Boards included the coronavirus number. 
                                                                   The peaks in calls are consistent with the timing of those letters being sent."),
                           input$measure_select == "AssessmentHub" ~  paste0("Data from the Unscheduled Care Datamart (UCD) is not available this week due to an IT issue. This will be updated when available. \nPlease note that data is provisional and may be updated in future publications as further information is supplied and validated from health boards."),
                           input$measure_select == "SAS" ~ "Data from the Unscheduled Care Datamart (UCD) is not available this week due to an IT issue. This will be updated when available. ")
-  
+ 
   # data sources
   data_source <- case_when(input$measure_select == "LabCases" ~ "ECOSS",
                            input$measure_select == "Admissions" ~ "ECOSS/RAPID",
