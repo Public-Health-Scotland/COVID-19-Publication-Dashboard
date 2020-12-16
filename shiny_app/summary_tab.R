@@ -195,7 +195,7 @@ output$data_explorer <- renderUI({
   simd_title <- paste0(dataset, " by deprivation category (SIMD) \n(", start_date, " to ", end_date, ")")
   
   subheading <- case_when(input$measure_select == "Admissions" ~ "COVID-19 related admissions have been identified as the following: A patient may have tested positive 
-<<<<<<< HEAD
+
                           for COVID-19 14 days prior to admission to hospital, on the day of their admission or during their 
                           stay in hospital.",
                           input$measure_select == "NHS24" ~ paste0("The launch of the Redesign of Urgent Care programme will see an increase in NHS 24 activity from the 1st of December onwards as a result of the launch of the programme. For more information see: https://www.gov.scot/policies/healthcare-standards/unscheduled-care/ 
@@ -215,26 +215,7 @@ data_source <- case_when(input$measure_select == "LabCases" ~ "ECOSS",
                          input$measure_select == "AssessmentHub" ~ "GP Out of Hours (OOH)", 
                          input$measure_select == "SAS"~ "SAS and Unscheduled Care Datamart")
 
-=======
-                                                                  for COVID-19 14 days prior to admission to hospital, on the day of their admission or during their 
-                                                                  stay in hospital.",
 
-                          input$measure_select == "NHS24" ~ paste0("The launch of the Redesign of Urgent Care programme will see an increase in NHS 24 activity from the 1st of December onwards as a result of the launch of the programme. For more information see: https://www.gov.scot/policies/healthcare-standards/unscheduled-care/ 
-                                                                  Since 15 September figures for the COVID helpline include calls made to the new flu helpline. 
-                                                                  In late September, the first batch of flu vaccination letters sent to those eligible by NHS Health Boards included the coronavirus number. 
-                                                                  The peaks in calls are consistent with the timing of those letters being sent."),
-                          input$measure_select == "AssessmentHub" ~  paste0("Data from the Unscheduled Care Datamart (UCD) is not available this week due to an IT issue. This will be updated when available. \nPlease note that data is provisional and may be updated in future publications as further information is supplied and validated from health boards."),
-                          input$measure_select == "SAS" ~ "Data from the Unscheduled Care Datamart (UCD) is not available this week due to an IT issue. This will be updated when available. ")
- 
-  # data sources
-  data_source <- case_when(input$measure_select == "LabCases" ~ "ECOSS",
-                           input$measure_select == "Admissions" ~ "ECOSS/RAPID",
-                           input$measure_select == "ICU" ~ "SICSAG", 
-                           input$measure_select == "NHS24" ~ "NHS 24 SAP BW", 
-                           input$measure_select == "AssessmentHub" ~ "GP Out of Hours (OOH)", 
-                           input$measure_select == "SAS"~ "SAS and Unscheduled Care Datamart")
- 
->>>>>>> f31b2684a4c25749fbcc462358077e3042b88aec
 
 # Functions for Chart Layouts ---------------------------------------------
 # Function to create the standard layout for all the different charts/sections
@@ -274,7 +255,6 @@ cut_charts_subheading <- function(title, source, data_name) {
 
 # Set up Charts for each section ------------------------------------------
 
-<<<<<<< HEAD
 # Charts and rest of UI
 if (input$measure_select == "LabCases") { #Positive Cases
   cut_charts(title= "Daily number of positive COVID-19 cases", 
@@ -328,61 +308,7 @@ if (input$measure_select == "LabCases") { #Positive Cases
           plot_box("COVID-19 admissions to hospital by ethnicity - Cases", plot_output = "EthnicityChart"),
           plot_box("COVID-19 admissions to hospital by ethnicity - Percentage", plot_output = "EthnicityChartPercentage"))
 } 
-=======
-  # Charts and rest of UI
-  if (input$measure_select == "LabCases") { #Positive Cases
-    cut_charts(title= "Daily number of positive COVID-19 cases", 
-               source = data_source, data_name = "LabCases")
-    
-  } else if (input$measure_select == "Admissions") { #Admissions
-    cut_charts_subheading(title= "Daily number of COVID-19 admissions to hospital", 
-                          source = data_source, data_name = "Admissions")
-    
-  } else if (input$measure_select == "ICU") {# ICU 
-    cut_charts_missing(title= "Daily number of COVID-19 admissions to ICU",
-                       source = data_source, data_name ="ICU")
-    
-  } else if (input$measure_select == "NHS24") {# NHS 24 contacts
-    NHS_Inform_title <- paste0("NHS Inform hits to COVID-19 section (",start_date, " to ", end_date, ")" )
-    SelfHelpTitle <- paste0("NHS24 COVID-19 self help guides completed (",start_date, " to ", end_date, ")" )
-    OutcomesTitle <- paste0("NHS24 COVID-19 outcomes (",start_date, " to ", end_date, ")" )
-    
-    tagList(cut_charts_subheading(title = "Daily number of COVID-19 related NHS24 contacts", 
-                                  source = data_source, data_name ="NHS24"),
-            h3("NHS Inform"),
-            # actionButton("btn_dataset_inform", "Data source: INFORM", icon = icon('question-circle')),
-            
-            plot_box(NHS_Inform_title, "NHS24_inform"),
-            plot_box(SelfHelpTitle, "NHS24_selfhelp"),
-            plot_box(OutcomesTitle, "NHS24_community"))
-    
-  } else if (input$measure_select == "AssessmentHub") { # Assessment Hub
-    cut_charts_subheading(title= "Daily number of COVID-19 consultations", 
-                          source = data_source, data_name = "AssessmentHub")
- 
-  } else if (input$measure_select == "SAS") { # SAS data
-    c(cut_charts_subheading(title= "Daily attended incidents by Scottish Ambulance Service (suspected COVID-19)", 
-                 source = data_source, data_name ="SAS"),
-      plot_box("SAS - all incidents", plot_output = "SAS_all"))
-    
-  }  else if (input$measure_select == "Child") { # Child data
-    tagList(h3("COVID-19 cases and testing among children and young people"),
-            p("Please note due to the data being based on specimen date of the COVID-19 test the latest week is provisional and may be subject to change."),
-            actionButton("btn_dataset_modal", paste0("Data source: ", "ECOSS"), icon = icon('question-circle')),
-            plot_box("Number of positive COVID-19 tests in children and young people", plot_output = "ChildDataPositives"),
-            plot_box("Number of negative COVID-19 tests in children and young people", "ChildDataNegatives"),
-            plot_box("Percentage of children and young people testing positive for COVID-19", plot_output = "ChildDataCases"))
-  
-    }  else if (input$measure_select == "Ethnicity_Chart") { # Ethnicity data
-      tagList(h3("COVID-19 admissions to hospital by ethnicity"),
-            p("COVID-19 related admissions have been identified as the following: A patient may have tested positive for COVID-19 14 days prior to admission to hospital, 
-              on the day of their admission or during their stay in hospital."),
-            p("Click on legend to select or deselect categories "),
-            actionButton("btn_dataset_modal", paste0("Data source: ", "RAPID"), icon = icon('question-circle')),
-            plot_box("COVID-19 admissions to hospital by ethnicity - Cases", plot_output = "EthnicityChart"),
-            plot_box("COVID-19 admissions to hospital by ethnicity - Percentage", plot_output = "EthnicityChartPercentage"))
-  } 
->>>>>>> f31b2684a4c25749fbcc462358077e3042b88aec
+
 }) 
 
 ###############################################.
