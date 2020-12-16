@@ -162,11 +162,15 @@ ContactTracing <- read_csv("data/ContactTracingWeekly.csv")
 saveRDS(ContactTracing, "data/ContactTracingWeekly.rds")
 
 ContactTime <- read_csv("data/ContactTime.csv")
+ContactTime <- ContactTime %>% 
+  mutate_if(is.numeric, round, 2)
 saveRDS(ContactTime, "data/ContactTime.rds")
 
 
 #Cases reporting an occupation in the Education and Childcare sector
 ContactEC <- read_csv("data/ContactTracingEducation.csv")
+ContactEC <- ContactEC %>% 
+  mutate_if(is.numeric, round, 2)
 saveRDS(ContactEC, "data/ContactTracingEducation.rds")
 
 
@@ -208,3 +212,24 @@ saveRDS(HCW_CareOfElderly, "data/HCW_CareOfElderly.rds")
 
 HCW_Psychiatry <- read_csv("data/HCW_Psychiatry.csv")
 saveRDS(HCW_Psychiatry, "data/HCW_Psychiatry.rds")
+
+# Ethnicity -----------------------------------------------------------------
+
+Ethnicity <- read_csv("data/Ethnicity.csv")
+Ethnicity <- Ethnicity %>% 
+  mutate(Date = month(Date, label = T, abbr = F),
+         Percentage = Percentage*100)%>% 
+  mutate_if(is.numeric, round, 2)
+saveRDS(Ethnicity, "data/Ethnicity.rds")
+
+Ethnicity_Chart <- read_csv("data/Ethnicity_Chart.csv")
+Ethnicity_Chart <- Ethnicity_Chart %>% 
+  mutate(Date = month(Date, label = T, abbr = F),
+         White_p = White_p*100,
+         `Black/Caribbean/African_p` = `Black/Caribbean/African_p`*100,
+         `South Asian_p` = `South Asian_p`*100,
+         Chinese_p = Chinese_p*100,
+         Other_p = Other_p*100,
+         `Not Available_p` = `Not Available_p`*100) %>% 
+  mutate_if(is.numeric, round, 2)
+saveRDS(Ethnicity_Chart, "data/Ethnicity_Chart.rds")

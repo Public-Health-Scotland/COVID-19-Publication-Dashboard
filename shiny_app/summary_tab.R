@@ -116,7 +116,14 @@ observeEvent(input$btn_dataset_modal,
                    size = "m",
                    easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)"))))
                
-             } 
+             } else if (input$measure_select == "EthnictyChart") { #NHS24 MODAL
+               showModal(modalDialog(
+                 title = "What is the data source?",
+                 p("BLANK"),
+                 p("BLANK ") ,
+                 size = "m",
+                 easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)")))
+             }
                )
 
 ###############################################.
@@ -190,11 +197,14 @@ output$data_explorer <- renderUI({
   subheading <- case_when(input$measure_select == "Admissions" ~ "COVID-19 related admissions have been identified as the following: A patient may have tested positive 
                                                                   for COVID-19 14 days prior to admission to hospital, on the day of their admission or during their 
                                                                   stay in hospital.",
-                          input$measure_select == "NHS24" ~ "The launch of the Redesign of Urgent Care programme will see an increase in NHS 24 activity from the 1st of December onwards as a result of the launch of the programme. 
-                                                            For more information see: https://www.gov.scot/policies/healthcare-standards/unscheduled-care/. Since 15 September figures for the COVID helpline include calls made to the new flu helpline.
-                                                            In late September, the first batch of flu vaccination letters sent to those eligible by NHS Health Boards included the coronavirus number.The peaks in calls are consistent with the timing of those letters being sent.",
-                          input$measure_select == "AssessmentHub" ~  "Please note that data is provisional and may be updated in future publications as further information is supplied and validated from health boards.")
-  
+
+                          input$measure_select == "NHS24" ~ paste0("The launch of the Redesign of Urgent Care programme will see an increase in NHS 24 activity from the 1st of December onwards as a result of the launch of the programme. For more information see: https://www.gov.scot/policies/healthcare-standards/unscheduled-care/ 
+                                                                  Since 15 September figures for the COVID helpline include calls made to the new flu helpline. 
+                                                                  In late September, the first batch of flu vaccination letters sent to those eligible by NHS Health Boards included the coronavirus number. 
+                                                                  The peaks in calls are consistent with the timing of those letters being sent."),
+                          input$measure_select == "AssessmentHub" ~  paste0("Data from the Unscheduled Care Datamart (UCD) is not available this week due to an IT issue. This will be updated when available. \nPlease note that data is provisional and may be updated in future publications as further information is supplied and validated from health boards."),
+                          input$measure_select == "SAS" ~ "Data from the Unscheduled Care Datamart (UCD) is not available this week due to an IT issue. This will be updated when available. ")
+ 
   # data sources
   data_source <- case_when(input$measure_select == "LabCases" ~ "ECOSS",
                            input$measure_select == "Admissions" ~ "ECOSS/RAPID",
@@ -274,7 +284,7 @@ output$data_explorer <- renderUI({
                           source = data_source, data_name = "AssessmentHub")
  
   } else if (input$measure_select == "SAS") { # SAS data
-    c(cut_charts(title= "Daily attended incidents by Scottish Ambulance Service (suspected COVID-19)", 
+    c(cut_charts_subheading(title= "Daily attended incidents by Scottish Ambulance Service (suspected COVID-19)", 
                  source = data_source, data_name ="SAS"),
       plot_box("SAS - all incidents", plot_output = "SAS_all"))
     
@@ -285,7 +295,16 @@ output$data_explorer <- renderUI({
             plot_box("Number of positive COVID-19 tests in children and young people", plot_output = "ChildDataPositives"),
             plot_box("Number of negative COVID-19 tests in children and young people", "ChildDataNegatives"),
             plot_box("Percentage of children and young people testing positive for COVID-19", plot_output = "ChildDataCases"))
-  }  
+  
+    }  else if (input$measure_select == "Ethnicity_Chart") { # Ethnicity data
+      tagList(h3("COVID-19 admissions to hospital by ethnicity"),
+            p("COVID-19 related admissions have been identified as the following: A patient may have tested positive for COVID-19 14 days prior to admission to hospital, 
+              on the day of their admission or during their stay in hospital."),
+            p("Click on legend to select or deselect categories "),
+            actionButton("btn_dataset_modal", paste0("Data source: ", "RAPID"), icon = icon('question-circle')),
+            plot_box("COVID-19 admissions to hospital by ethnicity - Cases", plot_output = "EthnicityChart"),
+            plot_box("COVID-19 admissions to hospital by ethnicity - Percentage", plot_output = "EthnicityChartPercentage"))
+  } 
 }) 
 
 ###############################################.
@@ -322,6 +341,8 @@ output$ChildDataPositives <- renderPlotly({plot_overall_chartChild(Child, data_n
 output$ChildDataNegatives <- renderPlotly({plot_overall_chartChild(Child, data_name = "Child", childdata = "ChildNegative")})
 output$ChildDataCases <- renderPlotly({plot_overall_chartChild(Child, data_name = "Child", childdata = "ChildPer")})
 
+output$EthnicityChart <- renderPlotly({plot_overall_chartEthnicity(Ethnicity_Chart, data_name = "Ethnicity_Chart")})
+output$EthnicityChartPercentage <- renderPlotly({plot_overall_chartEthnicityPercent(Ethnicity_Chart, data_name = "Ethnicity_Chart")})
 # output$ChildDataPositives <- renderPlotly({plot_overall_chartChildPositive(Child, data_name = "Child")})
 # output$ChildDataNegatives <- renderPlotly({plot_overall_chartChildNegative(Child, data_name = "Child")})
 # output$ChildDataCases <- renderPlotly({plot_overall_chartChildCases(Child, data_name = "Child")})
@@ -338,11 +359,12 @@ overall_data_download <- reactive({
     "LabCases" = LabCases,
     "Admissions" = Admissions,
     "ICU" = ICU,
-    "NHS24" = NHS24, 
+    "NHS24" = NHS24,
     "AssessmentHub" = AssessmentHub,
-    "SAS" = SAS, 
-    "Child" = Child) #%>% 
-  #select(area_name, week_ending, count, starts_with("average")) %>% 
+    "SAS" = SAS,
+    "Child" = Child,
+    "Ethnicity_Chart" = Ethnicity_Chart) #%>%
+  #select(area_name, week_ending, count, starts_with("average")) %>%
   # mutate(week_ending = format(week_ending, "%d %b %y"))
 })
 
@@ -350,5 +372,5 @@ output$download_chart_data <- downloadHandler(
   filename ="data_extract.csv",
   content = function(file) {
     write_csv(overall_data_download(),
-              file) } 
+              file) }
 )

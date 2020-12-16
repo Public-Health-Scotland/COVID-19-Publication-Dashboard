@@ -23,6 +23,7 @@ data_table <- reactive({  # Change dataset depending on what user selected
                                                                           `Rate per 100,000 population` = rate),
                        "Admissions_SIMD" = Admissions_SIMD %>% rename(`Number of Cases` = cases,
                                                                       Percent = cases_pc),
+                       "Ethnicity" = Ethnicity,
                        "ICU" = ICU %>%  rename(`Number of ICU Admissions` = Count,
                                                `7 day average` = Average7),
                        "ICU_AgeSex" = ICU_AgeSex %>%  rename(Sex = sex, 
@@ -91,6 +92,9 @@ data_table <- reactive({  # Change dataset depending on what user selected
      # select(Date, `Number of Admissions`)
 
   } else if (input$data_select %in% "SAS") {
+    table_data <- table_data #%>%
+    #  select(Date, `Number of Admissions`)
+  } else if (input$data_select %in% "Ethnicity") {
     table_data <- table_data #%>%
     #  select(Date, `Number of Admissions`)
   } 
