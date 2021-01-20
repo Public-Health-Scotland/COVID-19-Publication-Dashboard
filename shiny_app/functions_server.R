@@ -68,14 +68,14 @@ plot_overall_chartNHS24 <- function(dataset, data_name, yaxis_title, area = T) {
   
   #Text for tooltip
   tooltip_trend <- c(paste0("Date: ", format(trend_data$Date, "%d %b %y"),
-                            "<br>", "Number of NHS24 contacts: ", trend_data$Count,
+                            "<br>", "NHS24 Calls (COVID-19 Mention): ", trend_data$Count,
                             "<br>", "Number of calls to helpline: ", trend_data$CoronavirusHelpline))
   
   #Creating time trend plot
   plot_ly(data = trend_data, x = ~Date) %>%
     add_lines(y = ~Count, line = list(color = pal_overall[1]),
               text = tooltip_trend, hoverinfo="text",
-              name = "NHS24 contacts") %>%
+              name = "NHS24 Calls (COVID-19 Mention)") %>%
     add_lines(y = ~CoronavirusHelpline, line = list(color = pal_overall[2]),
               text = tooltip_trend, hoverinfo="text",
               name = "Coronavirus Helpline") %>%
@@ -330,6 +330,37 @@ plot_singletrace_chart <- function(dataset, data_name, yaxis_title, area = T) {
     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove ) 
 }
 
+plot_singlerate_chart <- function(dataset, data_name, yaxis_title, area = T) {
+  
+  # Filtering dataset to include only overall figures
+  trend_data <- dataset
+  
+  ###############################################.
+  # Creating objects that change depending on dataset
+  yaxis_title <- case_when(data_name == "LabCases" ~ "Cumulative rate of positive cases per 100,000")
+  
+  #Modifying standard layout
+  yaxis_plots[["title"]] <- yaxis_title
+  
+  measure_name <- case_when(data_name == "LabCases" ~ "Cumulative rate of positive cases per 100,000")
+  
+  #Text for tooltip
+  tooltip_trend <- glue("Date: {format(trend_data$Date, '%d %b %y')}<br>",
+                        "{measure_name}: {trend_data$CumulativeRatePer100000}")
+  
+  #Creating time trend plot
+  plot_ly(data = trend_data, x = ~Date) %>%
+    add_lines(y = ~CumulativeRatePer100000, line = list(color = pal_overall[1]),
+              text = tooltip_trend, hoverinfo = "text") %>%
+    #Layout
+    layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
+           yaxis = yaxis_plots, xaxis = xaxis_plots,
+           legend = list(x = 100, y = 0.5)) %>% #position of legend
+    # leaving only save plot button
+    config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove ) 
+}
+
+
 plot_nhs24_selfhelp_chart <- function(dataset, data_name, yaxis_title, area = T) {
   
   # Filtering dataset to include only overall figures
@@ -546,10 +577,7 @@ plot_contacttrace_chart <- function(dataset, data_name, CTdata, yaxis_title, are
 # Settings ----------------------------------------------------------------
 # cases stacked bar chart
 plot_settings_chart <- function(dataset, data_name, settingdata, yaxis_title, area = T) {
-  # dataset <- Settings
-  # Setting_select <- "Entertainment"
-  # data_name <- Settings 
-  # 
+
   yaxis_title <- case_when(data_name == "Settings" ~ "Number of Cases")
   
   # Filtering dataset to include only overall figures

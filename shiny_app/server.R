@@ -30,8 +30,12 @@ function(input, output, session) {
   source(file.path("setting_tab.R"),  local = TRUE)$value  
   
   ###############################################.
-  # Settings tab  
+  # HCW tab  
   source(file.path("health_care_workers_data_tab.R"),  local = TRUE)$value
+  
+  ###############################################.
+  # Care Homes tab  
+  source(file.path("care_home_data_tab.R"),  local = TRUE)$value
   
   ###############################################.
   # Ethnicity chart tab  
@@ -44,5 +48,8 @@ function(input, output, session) {
   observeEvent(input$jump_to_summary, {updateTabsetPanel(session, "intabset", selected = "summary")})
   observeEvent(input$jump_to_table, {updateTabsetPanel(session, "intabset", selected = "table")})
   observeEvent(input$jump_to_CTtable, {updateTabsetPanel(session, "intabset", selected = "CTtable")})
+  observeEvent(input$jump_to_HCW, {updateTabsetPanel(session, "intabset", selected = "HCWtable")})
+  observeEvent(input$jump_to_CH, {updateTabsetPanel(session, "intabset", selected = "CHData")})
+  
   
 } # server end

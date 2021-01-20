@@ -6,16 +6,15 @@
 ## Data extraction dates ----
 
 #publication date
-pub_date <- as.Date("2020-12-16")
+pub_date <- as.Date("2021-01-20")
 
 Labcases_date <- format(pub_date - 3, "%d %B %Y")
 ICU_date <- format(pub_date - 4, "%d %B %Y")
 NHS24_date <- format(pub_date - 3, "%d %B %Y")
-ICU_date <- format(pub_date - 3, "%d %B %Y")
 
-SAS_date <- format(pub_date - 27, "%d %B %Y")
+SAS_date <- format(pub_date - 3, "%d %B %Y")
 
-AssessmentHub_date <- format(pub_date - 20, "%d %B %Y")
+AssessmentHub_date <- format(pub_date - 7, "%d %B %Y")
 Admissions_date <- format(pub_date - 5, "%d %B %Y")
 
 #ECOSS, for LabCases
@@ -125,6 +124,9 @@ HealthCareWorkerPsychiatry <- readRDS("data/HCW_Psychiatry.rds")
 # Ethnicity
 Ethnicity <- readRDS("data/Ethnicity.rds")
 Ethnicity_Chart <- readRDS("data/Ethnicity_Chart.rds")
+
+# Care Homes
+Care_Homes <- readRDS("data/Care_Homes.rds")
 
 ###############################################.
 ## Data lists -------------------------------------------------------------- 
