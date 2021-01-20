@@ -8,7 +8,8 @@ data_table <- reactive({  # Change dataset depending on what user selected
   table_data <- switch(input$data_select,
                        "LabCases" = LabCases %>%  rename (`Number of Cases` = Count, 
                                                           `Cumulative Cases` = Cumulative,
-                                                          `7 day average` = Average7),
+                                                          `7 day average` = Average7, 
+                                                          `Cumulative Rate per 100,000` = CumulativeRatePer100000),
                        "LabCases_AgeSex" = LabCases_AgeSex %>%  rename(Sex = sex, 
                                                                        `Age Group` = `age_group`,
                                                                        `Number of Cases` = number,
@@ -72,7 +73,7 @@ data_table <- reactive({  # Change dataset depending on what user selected
   
   if (input$data_select %in% c("LabData")) {
     table_data <- table_data %>% 
-      select(Date, `Number of Daily Cases`, Cumulative) %>% 
+      select(Date, `Number of Daily Cases`, Cumulative, `Cumulative Rate per 100,000`) %>% 
       mutate(Date = format(Date, "%d %B %y"))
 
   } else if (input$data_select %in% "Admissions") { 
