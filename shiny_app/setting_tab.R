@@ -15,7 +15,7 @@ observeEvent(input$btn_dataset_modal3,
 
 output$Setting_explorer <- renderUI({
 
-   tagList(h3("Setting"),
+   tagList(
           actionButton("btn_dataset_modal3", paste0("Data source: Data source: Case Management System"), icon = icon('question-circle'))) 
           
   # Charts and rest of UI

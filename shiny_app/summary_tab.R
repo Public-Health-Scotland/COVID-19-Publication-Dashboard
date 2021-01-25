@@ -30,7 +30,7 @@ observeEvent(input$btn_dataset_modal,
                         Data are reviewed and validated on a continuous basis and 
                         so may be subject to change")),
                  p("Note that there may be a time lag with some data for the most recent days 
-                   and some of the above figures may change as more data is submitted. 
+                   and some of the above figures may change as more data are submitted. 
                    Data now includes any positive cases from NHS Laboratories or 
                    UK Government regional testing sites."),               
                  size = "m",
@@ -42,7 +42,7 @@ observeEvent(input$btn_dataset_modal,
                  p("SICSAG"),
                  p("Data excludes any patient under the age 15."), 
                  p("Data collection for the SICSAG core dataset is by the bespoke Wardwatcher 
-                   data collecting platform. SICSAG data is subject to ongoing validation and 
+                   data collecting platform. SICSAG data are subject to ongoing validation and 
                    must be regarded as dynamic. Therefore if this analysis was to be to re-run 
                    at a later stage it may be subject to change."), 
                  p("In the first report published (6th May), counts shown included any patient 
@@ -164,7 +164,7 @@ output$data_explorer <- renderUI({
   datasettrend <- case_when(input$measure_select == "LabCases" ~ "Positive COVID-19 cases",
                             input$measure_select == "Admissions" ~ "COVID-19 admissions to hospital",
                             input$measure_select == "ICU" ~ "COVID-19 admissions to ICU", 
-                            input$measure_select == "NHS24" ~ "COVID-19 related NHS24 contacts", 
+                            input$measure_select == "NHS24" ~ "NHS 24 111 COVID-19 Contacts and COVID-19 Advice Helpline calls", 
                             input$measure_select == "AssessmentHub" ~ "Consultations", 
                             input$measure_select == "SAS" ~ "SAS incidents (suspected COVID-19)")
   
@@ -195,17 +195,13 @@ output$data_explorer <- renderUI({
   simd_title <- paste0(dataset, " by deprivation category (SIMD) \n(", start_date, " to ", end_date, ")")
   
   subheading <- case_when(input$measure_select == "Admissions" ~ "COVID-19 related admissions have been identified as the following: A patient may have tested positive 
-
-                          for COVID-19 14 days prior to admission to hospital, on the day of their admission or during their 
-                          stay in hospital.",
+                                                  for COVID-19 14 days prior to admission to hospital, on the day of their admission or during their stay in hospital.",
                           input$measure_select == "NHS24" ~ paste0("The launch of the Redesign of Urgent Care programme will see an increase in NHS 24 activity from the 1st of December onwards as a result of the launch of the programme. For more information see: https://www.gov.scot/policies/healthcare-standards/unscheduled-care/ 
                                              Since 15 September figures for the COVID helpline include calls made to the new flu helpline. 
                                              In late September, the first batch of flu vaccination letters sent to those eligible by NHS Health Boards included the coronavirus number. 
                                              The peaks in calls are consistent with the timing of those letters being sent."),
-                          input$measure_select == "AssessmentHub" ~  paste0("Data from the Unscheduled Care Datamart (UCD) is not available this week due to an IT issue. This will be updated when available. 
-                                                                            \nPlease note that data is provisional and may be updated in future publications as further information is supplied and validated from health boards."),
-                          input$measure_select == "SAS" ~ "Data from the Unscheduled Care Datamart (UCD) is not available this week due to an IT issue. This will be updated when available. ")
-
+                          input$measure_select == "AssessmentHub" ~  paste0("Please note that data are provisional and may be updated in future publications as further information is supplied and validated from health boards."),
+                          input$measure_select == "SAS" ~ " ")
 
 # data sources
 data_source <- case_when(input$measure_select == "LabCases" ~ "ECOSS",
@@ -232,7 +228,7 @@ cut_charts <- function(title, source, data_name) {
 cut_charts_missing <- function(title, source, data_name) {
   tagList(
     h3(title),
-    p("SICSAG data is a dynamic database and subject to ongoing validations therefore on a week to week basis the data may change."),
+    p("SICSAG data are stored in a dynamic database and subject to ongoing validations therefore on a week to week basis the data may change."),
     p("On 30 October 2020, Public Health Scotland became aware of an ongoing issue when linking ICU data to laboratory data for COVID-19 test results. 
       Any COVID-19 positive patients with a missing a CHI number that had a first positive test in the community are unable to be linked to ICU data. 
       As a result, the COVID-19 positive ICU patients could be underreported by up to 10%. This is currently being investigated and figures may change in future reports."),
@@ -257,9 +253,14 @@ cut_charts_subheading <- function(title, source, data_name) {
 
 # Charts and rest of UI
 if (input$measure_select == "LabCases") { #Positive Cases
-  cut_charts(title= "Daily number of positive COVID-19 cases", 
-             source = data_source, data_name = "LabCases")
   
+  tagList(h3("Daily number of positive COVID-19 cases"),
+          actionButton("btn_dataset_modal", paste0("Data source: ", "ECOSS"), icon = icon('question-circle')),
+          plot_box("Daily number of Positive COVID-19 cases", plot_output = "LabCases_overall"),
+          plot_box("Cumulative rate per 100,000", plot_output = "LabCasesRate"),
+          plot_cut_box(paste0("Positive COVID-19 cases per 100,000 population by age \n(28 February to ", Labcases_date, ")"), "LabCases_AgeSex",
+                       paste0("Positive COVID-19 cases by deprivation category (SIMD) \n(28 February to ", Labcases_date, ")"), "LabCases_SIMD"))
+         
 } else if (input$measure_select == "Admissions") { #Admissions
   cut_charts_subheading(title= "Daily number of COVID-19 admissions to hospital", 
                         source = data_source, data_name = "Admissions")
@@ -344,6 +345,8 @@ output$SAS_all <- renderPlotly({plot_singletrace_chart(SAS_all, data_name = "SAS
 output$ChildDataPositives <- renderPlotly({plot_overall_chartChild(Child, data_name = "Child", childdata = "ChildPositive")})
 output$ChildDataNegatives <- renderPlotly({plot_overall_chartChild(Child, data_name = "Child", childdata = "ChildNegative")})
 output$ChildDataCases <- renderPlotly({plot_overall_chartChild(Child, data_name = "Child", childdata = "ChildPer")})
+output$LabCasesRate <- renderPlotly({plot_singlerate_chart(LabCases, data_name = "LabCases")})
+
 
 output$EthnicityChart <- renderPlotly({plot_overall_chartEthnicity(Ethnicity_Chart, data_name = "Ethnicity_Chart")})
 output$EthnicityChartPercentage <- renderPlotly({plot_overall_chartEthnicityPercent(Ethnicity_Chart, data_name = "Ethnicity_Chart")})

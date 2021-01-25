@@ -29,6 +29,8 @@ tagList(  #needed for shinyjs
              tags$li("Scottish Ambulance Service"),
              tags$li("COVID-19 in children and young people"),
              tags$li("Contact Tracing"),
+             tags$li("Health Care Workers"),
+             tags$li("Care Homes"),
              p(""),
              p("Interactive charts on each of the topics are available in the ",
                actionLink("jump_to_summary", "'Trend Charts' tab.")),
@@ -38,6 +40,10 @@ tagList(  #needed for shinyjs
                to the data in order to protect patient confidentiality."),
              p("The contact tracing data can be downloaded using the ",
                actionLink("jump_to_CTtable", "'Contact Tracing Data' tab.")),
+             p("The Health Care Worker Data can be downloaded using the ",
+               actionLink("jump_to_HCW", "'Health Care Worker Data' tab.")),
+             p("The Care Homes Data can be downloaded using the ",
+               actionLink("jump_to_CH", "'Care Home Data' tab.")),
              
              h3("Further information"),
              
@@ -75,7 +81,7 @@ tagList(  #needed for shinyjs
                  class = "externallink")),
              
              h3("Contact"),         
-             p("If you have any questions relating to this data please contact: ",
+             p("If you have any questions relating to these data please contact: ",
                tags$b(
                  tags$a(
                    href = "mailto:phs.covidweeklyreport@phs.scot",
@@ -127,11 +133,10 @@ tagList(  #needed for shinyjs
       title = "Data",
       icon = icon("table"),
       value = "table",
-      p("Data from the Unscheduled Care Datamart (UCD) is not available this week due to an IT issue. This will be updated when available."),
       p("This section allows you to view the data in table format.
         You can use the filters to select the data you are interested in.
         You can also download the data as a csv using the download button.
-        The data is also hosted in the",
+        The data are also hosted in the",
         tags$a(href = "https://www.opendata.nhs.scot/dataset?groups=covid-19",
                "Scottish Health and Social Care Open Data portal",
                class = "externallink"),"."),
@@ -146,7 +151,9 @@ tagList(  #needed for shinyjs
     
     ##################### Contact Tracing Charts ----
     
-    tabPanel(
+    navbarMenu("Contact Tracing",
+               icon = icon("address-book"),
+               tabPanel(
       title = "Contact Tracing",
       icon = icon("address-book"),
       value = "contacttracing",
@@ -199,10 +206,14 @@ tagList(  #needed for shinyjs
                           icon = icon("th"), 
                           onclick ="window.open('https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/',
                           '_blank')")),
+      p("Please note this includes individuals with no information on their Health Board of residence and from elsewhere in the UK.  
+        We are aware of a higher number of these records in week ending 20th December.  
+        This is under investigation, and any revision will be updated in subsequent publications."),
       
       mainPanel(width = 12,
                 DT::dataTableOutput("CTtable_filtered"))
-      ), # tabpanel bracket
+      ) # tabpanel bracket
+    ), # navbar menu bracket
     
     
     #################### Setting Charts ----
@@ -211,6 +222,14 @@ tagList(  #needed for shinyjs
       title = "Setting",
       icon = icon("address-book"),
       value = "settingchart",
+      
+      h3("Setting"),
+      p("Public Health Scotland has been able to present information on settings and events that contact tracing index cases have attended over the previous 7 days. This is based on interviews conducted with cases identified in the Case Management System (CMS) and involves cases recalling where they have been in the 7 days prior to symptom onset (or date of test if asymptomatic). The data in this section relate to the number of cases added to CMS over the past 7 days."),
+      p("Therefore, users of these data must exercise caution and cannot make inferences about the rank of settings and events where cases visited. The data presented below were analysed using data from the CMS which was designed for contact tracing purposes and not for identifying where transmission took place."),
+      p("However,", strong("Public Health Scotland cannot infer from the figures whether a specific setting or an event indicates where the COVID-19 transmission took place."), "This is because cases may have attended multiple settings or events within a short space of time. In addition, it is possible that even though a case visited a few settings and events, transmission may have taken place elsewhere."),
+      p(strong("Therefore, users of these data must exercise caution and cannot make inferences about the rank of settings and events where cases visited. The data presented below were analysed using data from the CMS which was designed for contact tracing purposes and not for identifying where transmission took place."), "This information is collected to help identify close contacts and to understand potential identification of source of exposure."),
+      
+      hr(),
       
       column(4,        
              selectInput("Setting_select", "Select the setting type you want to view.",
@@ -239,7 +258,7 @@ tagList(  #needed for shinyjs
         on these statistics. Please note these are developmental statistics and ongoing work is in place 
         to improve recording of data to increase accuracy (further information available in the metadata)." ),
       p("*the number of staff tested excludes those who have declined to test and those who have not been tested for operational reasons."),
-      p("Please note some of the data is suppressed due to disclosure methodology being applied to protect patient/staff confidentiality"),
+      p("Please note some of the data are suppressed due to disclosure methodology being applied to protect patient/staff confidentiality"),
       p("Please note NHS Borders, NHS Fife and NHS Forth Valley advised they do not have any Long Stay Care of the Elderly units 
         that meet the 3 month criteria NHS Highland, NHS Tayside, NHS Orkney, NHS Shetland, and NHS Western Isles advised they do not have any long stay care of the elderly wards. 
         NHS Greater Glasgow & Clyde advised that over recent years they have significantly reduced the number of long stay beds for older people and invested in care at home and care homes 
@@ -260,7 +279,23 @@ tagList(  #needed for shinyjs
       
       mainPanel(width = 12,
                 DT::dataTableOutput("HCWtable_filtered"))
-    )# tabpanel bracket
+    ),# tabpanel bracket
+    
+    tabPanel(
+      title = "Care Homes Data",
+      icon = icon("home"),
+      value = "CHData",
+      
+      h3("Number of Staff and Residents in Care Homes with Confirmed COVID-19"),
+      p("As of 20 January 2021, Public Health Scotland took over reporting of weekly data on COVID-19 in adult Care Homes in Scotland – data prior to 11 January 2021 can be found on the ", a(href = "https://www.gov.scot/publications/coronavirus-covid-19-additional-data-about-adult-care-homes-in-scotland/", "Scottish Government website."),
+        "These data are provisional management information submitted to the Turas Care Home Management system by Care Homes, and details numbers of people (i.e. staff and residents) tested in the last week. The numbers capture both those tests undertaken via NHS routes and those done via the Scottish Social Care portal.
+        Figures are an undercount in some cases as complete data were not collected for all Care Homes.
+        It is the responsibility of Boards to work with care homes as part of their oversight arrangements to quality assure these data. The role of PHS is to collate and publish only. Please use this information with caution."),
+      hr(),
+      downloadButton('download_care_home_data', 'Download data'),
+      mainPanel(width = 12,
+                DT::dataTableOutput("care_homes_table")))
+    
     #################### Ethnicity Chart ----
     
     # tabPanel(
