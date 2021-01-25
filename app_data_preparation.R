@@ -13,7 +13,7 @@ library(janitor) # round_half_up
 non_empty_cols <- function(x) { sum(!is.na(x)) > 0  }
 
 #source("functions_packages_data_prep.R")
-setwd("/PHI_conf/PrimaryCare/Megan/COVID-19-Publication-Dashboard2/shiny_app")
+setwd("/conf/PHSCOVID19_Analysis/COVID-19-Publication-Dashboard/shiny_app")
 
 # Lab Cases
 LabCases <- read_csv("data/LabCases.csv") %>% 
