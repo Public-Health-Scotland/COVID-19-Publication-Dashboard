@@ -307,10 +307,9 @@ tagList(  #needed for shinyjs
              value = "MTUtab",
              
              h3("Targeted Community Testing"),
-             br(),
-               strong("Use the Dropdown Menu to Select an Output"),
+             
                selectInput(inputId = "MTU_select", width = "100%",
-                           label = "",
+                           label = "Use the Dropdown Menu to Select an Output",
                            choices =  list("Key Points" = "summary",
                                            "Mobile Testing Over Time" = "heatmap",
                                            "Cummulative Totals" = "cumul_totals",
