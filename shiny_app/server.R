@@ -54,6 +54,8 @@ function(input, output, session) {
   observeEvent(input$jump_to_CTtable, {updateTabsetPanel(session, "intabset", selected = "CTtable")})
   observeEvent(input$jump_to_HCW, {updateTabsetPanel(session, "intabset", selected = "HCWtable")})
   observeEvent(input$jump_to_CH, {updateTabsetPanel(session, "intabset", selected = "CHData")})
+  observeEvent(input$jump_to_mtu, {updateTabsetPanel(session, "intabset", selected = "MTUtab")})
+  
   
   
 } # server end

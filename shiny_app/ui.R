@@ -31,6 +31,7 @@ tagList(  #needed for shinyjs
              tags$li("Contact Tracing"),
              tags$li("Health Care Workers"),
              tags$li("Care Homes"),
+             tags$li("Targeted Community Testing"),
              p(""),
              p("Interactive charts on each of the topics are available in the ",
                actionLink("jump_to_summary", "'Trend Charts' tab.")),
@@ -44,6 +45,8 @@ tagList(  #needed for shinyjs
                actionLink("jump_to_HCW", "'Health Care Worker Data' tab.")),
              p("The Care Homes Data can be downloaded using the ",
                actionLink("jump_to_CH", "'Care Home Data' tab.")),
+             p("Data surrounding Targeted Community Testing can be found in the",
+               actionLink("jump_to_mtu", "'Targeted Community Testing' Tab.")),
              
              h3("Further information"),
              
@@ -304,15 +307,14 @@ tagList(  #needed for shinyjs
              value = "MTUtab",
              
              h3("Targeted Community Testing"),
-             
-             inputPanel(
-               selectInput(inputId = "MTU_select",
-                           label = "Select Output",
+             br(),
+               strong("Use the Dropdown Menu to Select an Output"),
+               selectInput(inputId = "MTU_select", width = "100%",
+                           label = "",
                            choices =  list("Key Points" = "summary",
                                            "Mobile Testing Over Time" = "heatmap",
                                            "Cummulative Totals" = "cumul_totals",
-                                           "Data" = "data"))
-             ),
+                                           "Data" = "data")),
              
              mainPanel(width = 12,
                uiOutput("MTUOutputs")

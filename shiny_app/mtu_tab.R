@@ -97,18 +97,19 @@ output$MTUOutputs <-renderUI({
             p("Total Numbers of tests carried out through each Mobile Testing Unit."),
             plot_box("", plot_output = "mtu_totals"))
   }else if(paste(input$MTU_select) == "summary"){
-    tagList(h3("Targeted Community Testing Summary"),
-            
-            p("From 18th January to ", mtu_end, "Mobile Testing Units carried out:"),
-            tags$ul(
-              tags$li(n_mtu, "tests, of which", mtu_pos, "were positive."),
-              tags$li(n_mtu_as, "asymptomatic tests, of which", mtu_as_pos, "were positive."),
-              tags$li(n_mtu_s, "symptomatic tests, of which", mtu_s_pos, "were positive.")),
-                    
-              br(),
-              p("The 8 Mobile Testing Units are detailed in the table below."),
-              tableOutput("mtu_lookup_table")
-              
+    tagList(
+      column(width = 6,
+             h3("Key Points"),
+             p("From 18th January to ", mtu_end, "Mobile Testing Units carried out:"),
+             tags$ul(
+               tags$li(strong(n_mtu), "tests, of which", strong(mtu_pos), "were positive."),
+               tags$li(strong(n_mtu_as), "asymptomatic tests, of which", strong(mtu_as_pos), "were positive."),
+               tags$li(strong(n_mtu_s), "symptomatic tests, of which", strong(mtu_s_pos), "were positive."))
+      ),
+            column(width = 6,
+                   h3("Test Centres"),       
+                   p("The 8 Mobile Testing Units are detailed in the table below."),
+                   tableOutput("mtu_lookup_table"))
             )
   }
 })
