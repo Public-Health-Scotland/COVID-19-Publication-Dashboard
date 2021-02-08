@@ -38,6 +38,10 @@ function(input, output, session) {
   source(file.path("care_home_data_tab.R"),  local = TRUE)$value
   
   ###############################################.
+  # Mobile Testing Units tab  
+  source(file.path("mtu_tab.R"),  local = TRUE)$value
+  
+  ###############################################.
   # Ethnicity chart tab  
   #source(file.path("ethnicity_tab.R"),  local = TRUE)$value
   

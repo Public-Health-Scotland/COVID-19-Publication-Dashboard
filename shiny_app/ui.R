@@ -98,7 +98,9 @@ tagList(  #needed for shinyjs
     
     
     #################### Trend Charts ----
-    
+    navbarMenu(
+      title = "Trends & Data",
+      icon = icon("area-chart"),
     tabPanel(
       title = "Trend Charts",
       icon = icon("area-chart"),
@@ -146,8 +148,8 @@ tagList(  #needed for shinyjs
       column(6, downloadButton('download_table_csv', 'Download data')),
       mainPanel(width = 12,
                 DT::dataTableOutput("table_filtered"))
-    ),# tabpanel bracket
-    
+    )# tabpanel bracket
+    ), # navbarmenu
     
     ##################### Contact Tracing Charts ----
     
@@ -294,7 +296,27 @@ tagList(  #needed for shinyjs
       hr(),
       downloadButton('download_care_home_data', 'Download data'),
       mainPanel(width = 12,
-                DT::dataTableOutput("care_homes_table")))
+                DT::dataTableOutput("care_homes_table"))),
+    
+    ### Mobile Testing Units
+    tabPanel(title = "Targeted Community Testing",
+             icon = icon("shuttle-van"),
+             value = "MTUtab",
+             
+             h3("Targeted Community Testing"),
+             
+             inputPanel(
+               selectInput(inputId = "MTU_select",
+                           label = "Select Output",
+                           choices =  list("Key Points" = "summary",
+                                           "Mobile Testing Over Time" = "heatmap",
+                                           "Cummulative Totals" = "cumul_totals",
+                                           "Data" = "data"))
+             ),
+             
+             mainPanel(width = 12,
+               uiOutput("MTUOutputs")
+             ))
     
     #################### Ethnicity Chart ----
     
