@@ -45,6 +45,7 @@ library(flextable)
 library(tidytable)
 library(shinyBS) #for collapsible panels in commentary
 library(glue) #for pasting strings
+library(lubridate)
 
 ###############################################.
 ## Functions ----
@@ -76,6 +77,13 @@ plot_cut_missing <- function(title_plot, plot_output, extra_content = NULL) {
 
 ###############################################.
 ## Data ----
+# 
+# ## correct filepath
+# cv_fp <- function(filename) {
+#   fp <- "/conf/PHSCOVID19_Analysis/COVID-19-Publication-Dashboard/shiny_app/"
+#   paste0(fp, filename)
+# }
+
 
 LabCases <-readRDS("data/LabCases.rds")
 Admissions <-readRDS("data/Admissions.rds")
@@ -127,6 +135,13 @@ Ethnicity_Chart <- readRDS("data/Ethnicity_Chart.rds")
 
 # Care Homes
 Care_Homes <- readRDS("data/Care_Homes.rds")
+
+
+# Mobile Testing Units
+mtu <- readRDS("data/MTU.rds")
+mtu_totals <- readRDS("data/MTU_totals.rds")
+mtu_lookup <- readRDS("data/MTU_Lookup.rds")
+mtu_key_points <- readRDS("data/MTU_Key_Points.rds")
 
 ###############################################.
 ## Data lists -------------------------------------------------------------- 
@@ -209,6 +224,9 @@ pal_ETH <- c('#3F3685', '#9B4393', '#0078D4',  '#83BB26','#C73918')
 
 #for SIMD
 pal_simd <- c('#0078D4', '#DFDDE3', '#DFDDE3', '#DFDDE3', '#83BB26')
+
+#for mtus
+pal_mtu <- c('#0078D4','#9B4393')
 
 ###############################################.
 ## Plot Parameters ---------------------------------------------------------
