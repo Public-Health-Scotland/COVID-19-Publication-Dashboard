@@ -6,7 +6,7 @@
 ## Data extraction dates ----
 
 #publication date
-pub_date <- as.Date("2021-01-20")
+pub_date <- as.Date("2021-02-10")
 
 Labcases_date <- format(pub_date - 3, "%d %B %Y")
 ICU_date <- format(pub_date - 4, "%d %B %Y")
@@ -45,6 +45,7 @@ library(flextable)
 library(tidytable)
 library(shinyBS) #for collapsible panels in commentary
 library(glue) #for pasting strings
+library(lubridate)
 
 ###############################################.
 ## Functions ----
@@ -115,6 +116,10 @@ ContactEC <- readRDS("data/ContactTracingEducation.rds")
 ContactWeeklyCases <- readRDS("data/ContactTracingWeeklyCases.rds")
 ContactTracingWeeklyCumulative <- readRDS("data/ContactTracingWeeklyCumulative.rds")
 Settings <- readRDS("data/Settings.rds")
+ContactTracingAverages <- readRDS("data/ContactTracingAverages.rds")
+ContactTracingAveragesDT <- rename_at(ContactTracingAverages, 
+                                      .vars = vars(2:10), 
+                                      .funs = funs(paste0("Ages ", .)))
 
 # Health Care Workers
 HealthCareWorkerCancer <- readRDS("data/HCW_SpecialistCancer.rds")
@@ -127,6 +132,12 @@ Ethnicity_Chart <- readRDS("data/Ethnicity_Chart.rds")
 
 # Care Homes
 Care_Homes <- readRDS("data/Care_Homes.rds")
+
+# Mobile Testing Units
+mtu <- readRDS("data/MTU.rds")
+mtu_totals <- readRDS("data/MTU_totals.rds")
+mtu_lookup <- readRDS("data/mtu_lookup.rds")
+mtu_key_points <- readRDS("data/MTU_Key_Points.rds")
 
 ###############################################.
 ## Data lists -------------------------------------------------------------- 
@@ -144,14 +155,16 @@ data_list <- c("Positive Cases" = "LabCases",
 
 
 CTdata_list_chart_tab <- c ("Contact Tracing time performance %", 
-                            "Contact Tracing time performance cases")
+                            "Contact Tracing time performance cases",
+                            "Average number of contacts per case")
 
 
 CTdata_list_data_tab <- c ("Contact Tracing Weekly by Health Board" = "ContactTracing", 
                            "Contact Tracing time performance measures" = "ContactTime",
                            "Cases reporting an occupation in the Education and Childcare sector" = "ContactEC",
                            "Cases recorded in contact tracing software" = "ContactWeeklyCases",
-                           "Cumulative cases recorded in contact tracing software" ="ContactTracingWeeklyCumulative")
+                           "Cumulative cases recorded in contact tracing software" ="ContactTracingWeeklyCumulative",
+                           "Average number of contacts per case" = "ContactTracingAverages")
 
 
 SettingList <- c(sort(unique(Settings$`Setting Type`)))
@@ -209,6 +222,9 @@ pal_ETH <- c('#3F3685', '#9B4393', '#0078D4',  '#83BB26','#C73918')
 
 #for SIMD
 pal_simd <- c('#0078D4', '#DFDDE3', '#DFDDE3', '#DFDDE3', '#83BB26')
+
+#for mtus
+pal_mtu <- c('#0078D4','#9B4393')
 
 ###############################################.
 ## Plot Parameters ---------------------------------------------------------
