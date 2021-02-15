@@ -104,7 +104,7 @@ observeEvent(input$btn_dataset_modal,
                  
                  p("Following assessment and treatment by SAS crews some patients do not require to be taken to hospital. 
                    These patients can be safely left at home with follow up provided by other services including their own GP or GP OOH Services. 
-                   It is in the patientâs best interest to get the care they require as close to their own home as is feasible."),
+                   It is in the patients' best interest to get the care they require as close to their own home as is feasible."),
                  size = "m",
                  easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)")))
                
@@ -176,12 +176,12 @@ output$data_explorer <- renderUI({
                        input$measure_select == "AssessmentHub" ~ "Individuals", 
                        input$measure_select == "SAS" ~ "SAS incidents (suspected COVID-19)")
   
-  start_date <- case_when(input$measure_select == "LabCases" ~ "28 February",
-                          input$measure_select == "Admissions" ~ "1 March",
-                          input$measure_select == "ICU" ~ "11 March",
-                          input$measure_select == "NHS24" ~ "13 February",
-                          input$measure_select == "AssessmentHub" ~ "23 March",
-                          input$measure_select == "SAS" ~ "22 January")
+  start_date <- case_when(input$measure_select == "LabCases" ~ "28 February 2020",
+                          input$measure_select == "Admissions" ~ "1 March 2020",
+                          input$measure_select == "ICU" ~ "11 March 2020",
+                          input$measure_select == "NHS24" ~ "13 February 2020",
+                          input$measure_select == "AssessmentHub" ~ "23 March 2020",
+                          input$measure_select == "SAS" ~ "22 January 2020")
   
   end_date <- case_when(input$measure_select == "LabCases" ~ Labcases_date,
                         input$measure_select == "Admissions" ~ Admissions_date,
@@ -201,7 +201,7 @@ output$data_explorer <- renderUI({
                                              In late September, the first batch of flu vaccination letters sent to those eligible by NHS Health Boards included the coronavirus number. 
                                              The peaks in calls are consistent with the timing of those letters being sent."),
                           input$measure_select == "AssessmentHub" ~  paste0("Please note that data are provisional and may be updated in future publications as further information is supplied and validated from health boards."),
-                          input$measure_select == "SAS" ~ " ")
+                          input$measure_select == "SAS" ~ paste0(""))
 
 # data sources
 data_source <- case_when(input$measure_select == "LabCases" ~ "ECOSS",
@@ -258,8 +258,8 @@ if (input$measure_select == "LabCases") { #Positive Cases
           actionButton("btn_dataset_modal", paste0("Data source: ", "ECOSS"), icon = icon('question-circle')),
           plot_box("Daily number of Positive COVID-19 cases", plot_output = "LabCases_overall"),
           plot_box("Cumulative rate per 100,000", plot_output = "LabCasesRate"),
-          plot_cut_box(paste0("Positive COVID-19 cases per 100,000 population by age \n(28 February to ", Labcases_date, ")"), "LabCases_AgeSex",
-                       paste0("Positive COVID-19 cases by deprivation category (SIMD) \n(28 February to ", Labcases_date, ")"), "LabCases_SIMD"))
+          plot_cut_box(paste0("Positive COVID-19 cases per 100,000 population by age \n(28 February 2020 to ", Labcases_date, ")"), "LabCases_AgeSex",
+                       paste0("Positive COVID-19 cases by deprivation category (SIMD) \n(28 February to 2020 ", Labcases_date, ")"), "LabCases_SIMD"))
          
 } else if (input$measure_select == "Admissions") { #Admissions
   cut_charts_subheading(title= "Daily number of COVID-19 admissions to hospital", 

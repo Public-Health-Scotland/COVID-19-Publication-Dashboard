@@ -27,13 +27,17 @@ output$ContactTracing_explorer <- renderUI({
       plot_box("Time (hours) between case created in CMS and the positive individual being interviewed - Percentage", plot_output = "ContactTracingCaseInterviewPercentage"),
       plot_box("Time (hours) between case created in CMS and case closed - Percentage", plot_output = "ContactTracingCaseClosePercentage"))
 
-  }  else if (input$ContactTracing_select == "Contact Tracing time performance cases" ) { # Contact Tracing Cases 
+  }  else if (input$ContactTracing_select == "Contact Tracing time performance cases") { # Contact Tracing Cases 
     tagList(
     plot_box("Time (hours) between date test sample taken and case created in CMS - Cases", plot_output = "ContactTracingTestIndex"),
     plot_box("Time (hours) between date test sample taken and the positive individual being interviewed - Cases", plot_output = "ContactTracingTestInterview"),
     plot_box("Time (hours) between case created in CMS and the positive individual being interviewed - Cases", plot_output = "ContactTracingCaseInterview"),
     plot_box("Time (hours) between case created in CMS and case closed - Cases", plot_output = "ContactTracingCaseClose"))
-  }  
+  }  else if (input$ContactTracing_select == "Average number of contacts per case"){
+    tagList(
+      plot_box("Average number of contacts per case by Age Group","ContactTracingAveragePlot")
+    )
+  }
 }) 
  
 output$ContactTracingTestIndexPercentage <- renderPlotly({plot_contacttrace_Per_chart(ContactTime, data_name = "ContactTime", CTdata = "TestIndex" )})
@@ -46,12 +50,14 @@ output$ContactTracingTestInterview <- renderPlotly({plot_contacttrace_chart(Cont
 output$ContactTracingCaseInterview <- renderPlotly({plot_contacttrace_chart(ContactTime, data_name = "ContactTime", CTdata = "CaseInterview" )})
 output$ContactTracingCaseClose <- renderPlotly({plot_contacttrace_chart(ContactTime, data_name = "ContactTime", CTdata = "CaseClose" )})
 
+output$ContactTracingAveragePlot <- renderPlotly({plot_average_CT_cases(ContactTracingAverages)})
 
 ## Data downloads ----
 # For the charts at the moment the data download is for the overall one,
 output$download_CT_data <- downloadHandler(
-  filename ="data_extract.csv",
+  filename ="Contact_Tracing_Extract.csv",
   content = function(file) {
-    write_csv(ContactTracing(),
-              file)
+    
+    write_csv(ContactTime, file)
+    
     })

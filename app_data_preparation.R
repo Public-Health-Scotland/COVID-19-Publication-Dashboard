@@ -13,7 +13,7 @@ library(janitor) # round_half_up
 non_empty_cols <- function(x) { sum(!is.na(x)) > 0  }
 
 #source("functions_packages_data_prep.R")
-setwd("/PHI_conf/PrimaryCare/Megan/COVID-19-Publication-Dashboard2/shiny_app")
+setwd("/conf/PHSCOVID19_Analysis/COVID-19-Publication-Dashboard/shiny_app")
 
 # Lab Cases
 LabCases <- read_csv("data/LabCases.csv") %>% 
@@ -199,7 +199,10 @@ saveRDS(ContactTracingWeeklyCases, "data/ContactTracingWeeklyCases.rds")
 ContactTracingWeeklyCumulative <- read_csv("data/ContactTracingWeeklyCumulative.csv")
 saveRDS(ContactTracingWeeklyCumulative, "data/ContactTracingWeeklyCumulative.rds")
 
+ContactTracingAverages <- read_csv("data/ContactTracing_Average.csv") %>%
+  pivot_wider(names_from = `Age Band`, values_from = `Average Number of Contacts`)
 
+saveRDS(ContactTracingAverages, "data/ContactTracingAverages.rds")
 
 # Settings ----------------------------------------------------------------
 
@@ -258,3 +261,12 @@ saveRDS(Ethnicity_Chart, "data/Ethnicity_Chart.rds")
 care_homes <- read_csv("data/CareHomes.csv") %>% 
   mutate(`Week Ending` = ymd(`Week Ending`))
 saveRDS(care_homes, "data/Care_Homes.rds")
+
+mtu <- read_csv("data/MTU.csv")
+saveRDS(mtu, "data/MTU.rds")
+
+mtu_kp <- read_csv("data/MTU_keypoints.csv")
+saveRDS(mtu_kp, "data/MTU_Key_Points.rds")
+
+mtu_totals <- read_csv("data/mtu_totals.csv")
+saveRDS(mtu_totals, "data/MTU_totals.rds")

@@ -31,6 +31,7 @@ tagList(  #needed for shinyjs
              tags$li("Contact Tracing"),
              tags$li("Health Care Workers"),
              tags$li("Care Homes"),
+             tags$li("Targeted Community Testing"),
              p(""),
              p("Interactive charts on each of the topics are available in the ",
                actionLink("jump_to_summary", "'Trend Charts' tab.")),
@@ -44,6 +45,8 @@ tagList(  #needed for shinyjs
                actionLink("jump_to_HCW", "'Health Care Worker Data' tab.")),
              p("The Care Homes Data can be downloaded using the ",
                actionLink("jump_to_CH", "'Care Home Data' tab.")),
+             p("Data surrounding Targeted Community Testing can be found in the",
+               actionLink("jump_to_mtu", "'Targeted Community Testing' Tab.")),
              
              h3("Further information"),
              
@@ -98,7 +101,9 @@ tagList(  #needed for shinyjs
     
     
     #################### Trend Charts ----
-    
+    navbarMenu(
+      title = "Trends & Data",
+      icon = icon("area-chart"),
     tabPanel(
       title = "Trend Charts",
       icon = icon("area-chart"),
@@ -146,8 +151,8 @@ tagList(  #needed for shinyjs
       column(6, downloadButton('download_table_csv', 'Download data')),
       mainPanel(width = 12,
                 DT::dataTableOutput("table_filtered"))
-    ),# tabpanel bracket
-    
+    )# tabpanel bracket
+    ), # navbarmenu
     
     ##################### Contact Tracing Charts ----
     
@@ -294,7 +299,28 @@ tagList(  #needed for shinyjs
       hr(),
       downloadButton('download_care_home_data', 'Download data'),
       mainPanel(width = 12,
-                DT::dataTableOutput("care_homes_table")))
+                DT::dataTableOutput("care_homes_table"))),
+    
+    ### Mobile Testing Units
+    tabPanel(title = "Targeted Community Testing",
+             icon = icon("shuttle-van"),
+             value = "MTUtab",
+             
+             h3("Targeted Community Testing"),
+             p("Across Scotland, Mobile Testing Units have been deployed as part of the Community Testing Programme.  These are targeted at areas where there are concerns around community transmission levels, and offer testing to any member of that community.", 
+               "Use the dropdown to explore the outputs which detail the numbers of tests carried out by the Mobile Testing Units."),
+             
+               selectInput(inputId = "MTU_select", width = "100%",
+                           label = "Use the Dropdown Menu to Select an Output",
+                           choices =  list("Key Points" = "summary",
+                                           "Test Centre Details" = "details",
+                                           "Mobile Testing Over Time" = "heatmap",
+                                           "Cummulative Totals" = "cumul_totals",
+                                           "Data" = "data")),
+             
+             mainPanel(width = 12,
+               uiOutput("MTUOutputs")
+             ))
     
     #################### Ethnicity Chart ----
     

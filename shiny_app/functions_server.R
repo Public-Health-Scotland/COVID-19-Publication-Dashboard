@@ -573,6 +573,73 @@ plot_contacttrace_chart <- function(dataset, data_name, CTdata, yaxis_title, are
     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
 }
 
+plot_average_CT_cases <- function(dataset, area = T) {
+  
+  #Filtering dataset to include only overall figures
+  
+  
+  yaxis_title <- "Average Number of Cases per Contact"
+  
+  trend_data <- dataset 
+  
+  #Modifying standard layout
+  yaxis_plots[["title"]] <- yaxis_title
+  
+  #Text for tooltip
+  tooltip_trend <- c(paste0("Week ending: ", format(trend_data$`Week Ending`, "%d %b %y"),
+                            "<br>",yaxis_title, " aged 0-4: ", trend_data$`0-4`,
+                            "<br>",yaxis_title, " aged 5-14: ", trend_data$`5-14`,
+                            "<br>",yaxis_title, " aged 15-19: ", trend_data$`15-19`,
+                            "<br>",yaxis_title, " aged 20-24: ", trend_data$`20-24`,
+                            "<br>",yaxis_title, " aged 25-44: ", trend_data$`25-44`,
+                            "<br>",yaxis_title, " aged 45-64: ", trend_data$`45-64`,
+                            "<br>",yaxis_title, " aged 65-74: ", trend_data$`65-74`,
+                            "<br>",yaxis_title, " aged 74-84: ", trend_data$`75-84`,
+                            "<br>",yaxis_title, " aged 85+: ", trend_data$`85+`,
+                            "<br>",yaxis_title, " all ages: ", trend_data$`All Ages`))
+  
+  #Creating time trend plot
+  plot_ly(data = trend_data, x = ~`Week Ending`) %>%
+    add_lines(y = ~`0-4`, line = list(color = pal_ETH[1]),
+              text = tooltip_trend, hoverinfo="text",
+              name = "Age 0-4") %>%
+    add_lines(y = ~`5-14`, line = list(color = "#713D8D"),
+              text = tooltip_trend, hoverinfo="text",
+              name = "Age 5-14") %>%
+    add_lines(y = ~`15-19`, line = list(color = pal_ETH[2]),
+              text = tooltip_trend, hoverinfo="text",
+              name = "Age 15-19") %>%
+    add_lines(y = ~`20-24`, line = list(color = "#4660B6"),
+              text = tooltip_trend, hoverinfo="text",
+              name = "Age 20-24") %>%
+    add_lines(y = ~`25-44`, line = list(color = pal_ETH[3]),
+              text = tooltip_trend, hoverinfo="text",
+              name = "Age 25-44") %>%
+    add_lines(y = ~`45-64`, line = list(color = "#3C9685"),
+              text = tooltip_trend, hoverinfo="text",
+              name = "Age 45-64") %>%
+    add_lines(y = ~`65-74`, line = list(color = pal_ETH[4]),
+              text = tooltip_trend, hoverinfo="text",
+              name = "Age 65-74") %>%
+    add_lines(y = ~`75-84`, line = list(color = "#6B991E"),
+              text = tooltip_trend, hoverinfo="text",
+              name = "Age 75-84") %>%
+    add_lines(y = ~`85+`, line = list(color = "#4e7015"),
+              text = tooltip_trend, hoverinfo="text",
+              name = "Age 85+") %>%
+    add_lines(y = ~`All Ages`, line = list(color = pal_ETH[5]),
+              text = tooltip_trend, hoverinfo="text",
+              name = "All Ages") %>%
+    
+    
+    
+    #Layout
+    layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
+           yaxis = yaxis_plots, xaxis = xaxis_plots,
+           legend = list(x = 100, y = 0.5)) %>% #position of legend
+    # leaving only save plot button
+    config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove ) 
+}
 
 # Settings ----------------------------------------------------------------
 # cases stacked bar chart

@@ -1,8 +1,5 @@
 #### Care Home Data Tab
 
-caption <- paste("Please note: there were an additional 12 staff tested at",
-                 "homes where the COVID status was not specified.")
-
 output$care_homes_table <- DT::renderDataTable({
   
   # Remove the underscore from column names in the table
@@ -12,10 +9,9 @@ output$care_homes_table <- DT::renderDataTable({
                 class = 'table-bordered table-condensed',
                 rownames = FALSE,
                 options = list(pageLength = 15,
-                               dom = 'tic',
+                               dom = 'tip',
                                autoWidth = TRUE),
                 filter = "top",
-                caption = caption,
                 colnames = table_colnames)
 })
 
