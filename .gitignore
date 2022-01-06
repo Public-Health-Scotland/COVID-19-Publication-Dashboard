@@ -7,6 +7,8 @@ rsconnect
 .Rhistory
 .Ruserdata
 *.Rproj
+*.doc
+*.docx
 testing.R
 # packrat library folder (automatically added due to packract being initialised)
 packrat/lib*/
@@ -26,6 +28,5 @@ archive/
 *.[rR][dD][aA]
 app_data_preparation.R
 functions_packages_data_prep.R
-SOP - COVID Dashboard - Updating data and deploying dashboard.docx
-SOP - COVID Dashboard Anatomy.docx
-~$P - COVID Dashboard - Updating data and deploying dashboard.docx
+*.html
+
