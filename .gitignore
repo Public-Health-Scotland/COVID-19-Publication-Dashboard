@@ -1,18 +1,30 @@
 # they include API keys
 cookie-control.js
 deploying_app.R
-#Not needed
+# Not needed
 rsconnect
 .Rproj.user
 .Rhistory
 .Ruserdata
 *.Rproj
+*.lnk
+*.doc
+*.docx
+*.xlsx
+*.xls
+*.[Pp][nN][gG]
+*.[jJ][pP][gG]
+*.[jJ][pP][eE][gG]
 testing.R
 # packrat library folder (automatically added due to packract being initialised)
 packrat/lib*/
 # 'data' folder #
 data/
 archive/
+Data Formatting Scripts/
+Data Formatting/
+Dashboard Data Transfer/Input data/
+Dashboard Data Transfer/Test output/
 # Common text files that may contain data #
 *.[cC][sS][vV]
 *.[tT][xX][tT]
@@ -24,8 +36,5 @@ archive/
 *.[rR][dD][aA][tT][aA]
 *.[rR][dD][sS]
 *.[rR][dD][aA]
-app_data_preparation.R
 functions_packages_data_prep.R
-SOP - COVID Dashboard - Updating data and deploying dashboard.docx
-SOP - COVID Dashboard Anatomy.docx
-~$P - COVID Dashboard - Updating data and deploying dashboard.docx
+*.html

@@ -1,11 +1,11 @@
-#### Care Home Data Tab
+#### Quarantine Data Tab
 
-output$care_homes_table <- DT::renderDataTable({
+output$quarantine_table <- DT::renderDataTable({
   
   # Remove the underscore from column names in the table
-  table_colnames  <-  gsub("_", " ", colnames(Care_Homes))
+  table_colnames  <-  gsub("_", " ", colnames(Quarantine))
   
-  DT::datatable(Care_Homes, style = 'bootstrap',
+  DT::datatable(Quarantine, style = 'bootstrap',
                 class = 'table-bordered table-condensed',
                 rownames = FALSE,
                 options = list(pageLength = 15,
@@ -18,14 +18,15 @@ output$care_homes_table <- DT::renderDataTable({
 
 ## Data downloads ----
 
-care_home_data_download <- reactive({
-  Care_Homes
+quarantine_download <- reactive({
+  Quarantine
 })
 
 # For the charts at the moment the data download is for the overall one,
-output$download_care_home_data <- downloadHandler(
-  filename ="Care_Home_Data.csv",
+output$download_quarantine_data <- downloadHandler(
+  filename ="Quarantine.csv",
   content = function(file) {
-    write_csv(care_home_data_download(),
+    write_csv(quarantine_download(),
               file)
   })
+

@@ -1,5 +1,28 @@
+# Specific files
 AppDeployment.R
 Update functions_packages_data_prep.R
 ethnicity_data_tab-copy.R
 ethnicity_tab.R
 ethnicity_data_tab.R
+
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+# 'data' folder #
+data/
+
+# Common text files that may contain data #
+*.[cC][sS][vV]
+*.[tT][xX][tT]
+
+# Excel files #
+*.[xX][lL][sS]*
+
+# SPSS formats #
+*.[sS][aA][vV]
+
+# R data files #
+*.[rR][dD][aA][tT][aA]
+*.[rR][dD][sS]

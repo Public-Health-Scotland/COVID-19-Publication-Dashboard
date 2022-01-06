@@ -33,7 +33,8 @@ output$HCWtable_filtered <- DT::renderDataTable({
                                dom = 'tip',
                                autoWidth = TRUE),
                 filter = "top",
-                colnames = table_colnames)
+                colnames = table_colnames) #%>%
+    #formatCurrency(3:9, currency = "", interval = 3, mark = ",", digits=0)
 })
 
 ###############################################.

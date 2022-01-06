@@ -74,7 +74,7 @@ observeEvent(input$btn_dataset_modal,
                  p("NHS24 Systems Applications and Products Business Warehouse", 
                    p("In response to COVID-19, NHS 24 adapted their service provision. People who are concerned about COVID-19, 
                      or who experience symptoms, are advised to seek advice from NHS Inform website, the COVID-19 advice helpline 
-                     or to contact NHS 24âs 111 service if their symptoms worsen and they need clinical advice, following which they may be;"),
+                     or to contact NHS 24's 111 service if their symptoms worsen and they need clinical advice, following which they may be;"),
                    tags$li("provided with self-care advice or be asked to contact their own GP"),
                    tags$li("referred to a COVID-19 community hub for further clinical telephone triage, they may then be asked to attend assessment centre or receive a home visit by a Nurse or Doctor"),
                    tags$li("referred to acute services via the Scottish Ambulance Service or advised to attend hospital, depending on their symptoms."),
@@ -104,11 +104,11 @@ observeEvent(input$btn_dataset_modal,
                  
                  p("Following assessment and treatment by SAS crews some patients do not require to be taken to hospital. 
                    These patients can be safely left at home with follow up provided by other services including their own GP or GP OOH Services. 
-                   It is in the patientâs best interest to get the care they require as close to their own home as is feasible."),
+                   It is in the patients' best interest to get the care they require as close to their own home as is feasible."),
                  size = "m",
                  easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)")))
                
-             } else if (input$measure_select == "Child") { #NHS24 MODAL
+             } else if (input$measure_select == "Child") {
                showModal(modalDialog(
                  title = "What is the data source?",
                  p("ECOSS (Electronic Communication of Surveillance in Scotland) Database", 
@@ -116,15 +116,15 @@ observeEvent(input$btn_dataset_modal,
                    size = "m",
                    easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)"))))
                
-             } else if (input$measure_select == "EthnictyChart") { #NHS24 MODAL
+             } else if (input$measure_select == "Ethnicity_Chart") {
                showModal(modalDialog(
                  title = "What is the data source?",
-                 p("BLANK"),
-                 p("BLANK ") ,
+                 p("RAPID (Rapid Preliminary Inpatient Data)"), 
+                 p("Extract Date: 11/02/2021"),
                  size = "m",
                  easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)")))
              }
-               )
+)
 
 ###############################################.
 # Modal to explain SIMD and deprivation
@@ -146,7 +146,7 @@ simd_modal <- modalDialog(
     living in the most deprived areas."),
   size = "l", 
   easyClose = TRUE, fade=TRUE, footer = modalButton("Close (Esc)")
-  )
+)
 # Link action button click to modal launch 
 observeEvent(input$btn_modal_simd, { showModal(simd_modal) }) 
 
@@ -176,12 +176,12 @@ output$data_explorer <- renderUI({
                        input$measure_select == "AssessmentHub" ~ "Individuals", 
                        input$measure_select == "SAS" ~ "SAS incidents (suspected COVID-19)")
   
-  start_date <- case_when(input$measure_select == "LabCases" ~ "28 February",
-                          input$measure_select == "Admissions" ~ "1 March",
-                          input$measure_select == "ICU" ~ "11 March",
-                          input$measure_select == "NHS24" ~ "13 February",
-                          input$measure_select == "AssessmentHub" ~ "23 March",
-                          input$measure_select == "SAS" ~ "22 January")
+  start_date <- case_when(input$measure_select == "LabCases" ~ "28 February 2020",
+                          input$measure_select == "Admissions" ~ "1 March 2020",
+                          input$measure_select == "ICU" ~ "11 March 2020",
+                          input$measure_select == "NHS24" ~ "13 February 2020",
+                          input$measure_select == "AssessmentHub" ~ "23 March 2020",
+                          input$measure_select == "SAS" ~ "22 January 2020")
   
   end_date <- case_when(input$measure_select == "LabCases" ~ Labcases_date,
                         input$measure_select == "Admissions" ~ Admissions_date,
@@ -194,19 +194,19 @@ output$data_explorer <- renderUI({
   agesex_title <- paste0(dataset, " per 100,000 population by age \n(", start_date, " to ", end_date, ")")
   simd_title <- paste0(dataset, " by deprivation category (SIMD) \n(", start_date, " to ", end_date, ")")
   
-  subheading <- case_when(input$measure_select == "Admissions" ~ "COVID-19 related admissions have been identified as the following: A patient may have tested positive 
-                                                  for COVID-19 14 days prior to admission to hospital, on the day of their admission or during their stay in hospital.",
-                          input$measure_select == "NHS24" ~ paste0("The launch of the Redesign of Urgent Care programme will see an increase in NHS 24 activity from the 1st of December onwards as a result of the launch of the programme. For more information see: https://www.gov.scot/policies/healthcare-standards/unscheduled-care/ 
-                                             Since 15 September figures for the COVID helpline include calls made to the new flu helpline. 
+  subheading <- case_when(input$measure_select == "Admissions" ~ "COVID-19 related admissions have been identified as the following: A patient’s first positive test for COVID-19 up to 14 days prior to admission to hospital, on the day of their admission or during their stay in hospital. 
+                          If a patient’s first positive test is after their date of discharge from hospital, they are not included in the analysis.  An admission is defined as a period of stay in a single hospital. If the patient has been transferred to another hospital during treatment, each transfer will create a new admission record.",
+                          input$measure_select == "NHS24" ~ paste0("The launch of the Redesign of Urgent Care programme will see an increase in NHS 24 activity from the 1st December 2020 onwards as a result of the launch of the programme. For more information see: https://www.gov.scot/policies/healthcare-standards/unscheduled-care/ 
+                                             Since 15th September 2020, figures for the COVID helpline include calls made to the new flu helpline. 
                                              In late September, the first batch of flu vaccination letters sent to those eligible by NHS Health Boards included the coronavirus number. 
                                              The peaks in calls are consistent with the timing of those letters being sent."),
                           input$measure_select == "AssessmentHub" ~  paste0("Please note that data are provisional and may be updated in future publications as further information is supplied and validated from health boards."),
-                          input$measure_select == "SAS" ~ " ")
-
-# data sources
-data_source <- case_when(input$measure_select == "LabCases" ~ "ECOSS",
-                         input$measure_select == "Admissions" ~ "ECOSS/RAPID",
-                         input$measure_select == "ICU" ~ "SICSAG", 
+                          input$measure_select == "SAS" ~ paste0(""))
+  
+  # data sources
+  data_source <- case_when(input$measure_select == "LabCases" ~ "ECOSS",
+                           input$measure_select == "Admissions" ~ "ECOSS/RAPID",
+                           input$measure_select == "ICU" ~ "SICSAG", 
                          input$measure_select == "NHS24" ~ "NHS 24 SAP BW", 
                          input$measure_select == "AssessmentHub" ~ "GP Out of Hours (OOH)", 
                          input$measure_select == "SAS"~ "SAS and Unscheduled Care Datamart")
@@ -231,7 +231,7 @@ cut_charts_missing <- function(title, source, data_name) {
     p("SICSAG data are stored in a dynamic database and subject to ongoing validations therefore on a week to week basis the data may change."),
     p("On 30 October 2020, Public Health Scotland became aware of an ongoing issue when linking ICU data to laboratory data for COVID-19 test results. 
       Any COVID-19 positive patients with a missing a CHI number that had a first positive test in the community are unable to be linked to ICU data. 
-      As a result, the COVID-19 positive ICU patients could be underreported by up to 10%. This is currently being investigated and figures may change in future reports."),
+      As a result, the COVID-19 positive ICU patients could be underreported by up to 10%."),
     actionButton("btn_dataset_modal", paste0("Data source: ", source), icon = icon('question-circle')),
     plot_box(paste0(total_title), paste0(data_name, "_overall")),
     plot_cut_missing(paste0(agesex_title), paste0(data_name, "_AgeSex")))
@@ -256,14 +256,24 @@ if (input$measure_select == "LabCases") { #Positive Cases
   
   tagList(h3("Daily number of positive COVID-19 cases"),
           actionButton("btn_dataset_modal", paste0("Data source: ", "ECOSS"), icon = icon('question-circle')),
+          actionButton("btn_modal_simd", "What is SIMD?", icon = icon('question-circle')),
           plot_box("Daily number of Positive COVID-19 cases", plot_output = "LabCases_overall"),
           plot_box("Cumulative rate per 100,000", plot_output = "LabCasesRate"),
-          plot_cut_box(paste0("Positive COVID-19 cases per 100,000 population by age \n(28 February to ", Labcases_date, ")"), "LabCases_AgeSex",
-                       paste0("Positive COVID-19 cases by deprivation category (SIMD) \n(28 February to ", Labcases_date, ")"), "LabCases_SIMD"))
+          plot_box("Weekly COVID-19 cases by age group", 
+                   plot_output="labcases_age_groups"),
+          plot_cut_box(paste0("Positive COVID-19 cases per 100,000 population by age \n(28 February 2020 to ", Labcases_date, ")"), "LabCases_AgeSex",
+                       paste0("Positive COVID-19 cases by deprivation category (SIMD) \n(28 February 2020 to ", Labcases_date, ")"), "LabCases_SIMD"))
          
 } else if (input$measure_select == "Admissions") { #Admissions
-  cut_charts_subheading(title= "Daily number of COVID-19 admissions to hospital", 
-                        source = data_source, data_name = "Admissions")
+  tagList(actionButton("btn_modal_simd", "What is SIMD?", icon = icon('question-circle')),
+    cut_charts_subheading(title= "Daily number of COVID-19 admissions to hospital", 
+                        source = data_source, data_name = "Admissions"),
+  # percent admissions
+  plot_box("Proportion of weekly cases admitted to hospital within 14 days of a first positive test", 
+           plot_output = "prop_admissions"),
+  plot_box("Weekly cases admitted to hospital within 14 days of a first positive test, by age group", 
+           plot_output="cases_age_groups")
+)
   
 } else if (input$measure_select == "ICU") {# ICU 
   cut_charts_missing(title= "Daily number of COVID-19 admissions to ICU",
@@ -274,7 +284,8 @@ if (input$measure_select == "LabCases") { #Positive Cases
   SelfHelpTitle <- paste0("NHS24 COVID-19 self help guides completed (",start_date, " to ", end_date, ")" )
   OutcomesTitle <- paste0("NHS24 COVID-19 outcomes (",start_date, " to ", end_date, ")" )
   
-  tagList(cut_charts_subheading(title = "Daily number of COVID-19 related NHS24 contacts", 
+  tagList(actionButton("btn_modal_simd", "What is SIMD?", icon = icon('question-circle')),
+          cut_charts_subheading(title = "Daily number of COVID-19 related NHS24 contacts", 
                                 source = data_source, data_name ="NHS24"),
           h3("NHS Inform"),
           # actionButton("btn_dataset_inform", "Data source: INFORM", icon = icon('question-circle')),
@@ -284,27 +295,22 @@ if (input$measure_select == "LabCases") { #Positive Cases
           plot_box(OutcomesTitle, "NHS24_community"))
   
 } else if (input$measure_select == "AssessmentHub") { # Assessment Hub
+ tagList( actionButton("btn_modal_simd", "What is SIMD?", icon = icon('question-circle')),
   cut_charts_subheading(title= "Daily number of COVID-19 consultations", 
-                        source = data_source, data_name = "AssessmentHub")
+                        source = data_source, data_name = "AssessmentHub"))
   
 } else if (input$measure_select == "SAS") { # SAS data
-  c(cut_charts_subheading(title= "Daily attended incidents by Scottish Ambulance Service (suspected COVID-19)", 
+  c(actionButton("btn_modal_simd", "What is SIMD?", icon = icon('question-circle')),
+    cut_charts_subheading(title= "Daily attended incidents by Scottish Ambulance Service (suspected COVID-19)", 
                           source = data_source, data_name ="SAS"),
     plot_box("SAS - all incidents", plot_output = "SAS_all"))
-  
-}  else if (input$measure_select == "Child") { # Child data
-  tagList(h3("COVID-19 cases and testing among children and young people"),
-          p("Please note due to the data being based on specimen date of the COVID-19 test the latest week is provisional and may be subject to change."),
-          actionButton("btn_dataset_modal", paste0("Data source: ", "ECOSS"), icon = icon('question-circle')),
-          plot_box("Number of positive COVID-19 tests in children and young people", plot_output = "ChildDataPositives"),
-          plot_box("Number of negative COVID-19 tests in children and young people", "ChildDataNegatives"),
-          plot_box("Percentage of children and young people testing positive for COVID-19", plot_output = "ChildDataCases"))
-  
 }  else if (input$measure_select == "Ethnicity_Chart") { # Ethnicity data
   tagList(h3("COVID-19 admissions to hospital by ethnicity"),
           p("COVID-19 related admissions have been identified as the following: A patient may have tested positive for COVID-19 14 days prior to admission to hospital, 
             on the day of their admission or during their stay in hospital."),
-          p("Click on legend to select or deselect categories "),
+          p("Click on legend to select or deselect categories: "),
+          tags$li("Single click on an item in the legend to remove it from the plot"),
+          tags$li("Double click on an item in the legend to view only that line"),
           actionButton("btn_dataset_modal", paste0("Data source: ", "RAPID"), icon = icon('question-circle')),
           plot_box("COVID-19 admissions to hospital by ethnicity - Cases", plot_output = "EthnicityChart"),
           plot_box("COVID-19 admissions to hospital by ethnicity - Percentage", plot_output = "EthnicityChartPercentage"))
@@ -323,6 +329,7 @@ output$ICU_overall <- renderPlotly({plot_overall_chart(ICU, data_name = "ICU")})
 output$NHS24_overall <- renderPlotly({plot_overall_chartNHS24(NHS24, data_name = "NHS24")})
 output$AssessmentHub_overall <- renderPlotly({plot_overall_chartAssessmentHub(AssessmentHub, data_name = "AssessmentHub")})
 output$SAS_overall <- renderPlotly({plot_overall_chartSAS(SAS, data_name = "SAS")})
+output$labcases_age_groups <- renderPlotly({cases_age_chart_3_week(LabCases_Age, data_name = "LabCases_Age")})
 
 #age/sex and SIMD charts
 output$LabCases_AgeSex <- renderPlotly({plot_agesex_chart(LabCases_AgeSex, data_name = "LabCases_AgeSex")})
@@ -347,6 +354,10 @@ output$ChildDataNegatives <- renderPlotly({plot_overall_chartChild(Child, data_n
 output$ChildDataCases <- renderPlotly({plot_overall_chartChild(Child, data_name = "Child", childdata = "ChildPer")})
 output$LabCasesRate <- renderPlotly({plot_singlerate_chart(LabCases, data_name = "LabCases")})
 
+#extra admissions charts
+output$prop_admissions <- renderPlotly({plot_singletrace_chart(Cases_Adm, data_name = "Cases_Adm")})
+#output$cases_age_groups <- renderPlotly({stacked_cases_age_chart(Cases_AgeGrp, data_name = "Cases_AgeGrp")})
+output$cases_age_groups <- renderPlotly({cases_age_chart_3_week(Cases_AgeGrp, data_name = "Cases_AgeGrp")})
 
 output$EthnicityChart <- renderPlotly({plot_overall_chartEthnicity(Ethnicity_Chart, data_name = "Ethnicity_Chart")})
 output$EthnicityChartPercentage <- renderPlotly({plot_overall_chartEthnicityPercent(Ethnicity_Chart, data_name = "Ethnicity_Chart")})
