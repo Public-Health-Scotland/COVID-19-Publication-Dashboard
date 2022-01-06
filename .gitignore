@@ -10,6 +10,8 @@ rsconnect
 *.lnk
 *.doc
 *.docx
+*.xlsx
+*.xls
 testing.R
 # packrat library folder (automatically added due to packract being initialised)
 packrat/lib*/
