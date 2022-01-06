@@ -307,13 +307,19 @@ tagList(  #needed for shinyjs
              value = "MTUtab",
              
              h3("Targeted Community Testing"),
+<<<<<<< HEAD
              p("Across Scotland, Mobile Testing Units have been deployed as part of the Community Testing Programme.  These are targeted at areas where there are concerns around community transmission levels, and offer testing to any member of that community.", 
                "Use the dropdown to explore the outputs which detail the numbers of tests carried out by the Mobile Testing Units."),
+=======
+>>>>>>> 23b6235bbc9087f3fc83bd07b13f342523781e3b
              
                selectInput(inputId = "MTU_select", width = "100%",
                            label = "Use the Dropdown Menu to Select an Output",
                            choices =  list("Key Points" = "summary",
+<<<<<<< HEAD
                                            "Test Centre Details" = "details",
+=======
+>>>>>>> 23b6235bbc9087f3fc83bd07b13f342523781e3b
                                            "Mobile Testing Over Time" = "heatmap",
                                            "Cummulative Totals" = "cumul_totals",
                                            "Data" = "data")),
