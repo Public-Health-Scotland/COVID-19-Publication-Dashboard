@@ -253,7 +253,7 @@ plot_simd_chart <- function(dataset, data_name, yaxis_title, area = T) {
                            data_name == "Admissions_SIMD" ~ "Admissions",
                            data_name == "NHS24_SIMD" ~ "NHS24 contacts",
                            data_name == "AssessmentHub_SIMD" ~ "Individuals",
-                           data_name == "SAS_SIMD" ~ "SAS incidents (suspected COVID-19)")
+                           data_name == "SAS_SIMD" ~ "SAS incidents (suspected COVID-19)\n")
   
   yaxis_title <- paste0(yaxis_title, " by deprivation category (SIMD)")
   
@@ -298,7 +298,7 @@ plot_simd_chart <- function(dataset, data_name, yaxis_title, area = T) {
 
 ## Function for other charts -----------------------------------------------
 
-plot_singletrace_chart <- function(dataset, data_name, yaxis_title, area = T) {
+plot_singletrace_chart <- function(dataset, data_name, yaxis_title, xaxis_title, area = T) {
   
   # Filtering dataset to include only overall figures
   trend_data <- dataset
@@ -306,13 +306,22 @@ plot_singletrace_chart <- function(dataset, data_name, yaxis_title, area = T) {
   ###############################################.
   # Creating objects that change depending on dataset
   yaxis_title <- case_when(data_name == "NHS24_inform" ~ "Number of hits",
-                           data_name == "SAS_all" ~ "Number of SAS incidents")
+                           data_name == "SAS_all" ~ "Number of SAS incidents",
+                           data_name == "Cases_Adm" ~ "Percent")
   
   #Modifying standard layout
   yaxis_plots[["title"]] <- yaxis_title
   
   measure_name <- case_when(data_name == "NHS24_inform" ~ "COVID-19 section of NHS Inform: ",
-                            data_name == "SAS_all" ~ "SAS incidents: ")
+                            data_name == "SAS_all" ~ "SAS incidents: ",
+                            data_name == "Cases_Adm" ~ "Percentage")
+  
+  
+  
+  #measure_name <- case_when(data_name == "Cases_Adm" ~ "Week Commencing")
+  
+  xaxis_title <- case_when(data_name == "Cases_Adm" ~ "Week Ending")
+  xaxis_plots[["title"]] <- xaxis_title
   
   #Text for tooltip
   tooltip_trend <- glue("Date: {format(trend_data$date, '%d %b %y')}<br>",
@@ -358,6 +367,114 @@ plot_singlerate_chart <- function(dataset, data_name, yaxis_title, area = T) {
            legend = list(x = 100, y = 0.5)) %>% #position of legend
     # leaving only save plot button
     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove ) 
+}
+
+
+cases_age_chart_3_week <- function(dataset, data_name, area = T){
+  yaxis_title <- "Percent of Cases"
+  xaxis_title <- "Age Group"
+  
+  latest_date <- max(dataset$Date)
+  
+  # Filtering dataset to include only overall figures
+  trend_data <- dataset %>% 
+    filter(Date > (latest_date - 20)) %>%   # filter last 3 weeks
+    mutate(Age = gsub('\\[|\\]','', Age) ) %>% 
+    mutate(Age = factor(Age,levels =     c("0-17",
+                                           "18-29",
+                                           "30-39",
+                                           "40-49",
+                                           "50-54",
+                                           "55-59",
+                                           "60-64",
+                                           "65-69",
+                                           "70-74",
+                                           "75-79",
+                                           "80+")))
+  
+  
+  #Modifying standard layout
+  yaxis_plots[["title"]] <- yaxis_title
+  xaxis_plots[["title"]] <- xaxis_title
+  
+  #Text for tooltip
+  tooltip_trend <- glue("Percent of Cases: {trend_data$Percent}<br>",
+                        "Week Ending: {trend_data$Date}<br>",
+                        "Age Group: {trend_data$Age}")
+  
+  #Creating contact tracing time
+  trend_data %>%
+    plot_ly(x = ~Age, y = ~Percent, type="bar", 
+            color=~Date, 
+            stroke=I("black"), 
+            colors = pal_3_week, 
+            name=~Date,
+            hovertemplate=tooltip_trend,
+            hoverinfo="text") %>%
+   # add_bars(color = ~Date, #colour group
+  #           stroke = I("black"), #outline
+  #           #text = tooltip_trend,
+  #           hovertemplate = tooltip_trend,
+  #           hoverinfo = "text",
+  #           name = ~Date) %>%
+    #Layout
+    layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
+           yaxis = yaxis_plots, xaxis = xaxis_plots,
+           legend = list(x = 100, y = 0.5), #position of legend
+           barmode = "group") %>% #split by group
+    # leaving only save plot button
+    config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
+  
+  
+}
+
+
+
+
+stacked_cases_age_chart <- function(dataset, data_name, area = T) {
+  
+  yaxis_title <- "Percent of Cases"
+  
+  # Filtering dataset to include only overall figures
+  trend_data <- dataset %>% 
+    mutate( Age = gsub('\\[|\\]','',Age) ) %>% 
+    mutate(Age = factor(Age,levels = rev(c("0-17",
+                                           "18-29",
+                                          "30-39",
+                                          "40-49",
+                                          "50-54",
+                                          "55-59",
+                                          "60-64",
+                                          "65-69",
+                                          "70-74",
+                                          "75-79",
+                                          "80+"))))
+  
+  #Modifying standard layout
+  yaxis_plots[["title"]] <- yaxis_title
+  
+  #Text for tooltip
+  tooltip_trend <- glue("Percent of Cases: {trend_data$Percent}<br>",
+                        "Date: {trend_data$Date}<br>",
+                        "Age Group: {trend_data$Age}")
+  
+  #Creating contact tracing time
+  trend_data %>%
+    plot_ly(x = ~Date, y = ~Percent) %>%
+    add_bars(color = ~Age, #colour group
+             colors = pal_AgeGrp, #palette
+             stroke = I("black"), #outline
+             text = tooltip_trend,
+             hoverinfo = "text",
+             name = ~Age) %>%
+    #Layout
+    layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
+           yaxis = yaxis_plots, xaxis = xaxis_plots,
+           legend = list(x = 100, y = 0.5), #position of legend
+           barmode = "stack") %>% #split by group
+    # leaving only save plot button
+    config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
+  
 }
 
 
@@ -422,7 +539,7 @@ plot_nhs24_community_chart <- function(dataset, data_name, yaxis_title, area = T
   trend_data %>%
     plot_ly(x = ~date, y = ~count) %>%
     add_bars(color = ~outcome, #colour group
-             colors = pal_comm, #palette
+             colors = pal_CT, #palette
              stroke = I("black"), #outline
              text = tooltip_trend,
              hoverinfo = "text",
@@ -494,10 +611,83 @@ plot_overall_chartChild <- function(dataset, data_name, childdata, yaxis_title, 
 
 
 ## Contact Tracing Charts --------------------------------------------------
-# % stacked bar charts
+# New
+
+plot_contacttrace_Per_graph <- function(dataset, data_name, CTdata, yaxis_title, area = T) {
+  
+  yaxis_title <- case_when(#CTdata == "TestIndex" ~ "Test to index created",
+    CTdata == "TestInterview" ~ "Test to interview completed" ,
+    CTdata == "CaseInterview" ~ "Case created to interview completed",
+    CTdata == "CaseClose" ~ "Case created to case closed")
+  
+  # Filtering dataset to include only overall figures
+  trend_data <- dataset %>% 
+    filter(Measure == yaxis_title) %>% 
+    mutate(`Hours taken` = fct_inorder(`Hours taken`))
+  
+  #Modifying standard layout
+  yaxis_plots[["title"]] <- yaxis_title
+  
+  #Text for tooltip
+  tooltip_trend <- glue("{trend_data$Measure}<br>",
+                        "Week ending: {trend_data$week_ending}<br>",
+                        "{trend_data$`Hours taken`} hours: {trend_data$`Number of Index Cases`} cases ({trend_data$`% of Total Index Cases`}%)")
+  
+  #Creating contact tracing time
+  trend_data %>%
+    plot_ly(x =~week_ending, y=~`% of Total Index Cases`) %>% 
+    add_lines(color = ~ordered(`Hours taken`)) %>% 
+    #Layout
+    layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
+           yaxis = yaxis_plots, xaxis = xaxis_plots,
+           legend = list(x = 100, y = 0.5), #position of legend
+           barmode = "stack") %>% #split by group
+    # leaving only save plot button
+    config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
+  
+}
+
+plot_contacttrace_graph <- function(dataset, data_name, CTdata, yaxis_title, area = T) {
+  
+  yaxis_title <- case_when(#CTdata == "TestIndex" ~ "Test to index created",
+    CTdata == "TestInterview" ~ "Test to interview completed" ,
+    CTdata == "CaseInterview" ~ "Case created to interview completed",
+    CTdata == "CaseClose" ~ "Case created to case closed")
+  
+  # Filtering dataset to include only overall figures
+  trend_data <- dataset %>% 
+    filter(Measure == yaxis_title) %>% 
+    mutate(`Hours taken` = fct_inorder(`Hours taken`))
+  
+  #Modifying standard layout
+  yaxis_plots[["title"]] <- yaxis_title
+  
+  #Text for tooltip
+  tooltip_trend <- glue("{trend_data$Measure}<br>",
+                        "Week ending: {trend_data$week_ending}<br>",
+                        "{trend_data$`Hours taken`} hours: {trend_data$`Number of Index Cases`} cases ({trend_data$`% of Total Index Cases`}%)")
+  
+  # Creating contact tracing time
+  trend_data %>%
+    plot_ly(x = ~week_ending, y = ~`Number of Index Cases`) %>%
+    add_lines(color = ~ordered(`Hours taken`)) %>% 
+    # Layout
+    layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
+           yaxis = yaxis_plots, xaxis = xaxis_plots,
+           legend = list(x = 100, y = 0.5), #position of legend
+           barmode = "stack") %>% #split by group
+    # leaving only save plot button
+    config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
+}
+
+
+
+
+
+##### Old - bar chart
 plot_contacttrace_Per_chart <- function(dataset, data_name, CTdata, yaxis_title, area = T) {
   
-  yaxis_title <- case_when(CTdata == "TestIndex" ~ "Test to index created",
+  yaxis_title <- case_when(#CTdata == "TestIndex" ~ "Test to index created",
                            CTdata == "TestInterview" ~ "Test to interview completed" ,
                            CTdata == "CaseInterview" ~ "Case created to interview completed",
                            CTdata == "CaseClose" ~ "Case created to case closed")
@@ -519,7 +709,7 @@ plot_contacttrace_Per_chart <- function(dataset, data_name, CTdata, yaxis_title,
   trend_data %>%
     plot_ly(x = ~week_ending, y = ~`% of Total Index Cases`) %>%
     add_bars(color = ~`Hours taken`, #colour group
-             colors = pal_CT, #palette
+             colors = pal_comm, #palette
              stroke = I("black"), #outline
              text = tooltip_trend,
              hoverinfo = "text",
@@ -537,7 +727,7 @@ plot_contacttrace_Per_chart <- function(dataset, data_name, CTdata, yaxis_title,
 # cases stacked bar chart
 plot_contacttrace_chart <- function(dataset, data_name, CTdata, yaxis_title, area = T) {
   
-  yaxis_title <- case_when(CTdata == "TestIndex" ~ "Test to index created",
+  yaxis_title <- case_when(#CTdata == "TestIndex" ~ "Test to index created",
                            CTdata == "TestInterview" ~ "Test to interview completed" ,
                            CTdata == "CaseInterview" ~ "Case created to interview completed",
                            CTdata == "CaseClose" ~ "Case created to case closed")
@@ -573,78 +763,109 @@ plot_contacttrace_chart <- function(dataset, data_name, CTdata, yaxis_title, are
     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
 }
 
+# plot_average_CT_cases <- function(dataset, area = T) {
+#   
+#   #Filtering dataset to include only overall figures
+#   
+#   
+#   yaxis_title <- "Average Number of Cases per Contact"
+#   
+#   trend_data <- dataset 
+#   
+#   #Modifying standard layout
+#   yaxis_plots[["title"]] <- yaxis_title
+#   
+#   #Text for tooltip
+#   tooltip_trend <- c(paste0("Week ending: ", format(trend_data$`Week Ending`, "%d %b %y"),
+#                             "<br>",yaxis_title, " aged 0-4: ", trend_data$`0-4`,
+#                             "<br>",yaxis_title, " aged 5-14: ", trend_data$`5-14`,
+#                             "<br>",yaxis_title, " aged 15-19: ", trend_data$`15-19`,
+#                             "<br>",yaxis_title, " aged 20-24: ", trend_data$`20-24`,
+#                             "<br>",yaxis_title, " aged 25-44: ", trend_data$`25-44`,
+#                             "<br>",yaxis_title, " aged 45-64: ", trend_data$`45-64`,
+#                             "<br>",yaxis_title, " aged 65-74: ", trend_data$`65-74`,
+#                             "<br>",yaxis_title, " aged 74-84: ", trend_data$`75-84`,
+#                             "<br>",yaxis_title, " aged 85+: ", trend_data$`85+`,
+#                             "<br>",yaxis_title, " all ages: ", trend_data$`All Ages`))
+#   
+#   #Creating time trend plot
+#   plot_ly(data = trend_data, x = ~`Week Ending`) %>%
+#     add_lines(y = ~`0-4`, line = list(color = pal_ETH[1]),
+#               text = tooltip_trend, hoverinfo="text",
+#               name = "Age 0-4") %>%
+#     add_lines(y = ~`5-14`, line = list(color = "#713D8D"),
+#               text = tooltip_trend, hoverinfo="text",
+#               name = "Age 5-14") %>%
+#     add_lines(y = ~`15-19`, line = list(color = pal_ETH[2]),
+#               text = tooltip_trend, hoverinfo="text",
+#               name = "Age 15-19") %>%
+#     add_lines(y = ~`20-24`, line = list(color = "#4660B6"),
+#               text = tooltip_trend, hoverinfo="text",
+#               name = "Age 20-24") %>%
+#     add_lines(y = ~`25-44`, line = list(color = pal_ETH[3]),
+#               text = tooltip_trend, hoverinfo="text",
+#               name = "Age 25-44") %>%
+#     add_lines(y = ~`45-64`, line = list(color = "#3C9685"),
+#               text = tooltip_trend, hoverinfo="text",
+#               name = "Age 45-64") %>%
+#     add_lines(y = ~`65-74`, line = list(color = pal_ETH[4]),
+#               text = tooltip_trend, hoverinfo="text",
+#               name = "Age 65-74") %>%
+#     add_lines(y = ~`75-84`, line = list(color = "#6B991E"),
+#               text = tooltip_trend, hoverinfo="text",
+#               name = "Age 75-84") %>%
+#     add_lines(y = ~`85+`, line = list(color = "#4e7015"),
+#               text = tooltip_trend, hoverinfo="text",
+#               name = "Age 85+") %>%
+#     add_lines(y = ~`All Ages`, line = list(color = pal_ETH[5]),
+#               text = tooltip_trend, hoverinfo="text",
+#               name = "All Ages") %>%
+#     
+#     
+#     
+#     #Layout
+#     layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
+#            yaxis = yaxis_plots, xaxis = xaxis_plots,
+#            legend = list(x = 100, y = 0.5)) %>% #position of legend
+#     # leaving only save plot button
+#     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove ) 
+# }
+
 plot_average_CT_cases <- function(dataset, area = T) {
-  
-  #Filtering dataset to include only overall figures
-  
-  
-  yaxis_title <- "Average Number of Cases per Contact"
-  
-  trend_data <- dataset 
-  
-  #Modifying standard layout
-  yaxis_plots[["title"]] <- yaxis_title
-  
-  #Text for tooltip
-  tooltip_trend <- c(paste0("Week ending: ", format(trend_data$`Week Ending`, "%d %b %y"),
-                            "<br>",yaxis_title, " aged 0-4: ", trend_data$`0-4`,
-                            "<br>",yaxis_title, " aged 5-14: ", trend_data$`5-14`,
-                            "<br>",yaxis_title, " aged 15-19: ", trend_data$`15-19`,
-                            "<br>",yaxis_title, " aged 20-24: ", trend_data$`20-24`,
-                            "<br>",yaxis_title, " aged 25-44: ", trend_data$`25-44`,
-                            "<br>",yaxis_title, " aged 45-64: ", trend_data$`45-64`,
-                            "<br>",yaxis_title, " aged 65-74: ", trend_data$`65-74`,
-                            "<br>",yaxis_title, " aged 74-84: ", trend_data$`75-84`,
-                            "<br>",yaxis_title, " aged 85+: ", trend_data$`85+`,
-                            "<br>",yaxis_title, " all ages: ", trend_data$`All Ages`))
-  
-  #Creating time trend plot
-  plot_ly(data = trend_data, x = ~`Week Ending`) %>%
-    add_lines(y = ~`0-4`, line = list(color = pal_ETH[1]),
-              text = tooltip_trend, hoverinfo="text",
-              name = "Age 0-4") %>%
-    add_lines(y = ~`5-14`, line = list(color = "#713D8D"),
-              text = tooltip_trend, hoverinfo="text",
-              name = "Age 5-14") %>%
-    add_lines(y = ~`15-19`, line = list(color = pal_ETH[2]),
-              text = tooltip_trend, hoverinfo="text",
-              name = "Age 15-19") %>%
-    add_lines(y = ~`20-24`, line = list(color = "#4660B6"),
-              text = tooltip_trend, hoverinfo="text",
-              name = "Age 20-24") %>%
-    add_lines(y = ~`25-44`, line = list(color = pal_ETH[3]),
-              text = tooltip_trend, hoverinfo="text",
-              name = "Age 25-44") %>%
-    add_lines(y = ~`45-64`, line = list(color = "#3C9685"),
-              text = tooltip_trend, hoverinfo="text",
-              name = "Age 45-64") %>%
-    add_lines(y = ~`65-74`, line = list(color = pal_ETH[4]),
-              text = tooltip_trend, hoverinfo="text",
-              name = "Age 65-74") %>%
-    add_lines(y = ~`75-84`, line = list(color = "#6B991E"),
-              text = tooltip_trend, hoverinfo="text",
-              name = "Age 75-84") %>%
-    add_lines(y = ~`85+`, line = list(color = "#4e7015"),
-              text = tooltip_trend, hoverinfo="text",
-              name = "Age 85+") %>%
-    add_lines(y = ~`All Ages`, line = list(color = pal_ETH[5]),
-              text = tooltip_trend, hoverinfo="text",
-              name = "All Ages") %>%
-    
-    
-    
-    #Layout
-    layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
-           yaxis = yaxis_plots, xaxis = xaxis_plots,
-           legend = list(x = 100, y = 0.5)) %>% #position of legend
-    # leaving only save plot button
-    config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove ) 
+
+#Filtering dataset to include only overall figures
+
+yaxis_title <- "Average number of contacts per case"
+
+trend_data <- dataset 
+
+#Modifying standard layout
+yaxis_plots[["title"]] <- yaxis_title
+
+#Text for tooltip
+tooltip_trend <- c(paste0("Week ending: ", format(trend_data$`Week Ending`, "%d %b %y"),
+                          "<br>", yaxis_title,  trend_data$`Average Number of Contacts`))
+
+#Creating time trend plot
+plot_ly(data = trend_data, x = ~`Week Ending`) %>%
+  add_lines(y = ~`Average Number of Contacts`, 
+            line = list(color = pal_ETH[1]),
+            text = tooltip_trend, hoverinfo="text",
+            name = "Age 0-4") %>%
+  #Layout
+  layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
+         yaxis = yaxis_plots, xaxis = xaxis_plots,
+         legend = list(x = 100, y = 0.5)) %>% #position of legend
+  # leaving only save plot button
+  config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove ) 
 }
 
 # Settings ----------------------------------------------------------------
-# cases stacked bar chart
-plot_settings_chart <- function(dataset, data_name, settingdata, yaxis_title, area = T) {
 
+# new
+
+plot_settings_chart <- function(dataset, data_name, settingdata, yaxis_title, area = T) {
+  
   yaxis_title <- case_when(data_name == "Settings" ~ "Number of Cases")
   
   # Filtering dataset to include only overall figures
@@ -663,12 +884,7 @@ plot_settings_chart <- function(dataset, data_name, settingdata, yaxis_title, ar
   # Creating contact tracing time
   trend_data %>%
     plot_ly(x = ~week_ending, y = ~`Number of  Cases`) %>%
-    add_bars(color = ~`Setting Location`, #colour group
-             colors = pal_CT, #palette
-             stroke = I("black"), #outline
-             text = tooltip_trend,
-             hoverinfo = "text",
-             name = ~`Setting Location`) %>%
+    add_lines(color = ~`Setting Location`) %>%
     # Layout
     layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
            yaxis = yaxis_plots, xaxis = xaxis_plots,
@@ -677,6 +893,45 @@ plot_settings_chart <- function(dataset, data_name, settingdata, yaxis_title, ar
     # leaving only save plot button
     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
 }
+
+
+
+
+# old
+#plot_settings_chart <- function(dataset, data_name, settingdata, yaxis_title, area = T) {
+
+#  yaxis_title <- case_when(data_name == "Settings" ~ "Number of Cases")
+  
+#  # Filtering dataset to include only overall figures
+#  trend_data <- dataset %>% 
+#    filter(`Setting Type` == input$Setting_select)  %>% 
+#    mutate(`Setting Location` = fct_inorder(`Setting Location`))
+  
+#  # Modifying standard layout
+#  yaxis_plots[["title"]] <- yaxis_title
+  
+#  # ext for tooltip
+#  tooltip_trend <- glue("{trend_data$`Setting Location`}<br>",
+#                        "Week ending: {trend_data$week_ending}<br>",
+#                        "Number of cases: {trend_data$`Number of  Cases`}")
+  
+  # Creating contact tracing time
+#  trend_data %>%
+#    plot_ly(x = ~week_ending, y = ~`Number of  Cases`) %>%
+#    add_bars(color = ~`Setting Location`, #colour group
+#             colors = pal_CT, #palette
+#             stroke = I("black"), #outline
+#             text = tooltip_trend,
+#             hoverinfo = "text",
+#             name = ~`Setting Location`) %>%
+#    # Layout
+#    layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
+#           yaxis = yaxis_plots, xaxis = xaxis_plots,
+#           legend = list(x = 100, y = 0.5), #position of legend
+#           barmode = "stack") %>% #split by group
+#    # leaving only save plot button
+#    config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
+#}
 
 
 ## Ethnicity Chart ------------------------------------------------------------
@@ -689,7 +944,7 @@ plot_overall_chartEthnicity <- function(dataset, data_name, yaxis_title, area = 
   yaxis_plots[["title"]] <- yaxis_title
   
   #Text for tooltip
-  tooltip_trend <- c(paste0("Month: ", trend_data$`Date`, " 2020",
+  tooltip_trend <- c(paste0("Month: ", trend_data$`Month beginning`,
                             "<br>",yaxis_title, " - White: ", trend_data$`White_c`, " (", trend_data$`White_p`,"%)",
                             "<br>",yaxis_title, " - Black/Caribbean/African: ", trend_data$`Black/Caribbean/African_c`," (", trend_data$`Black/Caribbean/African_p`,"%)",
                             "<br>",yaxis_title, " - South Asian: ", trend_data$`South Asian_c`," (", trend_data$`South Asian_p`,"%)",
@@ -700,7 +955,7 @@ plot_overall_chartEthnicity <- function(dataset, data_name, yaxis_title, area = 
   
   
   #Creating time trend plot
-  plot_ly(data = trend_data, x = ~`Date`) %>%
+  plot_ly(data = trend_data, x = ~`Month beginning`) %>%
     add_lines(y = ~`White_c`, line = list(color = pal_ETH[1]),
               text = tooltip_trend, hoverinfo="text",
               name = "White") %>%
@@ -735,7 +990,7 @@ plot_overall_chartEthnicityPercent <- function(dataset, data_name, yaxis_title, 
   yaxis_plots[["title"]] <- yaxis_title
   
   #Text for tooltip
-  tooltip_trend <- c(paste0("Month: ", trend_data$`Date`, " 2020",
+  tooltip_trend <- c(paste0("Month: ", trend_data$`Month beginning`,
                             "<br>COVID-19 Admissions -  White: ", trend_data$`White_c`, " (", trend_data$`White_p`,"%)",
                             "<br>COVID-19 Admissions -  Black/Caribbean/African: ", trend_data$`Black/Caribbean/African_c`," (", trend_data$`Black/Caribbean/African_p`,"%)",
                             "<br>COVID-19 Admissions -  South Asian: ", trend_data$`South Asian_c`," (", trend_data$`South Asian_p`,"%)",
@@ -745,7 +1000,7 @@ plot_overall_chartEthnicityPercent <- function(dataset, data_name, yaxis_title, 
   
   
   #Creating time trend plot
-  plot_ly(data = trend_data, x = ~`Date`) %>%
+  plot_ly(data = trend_data, x = ~`Month beginning`) %>%
     add_lines(y = ~`White_p`, line = list(color = pal_ETH[1]),
               text = tooltip_trend, hoverinfo="text",
               name = "White") %>%
@@ -772,6 +1027,132 @@ plot_overall_chartEthnicityPercent <- function(dataset, data_name, yaxis_title, 
     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
 }
 
+##Scotland Proximity App - number of notificatins chart
+plot_prox_contacts_chart <- function(dataset, yaxis_title, xaxis_title, area = T) {
+  
+  # Filtering dataset to include only overall figures
+  trend_data <- dataset
+  
+  ###############################################.
+  # Creating objects that change depending on dataset
+  yaxis_title <- "Number of contact notifications"
+  xaxis_title <- "Week beginning"
+  
+    #Modifying standard layout
+  yaxis_plots[["title"]] <- yaxis_title
+  xaxis_plots[["title"]] <- xaxis_title
+  
+  measure_name <- "Number of contact notifications"
+  
+    #Text for tooltip
+  tooltip_trend <- glue("Week beginning: {trend_data$'Week beginning'}<br>",
+                        "Contact Notifications: {trend_data$'Contact notifications'}")
+  
+   #Creating plot
+
+  plot_ly(x = trend_data$`Week beginning`, y = trend_data$`Contact notifications`,
+          type = "bar", #text=tooltip_trend
+          hovertemplate = tooltip_trend) %>%
+    
+    #Layout
+    layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
+          yaxis = yaxis_plots, xaxis = xaxis_plots,
+           legend = list(x = 100, y = 0.5), #position of legend
+           barmode = "bar") %>% 
+    # leaving only save plot button
+    config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
+}
+
+
+##Scotland Proximity App - number of uploads chart
+plot_prox_uploads_chart <- function(dataset, yaxis_title, xaxis_title, area = T) {
+  
+  # Filtering dataset to include only overall figures
+  trend_data <- dataset
+  
+  ###############################################.
+  # Creating objects that change depending on dataset
+  yaxis_title <- "Number of exposure key uploads"
+  xaxis_title <- "Week beginning"
+  
+    #Modifying standard layout
+  yaxis_plots[["title"]] <- yaxis_title
+  xaxis_plots[["title"]] <- xaxis_title
+  
+  measure_name <- "Number of contact notifications"
+  
+    #Text for tooltip
+  tooltip_trend <- glue("Week beginning: {trend_data$'Week beginning'}<br>",
+                        "Exposure key uploads: {trend_data$'Exposure key uploads'}")
+  
+   #Creating plot
+
+  plot_ly(x = trend_data$`Week beginning`, y = trend_data$`Exposure key uploads`,
+          type = "bar", #text=tooltip_trend 
+          hovertemplate = tooltip_trend) %>%
+    
+    #Layout
+    layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
+          yaxis = yaxis_plots, xaxis = xaxis_plots,
+           legend = list(x = 100, y = 0.5), #position of legend
+           barmode = "bar") %>% 
+    # leaving only save plot button
+    config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
+}
+
+
+############ Chart for LFD trend
+plot_LFDs <- function(dataset, area = T) {
+  
+  # Filtering dataset to include only overall figures
+  trend_data <- dataset %>% utils::head(-1) # Removing incomplete previous week
+  
+  #Modifying standard layout
+  yaxis_plots[["title"]] <- "Number of LFD Tests"
+  
+  tooltip_trend <- glue("Week ending: {trend_data$`Week Ending`}<br>",
+                        "Number of LFDs: {trend_data$`Number of LFD Tests`}")
+  
+  #Creating time trend plot
+  plot_ly(data = trend_data, x = ~`Week Ending`) %>%
+    add_lines(y = ~`Number of LFD Tests`, line = list(color = pal_overall[3]),
+              text = tooltip_trend, hoverinfo = "text",
+              name = "Number of LFD Tests") %>%
+    #Layout
+    layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
+           yaxis = yaxis_plots, xaxis = xaxis_plots,
+           legend = list(x = 100, y = 0.5)) %>% #position of legend
+    # leaving only save plot button
+    config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove ) 
+}
+
+
+
+#### Travel outside Scotland Chart
+
+travel_outside_scotland_chart <- function(dataset, area = T){
+  
+  yaxis_plots[["title"]] <- "Travel Outside Scotland"
+  
+  plot_data <- dataset %>%
+    mutate(Region = factor(Region, levels = c("Scotland", "United Kingdom","North Sea", "Europe", "Rest of the World")))
+  
+  tooltip_trend <- glue("Region: {plot_data$Region}<br>",
+                        "Cases: {plot_data$Cases}")
+  
+  plot_ly(x = plot_data$Region, y = plot_data$Cases,
+          type = "bar", hovertemplate=tooltip_trend) %>%
+    
+    #Layout
+    layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
+           yaxis = yaxis_plots, xaxis = xaxis_plots,
+           legend = list(x = 100, y = 0.5), #position of legend
+           barmode = "bar") %>% 
+    # leaving only save plot button
+    config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
+  
+  
+}
 
 
 ### END

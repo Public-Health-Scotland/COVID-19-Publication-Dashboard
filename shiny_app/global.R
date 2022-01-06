@@ -6,16 +6,16 @@
 ## Data extraction dates ----
 
 #publication date
-pub_date <- as.Date("2021-02-10")
+pub_date <- as.Date("2021-12-22")
 
 Labcases_date <- format(pub_date - 3, "%d %B %Y")
 ICU_date <- format(pub_date - 4, "%d %B %Y")
 NHS24_date <- format(pub_date - 3, "%d %B %Y")
 
-SAS_date <- format(pub_date - 3, "%d %B %Y")
+SAS_date <- format(pub_date - 5, "%d %B %Y")
 
 AssessmentHub_date <- format(pub_date - 7, "%d %B %Y")
-Admissions_date <- format(pub_date - 5, "%d %B %Y")
+Admissions_date <- format(pub_date -4, "%d %B %Y")
 
 #ECOSS, for LabCases
 labcases_extract_date <- format(pub_date - 2, "%d %B %Y") #format date
@@ -25,6 +25,10 @@ admission_extract_date <- format(pub_date - 3, "%A %d %B %Y") #format date
 
 #For ICU Admissions
 ICU_extract_date <- format(pub_date - 2, "%A %d %B %Y") #format date
+
+#For LFD
+LFD_date <- format(pub_date - 3, "%A %d %B %Y") #format date
+LFD_demo_date <- format(pub_date - 5, "%A %d %B %Y")
 
 ###############################################.
 ## Packages ----
@@ -46,6 +50,9 @@ library(tidytable)
 library(shinyBS) #for collapsible panels in commentary
 library(glue) #for pasting strings
 library(lubridate)
+library(janitor)
+library(phsstyles)
+library(tidyr)
 
 ###############################################.
 ## Functions ----
@@ -53,6 +60,12 @@ library(lubridate)
 plot_box <- function(title_plot, plot_output) {
   tagList(h4(title_plot),
           withSpinner(plotlyOutput(plot_output)))
+}
+
+
+plot_box_2 <- function(title_plot, subtitle_plot = "", plot_output) {
+  tagList(h4(title_plot),p(tags$i(subtitle_plot)),
+          withSpinner(plotlyOutput(plot_output), proxy.height = "500px"))
 }
 
 plot_cut_box <- function(title_plot1, plot_output1,
@@ -89,9 +102,11 @@ NHS24_selfhelp <- readRDS("data/SelfHelp.rds")
 
 #read age/sex/deprivation data
 LabCases_AgeSex <- readRDS("data/LabCases_AgeSex.rds")
+LabCases_Age <- readRDS("data/LabCases_Age.rds")
 LabCases_SIMD <- readRDS("data/LabCases_SIMD.rds")
 Admissions_AgeSex <- readRDS("data/Admissions_AgeSex.rds")
 Admissions_SIMD <- readRDS("data/Admissions_SIMD.rds")
+Admissions_AgeBD <- readRDS("data/Admissions_AgeBD.rds")
 ICU_AgeSex <- readRDS("data/ICU_AgeSex.rds")
 NHS24_AgeSex <- readRDS("data/NHS24_AgeSex.rds")
 NHS24_SIMD <- readRDS("data/NHS24_SIMD.rds")
@@ -100,26 +115,36 @@ AssessmentHub_SIMD <- readRDS("data/AssessmentHub_SIMD.rds")
 SAS_AgeSex <- readRDS("data/SAS_AgeSex.rds")
 SAS_SIMD <- readRDS("data/SAS_SIMD.rds")
 
+Cases_Adm <- readRDS("data/Cases_Adm.rds")
+Cases_AgeGrp <- readRDS("data/Cases_AgeGrp.rds")
+
 #read SAS/NHS24 other data
 NHS24_community <- readRDS("data/NHS24_community.rds")
 SAS_all <- readRDS("data/SAS_all.rds")
 
 # read in children data
-ChildCases <- readRDS("data/ChildCases.rds")
-ChildTests <- readRDS("data/ChildTests.rds")
-Child <- readRDS("data/Child.rds")
+#ChildCases <- readRDS("data/ChildCases.rds")
+#ChildTests <- readRDS("data/ChildTests.rds")
+#Child <- readRDS("data/Child.rds")
 
 #Contact Tracing 
-ContactTracing<- readRDS("data/ContactTracingWeekly.rds")
+#ContactTracing<- readRDS("data/ContactTracingWeekly.rds")
 ContactTime <- readRDS("data/ContactTime.rds")
-ContactEC <- readRDS("data/ContactTracingEducation.rds")
+#ContactEC <- readRDS("data/ContactTracingEducation.rds")
 ContactWeeklyCases <- readRDS("data/ContactTracingWeeklyCases.rds")
 ContactTracingWeeklyCumulative <- readRDS("data/ContactTracingWeeklyCumulative.rds")
 Settings <- readRDS("data/Settings.rds")
 ContactTracingAverages <- readRDS("data/ContactTracingAverages.rds")
-ContactTracingAveragesDT <- rename_at(ContactTracingAverages, 
-                                      .vars = vars(2:10), 
-                                      .funs = funs(paste0("Ages ", .)))
+#ContactTracingAveragesAge <- readRDS("data/ContactTracingAveragesAge.rds")
+ContactTracingTestingPositive <- readRDS("data/ContactTracingTestingPositive.rds")
+ContactTracingFail <- readRDS("data/ContactTracingFail.rds")
+ContactTracingRegions <- readRDS("data/ContactTracingRegions.rds")
+ContactTracingInterviews <- readRDS("data/ContactTracingInterviews.rds")
+ProximityApp <- readRDS ("data/ProximityApp.rds")
+#ContactTracingDemoAge <-readRDS("data/ContactTracingDemoAge.rds")
+#ContactTracingDemoSex <-readRDS("data/ContactTracingDemoSex.rds")
+#ContactTracingDemoSIMD <-readRDS("data/ContactTracingDemoSIMD.rds")
+
 
 # Health Care Workers
 HealthCareWorkerCancer <- readRDS("data/HCW_SpecialistCancer.rds")
@@ -133,38 +158,71 @@ Ethnicity_Chart <- readRDS("data/Ethnicity_Chart.rds")
 # Care Homes
 Care_Homes <- readRDS("data/Care_Homes.rds")
 
+# Quarantine
+Quarantine <- readRDS("data/Quarantine.rds")
+
+# LFD
+LFD <- readRDS("data/LFD.rds")
+LFD_Weekly <- readRDS("data/LFD_Weekly.rds")
+# Get data from LFT dashboard
+#lft_dash_path <- "/conf/C19_Test_and_Protect/Test & Protect - Warehouse/LFT Dashboard/Calum P/AM_COVID-19_LateralFlowTests/shiny_app/data"
+lfd_demographics_data <- readRDS("data/Demographics.rds") %>% filter(indicator != "Local Authority")
+
+people_output_selection <- c("Age Group and Sex", "SIMD")
+plot_output_selection <- c("All Individuals", "Positive Testing Individuals")
+
 # Mobile Testing Units
-mtu <- readRDS("data/MTU.rds")
-mtu_totals <- readRDS("data/MTU_totals.rds")
-mtu_lookup <- readRDS("data/mtu_lookup.rds")
-mtu_key_points <- readRDS("data/MTU_Key_Points.rds")
+mtu_heatmap_data <- readRDS("data/TCT_TestCentres.rds")
+mtu_heatmap_data2 <- mtu_heatmap_data %>%
+  dplyr::mutate(Number_of_tests = replace_na(total_tests, 0)) %>%
+  dplyr::rename(`Test Centre` = test_centre,
+                'NHS Board' = hb2019name,
+                `Number of Tests` = Number_of_tests,
+                `Week Ending` = week_ending_label) %>%
+  select(`Test Centre`, 'NHS Board', `Week Ending`,  `Number of Tests`)
+
+mtu_ts_data <- readRDS("data/TCT_AllTestCentres.rds")
+
+mtu_cumul_symp <- readRDS("data/TCT_HBSymptomaticFlag.rds")
+mtu_cumul_pos <- readRDS("data/TCT_HBPercentPositive.rds")
+mtu_cumul_site <- readRDS("data/TCT_HBTestSiteType.rds")
+
+mtu_keypoints <- readRDS("data/TCT_KeyPoints.rds")
+
+br3<-function(){tagList(br(),br(),br())}
 
 ###############################################.
 ## Data lists -------------------------------------------------------------- 
 
 
 data_list <- c("Positive Cases" = "LabCases",
-               "Admissions" = "Admissions",
-               "Admissions by Ethnicity" = "Ethnicity_Chart",
+               "Hospital Admissions" = "Admissions",
+               "Hospital Admissions by Ethnicity" = "Ethnicity_Chart",
                "ICU Admissions" = "ICU",
                "NHS24 Contacts" = "NHS24",
                "Community Hubs and Assessment Centres" = "AssessmentHub",
-               "Scottish Ambulance Service" = "SAS",
-               "Cases and Testing among children and young people" = "Child")
-
+               "Scottish Ambulance Service" = "SAS")
 
 
 CTdata_list_chart_tab <- c ("Contact Tracing time performance %", 
                             "Contact Tracing time performance cases",
-                            "Average number of contacts per case")
+                            "Average number of contacts per case",
+                            "Protect Scotland App")
 
 
-CTdata_list_data_tab <- c ("Contact Tracing Weekly by Health Board" = "ContactTracing", 
+CTdata_list_data_tab <- c (#"Contact Tracing Weekly by Health Board" = "ContactTracing", 
                            "Contact Tracing time performance measures" = "ContactTime",
-                           "Cases reporting an occupation in the Education and Childcare sector" = "ContactEC",
+                         #  "Cases reporting an occupation in the Education and Childcare sector" = "ContactEC",
                            "Cases recorded in contact tracing software" = "ContactWeeklyCases",
                            "Cumulative cases recorded in contact tracing software" ="ContactTracingWeeklyCumulative",
-                           "Average number of contacts per case" = "ContactTracingAverages")
+                           #"Average number of contacts per case" = "ContactTracingAveragesAge",
+                           "Number of Contacts Positive Within 10 Days of Exposure" = "ContactTracingTestingPositive",
+                           "Failed index cases by reason of failure" = "ContactTracingFail",
+                           "Protect Scotland App" = "ProximityApp")
+                      
+                            #"Index and contact cases by age" = "ContactTracingDemoAge",
+                           #"Index and contact cases by sex" = "ContactTracingDemoSex",
+                           #"Index and contact cases by SIMD quintile" = "ContactTracingDemoSIMD")
 
 
 SettingList <- c(sort(unique(Settings$`Setting Type`)))
@@ -176,16 +234,19 @@ HCWdata_list_data_tab <- c ("Specialist Cancer Wards and Treatment Areas" = "Hea
 
 #extra choices for data tables
 data_list_data_tab <- c("Positive Cases" = "LabCases",
-                        "Positive Cases by age" = "LabCases_AgeSex",
+                        "Positive Cases by age and sex" = "LabCases_AgeSex",
                         "Positive Cases by deprivation" = "LabCases_SIMD",
-                        "Admissions" = "Admissions",
-                        "Admissions by age" = "Admissions_AgeSex",
-                        "Admissions by deprivation" = "Admissions_SIMD",
-                        "Admissions by ethnicity" = "Ethnicity",
+                        "Distribution of confirmed COVID-19 cases by age group" = "Cases_AgeGrp",
+                        "Hospital Admissions" = "Admissions",
+                        "Hospital Admissions by age and sex" = "Admissions_AgeSex",
+                        "Hospital Admissions by deprivation" = "Admissions_SIMD",
+                        "Weekly Hospital Admissions by age" = 'Admissions_AgeBD',
+                        "Proportion of weekly cases admitted to hospital within 14 days of a first positive test" = "Cases_Adm",
+                        "Hospital Admissions by ethnicity" = "Ethnicity",
                         "ICU Admissions" = "ICU",
                         "ICU Admissions by age" = "ICU_AgeSex",
                         "NHS24 Contacts" = "NHS24",
-                        "NHS24 Contacts by age" = "NHS24_AgeSex",
+                        "NHS24 Contacts by age and sex" = "NHS24_AgeSex",
                         "NHS24 Contacts by deprivation" = "NHS24_SIMD",
                         "NHS Inform hits" = "NHS24_inform",
                         "NHS24 Self Help guides" = "NHS24_selfhelp",
@@ -194,19 +255,21 @@ data_list_data_tab <- c("Positive Cases" = "LabCases",
                         "Community Hubs and Assessment Centres by age" = "AssessmentHub_AgeSex",
                         "Community Hubs and Assessment Centres by deprivation" = "AssessmentHub_SIMD",
                         "Scottish Ambulance Service" = "SAS",
-                        "Scottish Ambulance Service by age" = "SAS_AgeSex",
+                        "Scottish Ambulance Service by age and sex" = "SAS_AgeSex",
                         "Scottish Ambulance Service by deprivation" = "SAS_SIMD",
-                        "Scottish Ambulance Service - all incidents" = "SAS_all", 
-                        "COVID-19 cases among children and young people" = "ChildCases", 
-                        "COVID-19 testing among children and young people" = "ChildTests")
+                        "Scottish Ambulance Service - all incidents" = "SAS_all")
+
+data_list_quarantine_tab <- c("Quarantine statistics by date" = "Quarantine")
 
 ###############################################.
 ## Palettes  ----
 
 pal_overall <- c('#000000', '#0078D4','#9B4393', '#bdbdbd', '#bdbdbd', '#bdbdbd', '#7fcdbb')
 
+pal_WkAge <- c('#0078D4','#9B4393', '#7fcdbb')
+
 #for nhs24 community outcomes
-pal_comm <- c("#3F3685", "#9B4393", "#0078D4", "#83BB26", "#C73918", "#6B5C85","#1E7F84")
+pal_comm <- c("#3F3685", "#9B4393", "#0078D4", "#C73918", "#83BB26", "#6B5C85")
 
 #for female/male/total sex
 pal_sex <- c('#9B4393', '#0078D4', "#000000")
@@ -215,7 +278,16 @@ pal_sex <- c('#9B4393', '#0078D4', "#000000")
 pal_child <- c("#3F3685", "#9B4393", "#0078D4", "#83BB26", "#C73918", "#6B5C85")
 
 #for contact tracing charts
-pal_CT <- c('#0078D4', '#3393DD', '#80BCEA',  '#B3D7F2','#000000')
+#pal_CT <- c('#0078D4', '#3393DD', '#80BCEA',  '#B3D7F2','#000000')
+
+pal_CT <- c(phs_colours("phs-blue"), 
+  phs_colours("phs-purple"),
+  phs_colours("phs-magenta"),
+  phs_colours("phs-teal"),
+  phs_colours("phs-green"),
+  '#000000')
+
+pal_3_week <- c(phs_colours("phs-purple"), phs_colours("phs-magenta"), phs_colours("phs-blue"))
 
 #for contact tracing charts
 pal_ETH <- c('#3F3685', '#9B4393', '#0078D4',  '#83BB26','#C73918')
@@ -225,6 +297,9 @@ pal_simd <- c('#0078D4', '#DFDDE3', '#DFDDE3', '#DFDDE3', '#83BB26')
 
 #for mtus
 pal_mtu <- c('#0078D4','#9B4393')
+
+#for AgeGrp chart
+pal_AgeGrp <- c('#000000', '#0078D4', '#3393DD', '#80BCEA',  '#B3D7F2')
 
 ###############################################.
 ## Plot Parameters ---------------------------------------------------------
@@ -239,6 +314,7 @@ yaxis_plots <- list(title = FALSE, rangemode="tozero", fixedrange=TRUE, size = 4
 # Buttons to remove
 bttn_remove <-  list('select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d',
                      'autoScale2d',   'toggleSpikelines',  'hoverCompareCartesian',
-                     'hoverClosestCartesian')
+                     'hoverClosestCartesian') 
 
-## END
+## END  
+ 
