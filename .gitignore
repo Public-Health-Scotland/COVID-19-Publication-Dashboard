@@ -12,6 +12,9 @@ rsconnect
 *.docx
 *.xlsx
 *.xls
+*.[Pp][nN][gG]
+*.[jJ][pP][gG]
+*.[jJ][pP][eE][gG]
 testing.R
 # packrat library folder (automatically added due to packract being initialised)
 packrat/lib*/
