@@ -1,7 +1,7 @@
 # they include API keys
 cookie-control.js
 deploying_app.R
-#Not needed
+# Not needed
 rsconnect
 .Rproj.user
 .Rhistory
