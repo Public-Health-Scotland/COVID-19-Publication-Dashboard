@@ -453,6 +453,7 @@ tagList(  #needed for shinyjs
              h3("Targeted Community Testing"),
              p("The Community Testing Programme is ongoing across Scotland.  This is targeted at areas where there are concerns around community transmission levels, and offer testing to any member of that community.", 
                "Use the dropdown to explore the outputs which detail the numbers of tests carried out by the Community Testing Programme."),
+
              
                selectInput(inputId = "MTU_select", width = "100%",
                            label = "Use the Dropdown Menu to Select an Output",

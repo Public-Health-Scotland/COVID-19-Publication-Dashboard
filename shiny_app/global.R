@@ -90,6 +90,13 @@ plot_cut_missing <- function(title_plot, plot_output, extra_content = NULL) {
 
 ###############################################.
 ## Data ----
+# 
+# ## correct filepath
+# cv_fp <- function(filename) {
+#   fp <- "/conf/PHSCOVID19_Analysis/COVID-19-Publication-Dashboard/shiny_app/"
+#   paste0(fp, filename)
+# }
+
 
 LabCases <-readRDS("data/LabCases.rds")
 Admissions <-readRDS("data/Admissions.rds")
