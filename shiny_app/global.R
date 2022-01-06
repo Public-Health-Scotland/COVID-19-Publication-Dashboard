@@ -140,18 +140,10 @@ Ethnicity_Chart <- readRDS("data/Ethnicity_Chart.rds")
 # Care Homes
 Care_Homes <- readRDS("data/Care_Homes.rds")
 
-<<<<<<< HEAD
 # Mobile Testing Units
 mtu <- readRDS("data/MTU.rds")
 mtu_totals <- readRDS("data/MTU_totals.rds")
 mtu_lookup <- readRDS("data/mtu_lookup.rds")
-=======
-
-# Mobile Testing Units
-mtu <- readRDS("data/MTU.rds")
-mtu_totals <- readRDS("data/MTU_totals.rds")
-mtu_lookup <- readRDS("data/MTU_Lookup.rds")
->>>>>>> 23b6235bbc9087f3fc83bd07b13f342523781e3b
 mtu_key_points <- readRDS("data/MTU_Key_Points.rds")
 
 ###############################################.

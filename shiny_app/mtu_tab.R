@@ -54,11 +54,7 @@ plot_mtu_totals <- function(){
 }
 
 output$mtu_lookup_table <- renderTable({
-<<<<<<< HEAD
   mtu_lookup 
-=======
-  mtu_lookup
->>>>>>> 23b6235bbc9087f3fc83bd07b13f342523781e3b
 })
 
 ### Summary points objects
@@ -100,7 +96,6 @@ output$MTUOutputs <-renderUI({
     tagList(h3("Total Numbers of Tests"),
             p("Total Numbers of tests carried out through each Mobile Testing Unit."),
             plot_box("", plot_output = "mtu_totals"))
-<<<<<<< HEAD
   }else if(paste(input$MTU_select) == "details"){
     tagList(h3("Test Centres"),       
              p("The Mobile Testing Units and their deployment dates are detailed in the table below."),
@@ -108,28 +103,14 @@ output$MTUOutputs <-renderUI({
   } else if(paste(input$MTU_select == "summary")){
       
       tagList(
-=======
-  }else if(paste(input$MTU_select) == "summary"){
-    tagList(
-      column(width = 6,
->>>>>>> 23b6235bbc9087f3fc83bd07b13f342523781e3b
              h3("Key Points"),
              p("From 18th January to ", mtu_end, "Mobile Testing Units carried out:"),
              tags$ul(
                tags$li(strong(n_mtu), "tests, of which", strong(mtu_pos), "were positive."),
                tags$li(strong(n_mtu_as), "asymptomatic tests, of which", strong(mtu_as_pos), "were positive."),
                tags$li(strong(n_mtu_s), "symptomatic tests, of which", strong(mtu_s_pos), "were positive."))
-<<<<<<< HEAD
       )
             
-=======
-      ),
-            column(width = 6,
-                   h3("Test Centres"),       
-                   p("The 8 Mobile Testing Units are detailed in the table below."),
-                   tableOutput("mtu_lookup_table"))
-            )
->>>>>>> 23b6235bbc9087f3fc83bd07b13f342523781e3b
   }
 })
 
