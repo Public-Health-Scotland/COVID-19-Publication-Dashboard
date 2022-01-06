@@ -24,6 +24,9 @@ function(input, output, session) {
   ###############################################.
   # Contact Tracing Data tab  
   source(file.path("contact_tracing_data_tab.R"),  local = TRUE)$value  
+  ###############################################.
+  # Travel tab  
+  source(file.path("travel_tab.R"),  local = TRUE)$value  
   
   ###############################################.
   # Settings tab  
@@ -34,11 +37,21 @@ function(input, output, session) {
   source(file.path("health_care_workers_data_tab.R"),  local = TRUE)$value
   
   ###############################################.
+  # Quarantine tab  
+  source(file.path("quarantine_tab.R"),  local = TRUE)$value
+  
+  ###############################################.
+  # LFD tab  
+  source(file.path("lfd_tab.R"),  local = TRUE)$value
+  source(file.path("lft_demo_tab.R"), local = TRUE)$value
+  
+  ###############################################.
   # Care Homes tab  
   source(file.path("care_home_data_tab.R"),  local = TRUE)$value
   
   ###############################################.
   # Mobile Testing Units tab  
+  source(file.path("mtu_key_points_function.R"), local = TRUE)$value
   source(file.path("mtu_tab.R"),  local = TRUE)$value
   
   ###############################################.
@@ -52,7 +65,11 @@ function(input, output, session) {
   observeEvent(input$jump_to_summary, {updateTabsetPanel(session, "intabset", selected = "summary")})
   observeEvent(input$jump_to_table, {updateTabsetPanel(session, "intabset", selected = "table")})
   observeEvent(input$jump_to_CTtable, {updateTabsetPanel(session, "intabset", selected = "CTtable")})
+  observeEvent(input$jump_to_travel, {updateTabsetPanel(session, "intabset", selected = "travelData")})
   observeEvent(input$jump_to_HCW, {updateTabsetPanel(session, "intabset", selected = "HCWtable")})
+  observeEvent(input$jump_to_quarantine, {updateTabsetPanel(session, "intabset", selected = "QData")})
+  observeEvent(input$jump_to_LFD, {updateTabsetPanel(session, "intabset", selected = "LFDData")})
+  observeEvent(input$jump_to_LFTdemo, {updateTabsetPanel(session, "intabset", selected = "LFTdemoData")})
   observeEvent(input$jump_to_CH, {updateTabsetPanel(session, "intabset", selected = "CHData")})
   observeEvent(input$jump_to_mtu, {updateTabsetPanel(session, "intabset", selected = "MTUtab")})
   
