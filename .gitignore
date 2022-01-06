@@ -16,6 +16,10 @@ packrat/lib*/
 # 'data' folder #
 data/
 archive/
+Data Formatting Scripts/
+Data Formatting/
+Dashboard Data Transfer/Input data/
+Dashboard Data Transfer/Test output/
 # Common text files that may contain data #
 *.[cC][sS][vV]
 *.[tT][xX][tT]
@@ -30,4 +34,3 @@ archive/
 app_data_preparation.R
 functions_packages_data_prep.R
 *.html
-
