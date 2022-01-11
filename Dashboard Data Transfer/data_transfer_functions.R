@@ -2,10 +2,61 @@
 ##### sourced from dashboard_data_transfer.R
 
 
+# Function to choose alternative filename
+# ---------------------------------------
+
+suggest_alternative_files <- function(keywords, location, recursive = TRUE){
+  
+  possibilities <- c()
+  
+  # Go through the list of keywords and search for files based off them
+  for(keyword in keywords){
+    key_poss <- list.files(path = location, pattern = keyword, all.files = FALSE,
+                                full.names = TRUE, recursive = recursive,
+                                ignore.case = TRUE, include.dirs = TRUE, no.. = FALSE)
+    
+    possibilities <- append(possibilities, key_poss)
+  }
+  
+  print(possibilities)
+  user_choice <- readline(
+    prompt="Should I use one of the above files? Type the number to use, or type 'No' and press Enter.     "
+  )
+  
+  tryCatch(expr = {
+    return(possibilities[as.integer(user_choice)]) 
+  },
+  warning = function(w){ 
+    file_choice <- NA
+  }
+  )
+  
+}
 
 # Function to read all excel sheets
 # ---------------------------------
 read_all_sheets = function(xlsxFile, ...) {
+  
+  ##### First check file is there and if not suggest alternatives
+  if(file.exists(xlsxFile) == FALSE){
+    message(glue("Could not find file {xlsxFile}. Searching for possible alternatives."))
+    
+    # Get keyword possibilities based off filename
+    keywords <- unlist(lapply(strsplit(gsub('[[:digit:]]+', '', basename(xlsxFile)), split = '[-_,.]'), 
+                                      function(z){ z[!is.na(z) & z != "" & z!="xlsx" & z!="csv"]}))
+    
+    # Suggest alternatives based off keywords
+    alternative <- suggest_alternative_files(keywords, dirname(xlsxFile))
+  
+    if(is.na(alternative)){
+      stop(glue("Could not find file {xlsxFile} or suitable alternatives. Terminating script."))
+    } else{
+      xlsxFile <- alternative
+    }
+  }
+  
+  
+  ##### Read the excel file
   sheet_names = openxlsx::getSheetNames(xlsxFile)
   sheet_list = as.list(rep(NA, length(sheet_names)))
   names(sheet_list) = sheet_names
@@ -64,6 +115,9 @@ suppress_rowwise <- function(df,
   return(chardf)
   
 }
+
+
+
 
 
 
