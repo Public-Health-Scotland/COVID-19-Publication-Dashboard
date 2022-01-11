@@ -1,6 +1,8 @@
 # they include API keys
 cookie-control.js
 deploying_app.R
+# Except logo png
+!shiny_app/www/phs-logo.png
 # Not needed
 rsconnect
 .Rproj.user
