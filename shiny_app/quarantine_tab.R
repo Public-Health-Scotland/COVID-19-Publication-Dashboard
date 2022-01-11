@@ -8,7 +8,7 @@ output$quarantine_table <- DT::renderDataTable({
   DT::datatable(Quarantine, style = 'bootstrap',
                 class = 'table-bordered table-condensed',
                 rownames = FALSE,
-                options = list(pageLength = 15,
+                options = list(pageLength = 25,
                                dom = 'tip',
                                autoWidth = TRUE),
                 filter = "top",
