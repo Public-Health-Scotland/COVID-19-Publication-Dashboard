@@ -109,7 +109,13 @@ tagList(  #needed for shinyjs
                  tags$a(
                    href = "mailto:phs.comms@phs.scot",
                    "phs.comms@phs.scot",
-                   class = "externallink")),".")#,
+                   class = "externallink")),"."),
+          p("The GitHub repository supporting this dashboard can be found ",
+            tags$b(
+              tags$a(
+                href = "https://github.com/Public-Health-Scotland/COVID-19-Publication-Dashboard",
+                "at this location",
+                class = "externallink")),".")#,
              # ".")
     ), #tabPanel bracket
     
