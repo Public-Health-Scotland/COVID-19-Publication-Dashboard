@@ -3,8 +3,8 @@
 
 ###### 2. ICU
 
-i_icu_newpatient <- read_all_sheets(glue("Input data/{(report_date -9)}_ICU_newpatientadmissions_bydate.xlsx"))
-i_icu_cp_agesex_rate <- read_all_sheets(glue("Input data/{(report_date -9)}_ICU_cumulativepos_agesex_ratedata.xlsx"))
+i_icu_newpatient <- read_all_sheets(glue("Input data/{(report_date -2)}_ICU_newpatientadmissions_bydate.xlsx"))
+i_icu_cp_agesex_rate <- read_all_sheets(glue("Input data/{(report_date -2)}_ICU_cumulativepos_agesex_ratedata.xlsx"))
 
 #o_icu <- read.csv(glue("{output_folder}/ICU.csv"), header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)
 #o_icu_agesex <- read.csv(glue("{output_folder}/ICU_AgeSex.csv"), header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)
