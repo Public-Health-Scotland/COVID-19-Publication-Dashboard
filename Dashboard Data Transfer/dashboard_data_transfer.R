@@ -29,6 +29,19 @@ output_folder <- "/conf/PHSCOVID19_Analysis/COVID-19-Publication-Dashboard/shiny
 # Getting useful functions
 source("data_transfer_functions.R")
 
+# Getting population information
+# ------------------------------
+i_population <- read.csv("Input data/population.csv", header = TRUE, stringsAsFactors = FALSE)
+
+i_population %<>% dplyr::rename(age_group = MYE..2020) %>% 
+  melt(id=c("age_group"), variable="sex") %>% 
+  dplyr::rename(pop_number=value)
+
+i_population[i_population == "May-14"] <- "5-14"
+i_population$age_group[i_population$age_group == "total"] <- "All"
+i_population$age_group <- sapply(i_population$age_group, function(x) str_remove(x, "years"))
+i_population$age_group <- sapply(i_population$age_group, function(x) str_remove_all(x, " "))
+
 # Key within each transfer file:
 # ------------------------------
 # i: input files - from weekly report data folder copied across
