@@ -1,12 +1,20 @@
 ##### Functions for transferring data to the dashboard
 ##### sourced from dashboard_data_transfer.R
 
+
+
+# Function to read all excel sheets
+# ---------------------------------
 read_all_sheets = function(xlsxFile, ...) {
   sheet_names = openxlsx::getSheetNames(xlsxFile)
   sheet_list = as.list(rep(NA, length(sheet_names)))
   names(sheet_list) = sheet_names
   for (sn in sheet_names) {
-    sheet_list[[sn]] = openxlsx::read.xlsx(xlsxFile, sheet=sn, sep.names=" ",  detectDates=TRUE, colNames=TRUE, ...)
+    sheet_list[[sn]] = openxlsx::read.xlsx(xlsxFile, 
+                                           sheet=sn, 
+                                           sep.names=" ",  
+                                           detectDates=TRUE, 
+                                           colNames=TRUE, ...)
   }
   return(sheet_list)
   
@@ -56,3 +64,8 @@ suppress_rowwise <- function(df,
   return(chardf)
   
 }
+
+
+
+
+
