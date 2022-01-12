@@ -409,7 +409,7 @@ tagList(  #needed for shinyjs
         "The PCR result will determine the number of cases of COVID-19 in Scotland."),
      hr(),
       downloadButton('download_LFD_weekly_data', 'Download weekly totals'),
-      downloadButton('download_LFD_data', 'Download Health Board breakdown for previous week'),
+      downloadButton('download_LFD_data', 'Download cumulative Health Board data'),
       mainPanel(width = 12,
                 uiOutput("LFD_output"),
                 br3(), br3(), br3()
