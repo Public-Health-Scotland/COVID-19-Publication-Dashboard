@@ -5,7 +5,7 @@
 
 
 
-i_labdata <- read_excel(glue("Input data/Lab_Data_HPS_{format(report_date-2, format='%m%d')}.xlsx"))
+i_labdata <- read_all_sheets(glue("Input data/Lab_Data_HPS_{format(report_date-2, format='%m%d')}_test.xlsx"))
 i_barchart <- read.csv(glue("Input data/cases_agegrp_chart_data_{format(as.Date((report_date-2), format='%Y%m%d'), format='%m%d')}.csv"), 
                        header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)
 
@@ -16,13 +16,14 @@ o_labcases_simd <- read.csv(glue("{output_folder}/LabCases_SIMD.csv"), header = 
 
 ### a) LabCases
 
-g_labcases <- i_labdata[,1:3] %>% tail(-1)
+#g_labcases <- i_labdata[,1:3] %>% tail(-1)
+g_labcases <- i_labdata$`Cumulative confirmed cases`[,1:3] %>% tail(-1)
 
-names(g_labcases) <- g_labcases[1,]
+#names(g_labcases) <- g_labcases[1,]
 
-g_labcases %<>% tail(-1) %>% 
-  transform(Date = excel_numeric_to_date(as.numeric(as.character(Date)), date_system = "modern") ) %>% 
-  dplyr::rename(NumberCasesperDay = Number.of.cases.per.day) 
+g_labcases %<>% 
+#  transform(Date = excel_numeric_to_date(as.numeric(as.character(Date)), date_system = "modern") ) %>% 
+  dplyr::rename(NumberCasesperDay = `Number of cases per day`) 
 
 g_labcases$NumberCasesperDay <- as.numeric(g_labcases$NumberCasesperDay)
 g_labcases$Cumulative <- as.numeric(g_labcases$Cumulative)
@@ -39,15 +40,18 @@ rm(g_labcases, pop_grandtotal)
 
 ### b) LabCases_AgeSex
 
-g_lagesex <- i_labdata[5:16,7:11]
+#g_lagesex <- i_labdata[5:16,7:11]
 
-names(g_lagesex) <- g_lagesex[1,]
+g_lagesex <- i_labdata$`Age group and sex` %>% head(-4)
 
-g_lagesex %<>% tail(-1) %>% 
+#names(g_lagesex) <- g_lagesex[1,]
+
+g_lagesex %<>% 
   dplyr::rename(Total = `All Sex`,
-                age_group = `Age Group (years)`)
+                age_group = `Age group (years)`) %>% 
+  select(-`%agegroup`)
 
-g_lagesex$age_group[g_lagesex$age_group == "All Age groups"] <- "All"
+g_lagesex$age_group[g_lagesex$age_group == "Total"] <- "All"
 
 g_lagesex %<>% 
   reshape2::melt(id=c("age_group"), variable="sex") %>% 
@@ -70,11 +74,13 @@ rm(g_lagesex)
 
 ### c) LabCases_SIMD
 
-g_lsimd <- i_labdata[26:35,7:9]
+#g_lsimd <- i_labdata[26:35,7:9]
 
-names(g_lsimd) <- g_lsimd[1,]
+g_lsimd <- i_labdata$SIMD
 
-g_lsimd$`SIMD Quintile`[g_lsimd$`SIMD Quintile` == "missing"] <- "Unknown"
+#names(g_lsimd) <- g_lsimd[1,]
+
+g_lsimd$`SIMD Quintile`[g_lsimd$`SIMD Quintile` == "Missing"] <- "Unknown"
 
 
 g_lsimd %<>% 
