@@ -3,7 +3,7 @@
 
 ##### 1. NHS24 Community
 
-i_endpoints <- read_excel("Input data/PHS COVID-19 Endpoints.xlsx")
+i_endpoints <- read_excel_with_options("Input data/PHS COVID-19 Endpoints.xlsx")
 
 o_nhs24community <- read.csv(glue("{output_folder}/NHS24_community.csv"), header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)
 

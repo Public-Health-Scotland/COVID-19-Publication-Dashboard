@@ -3,7 +3,7 @@
 
 ##### 11. Care Homes
 
-i_carehomes <- read_excel(glue("Input data/{format(report_date -1,'%Y%m%d')}_CareHomeWeekly.xlsx"), col_names=FALSE)
+i_carehomes <- read_excel_with_options(glue("Input data/{format(report_date -1,'%Y%m%d')}_CareHomeWeekly.xlsx"), col_names=FALSE)
 
 o_carehomes <- read.csv(glue("{output_folder}/CareHomes.csv"), header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)
 

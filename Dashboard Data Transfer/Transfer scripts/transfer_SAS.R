@@ -6,7 +6,7 @@
 i_sas <- read_all_sheets("Input data/2.3 SAS COVID-19 Incidents UCD.xlsx")
 
 #library(readxl)
-i_sas_2 <- readxl::read_excel("Input data/2.2 SAS Incidents COVID-19.xlsx.xls")
+i_sas_2 <- read_excel_with_options("Input data/2.2 SAS Incidents COVID-19.xlsx.xls")
 
 o_sas <- read.csv(glue("{output_folder}/SAS.csv"), header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)
 o_sasall <- read.csv(glue("{output_folder}/SAS_all.csv"), header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)
