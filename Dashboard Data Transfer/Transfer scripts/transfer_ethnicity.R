@@ -3,7 +3,7 @@
 
 ##### 15. Ethnicity
 
-i_ethnicity <- read.csv(glue("Input data/RAPID_Ethnicity_Oct21.csv"), header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)
+i_ethnicity <- read_csv_with_options(glue("Input data/RAPID_Ethnicity_Oct21.csv"))
 
 #o_ethnicity <- read.csv(glue("{output_folder}/Ethnicity.csv"), header = TRUE, stringsAsFactors = FALSE)
 o_ethnicitychart <- read.csv(glue("{output_folder}/Ethnicity_Chart.csv"), header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)

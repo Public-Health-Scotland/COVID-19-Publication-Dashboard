@@ -3,10 +3,8 @@
 
 ##### 13. Hospital Admissions
 
-i_cadm <- read.csv(glue("Input data/Hospital Admissions/{format(report_date -2,'%Y%m%d')}_Cases_Adm_Wk_Scotland.csv"), 
-                   header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)
-i_cag <- read.csv(glue("Input data/Hospital Admissions/{format(report_date -2,'%Y%m%d')}_Cases_Adm_Wk_AgeGrp.csv"), 
-                         header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)
+i_cadm <- read_csv_with_options(glue("Input data/Hospital Admissions/{format(report_date -2,'%Y%m%d')}_Cases_Adm_Wk_Scotland.csv"))
+i_cag <- read_csv_with_options(glue("Input data/Hospital Admissions/{format(report_date -2,'%Y%m%d')}_Cases_Adm_Wk_AgeGrp.csv"))
 
 o_cadm <- read.csv(glue("{output_folder}/Cases_Adm.csv"), header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)
 o_cag <- read.csv(glue("{output_folder}/Cases_AgeGrp.csv"), header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)

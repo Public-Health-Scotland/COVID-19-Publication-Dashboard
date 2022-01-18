@@ -6,8 +6,7 @@
 
 
 i_labdata <- read_all_sheets(glue("Input data/Lab_Data_HPS_{format(report_date-2, format='%m%d')}_test.xlsx"))
-i_barchart <- read.csv(glue("Input data/cases_agegrp_chart_data_{format(as.Date((report_date-2), format='%Y%m%d'), format='%m%d')}.csv"), 
-                       header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)
+i_barchart <- read_csv_with_options(glue("Input data/cases_agegrp_chart_data_{format(as.Date((report_date-2), format='%Y%m%d'), format='%m%d')}.csv"))
 
 o_labcases <- read.csv(glue("{output_folder}/LabCases.csv"), header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)
 o_labcases_agesex <- read.csv(glue("{output_folder}/LabCases_AgeSex.csv"), header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)

@@ -16,9 +16,10 @@ suggest_alternative_files <- function(keywords, location, recursive = TRUE){
                                 ignore.case = TRUE, include.dirs = TRUE, no.. = FALSE)
     
     possibilities <- append(possibilities, key_poss)
+    
   }
   
-  print(possibilities)
+  print(unique(possibilities))
   user_choice <- readline(
     prompt="Should I use one of the above files? Type the number to use, or type 'No' and press Enter.     "
   )
@@ -37,24 +38,7 @@ suggest_alternative_files <- function(keywords, location, recursive = TRUE){
 # ---------------------------------
 read_all_sheets = function(xlsxFile, ...) {
   
-  ##### First check file is there and if not suggest alternatives
-  if(file.exists(xlsxFile) == FALSE){
-    message(glue("Could not find file {xlsxFile}. Searching for possible alternatives."))
-    
-    # Get keyword possibilities based off filename
-    keywords <- unlist(lapply(strsplit(gsub('[[:digit:]]+', '', basename(xlsxFile)), split = '[-_,.]'), 
-                                      function(z){ z[!is.na(z) & z != "" & z!="xlsx" & z!="csv"]}))
-    
-    # Suggest alternatives based off keywords
-    alternative <- suggest_alternative_files(keywords, dirname(xlsxFile))
-  
-    if(is.na(alternative)){
-      stop(glue("Could not find file {xlsxFile} or suitable alternatives. Terminating script."))
-    } else{
-      xlsxFile <- alternative
-    }
-  }
-  
+  xlsxFile <- check_file(xlsxFile)
   
   ##### Read the excel file
   sheet_names = openxlsx::getSheetNames(xlsxFile)
@@ -70,6 +54,50 @@ read_all_sheets = function(xlsxFile, ...) {
   return(sheet_list)
   
 }
+
+
+check_file <- function(filename){
+  
+  ##### First check file is there and if not suggest alternatives
+  if(file.exists(filename) == FALSE){
+    message(glue("Could not find file {filename}. Searching for possible alternatives."))
+    
+    # Get keyword possibilities based off filename
+    keywords <- unlist(lapply(strsplit(gsub('[[:digit:]]+', '', basename(filename)), split = '[-_,.]'), 
+                              function(z){ z[!is.na(z) & z != "" & z!="xlsx" & z!="csv"]}))
+    
+    # Suggest alternatives based off keywords
+    alternative <- suggest_alternative_files(keywords, dirname(filename))
+    
+    if(is.na(alternative)){
+      
+      stop(glue("Could not find file {filename} or suitable alternatives. Terminating script."))
+      
+    } else{
+      
+      return(alternative)
+    
+      }
+  }
+
+}
+
+read_csv_with_options <- function(filename){
+  
+  filename <- check_file(filename)
+  readfile <- utils::read.csv(filename, header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)
+  
+  return(readfile)
+}
+
+read_excel_with_options <- function(filename){
+  
+  filename <- check_file(filename)
+  readfile <- readxl::read_excel(filename)
+  
+  return(readfile)
+}
+
 
 
 # Function for row-wise suppression
