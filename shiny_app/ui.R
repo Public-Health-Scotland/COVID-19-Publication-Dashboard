@@ -257,7 +257,7 @@ tagList(  #needed for shinyjs
         
         h3("Travel outside of Scotland cases"),
         p("Since 28 September 2020 fields have been available to record information about whether a case has travelled outside of Scotland.", 
-          glue("In the week ending 21 November 2021, {ContactTracingInterviews$Number[[1]]} index cases were newly created on CMS, of which {ContactTracingInterviews$Number[[2]]} had a fully completed index case interview."),
+          glue("In the week ending {format(pub_date-3, '%d %B %Y')}, {ContactTracingInterviews$Number[[1]]} index cases were newly created on CMS, of which {ContactTracingInterviews$Number[[2]]} had a fully completed index case interview."),
           "The information in the chart and table below is collected on the contact tracing interview and is where outside of Scotland travel information is recorded.", 
           strong("Please note we are aware of an undercount for those travelled outside Scotland."),  
           strong("This is a data quality issue due to recording of the travel information, Public Health Scotland is working closely with contact tracing leads to improve this recording.")),
