@@ -16,9 +16,10 @@ suggest_alternative_files <- function(keywords, location, recursive = TRUE){
                                 ignore.case = TRUE, include.dirs = TRUE, no.. = FALSE)
     
     possibilities <- append(possibilities, key_poss)
+    
   }
   
-  print(possibilities)
+  print(unique(possibilities))
   user_choice <- readline(
     prompt="Should I use one of the above files? Type the number to use, or type 'No' and press Enter.     "
   )
