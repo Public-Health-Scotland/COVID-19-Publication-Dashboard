@@ -98,8 +98,8 @@ plot_cut_missing <- function(title_plot, plot_output, extra_content = NULL) {
 # }
 
 
-LabCases <-readRDS("data/LabCases.rds")
-Admissions <-readRDS("data/Admissions.rds")
+LabCases <-readRDS("data/LabCases.rds") %>% head(-1) # Removing final row as incomplete data
+Admissions <-readRDS("data/Admissions.rds") 
 ICU <- readRDS("data/ICU.rds")
 NHS24 <- readRDS("data/NHS24.rds")
 AssessmentHub <- readRDS("data/AssessmentHub.rds")
