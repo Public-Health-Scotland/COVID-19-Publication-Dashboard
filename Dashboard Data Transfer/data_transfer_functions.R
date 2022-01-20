@@ -57,7 +57,7 @@ read_all_sheets = function(xlsxFile, ...) {
 
 
 check_file <- function(filename){
-  
+
   ##### First check file is there and if not suggest alternatives
   if(file.exists(filename) == FALSE){
     message(glue("Could not find file {filename}. Searching for possible alternatives."))
@@ -78,6 +78,8 @@ check_file <- function(filename){
       return(alternative)
     
       }
+  } else {
+    return(filename)
   }
 
 }
@@ -85,7 +87,7 @@ check_file <- function(filename){
 read_csv_with_options <- function(filename){
   
   filename <- check_file(filename)
-  readfile <- utils::read.csv(filename, header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)
+  readfile <- read.csv(filename, header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)
   
   return(readfile)
 }
