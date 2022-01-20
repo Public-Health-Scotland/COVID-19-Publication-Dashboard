@@ -23,7 +23,7 @@ HCWdata_table <- reactive({  # Change dataset depending on what user selected
 
 output$HCWtable_filtered <- DT::renderDataTable({
   
-  byboard_data_table(HCWdata_table())
+  byboard_data_table(HCWdata_table(), board_name_column="NHS Board")
 
 })
 
