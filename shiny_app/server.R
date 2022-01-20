@@ -7,6 +7,10 @@ function(input, output, session) {
   source(file.path("functions_server.R"),  local = TRUE)$value
   
   ###############################################.
+  # Sourcing file with data table code
+  source(file.path("functions_tables.R"),  local = TRUE)$value
+  
+  ###############################################.
   # Summary trends tab  
   source(file.path("summary_tab.R"),  local = TRUE)$value
   

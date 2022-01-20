@@ -1,0 +1,34 @@
+#### Functions to make default data tables
+
+###############################################
+
+
+byboard_data_table <- function(input_data_table){
+  
+  # Remove the underscore from column names in the table
+  table_colnames  <-  gsub("_", " ", colnames(input_data_table))
+  
+  dt <- DT::datatable(input_data_table, style = 'bootstrap',
+                class = 'table-bordered table-condensed',
+                rownames = FALSE,
+                options = list(pageLength = 14, # Health Boards and total
+                               order = list(list(0, "desc")), # Most recent week first
+                               dom = 'tip',
+                               autoWidth = TRUE,
+                               initComplete = JS(
+                                 "function(settings, json) {",
+                                 "$(this.api().table().header()).css({'background-color': '#3F3685', 'color': 'white'});",
+                                 "}")
+                ),
+                filter = "top",
+                colnames = table_colnames) %>% 
+    formatStyle(
+      "NHS Board", target="row", 
+      backgroundColor = styleEqual("Scotland", phs_colours("phs-magenta")),
+      fontWeight = styleEqual("Scotland", "bold"),
+      color = styleEqual("Scotland", "white")
+    )
+  
+  return(dt)
+
+}
