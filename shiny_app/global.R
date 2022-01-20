@@ -6,7 +6,7 @@
 ## Data extraction dates ----
 
 #publication date
-pub_date <- as.Date("2021-12-22")
+pub_date <- as.Date("2022-01-19")
 
 Labcases_date <- format(pub_date - 3, "%d %B %Y")
 ICU_date <- format(pub_date - 4, "%d %B %Y")
@@ -28,7 +28,7 @@ ICU_extract_date <- format(pub_date - 2, "%A %d %B %Y") #format date
 
 #For LFD
 LFD_date <- format(pub_date - 3, "%A %d %B %Y") #format date
-LFD_demo_date <- format(pub_date - 5, "%A %d %B %Y")
+LFD_demo_date <- format(pub_date - 7, "%A %d %B %Y")
 
 ###############################################.
 ## Packages ----
