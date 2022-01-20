@@ -6,7 +6,7 @@
 ## Data extraction dates ----
 
 #publication date
-pub_date <- as.Date("2021-12-22")
+pub_date <- as.Date("2022-01-19")
 
 Labcases_date <- format(pub_date - 3, "%d %B %Y")
 ICU_date <- format(pub_date - 4, "%d %B %Y")
@@ -28,7 +28,7 @@ ICU_extract_date <- format(pub_date - 2, "%A %d %B %Y") #format date
 
 #For LFD
 LFD_date <- format(pub_date - 3, "%A %d %B %Y") #format date
-LFD_demo_date <- format(pub_date - 5, "%A %d %B %Y")
+LFD_demo_date <- format(pub_date - 7, "%A %d %B %Y")
 
 ###############################################.
 ## Packages ----
@@ -98,8 +98,8 @@ plot_cut_missing <- function(title_plot, plot_output, extra_content = NULL) {
 # }
 
 
-LabCases <-readRDS("data/LabCases.rds")
-Admissions <-readRDS("data/Admissions.rds")
+LabCases <-readRDS("data/LabCases.rds") %>% head(-1) # Removing final row as incomplete data
+Admissions <-readRDS("data/Admissions.rds") 
 ICU <- readRDS("data/ICU.rds")
 NHS24 <- readRDS("data/NHS24.rds")
 AssessmentHub <- readRDS("data/AssessmentHub.rds")

@@ -17,7 +17,7 @@ write.csv(g_lfd, glue("Test output/LFD_Board.csv"), row.names = FALSE)
 
 g_lfdtrend <- i_lfd$`Number of Tests Weekly` %>% 
   dplyr::rename(`Week Ending` = week_ending,
-                `Number of LFD Tests` = n)
+                `Number of LFD Tests` = n) %>% head(-1) # Removing last entry as not complete
 
 write.csv(g_lfdtrend, glue("Test output/LFD_Weekly.csv"), row.names = FALSE)
 
