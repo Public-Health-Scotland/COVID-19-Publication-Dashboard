@@ -2,11 +2,11 @@
 
 ###############################################
 
-
-byboard_data_table <- function(input_data_table, 
-                               board_name_column, 
-                               add_separator_cols=NULL,
-                               rows_to_display=14){
+# Data table with breakdown by Health Board
+byboard_data_table <- function(input_data_table,
+                               board_name_column,  # Name of the column with board names e.g. "NHS Board"
+                               add_separator_cols=NULL, # Column indices to add thousand separators to
+                               rows_to_display=14){ # Number of Boards + 1 for Scotland
   
   # Remove the underscore from column names in the table
   table_colnames  <-  gsub("_", " ", colnames(input_data_table))
@@ -21,14 +21,14 @@ byboard_data_table <- function(input_data_table,
                                initComplete = JS(
                                  "function(settings, json) {",
                                  "$(this.api().table().header()).css({'background-color': '#3F3685', 'color': 'white'});",
-                                 "}")
+                                 "}") # Make header phs-purple
                 ),
                 filter = "top",
                 colnames = table_colnames) %>% 
     formatCurrency(add_separator_cols, '', digits=0) %>% ## hack to add thousands separator
     formatStyle(
       board_name_column, target="row", 
-      backgroundColor = styleEqual("Scotland", phs_colours("phs-magenta")),
+      backgroundColor = styleEqual("Scotland", phs_colours("phs-magenta")), # highlight Scotland rows in phs-magenta
       fontWeight = styleEqual("Scotland", "bold"),
       color = styleEqual("Scotland", "white")
     )
