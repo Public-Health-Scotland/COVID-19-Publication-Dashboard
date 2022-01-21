@@ -248,29 +248,7 @@ output$data_tab_table <- renderUI({
 
 output$table_filtered <- DT::renderDataTable({
   
-  
-  
-  # Remove the underscore from column names in the table
-  
-  table_colnames  <-  gsub("_", " ", colnames(data_table()))
-  
-  
-  
-  DT::datatable(data_table(), style = 'bootstrap',
-                
-                class = 'table-bordered table-condensed',
-                
-                rownames = FALSE,
-                
-                options = list(pageLength = 20,
-                               
-                               dom = 'tip',
-                               
-                               autoWidth = TRUE),
-                
-                filter = "top",
-                
-                colnames = table_colnames)
+  data_tab_table(data_table()) # from functions_tables.R
   
 })
 

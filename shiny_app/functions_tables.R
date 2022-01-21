@@ -2,6 +2,37 @@
 
 ###############################################
 
+# Data table for Data tab
+
+data_tab_table <- function(input_data_table){
+  
+  
+  # Remove the underscore from column names in the table
+  
+  table_colnames  <-  gsub("_", " ", colnames(data_table()))
+  
+  dt <- DT::datatable(input_data_table, style = 'bootstrap',
+                
+                class = 'table-bordered table-condensed',
+                
+                rownames = FALSE,
+                
+                options = list(pageLength = 20,
+                               
+                               dom = 'tip',
+                               
+                               autoWidth = TRUE),
+                
+                filter = "top",
+                
+                colnames = table_colnames)
+  
+  return(dt)
+  
+  
+}
+
+
 # Data table with breakdown by Health Board
 byboard_data_table <- function(input_data_table,
                                board_name_column,  # Name of the column with board names e.g. "NHS Board"
