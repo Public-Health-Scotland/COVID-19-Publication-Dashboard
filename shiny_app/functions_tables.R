@@ -3,7 +3,10 @@
 ###############################################
 
 
-byboard_data_table <- function(input_data_table, board_name_column, rows_to_display=14){
+byboard_data_table <- function(input_data_table, 
+                               board_name_column, 
+                               add_separator_cols=NULL,
+                               rows_to_display=14){
   
   # Remove the underscore from column names in the table
   table_colnames  <-  gsub("_", " ", colnames(input_data_table))
@@ -22,6 +25,7 @@ byboard_data_table <- function(input_data_table, board_name_column, rows_to_disp
                 ),
                 filter = "top",
                 colnames = table_colnames) %>% 
+    formatCurrency(add_separator_cols, '', digits=0) %>% ## hack to add thousands separator
     formatStyle(
       board_name_column, target="row", 
       backgroundColor = styleEqual("Scotland", phs_colours("phs-magenta")),

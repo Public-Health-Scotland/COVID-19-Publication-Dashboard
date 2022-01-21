@@ -12,9 +12,7 @@ HCWdata_table <- reactive({  # Change dataset depending on what user selected
   
   
   table_data <- table_data
-  # table_data %>% 
-  #   mutate_if(is.numeric, round, 1) %>% 
-  #   mutate_if(is.character, as.factor)
+
 })
 
 
@@ -23,7 +21,9 @@ HCWdata_table <- reactive({  # Change dataset depending on what user selected
 
 output$HCWtable_filtered <- DT::renderDataTable({
   
-  byboard_data_table(HCWdata_table(), board_name_column="NHS Board")
+  byboard_data_table(HCWdata_table(), board_name_column="NHS Board",
+                     add_separator_cols=c(3,4,5,6))
+
 
 })
 

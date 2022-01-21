@@ -2,7 +2,10 @@
 
 output$care_homes_table <- DT::renderDataTable({
   
-  byboard_data_table(Care_Homes, board_name_column="Health Board", rows_to_display=15)
+  byboard_data_table(Care_Homes, 
+                     board_name_column="Health Board", 
+                     rows_to_display=15,
+                     add_separator_cols=c(3,4,5))
 })
 
 
