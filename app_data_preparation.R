@@ -1,7 +1,7 @@
 # Data preparation for app
 
 rm(list = ls())
-gc()  
+gc()
 
 ###############################################.
 ## Functions/Packages/filepaths/lookups ----
@@ -17,58 +17,58 @@ library(janitor) # round_half_up
 non_empty_cols <- function(x) { sum(!is.na(x)) > 0  }
 
 # Lab Cases
-LabCases <- read_csv("data/LabCases.csv") %>% 
+LabCases <- read_csv("data/LabCases.csv") %>%
   select_if(non_empty_cols)
-LabCases <- LabCases %>% 
-  dplyr::rename(Count = NumberCasesperDay) %>% 
+LabCases <- LabCases %>%
+  dplyr::rename(Count = NumberCasesperDay) %>%
   mutate(Date =ymd(Date))
 saveRDS(LabCases, "data/LabCases.rds")
 
 # Admissions
-Admissions <- read_csv("data/Admissions.csv") %>% 
+Admissions <- read_csv("data/Admissions.csv") %>%
   select_if(non_empty_cols)
-Admissions <- Admissions %>% 
+Admissions <- Admissions %>%
   dplyr::rename(Date = ADMISSION_DATE1,
-         Count = TESTEDIN)%>% 
+                Count = TESTEDIN)%>%
   mutate(Date = ymd(Date))
-  
+
 saveRDS(Admissions, "data/Admissions.rds")
 
 # ICU
-ICU <- read_csv("data/ICU.csv") %>% 
+ICU <- read_csv("data/ICU.csv") %>%
   select_if(non_empty_cols)
-ICU <- ICU %>% 
+ICU <- ICU %>%
   mutate(Date = ymd(Date)) %>%
   dplyr::rename(Average7 = `7-Day Moving Average`)
 saveRDS(ICU, "data/ICU.rds")
 
 # NHS24
 NHS24 <- read_csv("data/NHS24.csv")
-NHS24 <- NHS24 %>% 
+NHS24 <- NHS24 %>%
   mutate(Date = ymd(Date))
 saveRDS(NHS24, "data/NHS24.rds")
 
 #SAS
 SAS <- read_csv("data/SAS.csv")
-SAS <- SAS %>% 
+SAS <- SAS %>%
   mutate(Date = ymd(Date))
 saveRDS(SAS, "data/SAS.rds")
 
 #AssessmentHub
-AssessmentHub <- read_csv("data/AssessmentHub.csv") 
-AssessmentHub <- AssessmentHub %>% 
+AssessmentHub <- read_csv("data/AssessmentHub.csv")
+AssessmentHub <- AssessmentHub %>%
   mutate(Date = ymd(Date))
 saveRDS(AssessmentHub, "data/AssessmentHub.rds")
 
 #NHS Inform
 NHSInform <- read_csv("data/NHSInform.csv")
-NHSInform <- NHSInform %>% 
-  mutate(date = ymd(date)) 
+NHSInform <- NHSInform %>%
+  mutate(date = ymd(date))
 saveRDS(NHSInform, "data/NHSInform.rds")
 
 #NHS24 Self Help Guides
 SelfHelp <- read_csv("data/SelfHelpGuides.csv")
-SelfHelp <- SelfHelp %>% 
+SelfHelp <- SelfHelp %>%
   mutate(Date = ymd(Date))
 saveRDS(SelfHelp, "data/SelfHelp.rds")
 
@@ -86,7 +86,7 @@ saveRDS(LFD_Weekly, "data/LFD_Weekly.rds")
 LabCases_AgeSex <- read_csv("data/LabCases_AgeSex.csv")
 saveRDS(LabCases_AgeSex, "data/LabCases_AgeSex.rds")
 
-LabCases_SIMD <- read_csv("data/LabCases_SIMD.csv") %>% 
+LabCases_SIMD <- read_csv("data/LabCases_SIMD.csv") %>%
   mutate(cases_pc = cases_pc * 100)
 saveRDS(LabCases_SIMD, "data/LabCases_SIMD.rds")
 
@@ -96,12 +96,12 @@ LabCases_Age <- read_csv("data/LabCases_Age.csv") %>%
   select(-Cases)
 saveRDS(LabCases_Age, "data/LabCases_Age.rds")
 
-Admissions_AgeSex <- read_csv("data/Admissions_AgeSex.csv") %>% 
+Admissions_AgeSex <- read_csv("data/Admissions_AgeSex.csv") %>%
   select(1:4)
 saveRDS(Admissions_AgeSex, "data/Admissions_AgeSex.rds")
 
 Cases_Adm <- read_csv("data/Cases_Adm.csv") %>%
-  dplyr::rename(date = Date, count = Percent) %>% 
+  dplyr::rename(date = Date, count = Percent) %>%
   mutate(count = round_half_up(count,2))
 saveRDS(Cases_Adm, "data/Cases_Adm.rds")
 
@@ -111,15 +111,18 @@ Cases_Age <- read_csv("data/Cases_AgeGrp.csv") %>%
   select(-Cases)
 saveRDS(Cases_Age, "data/Cases_AgeGrp.rds")
 
+Prop_Adm_AgeGrp = read_csv("data/Prop_Admitted_AgeGrp.csv")
+saveRDS(Prop_Adm_AgeGrp, "data/Prop_Admitted_AgeGrp.rds")
+
 
 Admissions_AgeBD <- read_csv("data/Admissions_AgeBD.csv")
 saveRDS(Admissions_AgeBD, "data/Admissions_AgeBD.rds")
 
-Admissions_SIMD <- read_csv("data/Admissions_SIMD.csv") %>% 
+Admissions_SIMD <- read_csv("data/Admissions_SIMD.csv") %>%
   mutate(cases_pc = cases_pc * 100) %>% select(1:3)
 saveRDS(Admissions_SIMD, "data/Admissions_SIMD.rds")
 
-ICU_AgeSex <- read_csv("data/ICU_AgeSex.csv") 
+ICU_AgeSex <- read_csv("data/ICU_AgeSex.csv")
 saveRDS(ICU_AgeSex, "data/ICU_AgeSex.rds")
 
 NHS24_AgeSex <- read_csv("data/NHS24_AgeSex.csv")
@@ -143,61 +146,61 @@ saveRDS(SAS_SIMD, "data/SAS_SIMD.rds")
 # #read NHS24/SAS other data
 # NHS24_inform <- read_csv("data/NHSInform.csv") %>% mutate(date = as.Date(date, "%d-%b-%y"))
 # saveRDS(NHS24_inform, "data/NHS24_inform.rds")
-# 
+#
 # NHS24_selfhelp <- read_csv("data/NHS24_selfhelp.csv") %>% mutate(date = as.Date(date, "%d-%b-%y"))
 # saveRDS(NHS24_selfhelp, "data/NHS24_selfhelp.rds")
 
-NHS24_community <- read_csv("data/NHS24_community.csv") %>% 
+NHS24_community <- read_csv("data/NHS24_community.csv") %>%
   select_if(non_empty_cols)
-NHS24_community <- NHS24_community %>% 
-                    pivot_longer(-date, 
-                                 names_to = "outcome",
-                                 values_to = "count") %>%
-  mutate(date = ymd(date)) 
+NHS24_community <- NHS24_community %>%
+  pivot_longer(-date,
+               names_to = "outcome",
+               values_to = "count") %>%
+  mutate(date = ymd(date))
 
 saveRDS(NHS24_community, "data/NHS24_community.rds")
 
-SAS_all <- read_csv("data/SAS_all.csv") %>% 
-  mutate(date = ymd(date)) %>% 
+SAS_all <- read_csv("data/SAS_all.csv") %>%
+  mutate(date = ymd(date)) %>%
   select_if(non_empty_cols)
 saveRDS(SAS_all, "data/SAS_all.rds")
 
 
 # Child Data --------------------------------------------------------------
 
-# 
+#
 # # Children  Cases
 # ChildCases <- read_csv("data/cases_children.csv")
-# ChildCases <- ChildCases %>% 
-#   #dplyr::rename(Count = NumberCasesperDay) %>% 
-#   mutate(`Week ending` = ymd(`Week ending`), 
+# ChildCases <- ChildCases %>%
+#   #dplyr::rename(Count = NumberCasesperDay) %>%
+#   mutate(`Week ending` = ymd(`Week ending`),
 #          `% of patients testing positive` = `% of patients testing positive`*100)
 # saveRDS(ChildCases, "data/ChildCases.rds")
-# 
-# 
+#
+#
 # # Children  tests
 # ChildTests <- read_csv("data/tests_children.csv")
-# ChildTests <- ChildTests %>% 
-#   #dplyr::rename(Count = NumberCasesperDay) %>% 
-#   mutate(`Week ending` = ymd(`Week ending`), 
+# ChildTests <- ChildTests %>%
+#   #dplyr::rename(Count = NumberCasesperDay) %>%
+#   mutate(`Week ending` = ymd(`Week ending`),
 #          `%Positive` = `%Positive`*100)
 # saveRDS(ChildTests, "data/ChildTests.rds")
-# 
-# 
+#
+#
 # # This is simplified data for child testing
-# ChildDataCases <- ChildCases %>% 
+# ChildDataCases <- ChildCases %>%
 #   gather(`Number of Patients tested`, `Number of patients tested positive`, `Number of patients tested negative`,
-#          `% of patients testing positive`, `Rate per 100,000`, 
-#          key = Indicator, value = "value") %>% 
+#          `% of patients testing positive`, `Rate per 100,000`,
+#          key = Indicator, value = "value") %>%
 #   spread(key = `Age Group`, value="value")
-# 
-# ChildDataTests <- ChildTests %>% 
+#
+# ChildDataTests <- ChildTests %>%
 #   gather(`Total Tests`, `Positives`, `Negatives`,
-#          `%Positive`, 
-#          key = Indicator, value = "value") %>% 
+#          `%Positive`,
+#          key = Indicator, value = "value") %>%
 #   spread(key = `Age Group`, value="value")
-# 
-# ChildData  <- ChildDataCases %>% 
+#
+# ChildData  <- ChildDataCases %>%
 #   rbind(ChildDataTests)
 # saveRDS(ChildData, "data/Child.rds")
 
@@ -208,7 +211,7 @@ saveRDS(SAS_all, "data/SAS_all.rds")
 #saveRDS(ContactTracing, "data/ContactTracingWeekly.rds")
 
 ContactTime <- read_csv("data/ContactTime.csv")
-ContactTime <- ContactTime %>% 
+ContactTime <- ContactTime %>%
   mutate_if(is.numeric, round_half_up, 2) %>%
   mutate(week_ending = ymd(week_ending))
 saveRDS(ContactTime, "data/ContactTime.rds")
@@ -216,7 +219,7 @@ saveRDS(ContactTime, "data/ContactTime.rds")
 
 # #Cases reporting an occupation in the Education and Childcare sector
 # ContactEC <- read_csv("data/ContactTracingEducation.csv")
-# ContactEC <- ContactEC %>% 
+# ContactEC <- ContactEC %>%
 #   mutate_if(is.numeric, round_half_up, 2) %>%
 #   mutate(week_ending = ymd(week_ending))
 # saveRDS(ContactEC, "data/ContactTracingEducation.rds")
@@ -266,15 +269,15 @@ Settings <- read_csv("data/Settings.csv")
 
 #Settings <- read_csv(file.choose())
 
-AllSettings <- Settings %>% 
-  select(-`Setting Location`) %>% 
-  group_by(week_ending, `Setting Type`) %>% 
-  summarise(`Number of  Cases` = sum(`Number of  Cases`)) %>% 
-  dplyr::rename(`Setting Location` = `Setting Type`) %>% 
+AllSettings <- Settings %>%
+  select(-`Setting Location`) %>%
+  group_by(week_ending, `Setting Type`) %>%
+  summarise(`Number of  Cases` = sum(`Number of  Cases`)) %>%
+  dplyr::rename(`Setting Location` = `Setting Type`) %>%
   mutate(`Setting Type` = "All setting types")
 
-Settings <- Settings %>% 
-  full_join(AllSettings) %>% 
+Settings <- Settings %>%
+  full_join(AllSettings) %>%
   arrange(desc(`Setting Type`, `Number of  Cases`)) %>%
   mutate(week_ending = ymd(week_ending))
 
@@ -295,24 +298,24 @@ saveRDS(HCW_Psychiatry, "data/HCW_Psychiatry.rds")
 # Ethnicity -----------------------------------------------------------------
 
 Ethnicity <- read_csv("data/Ethnicity.csv")
-Ethnicity <- Ethnicity %>% 
-  mutate(Percentage = Percentage*100)%>% 
+Ethnicity <- Ethnicity %>%
+  mutate(Percentage = Percentage*100)%>%
   mutate_if(is.numeric, round, 2)
 saveRDS(Ethnicity, "data/Ethnicity.rds")
 
 Ethnicity_Chart <- read_csv("data/Ethnicity_Chart.csv")
-Ethnicity_Chart <- Ethnicity_Chart %>% 
+Ethnicity_Chart <- Ethnicity_Chart %>%
   mutate(White_p = White_p*100,
          `Black/Caribbean/African_p` = `Black/Caribbean/African_p`*100,
          `South Asian_p` = `South Asian_p`*100,
          Chinese_p = Chinese_p*100,
          Other_p = Other_p*100,
-         `Not Available_p` = `Not Available_p`*100) %>% 
+         `Not Available_p` = `Not Available_p`*100) %>%
   mutate_if(is.numeric, round, 2)
 saveRDS(Ethnicity_Chart, "data/Ethnicity_Chart.rds")
 
 #### Care Homes ----------------------------------------------------------------
-care_homes <- read_csv("data/CareHomes.csv") %>% 
+care_homes <- read_csv("data/CareHomes.csv") %>%
   mutate(`Week Ending` = ymd(`Week Ending`))
 saveRDS(care_homes, "data/Care_Homes.rds")
 
@@ -327,12 +330,12 @@ suppress <- function(variable){
   if_else(variable < 5 & variable != 0, "*", as.character(variable))
 }
 
-# 
+#
 # # time series outputs
 mtu_ts <- read_csv("data/AllCommunity_Testing_byWeek.csv")
 
 mtu_1.1 <- mtu_ts %>% filter(test_centre != "All") %>%
-  select(test_centre, hb2019name, week_ending, 
+  select(test_centre, hb2019name, week_ending,
          week_ending_label, total_tests) %>%
   mutate(total_tests = replace_zero(total_tests),
          week_ending = ymd(week_ending))
@@ -340,7 +343,7 @@ mtu_1.1 <- mtu_ts %>% filter(test_centre != "All") %>%
 # mtu_1.1 <- mtu_1 %>% filter(Test_centre != "All") %>%
 #   mutate(Number_of_tests =  replace_zero(Number_of_tests))
 saveRDS(mtu_1.1, "data/TCT_TestCentres.rds")
-# 
+#
 # mtu_1.2 <- mtu_1 %>% filter(Test_centre == "All")
 # saveRDS(mtu_1.2, "data/TCT_AllTestCentres.rds")
 mtu_1.2 <- mtu_ts %>%
@@ -351,13 +354,13 @@ mtu_1.2 <- mtu_ts %>%
          positive_tests = suppress(positive_tests))
 saveRDS(mtu_1.2, "data/TCT_AllTestCentres.rds")
 
-# 
+#
 # # cumulative outputs
 mtu_ct <- read_csv("data/Community_Testing_Totals.csv")
 
-mtu_2 <- mtu_ct %>% 
-  select(`Health Board` = hb2019name, 
-         Symptomatic = symptomatic, 
+mtu_2 <- mtu_ct %>%
+  select(`Health Board` = hb2019name,
+         Symptomatic = symptomatic,
          Asymptomatic = asymptomatic) %>%
   pivot_longer(cols = 2:3) %>%
   filter(`Health Board` != "All")
@@ -382,19 +385,19 @@ if(sum(mtu_3$positive_tests == "*") == 1){
 
 # mtu_3 <- read_csv("data/CommunityTesting_HB_percent_positive.csv")
 # mtu_3 <- mtu_3 %>% dplyr::rename(`Health Board` = hb2019name)
- saveRDS(mtu_3, "data/TCT_HBPercentPositive.rds")
- 
- 
-  mtu_4 <- mtu_ct %>% 
-   select(`Health Board` = hb2019name, 
-          MTU = mtu_tests, 
-          ATS = ats_tests) %>%
-   pivot_longer(cols = 2:3) %>%
-   filter(`Health Board` != "All")
+saveRDS(mtu_3, "data/TCT_HBPercentPositive.rds")
 
-  saveRDS(mtu_4, "data/TCT_HBTestSiteType.rds")
-  
-  # 
+
+mtu_4 <- mtu_ct %>%
+  select(`Health Board` = hb2019name,
+         MTU = mtu_tests,
+         ATS = ats_tests) %>%
+  pivot_longer(cols = 2:3) %>%
+  filter(`Health Board` != "All")
+
+saveRDS(mtu_4, "data/TCT_HBTestSiteType.rds")
+
+#
 # # Key Points
 mtu_5 <- read_csv("data/CommunityTesting_key_points.csv")
 saveRDS(mtu_5, "data/TCT_KeyPoints.rds")

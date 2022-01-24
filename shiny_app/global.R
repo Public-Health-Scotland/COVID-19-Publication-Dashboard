@@ -90,7 +90,7 @@ plot_cut_missing <- function(title_plot, plot_output, extra_content = NULL) {
 
 ###############################################.
 ## Data ----
-# 
+#
 # ## correct filepath
 # cv_fp <- function(filename) {
 #   fp <- "/conf/PHSCOVID19_Analysis/COVID-19-Publication-Dashboard/shiny_app/"
@@ -99,7 +99,7 @@ plot_cut_missing <- function(title_plot, plot_output, extra_content = NULL) {
 
 
 LabCases <-readRDS("data/LabCases.rds") %>% head(-1) # Removing final row as incomplete data
-Admissions <-readRDS("data/Admissions.rds") 
+Admissions <-readRDS("data/Admissions.rds")
 ICU <- readRDS("data/ICU.rds")
 NHS24 <- readRDS("data/NHS24.rds")
 AssessmentHub <- readRDS("data/AssessmentHub.rds")
@@ -124,6 +124,7 @@ SAS_SIMD <- readRDS("data/SAS_SIMD.rds")
 
 Cases_Adm <- readRDS("data/Cases_Adm.rds")
 Cases_AgeGrp <- readRDS("data/Cases_AgeGrp.rds")
+Prop_Adm_AgeGrp = readRDS("data/Prop_Admitted_AgeGrp.rds")
 
 #read SAS/NHS24 other data
 NHS24_community <- readRDS("data/NHS24_community.rds")
@@ -134,7 +135,7 @@ SAS_all <- readRDS("data/SAS_all.rds")
 #ChildTests <- readRDS("data/ChildTests.rds")
 #Child <- readRDS("data/Child.rds")
 
-#Contact Tracing 
+#Contact Tracing
 #ContactTracing<- readRDS("data/ContactTracingWeekly.rds")
 ContactTime <- readRDS("data/ContactTime.rds")
 #ContactEC <- readRDS("data/ContactTracingEducation.rds")
@@ -199,7 +200,7 @@ mtu_keypoints <- readRDS("data/TCT_KeyPoints.rds")
 br3<-function(){tagList(br(),br(),br())}
 
 ###############################################.
-## Data lists -------------------------------------------------------------- 
+## Data lists --------------------------------------------------------------
 
 
 data_list <- c("Positive Cases" = "LabCases",
@@ -211,25 +212,25 @@ data_list <- c("Positive Cases" = "LabCases",
                "Scottish Ambulance Service" = "SAS")
 
 
-CTdata_list_chart_tab <- c ("Contact Tracing time performance %", 
+CTdata_list_chart_tab <- c ("Contact Tracing time performance %",
                             "Contact Tracing time performance cases",
                             "Average number of contacts per case",
                             "Protect Scotland App")
 
 
-CTdata_list_data_tab <- c (#"Contact Tracing Weekly by Health Board" = "ContactTracing", 
-                           "Contact Tracing time performance measures" = "ContactTime",
-                         #  "Cases reporting an occupation in the Education and Childcare sector" = "ContactEC",
-                           "Cases recorded in contact tracing software" = "ContactWeeklyCases",
-                           "Cumulative cases recorded in contact tracing software" ="ContactTracingWeeklyCumulative",
-                           #"Average number of contacts per case" = "ContactTracingAveragesAge",
-                           "Number of Contacts Positive Within 10 Days of Exposure" = "ContactTracingTestingPositive",
-                           "Failed index cases by reason of failure" = "ContactTracingFail",
-                           "Protect Scotland App" = "ProximityApp")
-                      
-                            #"Index and contact cases by age" = "ContactTracingDemoAge",
-                           #"Index and contact cases by sex" = "ContactTracingDemoSex",
-                           #"Index and contact cases by SIMD quintile" = "ContactTracingDemoSIMD")
+CTdata_list_data_tab <- c (#"Contact Tracing Weekly by Health Board" = "ContactTracing",
+  "Contact Tracing time performance measures" = "ContactTime",
+  #  "Cases reporting an occupation in the Education and Childcare sector" = "ContactEC",
+  "Cases recorded in contact tracing software" = "ContactWeeklyCases",
+  "Cumulative cases recorded in contact tracing software" ="ContactTracingWeeklyCumulative",
+  #"Average number of contacts per case" = "ContactTracingAveragesAge",
+  "Number of Contacts Positive Within 10 Days of Exposure" = "ContactTracingTestingPositive",
+  "Failed index cases by reason of failure" = "ContactTracingFail",
+  "Protect Scotland App" = "ProximityApp")
+
+#"Index and contact cases by age" = "ContactTracingDemoAge",
+#"Index and contact cases by sex" = "ContactTracingDemoSex",
+#"Index and contact cases by SIMD quintile" = "ContactTracingDemoSIMD")
 
 
 SettingList <- c(sort(unique(Settings$`Setting Type`)))
@@ -287,12 +288,12 @@ pal_child <- c("#3F3685", "#9B4393", "#0078D4", "#83BB26", "#C73918", "#6B5C85")
 #for contact tracing charts
 #pal_CT <- c('#0078D4', '#3393DD', '#80BCEA',  '#B3D7F2','#000000')
 
-pal_CT <- c(phs_colours("phs-blue"), 
-  phs_colours("phs-purple"),
-  phs_colours("phs-magenta"),
-  phs_colours("phs-teal"),
-  phs_colours("phs-green"),
-  '#000000')
+pal_CT <- c(phs_colours("phs-blue"),
+            phs_colours("phs-purple"),
+            phs_colours("phs-magenta"),
+            phs_colours("phs-teal"),
+            phs_colours("phs-green"),
+            '#000000')
 
 pal_3_week <- c(phs_colours("phs-purple"), phs_colours("phs-magenta"), phs_colours("phs-blue"))
 
@@ -321,7 +322,7 @@ yaxis_plots <- list(title = FALSE, rangemode="tozero", fixedrange=TRUE, size = 4
 # Buttons to remove
 bttn_remove <-  list('select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d',
                      'autoScale2d',   'toggleSpikelines',  'hoverCompareCartesian',
-                     'hoverClosestCartesian') 
+                     'hoverClosestCartesian')
 
-## END  
- 
+## END
+
