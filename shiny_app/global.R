@@ -3,6 +3,8 @@
 # Global
 ###############################################.
 
+setwd("/conf/PHSCOVID19_Analysis/COVID-19-Publication-Dashboard/Dashboard Data Transfer")
+
 ## Data extraction dates ----
 
 #publication date
@@ -250,6 +252,7 @@ data_list_data_tab <- c("Positive Cases" = "LabCases",
                         "Hospital Admissions by deprivation" = "Admissions_SIMD",
                         "Weekly Hospital Admissions by age" = 'Admissions_AgeBD',
                         "Proportion of weekly cases admitted to hospital within 14 days of a first positive test" = "Cases_Adm",
+                        "Proportion of weekly cases admitted to hospital within 14 days of a first positive test" = "Prop_Adm_AgeGrp",
                         "Hospital Admissions by ethnicity" = "Ethnicity",
                         "ICU Admissions" = "ICU",
                         "ICU Admissions by age" = "ICU_AgeSex",

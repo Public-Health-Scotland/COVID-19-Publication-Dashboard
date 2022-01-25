@@ -30,7 +30,7 @@ g_cag <- i_cag %>%
 
 write.csv(g_cag, glue("Test output/Cases_AgeGrp.csv"), row.names = FALSE)
 
-rm(i_cag, g_cag, o_cag)
+rm(g_cag, o_cag)
 
 
 ### c) Proportion of Case Admissions by Age Group (added 24/1/22 - RV)
@@ -66,4 +66,4 @@ prop_adm = i_cag %>%
 
 write.csv(prop_adm, glue("Test output/Prop_Admitted_AgeGrp.csv"))
 
-rm(prop_adm)
+rm(prop_adm, i_cag)
