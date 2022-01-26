@@ -1,9 +1,7 @@
 
 
 # Global
-###############################################.
-
-setwd("/conf/PHSCOVID19_Analysis/COVID-19-Publication-Dashboard/Dashboard Data Transfer")
+###############################################
 
 ## Data extraction dates ----
 
