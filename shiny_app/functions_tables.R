@@ -4,7 +4,8 @@
 
 # Data table for Data tab
 
-data_tab_table <- function(input_data_table){
+datatab_table <- function(input_data_table, 
+                          add_separator_cols = NULL){
   
   
   # Remove the underscore from column names in the table
@@ -14,18 +15,23 @@ data_tab_table <- function(input_data_table){
   dt <- DT::datatable(input_data_table, style = 'bootstrap',
                 
                 class = 'table-bordered table-condensed',
-                
                 rownames = FALSE,
-                
                 options = list(pageLength = 20,
-                               
                                dom = 'tip',
-                               
-                               autoWidth = TRUE),
+                               autoWidth = TRUE,
+                               initComplete = JS(
+                                 "function(settings, json) {",
+                                 "$(this.api().table().header()).css({'background-color': '#3F3685', 'color': 'white'});",
+                                 "}"), # Make header phs-purple
+                               order = list(list(0, "desc"))),
                 
                 filter = "top",
-                
-                colnames = table_colnames)
+                colnames = table_colnames) 
+  
+  if(!is.null(add_separator_cols)){
+    
+    dt %<>% formatCurrency(add_separator_cols, '', digits=0) ## hack to add thousands separator
+  }
   
   return(dt)
   
@@ -56,13 +62,18 @@ byboard_data_table <- function(input_data_table,
                 ),
                 filter = "top",
                 colnames = table_colnames) %>% 
-    formatCurrency(add_separator_cols, '', digits=0) %>% ## hack to add thousands separator
     formatStyle(
       board_name_column, target="row", 
       backgroundColor = styleEqual("Scotland", phs_colours("phs-magenta")), # highlight Scotland rows in phs-magenta
       fontWeight = styleEqual("Scotland", "bold"),
       color = styleEqual("Scotland", "white")
     )
+  
+  if(!is.null(add_separator_cols)){
+    
+    dt %<>% formatCurrency(add_separator_cols, '', digits=0) ## hack to add thousands separator
+  }
+  
   
   return(dt)
 

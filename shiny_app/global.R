@@ -53,6 +53,7 @@ library(lubridate)
 library(janitor)
 library(phsstyles)
 library(tidyr)
+library(magrittr)
 
 ###############################################.
 ## Functions ----

@@ -155,8 +155,7 @@ data_table <- reactive({  # Change dataset depending on what user selected
       select(Date, `Number of Daily Cases`, Cumulative, `Cumulative Rate per 100,000`) %>%
       
       mutate(Date = format(Date, "%d %B %y"))
-    
-    
+  
     
   } else if (input$data_select %in% "Admissions") {
     
@@ -212,6 +211,12 @@ data_table <- reactive({  # Change dataset depending on what user selected
     
     mutate_if(is.character, as.factor)
   
+  
+  
+  
+  ### Assigning columns to add 1000 separator to
+
+  
 })
 
 
@@ -245,14 +250,66 @@ output$data_tab_table <- renderUI({
 })
 
 
-
 output$table_filtered <- DT::renderDataTable({
   
-  data_tab_table(data_table()) # from functions_tables.R
+  if (!exists("separator_cols")){
+    separator_cols <- c()    # Default is to not add thousand separators to any column
+  }
+  
+  datatab_table(data_table(), add_separator_cols = separator_cols()) # from functions_tables.R
   
 })
 
-
+separator_cols <- reactive({
+  separator_cols <- switch(input$data_select,
+                           
+                           "LabCases" = c(2,3),
+                           
+                           "LabCases_AgeSex" = c(3),
+                           
+                           "LabCases_SIMD" = c(2,3),
+                           
+                           
+                           "Admissions" = c(1),
+                           
+                           "Admissions_AgeSex" = c(3),
+                           
+                           "Admissions_SIMD" = c(2),
+                           
+                           "Admissions_AgeBD" = c(2:13),
+                           
+                           "Ethnicity" = c(3),
+                           
+                           "ICU_AgeSex" = c(3),
+                           
+                           "NHS24" = c(2,3),
+                           
+                           "NHS24_AgeSex" = c(3),
+                           
+                           "NHS24_SIMD" = c(2),
+                           
+                           "NHS24_inform" = c(2),
+                           
+                           "NHS24_selfhelp" = c(2,3),
+                           
+                           "NHS24_community" = c(3),
+                           
+                           "AssessmentHub" = c(2:5),
+                           
+                           "AssessmentHub_AgeSex" = c(3),
+                           
+                           "AssessmentHub_SIMD" = c(2),
+                           
+                           "SAS" = c(2:4),
+                           
+                           "SAS_AgeSex" = c(3),
+                           
+                           "SAS_SIMD" = c(2),
+                           
+                           "SAS_all" = c(2)
+  )
+  
+})
 
 ###############################################.
 
