@@ -8,13 +8,20 @@ datatab_table <- function(input_data_table,
                           add_separator_cols = NULL, # with , separator and 0dp
                           add_separator_cols_1dp = NULL, # with , separator and 1dp
                           add_percentage_cols = NULL, # with % symbol and 2dp
-                          maxrows = 14 # max rows displayed on page
+                          maxrows = 14, # max rows displayed on page
+                          flip_order = FALSE # Flip order of rows
                           ){ 
   
   
   # Remove the underscore from column names in the table
   
   table_colnames  <-  gsub("_", " ", colnames(input_data_table))
+  
+  if(flip_order){
+    tab_order <- list(list(0, "asc"))
+  } else {
+    tab_order <- list(list(0, "desc"))
+  }
   
   dt <- DT::datatable(input_data_table, style = 'bootstrap',
                 
@@ -27,7 +34,7 @@ datatab_table <- function(input_data_table,
                                  "function(settings, json) {",
                                  "$(this.api().table().header()).css({'background-color': '#3F3685', 'color': 'white'});",
                                  "}"), # Make header phs-purple
-                               order = list(list(0, "desc"))),
+                               order = tab_order),
                 
                 filter = "top",
                 colnames = table_colnames) 
