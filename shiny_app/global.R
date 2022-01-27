@@ -225,7 +225,7 @@ CTdata_list_data_tab <- c (#"Contact Tracing Weekly by Health Board" = "ContactT
                            "Cumulative cases recorded in contact tracing software" ="ContactTracingWeeklyCumulative",
                            #"Average number of contacts per case" = "ContactTracingAveragesAge",
                            "Number of Contacts Positive Within 10 Days of Exposure" = "ContactTracingTestingPositive",
-                           "Failed index cases by reason of failure" = "ContactTracingFail",
+                           "Incomplete index cases by reason incomplete" = "ContactTracingFail",
                            "Protect Scotland App" = "ProximityApp")
                       
                             #"Index and contact cases by age" = "ContactTracingDemoAge",
