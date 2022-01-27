@@ -7,7 +7,8 @@
 datatab_table <- function(input_data_table, 
                           add_separator_cols = NULL, # with , separator and 0dp
                           add_separator_cols_1dp = NULL, # with , separator and 1dp
-                          add_percentage_cols = NULL # with % symbol and 2dp
+                          add_percentage_cols = NULL, # with % symbol and 2dp
+                          maxrows = 14 # max rows displayed on page
                           ){ 
   
   
@@ -19,7 +20,7 @@ datatab_table <- function(input_data_table,
                 
                 class = 'table-bordered table-condensed',
                 rownames = FALSE,
-                options = list(pageLength = 20,
+                options = list(pageLength = maxrows,
                                dom = 'tip',
                                autoWidth = TRUE,
                                initComplete = JS(

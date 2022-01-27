@@ -253,14 +253,12 @@ output$data_tab_table <- renderUI({
 
 output$table_filtered <- DT::renderDataTable({
   
-  if (!exists("separator_cols")){
-    separator_cols <- c()    # Default is to not add thousand separators to any column
-  }
-  
   datatab_table(data_table(), 
                 add_separator_cols = separator_cols(),
                 add_separator_cols_1dp = separator_cols_1dp(),
-                add_percentage_cols = percentage_cols()) # from functions_tables.R
+                add_percentage_cols = percentage_cols(),
+                maxrows = maxrows()
+                ) # from functions_tables.R
   
 })
 
@@ -324,6 +322,23 @@ percentage_cols <- reactive({
                            "NHS24_SIMD" = c(3),
                            "AssessmentHub_SIMD" = c(3),
                            "SAS_SIMD" = c(3)
+  )
+  
+})
+
+# Number of max rows per page for each table (default is 10 if unlisted)
+maxrows <- reactive({
+  maxrows <- switch(input$data_select,
+                           
+                         "LabCases_AgeSex" = 44,
+                         "Cases_AgeGrp" = 11,
+                         "Admissions_AgeSex" = 30,
+                         "Ethnicity" = 6,
+                         "NHS24_community" = 6,
+                         "ICU_AgeSex" = 18,
+                         "NHS24_AgeSex" = 32,
+                         "AssessmentHub_AgeSex" = 32,
+                         "SAS_AgeSex" = 36
   )
   
 })
