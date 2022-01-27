@@ -6,7 +6,6 @@
 CTdata_table <- reactive({  # Change dataset depending on what user selected
 
   table_data <- switch(input$CTdata_select,
-                      # "ContactTracing" = ContactTracing,
                        "ContactTime" = ContactTime,
                        "ContactEC" = ContactEC,
                        "ContactWeeklyCases" = ContactWeeklyCases,
@@ -15,18 +14,7 @@ CTdata_table <- reactive({  # Change dataset depending on what user selected
                        "ContactTracingFail" = ContactTracingFail,
                        "ContactTracingRegions" = ContactTracingRegions,
                        "ProximityApp" = ProximityApp)
-                       #"ContactTracingDemoAge" = ContactTracingDemoAge,
-                       #"ContactTracingDemoSex" = ContactTracingDemoSex,
-                       #"ContactTracingDemoSIMD" = ContactTracingDemoSIMD,
-                       #"ContactTracingAveragesAge" = ContactTracingAveragesAge)
-                       #"ContactTracingAverages" = select(ContactTracingAverages, -`Age Band`))
 
-  # if (input$data_select %in% c("ContactTracing")) {
-  #   table_data <- table_data
-  # 
-  # } else if (input$data_select %in% "ContactTime") {
-  #   table_data <- table_data
-  # }
 
 table_data %>% 
     mutate_if(is.numeric, round, 1) %>% 
@@ -61,18 +49,61 @@ output$CT_Data_Tab_table <- renderUI({
 
 output$CTtable_filtered <- DT::renderDataTable({
   
-  # Remove the underscore from column names in the table
-  table_colnames  <-  gsub("_", " ", colnames(CTdata_table()))
-
-  DT::datatable(CTdata_table(), style = 'bootstrap',
-                class = 'table-bordered table-condensed',
-                rownames = FALSE,
-                options = list(pageLength = 20,
-                               dom = 'tip',
-                               autoWidth = TRUE),
-                filter = "top",
-                colnames = table_colnames)
+  
+  datatab_table(CTdata_table(),
+                add_separator_cols = separator_cols(),
+                add_separator_cols_1dp = separator_cols_1dp(),
+                add_percentage_cols = percentage_cols(),
+                maxrows = maxrows()
+  ) # from functions_tables.R
+  
 })
+
+# Columns to add 1,000 comma separator to for each table
+separator_cols <- reactive({
+  separator_cols <- switch(input$CTdata_select,
+                           
+                           "ContactTime" = c(4),
+                           "ContactWeeklyCases" = c(2,3,5,7,8,11:15),
+                           "ContactTracingWeeklyCumulative" = c(2),
+                           "ContactTracingTestingPositive" = c(2,3),
+                           "ContactTracingFail" = c(3),
+                           "ProximityApp" = c(2,3)
+  )
+  
+})
+
+# Columns to add 1,000 comma separator and 1dp to for each table
+separator_cols_1dp <- reactive({
+  separator_cols_1dp <- switch(input$CTdata_select,
+                               
+                               "ContactWeeklyCases" = c(16)
+
+  )
+  
+})
+
+# Columns to add % formatting to for each table
+percentage_cols <- reactive({
+  percentage_cols <- switch(input$CTdata_select,
+                            
+                            "ContactTime" = c(5),
+                            "ContactWeeklyCases" = c(4,6,8,10),
+                            "ContactTracingTestingPositive" = c(4)
+  )
+  
+})
+
+maxrows <- reactive({
+  maxrows <- switch(input$CTdata_select,
+                            
+                            "ContactTime" = 6,
+                            "ContactTracingWeeklyCumulative" = 11,
+                            "ContactTracingFail" = 7
+  )
+  
+})
+
 
 ###############################################.
 ## Data downloads ----

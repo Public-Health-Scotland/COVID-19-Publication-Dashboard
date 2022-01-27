@@ -14,7 +14,7 @@ datatab_table <- function(input_data_table,
   
   # Remove the underscore from column names in the table
   
-  table_colnames  <-  gsub("_", " ", colnames(data_table()))
+  table_colnames  <-  gsub("_", " ", colnames(input_data_table))
   
   dt <- DT::datatable(input_data_table, style = 'bootstrap',
                 
