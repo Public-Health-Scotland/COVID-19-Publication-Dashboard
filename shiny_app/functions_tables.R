@@ -5,7 +5,10 @@
 # Data table for Data tab
 
 datatab_table <- function(input_data_table, 
-                          add_separator_cols = NULL){
+                          add_separator_cols = NULL, # with , separator and 0dp
+                          add_separator_cols_1dp = NULL, # with , separator and 1dp
+                          add_percentage_cols = NULL # with % symbol and 2dp
+                          ){ 
   
   
   # Remove the underscore from column names in the table
@@ -29,9 +32,17 @@ datatab_table <- function(input_data_table,
                 colnames = table_colnames) 
   
   if(!is.null(add_separator_cols)){
-    
     dt %<>% formatCurrency(add_separator_cols, '', digits=0) ## hack to add thousands separator
   }
+  
+  if(!is.null(add_separator_cols_1dp)){
+    dt %<>% formatCurrency(add_separator_cols_1dp, '', digits=1) ## hack to add thousands separator
+  }
+  
+  if(!is.null(add_percentage_cols)){
+    dt %<>% formatCurrency(add_percentage_cols, mark=",", digits=2, currency="%", before=FALSE) 
+  }
+  
   
   return(dt)
   
@@ -70,7 +81,6 @@ byboard_data_table <- function(input_data_table,
     )
   
   if(!is.null(add_separator_cols)){
-    
     dt %<>% formatCurrency(add_separator_cols, '', digits=0) ## hack to add thousands separator
   }
   

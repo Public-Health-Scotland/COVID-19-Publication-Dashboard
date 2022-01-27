@@ -27,9 +27,10 @@ data_table <- reactive({  # Change dataset depending on what user selected
                                                                        
                                                                        `Rate per 100,000 population` = rate),
                        
-                       "LabCases_SIMD" = LabCases_SIMD %>% dplyr::rename(`Number of Cases` = cases,
-                                                                  
+                       "LabCases_SIMD" = LabCases_SIMD %>% mutate(cases_pc = cases_pc/100) %>% 
+                                                           dplyr::rename(`Number of Cases` = cases,
                                                                   Percent = cases_pc),
+                                                                  
                        "Cases_AgeGrp" = Cases_AgeGrp %>% dplyr::rename('Week ending' = 'Date',
                                                                 'Percentage of weekly cases' = 'Percent'),
                        
@@ -256,57 +257,73 @@ output$table_filtered <- DT::renderDataTable({
     separator_cols <- c()    # Default is to not add thousand separators to any column
   }
   
-  datatab_table(data_table(), add_separator_cols = separator_cols()) # from functions_tables.R
+  datatab_table(data_table(), 
+                add_separator_cols = separator_cols(),
+                add_separator_cols_1dp = separator_cols_1dp(),
+                add_percentage_cols = percentage_cols()) # from functions_tables.R
   
 })
 
+# Columns to add 1,000 comma separator to for each table
 separator_cols <- reactive({
   separator_cols <- switch(input$data_select,
                            
                            "LabCases" = c(2,3),
-                           
                            "LabCases_AgeSex" = c(3),
-                           
-                           "LabCases_SIMD" = c(2,3),
-                           
-                           
-                           "Admissions" = c(1),
-                           
+                           "LabCases_SIMD" = c(2),
+                           "Admissions" = c(2),
                            "Admissions_AgeSex" = c(3),
-                           
                            "Admissions_SIMD" = c(2),
-                           
                            "Admissions_AgeBD" = c(2:13),
-                           
                            "Ethnicity" = c(3),
-                           
                            "ICU_AgeSex" = c(3),
-                           
                            "NHS24" = c(2,3),
-                           
                            "NHS24_AgeSex" = c(3),
-                           
                            "NHS24_SIMD" = c(2),
-                           
                            "NHS24_inform" = c(2),
-                           
                            "NHS24_selfhelp" = c(2,3),
-                           
                            "NHS24_community" = c(3),
-                           
                            "AssessmentHub" = c(2:5),
-                           
                            "AssessmentHub_AgeSex" = c(3),
-                           
                            "AssessmentHub_SIMD" = c(2),
-                           
                            "SAS" = c(2:4),
-                           
                            "SAS_AgeSex" = c(3),
-                           
                            "SAS_SIMD" = c(2),
-                           
                            "SAS_all" = c(2)
+  )
+  
+})
+
+# Columns to add 1,000 comma separator and 1dp to for each table
+separator_cols_1dp <- reactive({
+  separator_cols_1dp <- switch(input$data_select,
+                           "LabCases" = c(4,5),
+                           "LabCases_AgeSex" = c(4),
+                           "Admissions" = c(3),
+                           "Admissions_AgeSex" = c(4),
+                           "ICU" = c(3),
+                           "ICU_AgeSex" = c(4),
+                           "NHS24_AgeSex" = c(4),
+                           "AssessmentHub_AgeSex" = c(4),
+                           "AssessmentHub_SIMD" = c(2),
+                           "SAS_AgeSex" = c(4),
+                           "SAS_SIMD" = c(2)
+  )
+  
+})
+
+# Columns to add % formatting to for each table
+percentage_cols <- reactive({
+  percentage_cols <- switch(input$data_select,
+                          
+                           "LabCases_SIMD" = c(3),
+                           "Cases_AgeGrp" = c(3),
+                           "Cases_Adm" = c(2),
+                           "Admissions_SIMD" = c(3),
+                           "Ethnicity" = c(4),
+                           "NHS24_SIMD" = c(3),
+                           "AssessmentHub_SIMD" = c(3),
+                           "SAS_SIMD" = c(3)
   )
   
 })
