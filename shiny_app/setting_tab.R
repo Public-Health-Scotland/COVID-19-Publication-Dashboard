@@ -46,16 +46,9 @@ output$SettingLocation <- renderPlotly({plot_settings_chart(Settings, data_name 
 ## Data view -----
 
 output$setting_table <- DT::renderDataTable({
-  table_colnames  <-  gsub("_", " ", colnames(Settings))
   
-  DT::datatable(Settings, style = 'bootstrap',
-                class = 'table-bordered table-condensed',
-                rownames = FALSE,
-                options = list(pageLength = 16,
-                               dom = 'tip',
-                               autoWidth = TRUE),
-                filter = "top",
-                colnames = table_colnames) 
+  datatab_table(Settings)
+  
 })
 
 
