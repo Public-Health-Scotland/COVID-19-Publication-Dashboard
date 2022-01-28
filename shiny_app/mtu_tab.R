@@ -213,13 +213,12 @@ output$mtu_heatmap <- renderPlotly({plot_mtu_heatmap()})
 output$mtu_time_series <- renderPlotly({plot_all_mtu_ts(plot_var = input$mtu_measure_select_ts)})
 
 output$mtu_data <- renderDataTable({
-  DT::datatable(mtu_heatmap_data2, style = 'bootstrap',
-                class = 'table-bordered table-condensed',
-                rownames = FALSE,
-                options = list(pageLength = 15,
-                               dom = 'tip',
-                               autoWidth = TRUE),
-                filter = "top")
+  
+  byboard_data_table((mtu_heatmap_data2 %>% 
+                        select(`Week Ending`, `NHS Board`, `Test Centre`, `Number of Tests`)),
+                     "NHS Board",  # Name of the column with board names e.g. "NHS Board"
+                     add_separator_cols=c(4))
+
 })
 output$mtu_totals <- renderPlotly({plot_mtu_totals()})
 output$mtu_test_sites <- renderPlotly({plot_mtu_test_centre_type()})
@@ -227,27 +226,25 @@ output$mtu_positives <- renderPlotly({plot_mtu_positives()})
 
 ## Positive tests
 output$mtu_data2 <- renderDataTable({
-  DT::datatable((mtu_cumul_pos %>% 
-                   mutate(`Percent Positive` = if_else(positive_tests == "*", "*", paste0(percent_positive, "%"))) %>% select(`Health Board`, `Total Tests` = total_tests, `Positive Tests` = positive_tests, `Percent Positive`)),
-                style = 'bootstrap',
-                class = 'table-bordered table-condensed',
-                rownames = FALSE,
-                options = list(pageLength = 15,
-                               dom = 'tip',
-                               autoWidth = TRUE),
-                filter = "top")
+  
+  tab_to_view <- mtu_cumul_pos %>% 
+    mutate(`Percent Positive` = if_else(positive_tests == "*", "*", paste0(percent_positive, "%"))) %>% 
+    select(`Health Board`, `Total Tests` = total_tests, `Positive Tests` = positive_tests, `Percent Positive`)
+  
+  byboard_data_table(tab_to_view,
+                     "Health Board",  # Name of the column with board names e.g. "NHS Board"
+                     add_separator_cols=c(2,3),
+                     flip_order=TRUE)
 })
 
 output$mtu_data3 <- renderDataTable({
-  DT::datatable((mtu_cumul_site %>% 
-                   pivot_wider(names_from = name, values_from = value)),
-                style = 'bootstrap',
-                class = 'table-bordered table-condensed',
-                rownames = FALSE,
-                options = list(pageLength = 15,
-                               dom = 'tip',
-                               autoWidth = TRUE),
-                filter = "top")
+  
+  byboard_data_table((mtu_cumul_site %>% 
+                        pivot_wider(names_from = name, values_from = value)),
+                     "Health Board",  # Name of the column with board names e.g. "NHS Board"
+                     add_separator_cols=c(2,3),
+                     flip_order=TRUE)
+  
 })
 
 

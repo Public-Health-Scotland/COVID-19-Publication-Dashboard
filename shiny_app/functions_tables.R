@@ -90,9 +90,10 @@ byboard_data_table <- function(input_data_table,
                 colnames = table_colnames) %>% 
     formatStyle(
       board_name_column, target="row", 
-      backgroundColor = styleEqual(c("Scotland", "Total"), c(phs_colours("phs-magenta"),phs_colours("phs-magenta"))), # highlight Scotland rows in phs-magenta
-      fontWeight = styleEqual(c("Scotland", "Total"), c("bold", "bold")),
-      color = styleEqual(c("Scotland", "Total"), c("white", "white"))
+      backgroundColor = styleEqual(c("Scotland", "Total", "All"), 
+                                   c(phs_colours("phs-magenta"),phs_colours("phs-magenta"),phs_colours("phs-magenta"))), # highlight Scotland rows in phs-magenta
+      fontWeight = styleEqual(c("Scotland", "Total", "All"), c("bold", "bold", "bold")),
+      color = styleEqual(c("Scotland", "Total", "All"), c("white", "white", "white"))
     )
   
   if(!is.null(add_separator_cols)){

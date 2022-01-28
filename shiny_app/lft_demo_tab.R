@@ -182,7 +182,7 @@ people_table_data <- reactive({
 table_params <- reactive({
   nrow =   switch(input$people_output_selection, 
            #         "Local Authority" = 15,
-                  "Age Group and Sex" = 15,
+                  "Age Group and Sex" = 10,
                   "SIMD" = NULL)
   
   num_cols = switch(input$people_output_selection, 
