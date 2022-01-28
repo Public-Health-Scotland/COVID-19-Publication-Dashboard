@@ -51,17 +51,17 @@ output$CTtable_filtered <- DT::renderDataTable({
   
   
   datatab_table(CTdata_table(),
-                add_separator_cols = separator_cols(),
-                add_separator_cols_1dp = separator_cols_1dp(),
-                add_percentage_cols = percentage_cols(),
-                maxrows = maxrows()
+                add_separator_cols = table_params_CTdata()$separator_cols,
+                add_separator_cols_1dp = table_params_CTdata()$separator_cols_1dp,
+                add_percentage_cols = table_params_CTdata()$percentage_cols,
+                maxrows = table_params_CTdata()$maxrows
   ) # from functions_tables.R
   
 })
 
-# Columns to add 1,000 comma separator to for each table
-separator_cols <- reactive({
-  separator_cols <- switch(input$CTdata_select,
+
+table_params_CTdata <- reactive({
+  separator_cols = switch(input$CTdata_select,
                            
                            "ContactTime" = c(4),
                            "ContactWeeklyCases" = c(2,3,5,7,8,11:15),
@@ -70,39 +70,31 @@ separator_cols <- reactive({
                            "ContactTracingFail" = c(3),
                            "ProximityApp" = c(2,3)
   )
-  
-})
-
-# Columns to add 1,000 comma separator and 1dp to for each table
-separator_cols_1dp <- reactive({
-  separator_cols_1dp <- switch(input$CTdata_select,
-                               
-                               "ContactWeeklyCases" = c(16)
-
+  separator_cols_1dp = switch(input$CTdata_select,
+                              
+                              "ContactWeeklyCases" = c(16)
+                              
+  )
+  percentage_cols = switch(input$CTdata_select,
+                           
+                           "ContactTime" = c(5),
+                           "ContactWeeklyCases" = c(4,6,8,10),
+                           "ContactTracingTestingPositive" = c(4)
+  )
+  maxrows = switch(input$CTdata_select,
+                   
+                   "ContactTime" = 6,
+                   "ContactTracingWeeklyCumulative" = 11,
+                   "ContactTracingFail" = 7
   )
   
-})
-
-# Columns to add % formatting to for each table
-percentage_cols <- reactive({
-  percentage_cols <- switch(input$CTdata_select,
-                            
-                            "ContactTime" = c(5),
-                            "ContactWeeklyCases" = c(4,6,8,10),
-                            "ContactTracingTestingPositive" = c(4)
-  )
+  list("separator_cols" = separator_cols, 
+       "separator_cols_1dp" = separator_cols_1dp, 
+       "percentage_cols" = percentage_cols, 
+       "maxrows" = maxrows)
   
 })
 
-maxrows <- reactive({
-  maxrows <- switch(input$CTdata_select,
-                            
-                            "ContactTime" = 6,
-                            "ContactTracingWeeklyCumulative" = 11,
-                            "ContactTracingFail" = 7
-  )
-  
-})
 
 
 ###############################################.

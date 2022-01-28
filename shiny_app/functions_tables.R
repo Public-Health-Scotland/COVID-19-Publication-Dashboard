@@ -9,7 +9,8 @@ datatab_table <- function(input_data_table,
                           add_separator_cols_1dp = NULL, # with , separator and 1dp
                           add_percentage_cols = NULL, # with % symbol and 2dp
                           maxrows = 14, # max rows displayed on page
-                          flip_order = FALSE # Flip order of rows
+                          flip_order = FALSE, # Flip order of rows
+                          highlight_column = NULL # Column to highlight specific entries based off
                           ){ 
   
   
@@ -37,7 +38,14 @@ datatab_table <- function(input_data_table,
                                order = tab_order),
                 
                 filter = "top",
-                colnames = table_colnames) 
+                colnames = table_colnames) %>% 
+    formatStyle(
+      highlight_column, target="row", 
+      backgroundColor = styleEqual(c("Cumulative"), 
+                                   c(phs_colours("phs-magenta"))), # highlight Scotland rows in phs-magenta
+      fontWeight = styleEqual(c("Cumulative"), c("bold")),
+      color = styleEqual(c("Cumulative"), c("white"))
+    )
   
   if(!is.null(add_separator_cols)){
     dt %<>% formatCurrency(add_separator_cols, '', digits=0) ## hack to add thousands separator

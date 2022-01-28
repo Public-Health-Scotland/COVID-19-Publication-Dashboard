@@ -270,6 +270,7 @@ table_params_data <- reactive({
                            "Admissions_AgeSex" = c(3),
                            "Admissions_SIMD" = c(2),
                            "Admissions_AgeBD" = c(2:13),
+                           "Prop_Adm_AgeGrp" = c(3,4),
                            "Ethnicity" = c(3),
                            "ICU_AgeSex" = c(3),
                            "NHS24" = c(2,3),

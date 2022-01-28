@@ -5,6 +5,7 @@ output$quarantine_table <- DT::renderDataTable({
   datatab_table(Quarantine, 
                 maxrows=20, 
                 flip_order = TRUE,
+                highlight_column = "Week Ending",
                 add_separator_cols = c(2:8) # with , separator and 0dp
 )
 })
