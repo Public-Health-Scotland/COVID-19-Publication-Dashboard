@@ -47,7 +47,7 @@ output$SettingLocation <- renderPlotly({plot_settings_chart(Settings, data_name 
 
 output$setting_table <- DT::renderDataTable({
   
-  datatab_table(Settings)
+  datatab_table(Settings, add_separator_cols = 4)
   
 })
 
