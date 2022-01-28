@@ -62,7 +62,14 @@ datatab_table <- function(input_data_table,
 byboard_data_table <- function(input_data_table,
                                board_name_column,  # Name of the column with board names e.g. "NHS Board"
                                add_separator_cols=NULL, # Column indices to add thousand separators to
-                               rows_to_display=14){ # Number of Boards + 1 for Scotland
+                               rows_to_display=14,
+                               flip_order=FALSE){ # Number of Boards + 1 for Scotland
+  
+  if(flip_order){
+    tab_order <- list(list(0, "asc"))
+  } else {
+    tab_order <- list(list(0, "desc"))
+  }
   
   # Remove the underscore from column names in the table
   table_colnames  <-  gsub("_", " ", colnames(input_data_table))
@@ -71,7 +78,7 @@ byboard_data_table <- function(input_data_table,
                 class = 'table-bordered table-condensed',
                 rownames = FALSE,
                 options = list(pageLength = rows_to_display, # Health Boards and total
-                               order = list(list(0, "desc")), # Most recent week first
+                               order = tab_order, # Most recent week first
                                dom = 'tip',
                                autoWidth = TRUE,
                                initComplete = JS(
@@ -83,9 +90,9 @@ byboard_data_table <- function(input_data_table,
                 colnames = table_colnames) %>% 
     formatStyle(
       board_name_column, target="row", 
-      backgroundColor = styleEqual("Scotland", phs_colours("phs-magenta")), # highlight Scotland rows in phs-magenta
-      fontWeight = styleEqual("Scotland", "bold"),
-      color = styleEqual("Scotland", "white")
+      backgroundColor = styleEqual(c("Scotland", "Total"), c(phs_colours("phs-magenta"),phs_colours("phs-magenta"))), # highlight Scotland rows in phs-magenta
+      fontWeight = styleEqual(c("Scotland", "Total"), c("bold", "bold")),
+      color = styleEqual(c("Scotland", "Total"), c("white", "white"))
     )
   
   if(!is.null(add_separator_cols)){

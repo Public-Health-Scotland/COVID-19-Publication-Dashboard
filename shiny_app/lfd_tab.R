@@ -7,17 +7,13 @@ output$LFD_trend <- renderPlotly({plot_LFDs(LFD_Weekly)}) #plot_LFDs
 ### Data
 output$LFD_table <- DT::renderDataTable({
   
-  # Remove the underscore from column names in the table
-  table_colnames  <-  gsub("_", " ", colnames(LFD))
   
-  DT::datatable(LFD, style = 'bootstrap',
-                class = 'table-bordered table-condensed',
-                rownames = FALSE,
-                options = list(pageLength = 16,
-                               dom = 'tip',
-                               autoWidth = TRUE),
-                filter = "top",
-                colnames = table_colnames)
+  byboard_data_table(LFD,
+                     "NHS Board of Residence",  # Name of the column with board names e.g. "NHS Board"
+                     add_separator_cols=c(2,3), # Column indices to add thousand separators to
+                     rows_to_display=16,
+                     flip_order=TRUE)
+  
 })
 
 
