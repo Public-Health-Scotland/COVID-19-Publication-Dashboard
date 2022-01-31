@@ -203,7 +203,7 @@ br3<-function(){tagList(br(),br(),br())}
 ## Data lists --------------------------------------------------------------
 
 
-data_list <- c("Positive Cases" = "LabCases",
+data_list <- c("Positive PCR Cases" = "LabCases",
                "Hospital Admissions" = "Admissions",
                "Hospital Admissions by Ethnicity" = "Ethnicity_Chart",
                "ICU Admissions" = "ICU",
@@ -241,10 +241,10 @@ HCWdata_list_data_tab <- c ("Specialist Cancer Wards and Treatment Areas" = "Hea
 
 
 #extra choices for data tables
-data_list_data_tab <- c("Positive Cases" = "LabCases",
-                        "Positive Cases by age and sex" = "LabCases_AgeSex",
-                        "Positive Cases by deprivation" = "LabCases_SIMD",
-                        "Distribution of confirmed COVID-19 cases by age group" = "Cases_AgeGrp",
+data_list_data_tab <- c("Positive PCR Cases" = "LabCases",
+                        "Positive PCR Cases by age and sex" = "LabCases_AgeSex",
+                        "Positive PCR Cases by deprivation" = "LabCases_SIMD",
+                        "Distribution of confirmed COVID-19 PCR cases by age group" = "Cases_AgeGrp",
                         "Hospital Admissions" = "Admissions",
                         "Hospital Admissions by age and sex" = "Admissions_AgeSex",
                         "Hospital Admissions by deprivation" = "Admissions_SIMD",
