@@ -1,4 +1,4 @@
-
+setwd("/conf/PHSCOVID19_Analysis/COVID-19-Publication-Dashboard/shiny_app")
 
 # Global
 ###############################################
