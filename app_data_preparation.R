@@ -152,11 +152,15 @@ saveRDS(SAS_SIMD, "data/SAS_SIMD.rds")
 
 NHS24_community <- read_csv("data/NHS24_community.csv") %>%
   select_if(non_empty_cols)
+
+colnames(NHS24_community) <- gsub("\\.", " ", colnames(NHS24_community)) # Remove . in outcomes
+
 NHS24_community <- NHS24_community %>%
   pivot_longer(-date,
                names_to = "outcome",
                values_to = "count") %>%
   mutate(date = ymd(date))
+
 
 saveRDS(NHS24_community, "data/NHS24_community.rds")
 
