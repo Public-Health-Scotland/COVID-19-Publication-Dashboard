@@ -160,6 +160,25 @@ data_table <- reactive({  # Change dataset depending on what user selected
 
       mutate(Date = format(Date, "%d %B %y"))
 
+
+
+  } else if (input$data_select %in% "LabCases") {
+    
+    table_data <- table_data %>%
+      
+      dplyr::rename("Number of PCR Cases" = "Number of Cases",
+                    "Cumulative PCR Cases" = "Cumulative Cases")
+    
+    
+    
+  } else if (input$data_select %in% c("Cases_AgeGrp", "Cases_Adm")) {
+    
+    table_data <- table_data %>%
+      
+      dplyr::rename("Percentage of weekly PCR cases" = "Percentage of weekly cases")
+    
+    
+    
   } else if (input$data_select %in% "Admissions") {
 
     table_data <- table_data %>%
@@ -168,7 +187,25 @@ data_table <- reactive({  # Change dataset depending on what user selected
 
 
 
-  } else if (input$data_select %in% "ICU") {
+  } else if (input$data_select %in% c("Admissions_AgeSex", "Admissions_SIMD", 
+                                      "ICU_AgeSex", "ICU_SIMD",
+                                      "LabCases_AgeSex", "LabCases_SIMD")) {
+    
+    table_data <- table_data %>%
+      
+      dplyr::rename("Number of PCR cases" = "Number of Cases")
+    
+    
+    
+  } else if (input$data_select %in% c("Prop_Adm_AgeGrp")) {
+    
+    table_data <- table_data %>%
+      
+      dplyr::rename("PCR cases" = "Cases")
+    
+    
+    
+  }  else if (input$data_select %in% "ICU") {
 
     table_data <- table_data %>%
 
