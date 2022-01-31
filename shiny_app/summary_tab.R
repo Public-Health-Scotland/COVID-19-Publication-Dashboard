@@ -269,9 +269,9 @@ if (input$measure_select == "LabCases") { #Positive Cases
     cut_charts_subheading(title= "Daily number of COVID-19 admissions to hospital", 
                         source = data_source, data_name = "Admissions"),
   # percent admissions
-  plot_box("Proportion of weekly cases admitted to hospital within 14 days of a first positive test", 
+  plot_box("Proportion of weekly cases admitted to hospital within 14 days of a first positive PCR test", 
            plot_output = "prop_admissions"),
-  plot_box("Weekly cases admitted to hospital within 14 days of a first positive test, by age group", 
+  plot_box("Weekly cases admitted to hospital within 14 days of a first positive PCR test, by age group", 
            plot_output="cases_age_groups")
 )
   
