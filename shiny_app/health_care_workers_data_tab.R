@@ -12,9 +12,7 @@ HCWdata_table <- reactive({  # Change dataset depending on what user selected
   
   
   table_data <- table_data
-  # table_data %>% 
-  #   mutate_if(is.numeric, round, 1) %>% 
-  #   mutate_if(is.character, as.factor)
+
 })
 
 
@@ -23,18 +21,10 @@ HCWdata_table <- reactive({  # Change dataset depending on what user selected
 
 output$HCWtable_filtered <- DT::renderDataTable({
   
-  # Remove the underscore from column names in the table
-  table_colnames  <-  gsub("_", " ", colnames(HCWdata_table()))
-  
-  DT::datatable(HCWdata_table(), style = 'bootstrap',
-                class = 'table-bordered table-condensed',
-                rownames = FALSE,
-                options = list(pageLength = 20,
-                               dom = 'tip',
-                               autoWidth = TRUE),
-                filter = "top",
-                colnames = table_colnames) #%>%
-    #formatCurrency(3:9, currency = "", interval = 3, mark = ",", digits=0)
+  byboard_data_table(HCWdata_table(), board_name_column="NHS Board",
+                     add_separator_cols=c(3,4,5,6))
+
+
 })
 
 ###############################################.

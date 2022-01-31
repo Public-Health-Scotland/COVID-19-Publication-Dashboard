@@ -53,6 +53,7 @@ library(lubridate)
 library(janitor)
 library(phsstyles)
 library(tidyr)
+library(magrittr)
 
 ###############################################.
 ## Functions ----
@@ -218,19 +219,20 @@ CTdata_list_chart_tab <- c ("Contact Tracing time performance %",
                             "Protect Scotland App")
 
 
-CTdata_list_data_tab <- c (#"Contact Tracing Weekly by Health Board" = "ContactTracing",
-  "Contact Tracing time performance measures" = "ContactTime",
-  #  "Cases reporting an occupation in the Education and Childcare sector" = "ContactEC",
-  "Cases recorded in contact tracing software" = "ContactWeeklyCases",
-  "Cumulative cases recorded in contact tracing software" ="ContactTracingWeeklyCumulative",
-  #"Average number of contacts per case" = "ContactTracingAveragesAge",
-  "Number of Contacts Positive Within 10 Days of Exposure" = "ContactTracingTestingPositive",
-  "Failed index cases by reason of failure" = "ContactTracingFail",
-  "Protect Scotland App" = "ProximityApp")
+CTdata_list_data_tab <- c (#"Contact Tracing Weekly by Health Board" = "ContactTracing", 
+                           "Contact Tracing time performance measures" = "ContactTime",
+                         #  "Cases reporting an occupation in the Education and Childcare sector" = "ContactEC",
+                           "Cases recorded in contact tracing software" = "ContactWeeklyCases",
+                           "Cumulative cases recorded in contact tracing software" ="ContactTracingWeeklyCumulative",
+                           #"Average number of contacts per case" = "ContactTracingAveragesAge",
+                           "Number of Contacts Positive Within 10 Days of Exposure" = "ContactTracingTestingPositive",
+                           "Incomplete index cases by reason incomplete" = "ContactTracingFail",
+                           "Protect Scotland App" = "ProximityApp")
+                      
+                            #"Index and contact cases by age" = "ContactTracingDemoAge",
+                           #"Index and contact cases by sex" = "ContactTracingDemoSex",
+                           #"Index and contact cases by SIMD quintile" = "ContactTracingDemoSIMD")
 
-#"Index and contact cases by age" = "ContactTracingDemoAge",
-#"Index and contact cases by sex" = "ContactTracingDemoSex",
-#"Index and contact cases by SIMD quintile" = "ContactTracingDemoSIMD")
 
 
 SettingList <- c(sort(unique(Settings$`Setting Type`)))
@@ -241,6 +243,7 @@ HCWdata_list_data_tab <- c ("Specialist Cancer Wards and Treatment Areas" = "Hea
 
 
 #extra choices for data tables
+
 data_list_data_tab <- c("Positive PCR cases" = "LabCases",
                         "Positive PCR cases by age and sex" = "LabCases_AgeSex",
                         "Positive PCR cases by deprivation" = "LabCases_SIMD",
@@ -250,7 +253,7 @@ data_list_data_tab <- c("Positive PCR cases" = "LabCases",
                         "Hospital admissions by deprivation" = "Admissions_SIMD",
                         "Weekly hospital admissions by age" = 'Admissions_AgeBD',
                         "Proportion of weekly cases admitted to hospital within 14 days of a first positive PCR test" = "Cases_Adm",
-                        "Proportion of weekly cases admitted to hospital within 14 days of a first positive PCR test" = "Prop_Adm_AgeGrp",
+                        "Proportion of weekly cases admitted to hospital by age group" = "Prop_Adm_AgeGrp",
                         "Hospital admissions by ethnicity" = "Ethnicity",
                         "ICU admissions" = "ICU",
                         "ICU admissions by age" = "ICU_AgeSex",

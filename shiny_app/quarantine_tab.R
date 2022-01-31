@@ -2,17 +2,12 @@
 
 output$quarantine_table <- DT::renderDataTable({
   
-  # Remove the underscore from column names in the table
-  table_colnames  <-  gsub("_", " ", colnames(Quarantine))
-  
-  DT::datatable(Quarantine, style = 'bootstrap',
-                class = 'table-bordered table-condensed',
-                rownames = FALSE,
-                options = list(pageLength = 25,
-                               dom = 'tip',
-                               autoWidth = TRUE),
-                filter = "top",
-                colnames = table_colnames)
+  datatab_table(Quarantine, 
+                maxrows=20, 
+                flip_order = TRUE,
+                highlight_column = "Week Ending",
+                add_separator_cols = c(2:8) # with , separator and 0dp
+)
 })
 
 

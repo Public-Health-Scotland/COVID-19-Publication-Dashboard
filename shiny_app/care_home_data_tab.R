@@ -2,17 +2,10 @@
 
 output$care_homes_table <- DT::renderDataTable({
   
-  # Remove the underscore from column names in the table
-  table_colnames  <-  gsub("_", " ", colnames(Care_Homes))
-  
-  DT::datatable(Care_Homes, style = 'bootstrap',
-                class = 'table-bordered table-condensed',
-                rownames = FALSE,
-                options = list(pageLength = 15,
-                               dom = 'tip',
-                               autoWidth = TRUE),
-                filter = "top",
-                colnames = table_colnames)
+  byboard_data_table(Care_Homes, 
+                     board_name_column="Health Board", 
+                     rows_to_display=15,
+                     add_separator_cols=c(3,4,5))
 })
 
 
