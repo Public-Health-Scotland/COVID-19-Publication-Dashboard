@@ -161,7 +161,7 @@ observeEvent(input$btn_dataset_inform, { showModal(inform_modal) })
 output$data_explorer <- renderUI({
   
   # text for titles of cut charts
-  datasettrend <- case_when(input$measure_select == "LabCases" ~ "Positive COVID-19 cases",
+  datasettrend <- case_when(input$measure_select == "LabCases" ~ "Positive COVID-19 PCR cases",
                             input$measure_select == "Admissions" ~ "COVID-19 admissions to hospital",
                             input$measure_select == "ICU" ~ "COVID-19 admissions to ICU", 
                             input$measure_select == "NHS24" ~ "NHS 24 111 COVID-19 Contacts and COVID-19 Advice Helpline calls", 
@@ -169,7 +169,7 @@ output$data_explorer <- renderUI({
                             input$measure_select == "SAS" ~ "SAS incidents (suspected COVID-19)")
   
   # text for titles of cut charts
-  dataset <- case_when(input$measure_select == "LabCases" ~ "Positive COVID-19 cases",
+  dataset <- case_when(input$measure_select == "LabCases" ~ "Positive COVID-19 PCR cases",
                        input$measure_select == "Admissions" ~ "COVID-19 admissions to hospital",
                        input$measure_select == "ICU" ~ "COVID-19 admissions to ICU", 
                        input$measure_select == "NHS24" ~ "COVID-19 related NHS24 contacts", 
@@ -254,24 +254,24 @@ cut_charts_subheading <- function(title, source, data_name) {
 # Charts and rest of UI
 if (input$measure_select == "LabCases") { #Positive Cases
   
-  tagList(h3("Daily number of positive COVID-19 cases"),
+  tagList(h3("Daily number of positive COVID-19 PCR cases"),
           actionButton("btn_dataset_modal", paste0("Data source: ", "ECOSS"), icon = icon('question-circle')),
           actionButton("btn_modal_simd", "What is SIMD?", icon = icon('question-circle')),
-          plot_box("Daily number of Positive COVID-19 cases", plot_output = "LabCases_overall"),
+          plot_box("Daily number of Positive COVID-19 PCR cases", plot_output = "LabCases_overall"),
           plot_box("Cumulative rate per 100,000", plot_output = "LabCasesRate"),
-          plot_box("Weekly COVID-19 cases by age group", 
+          plot_box("Weekly COVID-19 PCR cases by age group", 
                    plot_output="labcases_age_groups"),
-          plot_cut_box(paste0("Positive COVID-19 cases per 100,000 population by age \n(28 February 2020 to ", Labcases_date, ")"), "LabCases_AgeSex",
-                       paste0("Positive COVID-19 cases by deprivation category (SIMD) \n(28 February 2020 to ", Labcases_date, ")"), "LabCases_SIMD"))
+          plot_cut_box(paste0("Positive COVID-19 PCR cases per 100,000 population by age \n(28 February 2020 to ", Labcases_date, ")"), "LabCases_AgeSex",
+                       paste0("Positive COVID-19 PCR cases by deprivation category (SIMD) \n(28 February 2020 to ", Labcases_date, ")"), "LabCases_SIMD"))
          
 } else if (input$measure_select == "Admissions") { #Admissions
   tagList(actionButton("btn_modal_simd", "What is SIMD?", icon = icon('question-circle')),
     cut_charts_subheading(title= "Daily number of COVID-19 admissions to hospital", 
                         source = data_source, data_name = "Admissions"),
   # percent admissions
-  plot_box("Proportion of weekly cases admitted to hospital within 14 days of a first positive test", 
+  plot_box("Proportion of weekly cases admitted to hospital within 14 days of a first positive PCR test", 
            plot_output = "prop_admissions"),
-  plot_box("Weekly cases admitted to hospital within 14 days of a first positive test, by age group", 
+  plot_box("Weekly cases admitted to hospital within 14 days of a first positive PCR test, by age group", 
            plot_output="cases_age_groups")
 )
   
