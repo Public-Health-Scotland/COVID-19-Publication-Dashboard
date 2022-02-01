@@ -64,6 +64,6 @@ prop_adm = i_cag %>%
                 Admissions = admissions,
                 "Proportion Admitted" = p.admissions)
 
-write.csv(prop_adm, glue("Test output/Prop_Admitted_AgeGrp.csv"))
+write.csv(prop_adm, glue("Test output/Prop_Admitted_AgeGrp.csv"), row.names=FALSE)
 
 rm(prop_adm, i_cag)
