@@ -1,3 +1,5 @@
+## Uncomment the line below if you are running the app locally from a different directory to the one given
+## Make sure it is commented out before deploying the app
 #setwd("/conf/PHSCOVID19_Analysis/COVID-19-Publication-Dashboard/shiny_app")
 
 # Global
