@@ -1,4 +1,4 @@
-setwd("/conf/PHSCOVID19_Analysis/COVID-19-Publication-Dashboard/shiny_app")
+#setwd("/conf/PHSCOVID19_Analysis/COVID-19-Publication-Dashboard/shiny_app")
 
 # Global
 ###############################################
@@ -6,7 +6,7 @@ setwd("/conf/PHSCOVID19_Analysis/COVID-19-Publication-Dashboard/shiny_app")
 ## Data extraction dates ----
 
 #publication date
-pub_date <- as.Date("2022-01-19")
+pub_date <- as.Date("2022-02-02")
 
 Labcases_date <- format(pub_date - 3, "%d %B %Y")
 ICU_date <- format(pub_date - 4, "%d %B %Y")
