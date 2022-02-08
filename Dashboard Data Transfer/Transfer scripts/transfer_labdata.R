@@ -83,7 +83,6 @@ g_lsimd$`SIMD Quintile`[g_lsimd$`SIMD Quintile` == "Missing"] <- "Unknown"
 
 
 g_lsimd %<>% 
-  tail(-1) %>% 
   drop_na(`SIMD Quintile`) %>% 
   subset(`SIMD Quintile` != "Total") %>% 
   dplyr::rename(cases_pc = `% cases per quintile`,
