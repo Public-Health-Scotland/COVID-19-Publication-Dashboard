@@ -204,7 +204,7 @@ br3<-function(){tagList(br(),br(),br())}
 ## Data lists --------------------------------------------------------------
 
 
-data_list <- c("Positive PCR Cases" = "LabCases",
+data_list <- c("Positive Cases" = "LabCases",
                "Hospital Admissions" = "Admissions",
                "Hospital Admissions by Ethnicity" = "Ethnicity_Chart",
                "ICU Admissions" = "ICU",
@@ -219,7 +219,7 @@ CTdata_list_chart_tab <- c ("Contact Tracing time performance %",
                             "Protect Scotland App")
 
 
-CTdata_list_data_tab <- c (#"Contact Tracing Weekly by Health Board" = "ContactTracing", 
+CTdata_list_data_tab <- c (#"Contact Tracing Weekly by Health Board" = "ContactTracing",
                            "Contact Tracing time performance measures" = "ContactTime",
                          #  "Cases reporting an occupation in the Education and Childcare sector" = "ContactEC",
                            "Cases recorded in contact tracing software" = "ContactWeeklyCases",
@@ -228,7 +228,7 @@ CTdata_list_data_tab <- c (#"Contact Tracing Weekly by Health Board" = "ContactT
                            "Number of Contacts Positive Within 10 Days of Exposure" = "ContactTracingTestingPositive",
                            "Incomplete index cases by reason incomplete" = "ContactTracingFail",
                            "Protect Scotland App" = "ProximityApp")
-                      
+
                             #"Index and contact cases by age" = "ContactTracingDemoAge",
                            #"Index and contact cases by sex" = "ContactTracingDemoSex",
                            #"Index and contact cases by SIMD quintile" = "ContactTracingDemoSIMD")
@@ -244,15 +244,15 @@ HCWdata_list_data_tab <- c ("Specialist Cancer Wards and Treatment Areas" = "Hea
 
 #extra choices for data tables
 
-data_list_data_tab <- c("Positive PCR cases" = "LabCases",
-                        "Positive PCR cases by age and sex" = "LabCases_AgeSex",
-                        "Positive PCR cases by deprivation" = "LabCases_SIMD",
-                        "Distribution of confirmed COVID-19 PCR cases by age group" = "Cases_AgeGrp",
+data_list_data_tab <- c("Positive cases" = "LabCases",
+                        "Positive cases by age and sex" = "LabCases_AgeSex",
+                        "Positive cases by deprivation" = "LabCases_SIMD",
+                        "Distribution of confirmed COVID-19 cases by age group" = "Cases_AgeGrp",
                         "Hospital admissions" = "Admissions",
                         "Hospital admissions by age and sex" = "Admissions_AgeSex",
                         "Hospital admissions by deprivation" = "Admissions_SIMD",
                         "Weekly hospital admissions by age" = 'Admissions_AgeBD',
-                        "Proportion of weekly cases admitted to hospital within 14 days of a first positive PCR test" = "Cases_Adm",
+                        "Proportion of weekly cases admitted to hospital within 14 days of a first positive test" = "Cases_Adm",
                         "Proportion of weekly cases admitted to hospital by age group" = "Prop_Adm_AgeGrp",
                         "Hospital admissions by ethnicity" = "Ethnicity",
                         "ICU admissions" = "ICU",
