@@ -5,7 +5,16 @@
 # Link action button click to modal launch
 observeEvent(input$btn_dataset_modal,
 
-             if (input$measure_select == "LabCases") { # Positive Cases MODAL
+             if (input$measure_select == "TotalCases") { # Total Cases MODAL
+               showModal(modalDialog(
+                 title = "What is the data source?",
+                 p(""), ## TODO: FIND DATA SOURCE
+                 p(glue("Date extracted: {totalcases_extract_date}")),
+                 p(""),
+                 size = "m",
+                 easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)")))
+
+             } else if (input$measure_select == "LabCases") { # Positive Cases MODAL
                showModal(modalDialog(
                  title = "What is the data source?",
                  p("ECOSS (Electronic Communication of Surveillance in Scotland) Database"),
@@ -162,7 +171,8 @@ observeEvent(input$btn_dataset_inform, { showModal(inform_modal) })
 output$data_explorer <- renderUI({
 
   # text for titles of cut charts
-  datasettrend <- case_when(input$measure_select == "LabCases" ~ "Positive COVID-19 PCR cases",
+  datasettrend <- case_when(input$measure_select == "TotalCases" ~ "Total positive COVID-19 cases",
+                            input$measure_select == "LabCases" ~ "Positive COVID-19 PCR cases",
                             input$measure_select == "Admissions" ~ "COVID-19 admissions to hospital",
                             input$measure_select == "ICU" ~ "COVID-19 admissions to ICU",
                             input$measure_select == "NHS24" ~ "NHS 24 111 COVID-19 Contacts and COVID-19 Advice Helpline calls",
@@ -170,21 +180,24 @@ output$data_explorer <- renderUI({
                             input$measure_select == "SAS" ~ "SAS incidents (suspected COVID-19)")
 
   # text for titles of cut charts
-  dataset <- case_when(input$measure_select == "LabCases" ~ "Positive COVID-19 PCR cases",
+  dataset <- case_when(input$measure_select == "TotalCases" ~ "Total positive COVID-19 cases",
+                       input$measure_select == "LabCases" ~ "Positive COVID-19 PCR cases",
                        input$measure_select == "Admissions" ~ "COVID-19 admissions to hospital",
                        input$measure_select == "ICU" ~ "COVID-19 admissions to ICU",
                        input$measure_select == "NHS24" ~ "COVID-19 related NHS24 contacts",
                        input$measure_select == "AssessmentHub" ~ "Individuals",
                        input$measure_select == "SAS" ~ "SAS incidents (suspected COVID-19)")
 
-  start_date <- case_when(input$measure_select == "LabCases" ~ "28 February 2020",
+  start_date <- case_when(input$measure_select == "TotalCases" ~ "28 February 2020"
+                          input$measure_select == "LabCases" ~ "28 February 2020",
                           input$measure_select == "Admissions" ~ "1 March 2020",
                           input$measure_select == "ICU" ~ "11 March 2020",
                           input$measure_select == "NHS24" ~ "13 February 2020",
                           input$measure_select == "AssessmentHub" ~ "23 March 2020",
                           input$measure_select == "SAS" ~ "22 January 2020")
 
-  end_date <- case_when(input$measure_select == "LabCases" ~ Labcases_date,
+  end_date <- case_when(input$measure_select == "TotalCases" ~ Totalcases_date,
+                        input$measure_select == "LabCases" ~ Labcases_date,
                         input$measure_select == "Admissions" ~ Admissions_date,
                         input$measure_select == "ICU" ~ ICU_date,
                         input$measure_select == "NHS24" ~ NHS24_date,
@@ -205,12 +218,13 @@ output$data_explorer <- renderUI({
                           input$measure_select == "SAS" ~ paste0(""))
 
   # data sources
-  data_source <- case_when(input$measure_select == "LabCases" ~ "ECOSS",
+  data_source <- case_when(input$measure_select == "TotalCases" ~ "" #TODO: FIND DATA SOURCE
+                           input$measure_select == "LabCases" ~ "ECOSS",
                            input$measure_select == "Admissions" ~ "ECOSS/RAPID",
                            input$measure_select == "ICU" ~ "SICSAG",
-                         input$measure_select == "NHS24" ~ "NHS 24 SAP BW",
-                         input$measure_select == "AssessmentHub" ~ "GP Out of Hours (OOH)",
-                         input$measure_select == "SAS"~ "SAS and Unscheduled Care Datamart")
+                           input$measure_select == "NHS24" ~ "NHS 24 SAP BW",
+                           input$measure_select == "AssessmentHub" ~ "GP Out of Hours (OOH)",
+                           input$measure_select == "SAS"~ "SAS and Unscheduled Care Datamart")
 
 
 
@@ -253,7 +267,14 @@ cut_charts_subheading <- function(title, source, data_name) {
 # Set up Charts for each section ------------------------------------------
 
 # Charts and rest of UI
-if (input$measure_select == "LabCases") { #Positive Cases
+if (input$measure_select == "TotalCases") { # Total Positive Cases
+
+  tagList(h3("Daily number of positive COVID-19 cases"),
+          actionButton("btn_dataset_modal", paste0("Data source: ", ""), icon = icon('question-circle')), #TODO: add data source
+          plot_box("Daily number of Positive COVID-19 cases", plot_output = "TotalCases_overall"),
+          plot_box("Cumulative rate per 100,000", plot_output = "TotalCasesRate")
+          )
+} else if (input$measure_select == "LabCases") { # Positive PCR Cases
 
   tagList(h3("Daily number of positive COVID-19 PCR cases"),
           actionButton("btn_dataset_modal", paste0("Data source: ", "ECOSS"), icon = icon('question-circle')),
@@ -338,6 +359,7 @@ if (input$measure_select == "LabCases") { #Positive Cases
 
 # Creating plots for each cut and dataset
 # Trend Charts
+output$TotalCases_overall <- renderPlotly({plot_overall_chart(TotalCases, data_name="TotalCases")})
 output$LabCases_overall <- renderPlotly({plot_overall_chart(LabCases, data_name = "LabCases")})
 output$Admissions_overall <- renderPlotly({plot_overall_chart(Admissions, data_name = "Admissions")})
 output$ICU_overall <- renderPlotly({plot_overall_chart(ICU, data_name = "ICU")})
@@ -368,6 +390,7 @@ output$ChildDataPositives <- renderPlotly({plot_overall_chartChild(Child, data_n
 output$ChildDataNegatives <- renderPlotly({plot_overall_chartChild(Child, data_name = "Child", childdata = "ChildNegative")})
 output$ChildDataCases <- renderPlotly({plot_overall_chartChild(Child, data_name = "Child", childdata = "ChildPer")})
 output$LabCasesRate <- renderPlotly({plot_singlerate_chart(LabCases, data_name = "LabCases")})
+output$TotalCasesRate <- renderPlotly({plot_singlerate_chart(TotalCases, data_name = "TotalCases")})
 
 #extra admissions charts
 output$prop_admissions <- renderPlotly({plot_singletrace_chart(Cases_Adm, data_name = "Cases_Adm")})
@@ -389,6 +412,7 @@ output$EthnicityChartPercentage <- renderPlotly({plot_overall_chartEthnicityPerc
 overall_data_download <- reactive({
   switch(
     input$measure_select,
+    "TotalCases" = TotalCases,
     "LabCases" = LabCases,
     "Admissions" = Admissions,
     "ICU" = ICU,

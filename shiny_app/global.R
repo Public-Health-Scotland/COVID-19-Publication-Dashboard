@@ -9,6 +9,7 @@ setwd("/conf/PHSCOVID19_Analysis/COVID-19-Publication-Dashboard/shiny_app")
 pub_date <- as.Date("2022-01-19")
 
 Labcases_date <- format(pub_date - 3, "%d %B %Y")
+Totalcases_date <- format(pub_date - 3, "%d %B %Y")
 ICU_date <- format(pub_date - 4, "%d %B %Y")
 NHS24_date <- format(pub_date - 3, "%d %B %Y")
 
@@ -19,6 +20,8 @@ Admissions_date <- format(pub_date -4, "%d %B %Y")
 
 #ECOSS, for LabCases
 labcases_extract_date <- format(pub_date - 2, "%d %B %Y") #format date
+
+totalcases_extract_date <- format(pub_date - 2, "%d %B %Y") #format date
 
 #For Hospital Admissions
 admission_extract_date <- format(pub_date - 3, "%A %d %B %Y") #format date
@@ -100,6 +103,7 @@ plot_cut_missing <- function(title_plot, plot_output, extra_content = NULL) {
 
 
 LabCases <-readRDS("data/LabCases.rds") %>% head(-1) # Removing final row as incomplete data
+TotalCases <- readRDS("data/TotalCases.rds")
 Admissions <-readRDS("data/Admissions.rds")
 ICU <- readRDS("data/ICU.rds")
 NHS24 <- readRDS("data/NHS24.rds")
@@ -204,7 +208,8 @@ br3<-function(){tagList(br(),br(),br())}
 ## Data lists --------------------------------------------------------------
 
 
-data_list <- c("Positive PCR Cases" = "LabCases",
+data_list <- c("Total Cases" = "TotalCases",
+               "Positive PCR Cases" = "LabCases",
                "Hospital Admissions" = "Admissions",
                "Hospital Admissions by Ethnicity" = "Ethnicity_Chart",
                "ICU Admissions" = "ICU",
@@ -219,7 +224,7 @@ CTdata_list_chart_tab <- c ("Contact Tracing time performance %",
                             "Protect Scotland App")
 
 
-CTdata_list_data_tab <- c (#"Contact Tracing Weekly by Health Board" = "ContactTracing", 
+CTdata_list_data_tab <- c (#"Contact Tracing Weekly by Health Board" = "ContactTracing",
                            "Contact Tracing time performance measures" = "ContactTime",
                          #  "Cases reporting an occupation in the Education and Childcare sector" = "ContactEC",
                            "Cases recorded in contact tracing software" = "ContactWeeklyCases",
@@ -228,7 +233,7 @@ CTdata_list_data_tab <- c (#"Contact Tracing Weekly by Health Board" = "ContactT
                            "Number of Contacts Positive Within 10 Days of Exposure" = "ContactTracingTestingPositive",
                            "Incomplete index cases by reason incomplete" = "ContactTracingFail",
                            "Protect Scotland App" = "ProximityApp")
-                      
+
                             #"Index and contact cases by age" = "ContactTracingDemoAge",
                            #"Index and contact cases by sex" = "ContactTracingDemoSex",
                            #"Index and contact cases by SIMD quintile" = "ContactTracingDemoSIMD")
@@ -244,7 +249,8 @@ HCWdata_list_data_tab <- c ("Specialist Cancer Wards and Treatment Areas" = "Hea
 
 #extra choices for data tables
 
-data_list_data_tab <- c("Positive PCR cases" = "LabCases",
+data_list_data_tab <- c("Total Cases" = "TotalCases",
+                        "Positive PCR cases" = "LabCases",
                         "Positive PCR cases by age and sex" = "LabCases_AgeSex",
                         "Positive PCR cases by deprivation" = "LabCases_SIMD",
                         "Distribution of confirmed COVID-19 PCR cases by age group" = "Cases_AgeGrp",
