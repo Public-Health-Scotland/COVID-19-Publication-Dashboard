@@ -24,6 +24,14 @@ LabCases <- LabCases %>%
   mutate(Date =ymd(Date))
 saveRDS(LabCases, "data/LabCases.rds")
 
+# Total Cases
+
+TotalCases <- read_csv("data/TotalCases.csv") %>%
+  select_if(non_empty_cols) %>%
+  dplyr::rename(Count = NumberCasesperDay) %>%
+  mutate(Date =ymd(Date))
+saveRDS(TotalCases, "data/TotalCases.rds")
+
 # Admissions
 Admissions <- read_csv("data/Admissions.csv") %>%
   select_if(non_empty_cols)
