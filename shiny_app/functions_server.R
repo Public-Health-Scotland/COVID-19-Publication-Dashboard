@@ -45,13 +45,17 @@ plot_overall_chart <- function(dataset, data_name, yaxis_title, area = T) {
 
   #Creating time trend plot
   plot_ly(data = trend_data, x = ~Date) %>%
-    add_lines(y = ~Count, line = list(color = pal_overall[1]),
+    add_lines(y = ~Count, line = list(color = pal_overall[2], width=0.8),
               text = tooltip_trend, hoverinfo = "text",
               name = "Count") %>%
-    add_lines(y = ~Average7, line = list(color = pal_overall[2], dash = 'dash'),
+    add_lines(y = ~Average7, line = list(color = pal_overall[1]),
               text = tooltip_trend, hoverinfo = "text",
               name = "7 Day Average") %>%
-    add_vline("2022-01-06", color=phs_colours("phs-magenta")) %>%
+    add_vline("2022-01-06", color=phs_colours("phs-magenta"), width=3.0) %>%
+    #add_text(text="From 6 Jan \n cases include PCR + LFD",
+    #         x="2021-12-01",
+    #         y=(max(trend_data)-0.2*max(trend_data))
+    #         ) %>%
    # add_segments(x="2022-01-06", xend="2022-01-06", y=0, yend=max(trend_data)) %>%
     #Layout
     layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
