@@ -188,7 +188,7 @@ output$data_explorer <- renderUI({
                        input$measure_select == "AssessmentHub" ~ "Individuals",
                        input$measure_select == "SAS" ~ "SAS incidents (suspected COVID-19)")
 
-  start_date <- case_when(input$measure_select == "TotalCases" ~ "28 February 2020"
+  start_date <- case_when(input$measure_select == "TotalCases" ~ "28 February 2020",
                           input$measure_select == "LabCases" ~ "28 February 2020",
                           input$measure_select == "Admissions" ~ "1 March 2020",
                           input$measure_select == "ICU" ~ "11 March 2020",
@@ -218,7 +218,7 @@ output$data_explorer <- renderUI({
                           input$measure_select == "SAS" ~ paste0(""))
 
   # data sources
-  data_source <- case_when(input$measure_select == "TotalCases" ~ "" #TODO: FIND DATA SOURCE
+  data_source <- case_when(input$measure_select == "TotalCases" ~ "", #TODO: FIND DATA SOURCE
                            input$measure_select == "LabCases" ~ "ECOSS",
                            input$measure_select == "Admissions" ~ "ECOSS/RAPID",
                            input$measure_select == "ICU" ~ "SICSAG",
