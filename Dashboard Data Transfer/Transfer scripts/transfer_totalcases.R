@@ -13,7 +13,7 @@ g_cases <- i_dailydata$Cases %>%
   dplyr::rename(NumberCasesperDay = `Cases per day`,
                 Average7 = `7 Day Average`) %>%
   mutate(CumulativeRatePer10000 = 10000 * Cumulative / pop_grandtotal) %>%
-  select(Date, NumberCasesperDay, Cumulative, Average7, CumulativeRatePer10000)
+  select(Date, NumberCasesperDay, Cumulative, Average7, CumulativeRatePer100000)
 
 
 write.csv(g_cases, glue("Test output/TotalCases.csv"), row.names = FALSE)
