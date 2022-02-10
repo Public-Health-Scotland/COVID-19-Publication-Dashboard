@@ -17,7 +17,7 @@ add_vline = function(p, x, ...) {
   p %>% layout(shapes=list(l_shape))
 }
 
-plot_overall_chart <- function(dataset, data_name, yaxis_title, area = T) {
+plot_overall_chart <- function(dataset, data_name, yaxis_title, area = T, include_vline=F) {
 
   # Filtering dataset to include only overall figures
   trend_data <- dataset
@@ -44,25 +44,40 @@ plot_overall_chart <- function(dataset, data_name, yaxis_title, area = T) {
                             "<br>", "7 Day Average: ", trend_data$Average7))
 
   #Creating time trend plot
-  plot_ly(data = trend_data, x = ~Date) %>%
+  p <- plot_ly(data = trend_data, x = ~Date) %>%
     add_lines(y = ~Count, line = list(color = pal_overall[2], width=0.8),
               text = tooltip_trend, hoverinfo = "text",
               name = "Count") %>%
     add_lines(y = ~Average7, line = list(color = pal_overall[1]),
               text = tooltip_trend, hoverinfo = "text",
               name = "7 Day Average") %>%
-    add_vline("2022-01-06", color=phs_colours("phs-magenta"), width=3.0) %>%
-    #add_text(text="From 6 Jan \n cases include PCR + LFD",
-    #         x="2021-12-01",
-    #         y=(max(trend_data)-0.2*max(trend_data))
-    #         ) %>%
-   # add_segments(x="2022-01-06", xend="2022-01-06", y=0, yend=max(trend_data)) %>%
     #Layout
     layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
            yaxis = yaxis_plots, xaxis = xaxis_plots,
            legend = list(x = 100, y = 0.5)) %>% #position of legend
     # leaving only save plot button
     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
+
+  if(include_vline){
+    # Fraction of plot which is since 01 Dec 2021 (where we want to place text)
+    frac <- as.numeric(as.Date("2021-12-01") - min(trend_data$Date))/as.numeric(max(trend_data$Date - min(trend_data$Date)))
+
+    annotation <- list(yref = "paper",
+                       xref = "paper",
+                       y = 0.8,
+                       x = frac,
+                       text = "<b>From 6 Jan \n cases include \n PCR + LFD</b>",
+                       bordercolor = phs_colours("phs-magenta"),
+                       borderwidth = 2,
+                       textcolor = "red",
+                       showarrow=FALSE)
+
+    p %<>% add_vline("2022-01-06", color=phs_colours("phs-magenta"), width=3.0) %>%
+      layout(annotations=annotation)
+  }
+
+  return(p)
+
 }
 
 
@@ -314,7 +329,7 @@ plot_simd_chart <- function(dataset, data_name, yaxis_title, area = T) {
 
 ## Function for other charts -----------------------------------------------
 
-plot_singletrace_chart <- function(dataset, data_name, yaxis_title, xaxis_title, area = T) {
+plot_singletrace_chart <- function(dataset, data_name, yaxis_title, xaxis_title, area = T, include_vline=F) {
 
   # Filtering dataset to include only overall figures
   trend_data <- dataset
@@ -344,7 +359,7 @@ plot_singletrace_chart <- function(dataset, data_name, yaxis_title, xaxis_title,
                         "{measure_name}: {trend_data$count}")
 
   #Creating time trend plot
-  plot_ly(data = trend_data, x = ~date) %>%
+ p <-  plot_ly(data = trend_data, x = ~date) %>%
     add_lines(y = ~count, line = list(color = pal_overall[1]),
               text = tooltip_trend, hoverinfo = "text") %>%
     #Layout
@@ -353,9 +368,29 @@ plot_singletrace_chart <- function(dataset, data_name, yaxis_title, xaxis_title,
            legend = list(x = 100, y = 0.5)) %>% #position of legend
     # leaving only save plot button
     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
+
+
+ if(include_vline){
+
+   # Fraction of plot which is since 01 Dec 2021 (where we want to place text)
+   frac <- as.numeric(as.Date("2021-12-01") - min(trend_data$date))/as.numeric(max(trend_data$date - min(trend_data$date)))
+
+   annotation <- list(yref = "paper",
+                      xref = "paper",
+                      y = 0.8,
+                      x = frac,
+                      text = "<b>From 6 Jan \n cases include \n PCR + LFD</b>",
+                      bordercolor = phs_colours("phs-magenta"),
+                      borderwidth = 2,
+                      textcolor = "red",
+                      showarrow=FALSE)
+
+   p %<>% add_vline("2022-01-06", color=phs_colours("phs-magenta"), width=3.0) %>%
+     layout(annotations=annotation)
+ }
 }
 
-plot_singlerate_chart <- function(dataset, data_name, yaxis_title, area = T) {
+plot_singlerate_chart <- function(dataset, data_name, yaxis_title, area = T, include_vline=F) {
 
   # Filtering dataset to include only overall figures
   trend_data <- dataset
@@ -374,7 +409,7 @@ plot_singlerate_chart <- function(dataset, data_name, yaxis_title, area = T) {
                         "{measure_name}: {trend_data$CumulativeRatePer100000}")
 
   #Creating time trend plot
-  plot_ly(data = trend_data, x = ~Date) %>%
+  p <- plot_ly(data = trend_data, x = ~Date) %>%
     add_lines(y = ~CumulativeRatePer100000, line = list(color = pal_overall[1]),
               text = tooltip_trend, hoverinfo = "text") %>%
     #Layout
@@ -383,6 +418,27 @@ plot_singlerate_chart <- function(dataset, data_name, yaxis_title, area = T) {
            legend = list(x = 100, y = 0.5)) %>% #position of legend
     # leaving only save plot button
     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
+
+  if(include_vline){
+    # Fraction of plot which is since 01 Dec 2021 (where we want to place text)
+    frac <- as.numeric(as.Date("2021-12-01") - min(trend_data$Date))/as.numeric(max(trend_data$Date - min(trend_data$Date)))
+
+    annotation <- list(yref = "paper",
+                       xref = "paper",
+                       y = 0.8,
+                       x = frac,
+                       text = "<b>From 6 Jan \n cases include \n PCR + LFD</b>",
+                       bordercolor = phs_colours("phs-magenta"),
+                       borderwidth = 2,
+                       textcolor = "red",
+                       showarrow=FALSE)
+
+    p %<>% add_vline("2022-01-06", color=phs_colours("phs-magenta"), width=3.0) %>%
+      layout(annotations=annotation)
+  }
+
+  return(p)
+
 }
 
 
