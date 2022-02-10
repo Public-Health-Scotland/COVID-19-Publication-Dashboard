@@ -167,7 +167,7 @@ tagList(  #needed for shinyjs
                  class = "externallink"),"."),
         p(strong("NOTE:"), "On 05 January 2022, the Scottish Government announced that asymptomatic people who return a positive",
           "LFT would no longer have to confirm their positive result with a PCR test."),
-        p(strong(style="color:red", "As a result, from 06 January 2022, cases in the tables below include PCR + LFD positives.")),
+        p(strong(style="color:red", "As a result, from 05 January 2022, cases in the tables below include PCR + LFD positives.")),
         column(6,
                selectInput("data_select", "Select the data you want to explore.",
                            choices = data_list_data_tab)),

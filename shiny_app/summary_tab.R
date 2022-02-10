@@ -258,7 +258,7 @@ if (input$measure_select == "LabCases") { #Positive Cases
   tagList(h3("Daily number of positive COVID-19 cases"),
           p("On 05 January 2022, the Scottish Government announced that asymptomatic people who return a positive",
             "LFT would no longer have to confirm their positive result with a PCR test."),
-          p(strong(style="color:red", "As a result, from 06 January 2022, cases in the charts below include PCR + LFD positives.")),
+          p(strong(style="color:red", "As a result, from 05 January 2022, cases in the charts below include PCR + LFD positives.")),
           actionButton("btn_dataset_modal", paste0("Data source: ", "ECOSS"), icon = icon('question-circle')),
           actionButton("btn_modal_simd", "What is SIMD?", icon = icon('question-circle')),
           plot_box("Daily number of Positive COVID-19 cases", plot_output = "LabCases_overall"),
@@ -272,7 +272,7 @@ if (input$measure_select == "LabCases") { #Positive Cases
   tagList(actionButton("btn_modal_simd", "What is SIMD?", icon = icon('question-circle')),
           p("On 05 January 2022, the Scottish Government announced that asymptomatic people who return a positive",
             "LFT would no longer have to confirm their positive result with a PCR test."),
-          p(strong(style="color:red", "As a result, from 06 January 2022, cases in the charts below include PCR + LFD positives.")),
+          p(strong(style="color:red", "As a result, from 05 January 2022, cases in the charts below include PCR + LFD positives.")),
     cut_charts_subheading(title= "Daily number of COVID-19 admissions to hospital",
                         source = data_source, data_name = "Admissions"),
   # percent admissions

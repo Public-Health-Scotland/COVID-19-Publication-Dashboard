@@ -379,13 +379,13 @@ plot_singletrace_chart <- function(dataset, data_name, yaxis_title, xaxis_title,
                       xref = "paper",
                       y = 0.8,
                       x = frac,
-                      text = "<b>From 6 Jan \n cases include \n PCR + LFD</b>",
+                      text = "<b>From 5 Jan \n cases include \n PCR + LFD</b>",
                       bordercolor = phs_colours("phs-magenta"),
                       borderwidth = 2,
                       textcolor = "red",
                       showarrow=FALSE)
 
-   p %<>% add_vline("2022-01-06", color=phs_colours("phs-magenta"), width=3.0) %>%
+   p %<>% add_vline("2022-01-05", color=phs_colours("phs-magenta"), width=3.0) %>%
      layout(annotations=annotation)
  }
 }
