@@ -685,7 +685,7 @@ plot_overall_chartChild <- function(dataset, data_name, childdata, yaxis_title, 
 ## Contact Tracing Charts --------------------------------------------------
 # New
 
-plot_contacttrace_Per_graph <- function(dataset, data_name, CTdata, yaxis_title, area = T) {
+plot_contacttrace_Per_graph <- function(dataset, data_name, CTdata, yaxis_title, area = T, include_vline = T) {
 
   yaxis_title <- case_when(#CTdata == "TestIndex" ~ "Test to index created",
     CTdata == "TestInterview" ~ "Test to interview completed" ,
@@ -706,7 +706,7 @@ plot_contacttrace_Per_graph <- function(dataset, data_name, CTdata, yaxis_title,
                         "{trend_data$`Hours taken`} hours: {trend_data$`Number of Index Cases`} cases ({trend_data$`% of Total Index Cases`}%)")
 
   #Creating contact tracing time
-  trend_data %>%
+  p <- trend_data %>%
     plot_ly(x =~week_ending, y=~`% of Total Index Cases`) %>%
     add_lines(color = ~ordered(`Hours taken`)) %>%
     #Layout
@@ -717,9 +717,30 @@ plot_contacttrace_Per_graph <- function(dataset, data_name, CTdata, yaxis_title,
     # leaving only save plot button
     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
 
+  if(include_vline){
+    # Fraction of plot which is since 01 Dec 2021 (where we want to place text)
+    frac <- as.numeric(as.Date("2021-12-25") - min(trend_data$week_ending))/as.numeric(
+      max(trend_data$week_ending - min(trend_data$week_ending)))
+
+    annotation <- list(yref = "paper",
+                       xref = "paper",
+                       y = 0.9,
+                       x = frac,
+                       text = "<b>From 5 Jan \n cases include \n PCR + LFD</b>",
+                       bordercolor = phs_colours("phs-magenta"),
+                       borderwidth = 2,
+                       textcolor = "red",
+                       showarrow=FALSE)
+
+    p %<>% add_vline("2022-01-06", color=phs_colours("phs-magenta"), width=3.0) %>%
+      layout(annotations=annotation)
+  }
+
+  return(p)
+
 }
 
-plot_contacttrace_graph <- function(dataset, data_name, CTdata, yaxis_title, area = T) {
+plot_contacttrace_graph <- function(dataset, data_name, CTdata, yaxis_title, area = T, include_vline=T) {
 
   yaxis_title <- case_when(#CTdata == "TestIndex" ~ "Test to index created",
     CTdata == "TestInterview" ~ "Test to interview completed" ,
@@ -740,7 +761,7 @@ plot_contacttrace_graph <- function(dataset, data_name, CTdata, yaxis_title, are
                         "{trend_data$`Hours taken`} hours: {trend_data$`Number of Index Cases`} cases ({trend_data$`% of Total Index Cases`}%)")
 
   # Creating contact tracing time
-  trend_data %>%
+  p <- trend_data %>%
     plot_ly(x = ~week_ending, y = ~`Number of Index Cases`) %>%
     add_lines(color = ~ordered(`Hours taken`)) %>%
     # Layout
@@ -750,6 +771,28 @@ plot_contacttrace_graph <- function(dataset, data_name, CTdata, yaxis_title, are
            barmode = "stack") %>% #split by group
     # leaving only save plot button
     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
+
+  if(include_vline){
+    # Fraction of plot which is since 01 Dec 2021 (where we want to place text)
+    frac <- as.numeric(as.Date("2021-12-25") - min(trend_data$week_ending))/as.numeric(
+      max(trend_data$week_ending - min(trend_data$week_ending)))
+
+    annotation <- list(yref = "paper",
+                       xref = "paper",
+                       y = 0.9,
+                       x = frac,
+                       text = "<b>From 5 Jan \n cases include \n PCR + LFD</b>",
+                       bordercolor = phs_colours("phs-magenta"),
+                       borderwidth = 2,
+                       textcolor = "red",
+                       showarrow=FALSE)
+
+    p %<>% add_vline("2022-01-06", color=phs_colours("phs-magenta"), width=3.0) %>%
+      layout(annotations=annotation)
+  }
+
+  return(p)
+
 }
 
 
@@ -835,75 +878,8 @@ plot_contacttrace_chart <- function(dataset, data_name, CTdata, yaxis_title, are
     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
 }
 
-# plot_average_CT_cases <- function(dataset, area = T) {
-#
-#   #Filtering dataset to include only overall figures
-#
-#
-#   yaxis_title <- "Average Number of Cases per Contact"
-#
-#   trend_data <- dataset
-#
-#   #Modifying standard layout
-#   yaxis_plots[["title"]] <- yaxis_title
-#
-#   #Text for tooltip
-#   tooltip_trend <- c(paste0("Week ending: ", format(trend_data$`Week Ending`, "%d %b %y"),
-#                             "<br>",yaxis_title, " aged 0-4: ", trend_data$`0-4`,
-#                             "<br>",yaxis_title, " aged 5-14: ", trend_data$`5-14`,
-#                             "<br>",yaxis_title, " aged 15-19: ", trend_data$`15-19`,
-#                             "<br>",yaxis_title, " aged 20-24: ", trend_data$`20-24`,
-#                             "<br>",yaxis_title, " aged 25-44: ", trend_data$`25-44`,
-#                             "<br>",yaxis_title, " aged 45-64: ", trend_data$`45-64`,
-#                             "<br>",yaxis_title, " aged 65-74: ", trend_data$`65-74`,
-#                             "<br>",yaxis_title, " aged 74-84: ", trend_data$`75-84`,
-#                             "<br>",yaxis_title, " aged 85+: ", trend_data$`85+`,
-#                             "<br>",yaxis_title, " all ages: ", trend_data$`All Ages`))
-#
-#   #Creating time trend plot
-#   plot_ly(data = trend_data, x = ~`Week Ending`) %>%
-#     add_lines(y = ~`0-4`, line = list(color = pal_ETH[1]),
-#               text = tooltip_trend, hoverinfo="text",
-#               name = "Age 0-4") %>%
-#     add_lines(y = ~`5-14`, line = list(color = "#713D8D"),
-#               text = tooltip_trend, hoverinfo="text",
-#               name = "Age 5-14") %>%
-#     add_lines(y = ~`15-19`, line = list(color = pal_ETH[2]),
-#               text = tooltip_trend, hoverinfo="text",
-#               name = "Age 15-19") %>%
-#     add_lines(y = ~`20-24`, line = list(color = "#4660B6"),
-#               text = tooltip_trend, hoverinfo="text",
-#               name = "Age 20-24") %>%
-#     add_lines(y = ~`25-44`, line = list(color = pal_ETH[3]),
-#               text = tooltip_trend, hoverinfo="text",
-#               name = "Age 25-44") %>%
-#     add_lines(y = ~`45-64`, line = list(color = "#3C9685"),
-#               text = tooltip_trend, hoverinfo="text",
-#               name = "Age 45-64") %>%
-#     add_lines(y = ~`65-74`, line = list(color = pal_ETH[4]),
-#               text = tooltip_trend, hoverinfo="text",
-#               name = "Age 65-74") %>%
-#     add_lines(y = ~`75-84`, line = list(color = "#6B991E"),
-#               text = tooltip_trend, hoverinfo="text",
-#               name = "Age 75-84") %>%
-#     add_lines(y = ~`85+`, line = list(color = "#4e7015"),
-#               text = tooltip_trend, hoverinfo="text",
-#               name = "Age 85+") %>%
-#     add_lines(y = ~`All Ages`, line = list(color = pal_ETH[5]),
-#               text = tooltip_trend, hoverinfo="text",
-#               name = "All Ages") %>%
-#
-#
-#
-#     #Layout
-#     layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
-#            yaxis = yaxis_plots, xaxis = xaxis_plots,
-#            legend = list(x = 100, y = 0.5)) %>% #position of legend
-#     # leaving only save plot button
-#     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
-# }
 
-plot_average_CT_cases <- function(dataset, area = T) {
+plot_average_CT_cases <- function(dataset, area = T, include_vline=T) {
 
 #Filtering dataset to include only overall figures
 
@@ -919,7 +895,7 @@ tooltip_trend <- c(paste0("Week ending: ", format(trend_data$`Week Ending`, "%d 
                           "<br>", yaxis_title,  trend_data$`Average Number of Contacts`))
 
 #Creating time trend plot
-plot_ly(data = trend_data, x = ~`Week Ending`) %>%
+p <- plot_ly(data = trend_data, x = ~`Week Ending`) %>%
   add_lines(y = ~`Average Number of Contacts`,
             line = list(color = pal_ETH[1]),
             text = tooltip_trend, hoverinfo="text",
@@ -930,6 +906,28 @@ plot_ly(data = trend_data, x = ~`Week Ending`) %>%
          legend = list(x = 100, y = 0.5)) %>% #position of legend
   # leaving only save plot button
   config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
+
+if(include_vline){
+  # Fraction of plot which is since 01 Dec 2021 (where we want to place text)
+  frac <- as.numeric(as.Date("2021-12-25") - min(trend_data$`Week Ending`))/as.numeric(
+    max(trend_data$`Week Ending` - min(trend_data$`Week Ending`)))
+
+  annotation <- list(yref = "paper",
+                     xref = "paper",
+                     y = 0.9,
+                     x = frac,
+                     text = "<b>From 5 Jan \n cases include \n PCR + LFD</b>",
+                     bordercolor = phs_colours("phs-magenta"),
+                     borderwidth = 2,
+                     textcolor = "red",
+                     showarrow=FALSE)
+
+  p %<>% add_vline("2022-01-06", color=phs_colours("phs-magenta"), width=3.0) %>%
+    layout(annotations=annotation)
+}
+
+return(p)
+
 }
 
 # Settings ----------------------------------------------------------------
@@ -1100,7 +1098,7 @@ plot_overall_chartEthnicityPercent <- function(dataset, data_name, yaxis_title, 
 }
 
 ##Scotland Proximity App - number of notificatins chart
-plot_prox_contacts_chart <- function(dataset, yaxis_title, xaxis_title, area = T) {
+plot_prox_contacts_chart <- function(dataset, yaxis_title, xaxis_title, area = T, include_vline=T) {
 
   # Filtering dataset to include only overall figures
   trend_data <- dataset
@@ -1122,7 +1120,7 @@ plot_prox_contacts_chart <- function(dataset, yaxis_title, xaxis_title, area = T
 
    #Creating plot
 
-  plot_ly(x = trend_data$`Week beginning`, y = trend_data$`Contact notifications`,
+ p <- plot_ly(x = trend_data$`Week beginning`, y = trend_data$`Contact notifications`,
           type = "bar", #text=tooltip_trend
           hovertemplate = tooltip_trend) %>%
 
@@ -1133,11 +1131,33 @@ plot_prox_contacts_chart <- function(dataset, yaxis_title, xaxis_title, area = T
            barmode = "bar") %>%
     # leaving only save plot button
     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
+
+
+  if(include_vline){
+    # Fraction of plot which is since 01 Dec 2021 (where we want to place text)
+    frac <- as.numeric(as.Date("2021-12-01") - min(trend_data$`Week beginning`))/as.numeric(
+      max(trend_data$`Week beginning` - min(trend_data$`Week beginning`)))
+
+    annotation <- list(yref = "paper",
+                       xref = "paper",
+                       y = 0.9,
+                       x = frac,
+                       text = "<b>From 5 Jan \n cases include \n PCR + LFD</b>",
+                       bordercolor = phs_colours("phs-magenta"),
+                       borderwidth = 2,
+                       textcolor = "red",
+                       showarrow=FALSE)
+
+    p %<>% add_vline("2022-01-06", color=phs_colours("phs-magenta"), width=3.0) %>%
+      layout(annotations=annotation)
+  }
+
+  return(p)
 }
 
 
 ##Scotland Proximity App - number of uploads chart
-plot_prox_uploads_chart <- function(dataset, yaxis_title, xaxis_title, area = T) {
+plot_prox_uploads_chart <- function(dataset, yaxis_title, xaxis_title, area = T, include_vline = T) {
 
   # Filtering dataset to include only overall figures
   trend_data <- dataset
@@ -1159,7 +1179,7 @@ plot_prox_uploads_chart <- function(dataset, yaxis_title, xaxis_title, area = T)
 
    #Creating plot
 
-  plot_ly(x = trend_data$`Week beginning`, y = trend_data$`Exposure key uploads`,
+  p <- plot_ly(x = trend_data$`Week beginning`, y = trend_data$`Exposure key uploads`,
           type = "bar", #text=tooltip_trend
           hovertemplate = tooltip_trend) %>%
 
@@ -1170,6 +1190,29 @@ plot_prox_uploads_chart <- function(dataset, yaxis_title, xaxis_title, area = T)
            barmode = "bar") %>%
     # leaving only save plot button
     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
+
+
+  if(include_vline){
+    # Fraction of plot which is since 01 Dec 2021 (where we want to place text)
+    frac <- as.numeric(as.Date("2021-12-01") - min(trend_data$`Week beginning`))/as.numeric(
+      max(trend_data$`Week beginning` - min(trend_data$`Week beginning`)))
+
+    annotation <- list(yref = "paper",
+                       xref = "paper",
+                       y = 0.9,
+                       x = frac,
+                       text = "<b>From 5 Jan \n cases include \n PCR + LFD</b>",
+                       bordercolor = phs_colours("phs-magenta"),
+                       borderwidth = 2,
+                       textcolor = "red",
+                       showarrow=FALSE)
+
+    p %<>% add_vline("2022-01-06", color=phs_colours("phs-magenta"), width=3.0) %>%
+      layout(annotations=annotation)
+  }
+
+  return(p)
+
 }
 
 
