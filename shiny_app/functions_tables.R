@@ -5,8 +5,15 @@
 ## Column formatting functions
 
 format_cols <- function(x, dp=0, perc=F){
-  numx <- as.numeric(x)
-  if (!is.na(numx)){
+
+  # First strip any existing commas and whitespace out
+  x <- gsub(",", "", x)
+  x <- gsub(" ", "", x)
+
+  numx <- tryCatch(as.numeric(x),
+           warning = function(w) NULL)
+
+  if (!is.null(numx)){
     numx <- formatC(numx, format="f", big.mark = ",", digits=dp)
     if (perc){
       numx <- paste0(numx, "%")
@@ -77,23 +84,6 @@ datatab_table <- function(input_data_table,
       color = styleEqual(c("Cumulative"), c("white"))
     )
 
-
- # if(!is.null(add_separator_cols_1dp))
-
- #   for (i in add_separator_cols_1dp){
- #     dt[i] <- map(dt[i], format_cols, dp=1)
- #   }
-# }
-
- # if(!is.null(add_percentage_cols)){
-#
- #   for (i in add_percentage_cols){
- #     dt[i] <- map(dt[i], format_cols, dp=1, perc=T)
-  #  }
-
-#  }
-
-
   return(dt)
 
 
@@ -116,6 +106,12 @@ byboard_data_table <- function(input_data_table,
   # Remove the underscore from column names in the table
   table_colnames  <-  gsub("_", " ", colnames(input_data_table))
 
+  # Add column formatting
+
+  for (i in add_separator_cols){
+    input_data_table[i] <- apply(input_data_table[i], MARGIN=1, FUN=format_cols)
+  }
+
   dt <- DT::datatable(input_data_table, style = 'bootstrap',
                 class = 'table-bordered table-condensed',
                 rownames = FALSE,
@@ -137,11 +133,6 @@ byboard_data_table <- function(input_data_table,
       fontWeight = styleEqual(c("Scotland", "Total", "All"), c("bold", "bold", "bold")),
       color = styleEqual(c("Scotland", "Total", "All"), c("white", "white", "white"))
     )
-
-  if(!is.null(add_separator_cols)){
-    dt %<>% formatCurrency(add_separator_cols, '', digits=0) ## hack to add thousands separator
-  }
-
 
   return(dt)
 
