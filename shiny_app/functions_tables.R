@@ -33,15 +33,20 @@ datatab_table <- function(input_data_table,
 
   table_colnames  <-  gsub("_", " ", colnames(input_data_table))
 
-  if(!is.null(add_separator_cols)){
+  # Add column formatting
 
     for (i in add_separator_cols){
-      input_data_table[i] <- unlist(map(input_data_table[[i]], format_cols))
+      input_data_table[i] <- apply(input_data_table[i], MARGIN=1, FUN=format_cols)
     }
 
-  #  input_data_table[add_separator_cols] <- input_data_table[add_separator_cols] %>% map_dfc(format_cols)
+    for (i in add_separator_cols_1dp){
+      input_data_table[i] <- apply(input_data_table[i], MARGIN=1, FUN=format_cols, dp=1)
+    }
 
-  }
+    for (i in add_percentage_cols){
+      input_data_table[i] <- apply(input_data_table[i], MARGIN=1, FUN=format_cols, dp=1, perc=T)
+    }
+
 
   if(flip_order){
     tab_order <- list(list(0, "asc"))
