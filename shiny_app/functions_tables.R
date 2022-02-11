@@ -59,7 +59,6 @@ datatab_table <- function(input_data_table,
       input_data_table[i] <- apply(input_data_table[i], MARGIN=1, FUN=format_entry, dp=1, perc=T)
     }
 
-
   if(flip_order){
     tab_order <- list(list(0, "asc"))
   } else {

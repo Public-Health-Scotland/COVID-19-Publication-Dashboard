@@ -81,7 +81,6 @@ g_lsimd <- i_labdata$SIMD
 
 g_lsimd$`SIMD Quintile`[g_lsimd$`SIMD Quintile` == "Missing"] <- "Unknown"
 
-
 g_lsimd %<>%
   drop_na(`SIMD Quintile`) %>%
   subset(`SIMD Quintile` != "Total") %>%
