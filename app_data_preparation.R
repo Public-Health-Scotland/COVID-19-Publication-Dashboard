@@ -306,20 +306,11 @@ saveRDS(HCW_Psychiatry, "data/HCW_Psychiatry.rds")
 # Ethnicity -----------------------------------------------------------------
 
 Ethnicity <- read_csv("data/Ethnicity.csv")
-Ethnicity <- Ethnicity %>%
-  mutate(Percentage = Percentage*100)%>%
-  mutate_if(is.numeric, round, 2)
+Ethnicity <- Ethnicity
 saveRDS(Ethnicity, "data/Ethnicity.rds")
 
 Ethnicity_Chart <- read_csv("data/Ethnicity_Chart.csv")
-Ethnicity_Chart <- Ethnicity_Chart %>%
-  mutate(White_p = White_p*100,
-         `Black/Caribbean/African_p` = `Black/Caribbean/African_p`*100,
-         `South Asian_p` = `South Asian_p`*100,
-         Chinese_p = Chinese_p*100,
-         Other_p = Other_p*100,
-         `Not Available_p` = `Not Available_p`*100) %>%
-  mutate_if(is.numeric, round, 2)
+Ethnicity_Chart <- Ethnicity_Chart
 saveRDS(Ethnicity_Chart, "data/Ethnicity_Chart.rds")
 
 #### Care Homes ----------------------------------------------------------------
