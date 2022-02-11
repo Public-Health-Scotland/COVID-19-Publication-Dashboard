@@ -2,6 +2,21 @@
 
 ###############################################
 
+## Column formatting functions
+
+format_cols <- function(x, dp=0, perc=F){
+  numx <- as.numeric(x)
+  if (!is.na(numx)){
+    numx <- formatC(numx, format="f", big.mark = ",", digits=dp)
+    if (perc){
+      numx <- paste0(numx, "%")
+    }
+    return (numx)
+  } else {
+    return(x)
+  }
+}
+
 # Data table for Data tab
 
 datatab_table <- function(input_data_table,
@@ -17,6 +32,16 @@ datatab_table <- function(input_data_table,
   # Remove the underscore from column names in the table
 
   table_colnames  <-  gsub("_", " ", colnames(input_data_table))
+
+  if(!is.null(add_separator_cols)){
+
+    for (i in add_separator_cols){
+      input_data_table[i] <- unlist(map(input_data_table[[i]], format_cols))
+    }
+
+  #  input_data_table[add_separator_cols] <- input_data_table[add_separator_cols] %>% map_dfc(format_cols)
+
+  }
 
   if(flip_order){
     tab_order <- list(list(0, "asc"))
@@ -47,17 +72,21 @@ datatab_table <- function(input_data_table,
       color = styleEqual(c("Cumulative"), c("white"))
     )
 
-  if(!is.null(add_separator_cols)){
-    dt %<>% formatCurrency(add_separator_cols, '', digits=0) ## hack to add thousands separator
-  }
 
-  if(!is.null(add_separator_cols_1dp)){
-    dt %<>% formatCurrency(add_separator_cols_1dp, '', digits=1) ## hack to add thousands separator
-  }
+ # if(!is.null(add_separator_cols_1dp))
 
-  if(!is.null(add_percentage_cols)){
-    dt %<>% formatCurrency(add_percentage_cols, mark=",", digits=1, currency="%", before=FALSE)
-  }
+ #   for (i in add_separator_cols_1dp){
+ #     dt[i] <- map(dt[i], format_cols, dp=1)
+ #   }
+# }
+
+ # if(!is.null(add_percentage_cols)){
+#
+ #   for (i in add_percentage_cols){
+ #     dt[i] <- map(dt[i], format_cols, dp=1, perc=T)
+  #  }
+
+#  }
 
 
   return(dt)
