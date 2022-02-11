@@ -197,7 +197,12 @@ tagList(  #needed for shinyjs
                  "issued by the Scottish Government in November 2021 sets out how Scotland will continue to adapt now that we are in the phase described as “beyond level zero”. That will require a constant review
                    of the associated management information compiled in the weekly report. The information we produce will change over time to reflect the most critical information to help understand, plan and deliver
                    contact tracing at any given point in time."),
-                 p(strong(style="color:red", "Please note: as of 16 February 2022, we will be presenting COVID-19 case data based on",
+                 p("On 05 January 2022, the Scottish Government announced that asymptomatic people who return a positive",
+                   "LFT would no longer have to confirm their positive result with a PCR test."),
+                 p(strong(style="color:red", "As a result, a positive case is now defined as an individual’s first positive PCR or first positive LFD test.",
+                          "LFD tests are included in the case definition from 05 January 2022 to reflect the revised testing strategy.",
+                          "LFD positive cases that are followed by a negative PCR result within 48 hours will be denotified.")),
+                 p(strong(style="color:red", "Additionally, as of 16 February 2022, we will be presenting COVID-19 case data based on",
                           "specimen date, rather than reporting date, which may retrospectively affect some of the below data tables.")),
                  p(),
                  strong(''),
@@ -239,7 +244,12 @@ tagList(  #needed for shinyjs
       p("Please note that during a data quality exercise some historic figures have been revised."),
       p("You can use the filters to select the data you are interested in.
         You can also download the data as a csv using the download button."),
-      p(strong(style="color:red", "Please note: as of 16 February 2022, we will be presenting COVID-19 case data based on",
+      p("On 05 January 2022, the Scottish Government announced that asymptomatic people who return a positive",
+        "LFT would no longer have to confirm their positive result with a PCR test."),
+      p(strong(style="color:red", "As a result, a positive case is now defined as an individual’s first positive PCR or first positive LFD test.",
+               "LFD tests are included in the case definition from 05 January 2022 to reflect the revised testing strategy.",
+               "LFD positive cases that are followed by a negative PCR result within 48 hours will be denotified.")),
+      p(strong(style="color:red", "Additionally, as of 16 February 2022, we will be presenting COVID-19 case data based on",
                "specimen date, rather than reporting date, which may retrospectively affect some of the below data tables.")),
 
       p(),
@@ -273,6 +283,7 @@ tagList(  #needed for shinyjs
           strong("Please note we are aware of an undercount for those travelled outside Scotland."),
           strong("This is a data quality issue due to recording of the travel information, Public Health Scotland is working closely with contact tracing leads to improve this recording.")
           ),
+
         p(strong(style = "color:red", "These data will no longer be updated weekly, starting 16th February 2022.")),
         hr(),
         downloadButton('download_travel_data', 'Download data'),
