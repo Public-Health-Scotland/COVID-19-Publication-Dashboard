@@ -302,9 +302,7 @@ saveRDS(HCW_Psychiatry, "data/HCW_Psychiatry.rds")
 # Ethnicity -----------------------------------------------------------------
 
 Ethnicity <- read_csv("data/Ethnicity.csv")
-Ethnicity <- Ethnicity %>%
-  mutate(Percentage = Percentage*100)%>%
-  mutate_if(is.numeric, round, 2)
+Ethnicity <- Ethnicity
 saveRDS(Ethnicity, "data/Ethnicity.rds")
 
 Ethnicity_Chart <- read_csv("data/Ethnicity_Chart.csv")

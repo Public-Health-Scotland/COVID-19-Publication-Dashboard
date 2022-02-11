@@ -12,7 +12,9 @@ o_ethnicitychart <- read.csv(glue("{output_folder}/Ethnicity_Chart.csv"), header
 
 g_ethnicity <- i_ethnicity %>%
   dplyr::rename(Admissions = count,
-                Percentage = percentage)
+                Percentage = percentage) %>%
+  mutate(Percentage = Percentage*100) %>%
+  mutate_if(is.numeric, round, 2)
 
 g_ethnicity$Admissions[g_ethnicity$Admissions < 5] <- "*"
 g_ethnicity$Percentage[g_ethnicity$Admissions == "*"] <- "*"
