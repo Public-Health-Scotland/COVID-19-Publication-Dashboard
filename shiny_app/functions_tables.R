@@ -2,17 +2,21 @@
 
 ###############################################
 
-## Column formatting functions
-
-format_cols <- function(x, dp=0, perc=F){
+## Function to format a given entry in a table
+format_entry <- function(x, dp=0, perc=F){
+  # x (numeric, char): entry
+  # dp (int): number of decimal places
+  # perc (bool): whether to add % afterwards
 
   # First strip any existing commas and whitespace out
   x <- gsub(",", "", x)
   x <- gsub(" ", "", x)
 
+  # Try to convert entry to numeric, if failed return NULL
   numx <- tryCatch(as.numeric(x),
            warning = function(w) NULL)
 
+  # Format entry if numeric
   if (!is.null(numx)){
     numx <- formatC(numx, format="f", big.mark = ",", digits=dp)
     if (perc){
@@ -20,6 +24,7 @@ format_cols <- function(x, dp=0, perc=F){
     }
     return (numx)
   } else {
+    # If entry cannot be converted to numeric, return original entry i.e. "*"
     return(x)
   }
 }
@@ -43,15 +48,15 @@ datatab_table <- function(input_data_table,
   # Add column formatting
 
     for (i in add_separator_cols){
-      input_data_table[i] <- apply(input_data_table[i], MARGIN=1, FUN=format_cols)
+      input_data_table[i] <- apply(input_data_table[i], MARGIN=1, FUN=format_entry)
     }
 
     for (i in add_separator_cols_1dp){
-      input_data_table[i] <- apply(input_data_table[i], MARGIN=1, FUN=format_cols, dp=1)
+      input_data_table[i] <- apply(input_data_table[i], MARGIN=1, FUN=format_entry, dp=1)
     }
 
     for (i in add_percentage_cols){
-      input_data_table[i] <- apply(input_data_table[i], MARGIN=1, FUN=format_cols, dp=1, perc=T)
+      input_data_table[i] <- apply(input_data_table[i], MARGIN=1, FUN=format_entry, dp=1, perc=T)
     }
 
 
@@ -109,7 +114,7 @@ byboard_data_table <- function(input_data_table,
   # Add column formatting
 
   for (i in add_separator_cols){
-    input_data_table[i] <- apply(input_data_table[i], MARGIN=1, FUN=format_cols)
+    input_data_table[i] <- apply(input_data_table[i], MARGIN=1, FUN=format_entry)
   }
 
   dt <- DT::datatable(input_data_table, style = 'bootstrap',
