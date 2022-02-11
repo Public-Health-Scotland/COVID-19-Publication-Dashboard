@@ -82,9 +82,9 @@ g_lsimd <- i_labdata$SIMD
 g_lsimd$`SIMD Quintile`[g_lsimd$`SIMD Quintile` == "Missing"] <- "Unknown"
 
 
-g_lsimd %<>%
-  drop_na(`SIMD Quintile`) %>%
-  subset(`SIMD Quintile` != "Total") %>%
+g_lsimd %<>% 
+  drop_na(`SIMD Quintile`) %>% 
+  subset(`SIMD Quintile` != "Total") %>% 
   dplyr::rename(cases_pc = `% cases per quintile`,
                 cases = Cases,
                 SIMD = `SIMD Quintile`)
