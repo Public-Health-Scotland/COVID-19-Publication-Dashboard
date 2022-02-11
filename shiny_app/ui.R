@@ -197,6 +197,8 @@ tagList(  #needed for shinyjs
                  "issued by the Scottish Government in November 2021 sets out how Scotland will continue to adapt now that we are in the phase described as “beyond level zero”. That will require a constant review
                    of the associated management information compiled in the weekly report. The information we produce will change over time to reflect the most critical information to help understand, plan and deliver
                    contact tracing at any given point in time."),
+                 p(strong(style="color:red", "Please note: as of 16 February 2022, we will be presenting COVID-19 case data based on",
+                          "specimen date, rather than reporting date, which may retrospectively affect some of the below data tables.")),
                  p(),
                  strong(''),
                  p(),
@@ -237,6 +239,8 @@ tagList(  #needed for shinyjs
       p("Please note that during a data quality exercise some historic figures have been revised."),
       p("You can use the filters to select the data you are interested in.
         You can also download the data as a csv using the download button."),
+      p(strong(style="color:red", "Please note: as of 16 February 2022, we will be presenting COVID-19 case data based on",
+               "specimen date, rather than reporting date, which may retrospectively affect some of the below data tables.")),
 
       p(),
       strong(''),
