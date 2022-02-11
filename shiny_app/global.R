@@ -18,7 +18,7 @@ AssessmentHub_date <- format(pub_date - 7, "%d %B %Y")
 Admissions_date <- format(pub_date -4, "%d %B %Y")
 
 #ECOSS, for LabCases
-labcases_extract_date <- format(pub_date - 2, "%d %B %Y") #format date
+labcases_extract_date <- format(pub_date - 3, "%d %B %Y") #format date
 
 #For Hospital Admissions
 admission_extract_date <- format(pub_date - 3, "%A %d %B %Y") #format date
