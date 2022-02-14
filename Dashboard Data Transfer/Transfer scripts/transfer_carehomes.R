@@ -12,7 +12,7 @@ summaryfigs <- dplyr::pull(i_carehomes, names(i_carehomes)[[length(i_carehomes)]
 summaryfigs <- summaryfigs[!is.na(summaryfigs)]
 
 # Getting main table
-maintable <- i_carehomes[,1:4] %>% tail(-3)
+maintable <- i_carehomes[,1:4] %>% tail(-2)
 
 names(maintable) <- names(o_carehomes)[2:5]
 
