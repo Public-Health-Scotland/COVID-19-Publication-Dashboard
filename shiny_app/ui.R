@@ -407,7 +407,7 @@ tagList(  #needed for shinyjs
         "All travellers (except those exempt and those under 18 years of age) will receive an email, providing them with appropriate public health information on self-isolation and testing.  Unvaccinated travellers arriving from an Amber country are also called by the NCC.",
         "Fully vaccinated travellers arriving from an Amber country, or travellers arriving from a Green country, receive a SMS and email.  Arrivals from a Red country receive an email and continue to be managed via quarantine.  Travellers under the age of 18 are not contacted."
         ),
-      p(strong(style = "color:red", "Please note that this sectino will no longer be updated after 9th February 2022.")),
+      p(strong(style = "color:red", "Please note that this section will no longer be updated after 9th February 2022.")),
       hr(),
       downloadButton('download_quarantine_data', 'Download data'),
       mainPanel(width = 12,
