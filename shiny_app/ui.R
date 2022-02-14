@@ -202,8 +202,6 @@ tagList(  #needed for shinyjs
                  p(strong(style="color:red", "As a result, a positive case is now defined as an individual’s first positive PCR or first positive LFD test.",
                           "LFD tests are included in the case definition from 05 January 2022 to reflect the revised testing strategy.",
                           "LFD positive cases that are followed by a negative PCR result within 48 hours will be denotified.")),
-                 p(strong(style="color:red", "Additionally, as of 16 February 2022, we will be presenting COVID-19 case data based on",
-                          "specimen date, rather than reporting date, which may retrospectively affect some of the below data tables.")),
                  p(),
                  strong(''),
                  p(),
