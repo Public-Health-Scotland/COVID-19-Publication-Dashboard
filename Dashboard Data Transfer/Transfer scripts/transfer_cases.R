@@ -23,9 +23,9 @@ rm(i_cadm, g_cadm, o_cadm)
 ### b) Cases by Age Group
 
 g_cag <- i_cag %>%
-  select(week_ending, SG_Age_Band, cases) %>%
+  select(week_ending, age_band, cases) %>%
   dplyr::rename(Date = week_ending,
-                Age = SG_Age_Band,
+                Age = age_band,
                 Cases = cases)
 
 write.csv(g_cag, glue("Test output/Cases_AgeGrp.csv"), row.names = FALSE)
@@ -37,9 +37,9 @@ rm(g_cag, o_cag)
 
 prop_adm = i_cag %>%
   # Removing square brackets
-  dplyr::mutate(SG_Age_Band = gsub(pattern = "\\[|\\]",
+  dplyr::mutate(age_band = gsub(pattern = "\\[|\\]",
                                    replacement = "",
-                                   SG_Age_Band),
+                                   age_band),
                 # Adding % sign
                 p.admissions = paste0(format
                                       (round_half_up
@@ -59,7 +59,7 @@ prop_adm = i_cag %>%
                 )) %>%
   # Renaming column headers
   dplyr::rename(Date = week_ending,
-                Age = SG_Age_Band,
+                Age = age_band,
                 Cases = cases,
                 Admissions = admissions,
                 "Proportion Admitted" = p.admissions)

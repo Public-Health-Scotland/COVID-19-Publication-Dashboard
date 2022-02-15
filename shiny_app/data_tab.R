@@ -68,7 +68,7 @@ data_table <- reactive({  # Change dataset depending on what user selected
 
                                                                     `Age Group` = `age_group`,
 
-                                                                    `Number of Cases` = number,
+                                                                    `Number of ICU Admissions` = number,
 
                                                                     `Rate per 100,000 population` = rate),
 
