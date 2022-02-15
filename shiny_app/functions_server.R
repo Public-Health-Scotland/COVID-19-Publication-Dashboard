@@ -17,7 +17,7 @@ add_vline = function(p, x, ...) {
   p %>% layout(shapes=list(l_shape))
 }
 
-plot_overall_chart <- function(dataset, data_name, yaxis_title, area = T, include_vline=F) {
+plot_overall_chart <- function(dataset, data_name,  area = T, include_vline=F) {
 
   # Filtering dataset to include only overall figures
   trend_data <- dataset
@@ -29,9 +29,12 @@ plot_overall_chart <- function(dataset, data_name, yaxis_title, area = T, includ
                            data_name == "ICU" ~ "Number of ICU admissions",
                            data_name == "NHS24" ~ "Number of NHS24 contacts")
 
+  xaxis_title <- case_when(data_name == "LabCases" ~ "Specimen date")
+
 
   #Modifying standard layout
   yaxis_plots[["title"]] <- yaxis_title
+  xaxis_plots[["title"]] <- xaxis_title
 
   measure_name <- case_when(data_name == "LabCases" ~ "Number of Cases: ",
                             data_name == "Admissions" ~ "Admissions: ",
@@ -398,9 +401,12 @@ plot_singlerate_chart <- function(dataset, data_name, yaxis_title, area = T, inc
   ###############################################.
   # Creating objects that change depending on dataset
   yaxis_title <- case_when(data_name == "LabCases" ~ "Cumulative rate of cases per 100,000")
+  xaxis_title <- case_when(data_name == "LabCases" ~ "Specimen date")
+
 
   #Modifying standard layout
   yaxis_plots[["title"]] <- yaxis_title
+  xaxis_plots[["title"]] <- xaxis_title
 
   measure_name <- case_when(data_name == "LabCases" ~ "Cumulative rate of cases per 100,000")
 
@@ -879,7 +885,7 @@ plot_contacttrace_chart <- function(dataset, data_name, CTdata, yaxis_title, are
 }
 
 
-plot_average_CT_cases <- function(dataset, area = T, include_vline=T) {
+plot_average_CT_cases <- function(dataset, area = T, include_vline=F) {
 
 #Filtering dataset to include only overall figures
 
@@ -1098,7 +1104,7 @@ plot_overall_chartEthnicityPercent <- function(dataset, data_name, yaxis_title, 
 }
 
 ##Scotland Proximity App - number of notificatins chart
-plot_prox_contacts_chart <- function(dataset, yaxis_title, xaxis_title, area = T, include_vline=T) {
+plot_prox_contacts_chart <- function(dataset, yaxis_title, xaxis_title, area = T, include_vline=F) {
 
   # Filtering dataset to include only overall figures
   trend_data <- dataset
@@ -1157,7 +1163,7 @@ plot_prox_contacts_chart <- function(dataset, yaxis_title, xaxis_title, area = T
 
 
 ##Scotland Proximity App - number of uploads chart
-plot_prox_uploads_chart <- function(dataset, yaxis_title, xaxis_title, area = T, include_vline = T) {
+plot_prox_uploads_chart <- function(dataset, yaxis_title, xaxis_title, area = T, include_vline = F) {
 
   # Filtering dataset to include only overall figures
   trend_data <- dataset

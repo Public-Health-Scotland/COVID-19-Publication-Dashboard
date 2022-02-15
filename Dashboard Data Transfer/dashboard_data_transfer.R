@@ -33,8 +33,8 @@ source("data_transfer_functions.R")
 # ------------------------------
 i_population <- read.csv("Input data/population.csv", header = TRUE, stringsAsFactors = FALSE)
 
-i_population %<>% dplyr::rename(age_group = MYE..2020) %>% 
-  melt(id=c("age_group"), variable="sex") %>% 
+i_population %<>% dplyr::rename(age_group = MYE..2020) %>%
+  melt(id=c("age_group"), variable="sex") %>%
   dplyr::rename(pop_number=value)
 
 i_population[i_population == "May-14"] <- "5-14"
@@ -105,18 +105,18 @@ source("Transfer scripts/transfer_cases.R")
 source("Transfer scripts/transfer_selfhelp.R")
 
 ##### 15. Ethnicity
-# NB often not updated week on week 
+# NB often not updated week on week
 #source("Transfer scripts/transfer_ethnicity.R")
 
 ##### 16. Quarantine
 
-source("Transfer scripts/transfer_quarantine.R")
+#source("Transfer scripts/transfer_quarantine.R")
 
 ##### 17. NHS Proximity app
 
 source("Transfer scripts/transfer_proximityapp.R")
 
-##### 18. LFD 
+##### 18. LFD
 
 source("Transfer scripts/transfer_LFD.R")
 
@@ -124,7 +124,7 @@ source("Transfer scripts/transfer_LFD.R")
 
 source("Transfer scripts/transfer_travel.R")
 
-##### 20. Settings 
+##### 20. Settings
 
 # Hasn't been updated on the dashboard since August so leaving blank here for now
 
