@@ -288,10 +288,9 @@ tagList(  #needed for shinyjs
           glue("In the week ending {format(pub_date-3, '%d %B %Y')}, {ContactTracingInterviews$Number[[1]]} index cases were newly created on CMS, of which {ContactTracingInterviews$Number[[2]]} had a fully completed index case interview."),
           "The information in the chart and table below is collected on the contact tracing interview and is where outside of Scotland travel information is recorded.",
           strong("Please note we are aware of an undercount for those travelled outside Scotland."),
-          strong("This is a data quality issue due to recording of the travel information, Public Health Scotland is working closely with contact tracing leads to improve this recording.")
+          strong("This is a data quality issue due to recording of the travel information."),
+          strong("From 16 February 2022 these data resources are no longer updated.")
           ),
-
-       # p(strong(style = "color:black", "These data will no longer be updated weekly, starting 16th February 2022.")),
         hr(),
         downloadButton('download_travel_data', 'Download data'),
         mainPanel(width = 12,
