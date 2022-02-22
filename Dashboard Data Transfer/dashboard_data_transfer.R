@@ -122,7 +122,7 @@ source("Transfer scripts/transfer_LFD.R")
 
 ##### 19. Travel
 
-source("Transfer scripts/transfer_travel.R")
+#source("Transfer scripts/transfer_travel.R")
 
 ##### 20. Settings
 

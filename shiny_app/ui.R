@@ -176,7 +176,8 @@ tagList(  #needed for shinyjs
                         "here.", class="externallink"),
                  "We’ve taken this time to refine the methodology in the tables presented within this section and we’ve applied it retrospectively.")),
 
-        column(6,
+       p("Please note that the data on hospital admissions by ethnicity only refers to laboratory confirmed (PCR) COVID-19 tests."),
+       column(6,
                selectInput("data_select", "Select the data you want to explore.",
                            choices = data_list_data_tab)),
         column(6, downloadButton('download_table_csv', 'Download data')),

@@ -5,8 +5,8 @@
 
 adm_path <- "/conf/PHSCOVID19_Analysis/RAPID Reporting/RAPID CHI & DOA"
 
-i_adm <- read_all_sheets(glue("{adm_path}/Pubs {format(report_date-2, format='%d%m')}/12 Admissions Positives.xlsx"))
-i_chiadm <- read_excel_with_options(glue("{adm_path}/Pubs {format(report_date-2, format='%d%m')}/CHI Admissions Positives.xlsx"))
+i_adm <- read_all_sheets(glue("{adm_path}/Pubs {format(report_date-2, format='%d%m')}/12_Admissions_Positives_{format(report_date-2, format='%Y-%d-%m')}.xlsx"))
+i_chiadm <- read_excel_with_options(glue("{adm_path}/Pubs {format(report_date-2, format='%d%m')}/CHI_Admissions_Positives_{format(report_date-2, format='%Y-%d-%m')}.xlsx"))
 
 
 o_adm <- read.csv(glue("{output_folder}/Admissions.csv"), header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)

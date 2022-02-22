@@ -1020,36 +1020,37 @@ plot_overall_chartEthnicity <- function(dataset, data_name, yaxis_title, area = 
   yaxis_plots[["title"]] <- yaxis_title
 
   #Text for tooltip
-  tooltip_trend <- c(paste0("Month: ", trend_data$`Month beginning`,
-                            "<br>",yaxis_title, " - White: ", trend_data$`White_c`, " (", trend_data$`White_p`,"%)",
-                            "<br>",yaxis_title, " - Black/Caribbean/African: ", trend_data$`Black/Caribbean/African_c`," (", trend_data$`Black/Caribbean/African_p`,"%)",
-                            "<br>",yaxis_title, " - South Asian: ", trend_data$`South Asian_c`," (", trend_data$`South Asian_p`,"%)",
-                            "<br>",yaxis_title, " - Chinese: ", trend_data$`Chinese_c`," (", trend_data$`Chinese_p`,"%)",
-                            "<br>",yaxis_title, " - Other: ", trend_data$`Other_c`," (", trend_data$`Other_p`,"%)",
-                            "<br>",yaxis_title, " - Not Available: ", trend_data$`Not Available_c`," (", trend_data$`Not Available_p`,"%)"))
+  tooltip_trend <- c(paste0("Month: ", trend_data$month_begining,
+                            "<br>",yaxis_title, " - White: ", trend_data$admissions_white, " (", trend_data$percentage_white,"%)",
+                            "<br>",yaxis_title, " - Black/Caribbean: ", trend_data$admissions_caribbean_or_black," (", trend_data$percentage_caribbean_or_black,"%)",
+                            "<br>",yaxis_title, " - Mixed/Multiple Ethnic Groups: ", trend_data$admissions_mixed_or_multiple_ethnic_groups," (", trend_data$percentage_mixed_or_multiple_ethnic_groups,"%)",
+                            "<br>",yaxis_title, " - African: ", trend_data$admissions_african," (", trend_data$percentage_african,"%)",
+                            "<br>",yaxis_title, " - Asian/Asian Scottish/Asian British: ", trend_data$admissions_asian_asian_scottish_or_asian_british," (", trend_data$percentage_asian_asian_scottish_or_asian_british,"%)",
+                            "<br>",yaxis_title, " - Other: ", trend_data$admissions_other," (", trend_data$percentage_other,"%)",
+                            "<br>",yaxis_title, " - Unknown: ", trend_data$admissions_unknown," (", trend_data$percentage_unknown,"%)"))
 
 
 
   #Creating time trend plot
-  plot_ly(data = trend_data, x = ~`Month beginning`) %>%
-    add_lines(y = ~`White_c`, line = list(color = pal_ETH[1]),
+  plot_ly(data = trend_data, x = ~month_begining) %>%
+    add_lines(y = ~trend_data$admissions_white, line = list(color = pal_ETH[1]),
               text = tooltip_trend, hoverinfo="text",
               name = "White") %>%
-    add_lines(y = ~trend_data$`Black/Caribbean/African_c`, line = list(color = pal_ETH[2]),
+    add_lines(y = ~trend_data$admissions_caribbean_or_black, line = list(color = pal_ETH[2]),
               text = tooltip_trend, hoverinfo = "text",
-              name = "Black/Caribbean/African") %>%
-    add_lines(y = ~trend_data$`South Asian_c`, line = list(color = pal_ETH[3]),
+              name = "Black/Caribbean") %>%
+    add_lines(y = ~trend_data$admissions_mixed_or_multiple_ethnic_groups, line = list(color = pal_ETH[3]),
               text = tooltip_trend, hoverinfo = "text",
-              name = "South Asian") %>%
-    add_lines(y = ~trend_data$`Chinese_c`, line = list(color = pal_ETH[4]),
+              name = "Mixed/Multiple Ethnic Groups") %>%
+    add_lines(y = ~trend_data$admissions_asian_asian_scottish_or_asian_british, line = list(color = pal_ETH[4]),
               text = tooltip_trend, hoverinfo = "text",
-              name = "Chinese") %>%
-    add_lines(y = ~trend_data$`Other_c`, line = list(color = pal_ETH[5]),
+              name = "Asian/Asian Scottish/Asian British") %>%
+    add_lines(y = ~trend_data$admissions_other, line = list(color = pal_ETH[5]),
               text = tooltip_trend, hoverinfo = "text",
               name = "Other") %>%
-    add_lines(y = ~trend_data$`Not Available_c`, line = list(color = pal_ETH[6]),
+    add_lines(y = ~trend_data$admissions_unknown, line = list(color = pal_ETH[6]),
               text = tooltip_trend, hoverinfo = "text",
-              name = "Not Available") %>%
+              name = "Unknown") %>%
     #Layout
     layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
            yaxis = yaxis_plots, xaxis = xaxis_plots,
@@ -1066,35 +1067,34 @@ plot_overall_chartEthnicityPercent <- function(dataset, data_name, yaxis_title, 
   yaxis_plots[["title"]] <- yaxis_title
 
   #Text for tooltip
-  tooltip_trend <- c(paste0("Month: ", trend_data$`Month beginning`,
-                            "<br>COVID-19 Admissions -  White: ", trend_data$`White_c`, " (", trend_data$`White_p`,"%)",
-                            "<br>COVID-19 Admissions -  Black/Caribbean/African: ", trend_data$`Black/Caribbean/African_c`," (", trend_data$`Black/Caribbean/African_p`,"%)",
-                            "<br>COVID-19 Admissions -  South Asian: ", trend_data$`South Asian_c`," (", trend_data$`South Asian_p`,"%)",
-                            "<br>COVID-19 Admissions -  Chinese: ", trend_data$`Chinese_c`," (", trend_data$`Chinese_p`,"%)",
-                            "<br>COVID-19 Admissions -  Other: ", trend_data$`Other_c`," (", trend_data$`Other_p`,"%)",
-                            "<br>COVID-19 Admissions -  Not Available: ", trend_data$`Not Available_c`," (", trend_data$`Not Available_p`,"%)"))
-
+  tooltip_trend <- c(paste0("Month: ", trend_data$month_begining,
+                            "<br>COVID-19 Admissions -  White: ", trend_data$admissions_white, " (", trend_data$percentage_white,"%)",
+                            "<br>COVID-19 Admissions -  Black/Caribbean: ", trend_data$admissions_caribbean_or_black," (", trend_data$percentage_caribbean_or_black,"%)",
+                            "<br>COVID-19 Admissions -  Mixed/Multiple Ethnic Groups: ", trend_data$admissions_mixed_or_multiple_ethnic_groups," (", trend_data$percentage_mixed_or_multiple_ethnic_groups,"%)",
+                            "<br>COVID-19 Admissions -  Asian/Asian Scottish/Asian British: ", trend_data$admissions_asian_asian_scottish_or_asian_british," (", trend_data$percentage_asian_asian_scottish_or_asian_british,"%)",
+                            "<br>COVID-19 Admissions -  Other: ", trend_data$admissions_other," (", trend_data$percentage_other,"%)",
+                            "<br>COVID-19 Admissions -  Unknown: ", trend_data$admissions_unknown," (", trend_data$percentage_unknown,"%)"))
 
   #Creating time trend plot
-  plot_ly(data = trend_data, x = ~`Month beginning`) %>%
-    add_lines(y = ~`White_p`, line = list(color = pal_ETH[1]),
+  plot_ly(data = trend_data, x = ~month_begining) %>%
+    add_lines(y = ~trend_data$percentage_white, line = list(color = pal_ETH[1]),
               text = tooltip_trend, hoverinfo="text",
               name = "White") %>%
-    add_lines(y = ~trend_data$`Black/Caribbean/African_p`, line = list(color = pal_ETH[2]),
+    add_lines(y = ~trend_data$percentage_caribbean_or_black, line = list(color = pal_ETH[2]),
               text = tooltip_trend, hoverinfo = "text",
-              name = "Black/Caribbean/African") %>%
-    add_lines(y = ~trend_data$`South Asian_p`, line = list(color = pal_ETH[3]),
+              name = "Black/Caribbean") %>%
+    add_lines(y = ~trend_data$percentage_mixed_or_multiple_ethnic_groups, line = list(color = pal_ETH[3]),
               text = tooltip_trend, hoverinfo = "text",
-              name = "South Asian") %>%
-    add_lines(y = ~trend_data$`Chinese_p`, line = list(color = pal_ETH[4]),
+              name = "Mixed/Multiple Ethnic Groups") %>%
+    add_lines(y = ~trend_data$percentage_asian_asian_scottish_or_asian_british, line = list(color = pal_ETH[4]),
               text = tooltip_trend, hoverinfo = "text",
-              name = "Chinese") %>%
-    add_lines(y = ~trend_data$`Other_p`, line = list(color = pal_ETH[5]),
+              name = "Asian/Asian Scottish/Asian British") %>%
+    add_lines(y = ~trend_data$percentage_other, line = list(color = pal_ETH[5]),
               text = tooltip_trend, hoverinfo = "text",
               name = "Other") %>%
-    add_lines(y = ~trend_data$`Not Available_p`, line = list(color = pal_ETH[6]),
+    add_lines(y = ~trend_data$percentage_unknown, line = list(color = pal_ETH[6]),
               text = tooltip_trend, hoverinfo = "text",
-              name = "Not Available") %>%
+              name = "Unknown") %>%
     #Layout
     layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
            yaxis = yaxis_plots, xaxis = xaxis_plots,

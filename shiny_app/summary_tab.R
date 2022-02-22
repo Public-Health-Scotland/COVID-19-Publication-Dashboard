@@ -340,6 +340,7 @@ if (input$measure_select == "LabCases") { #Positive Cases
   tagList(h3("COVID-19 admissions to hospital by ethnicity"),
           p("COVID-19 related admissions have been identified as the following: A patient may have tested positive for COVID-19 14 days prior to admission to hospital,
             on the day of their admission or during their stay in hospital."),
+          p("Please note that the data on hospital admissions by ethnicity only refers to laboratory confirmed (PCR) COVID-19 tests."),
           p("These data will next be updated in February 2022."),
           p("Click on legend to select or deselect categories: "),
           tags$li("Single click on an item in the legend to remove it from the plot"),
