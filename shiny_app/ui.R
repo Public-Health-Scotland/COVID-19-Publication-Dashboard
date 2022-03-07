@@ -170,11 +170,14 @@ tagList(  #needed for shinyjs
                  "announced",
                  class = "externallink"),
           "that asymptomatic people who return a positive lateral flow device (LFD) no longer have to confirm their positive result with a PCR test."),
-        p(strong(style="color:black", "The statistics presented in this section reflect the change in case definition (an individual’s first positive PCR or LFD from 05 January 22).",
+        p(strong(style="color:black", "From 01 March 2022, PHS now include episodes of reinfection within COVID-19 reporting. 
+                 Prior to this date COVID-19 cases were based on an individual’s first positive test result only. 
+                 The new daily calculation includes both new infections and possible reinfections. 
+                 Possible reinfections are defined as individuals who tests positive, by PCR (polymerase chain reaction) or LFD (lateral flow device), 90 days or more after their last positive test.
+                 Currently hospital admissions do not include reinfections, although this will be updated in coming weeks.",
                  "More information available on the Public Health Scotland website",
-                 tags$a(href="https://publichealthscotland.scot/news/2022/february/update-on-enhancements-to-covid-19-reporting/",
-                        "here.", class="externallink"),
-                 "We’ve taken this time to refine the methodology in the tables presented within this section and we’ve applied it retrospectively.")),
+                 tags$a(href="https://publichealthscotland.scot/news/2022/february/covid-19-reporting-to-include-further-data-on-reinfections/",
+                        "here.", class="externallink"))),
 
        p("Please note that the data on hospital admissions by ethnicity only refers to laboratory confirmed (PCR) COVID-19 tests."),
        column(6,
@@ -207,9 +210,13 @@ tagList(  #needed for shinyjs
                           "announced",
                           class = "externallink"),
                    "that asymptomatic people who return a positive lateral flow device (LFD) no longer have to confirm their positive result with a PCR test."),
-                 p(strong(style="color:black", "The statistics presented in this section reflect the change in case definition (an individual’s first positive PCR or LFD from 05 January 22).",
+                 p(strong(style="color:black", "From 01 March 2022, PHS now include episodes of reinfection within COVID-19 reporting. 
+                          Prior to this date COVID-19 cases were based on an individual’s first positive test result only. 
+                          The new daily calculation includes both new infections and possible reinfections. 
+                          Possible reinfections are defined as individuals who tests positive, by PCR (polymerase chain reaction) or LFD (lateral flow device), 90 days or more after their last positive test.
+                          Currently hospital admissions do not include reinfections, although this will be updated in coming weeks.",
                           "More information available on the Public Health Scotland website",
-                          tags$a(href="https://publichealthscotland.scot/news/2022/february/update-on-enhancements-to-covid-19-reporting/",
+                          tags$a(href="https://publichealthscotland.scot/news/2022/february/covid-19-reporting-to-include-further-data-on-reinfections/",
                                  "here.", class="externallink"))),
                  p(),
                  strong(''),
@@ -256,9 +263,13 @@ tagList(  #needed for shinyjs
                "announced",
                class = "externallink"),
         "that asymptomatic people who return a positive lateral flow device (LFD) no longer have to confirm their positive result with a PCR test."),
-      p(strong(style="color:black", "The statistics presented in this section reflect the change in case definition (an individual’s first positive PCR or LFD from 05 January 22).",
+      p(strong(style="color:black", "From 01 March 2022, PHS now include episodes of reinfection within COVID-19 reporting. 
+                          Prior to this date COVID-19 cases were based on an individual’s first positive test result only. 
+                          The new daily calculation includes both new infections and possible reinfections. 
+                          Possible reinfections are defined as individuals who tests positive, by PCR (polymerase chain reaction) or LFD (lateral flow device), 90 days or more after their last positive test.
+                          Currently hospital admissions do not include reinfections, although this will be updated in coming weeks.",
                "More information available on the Public Health Scotland website",
-               tags$a(href="https://publichealthscotland.scot/news/2022/february/update-on-enhancements-to-covid-19-reporting/",
+               tags$a(href="https://publichealthscotland.scot/news/2022/february/covid-19-reporting-to-include-further-data-on-reinfections/",
                       "here.", class="externallink"))),
       p(),
       strong(''),
