@@ -8,7 +8,7 @@
 .well {background-color:#ffffff; border: 0 solid #336699;
        padding: 5px; box-shadow: none; }
 
-/* Navigation bar following PHS colour scheme */    
+/* Navigation bar following PHS colour scheme */
 .navbar-default {color: #ffffff; background-color: #433684; }
 
 .navbar-default .navbar-brand, .navbar-default:hover .navbar-brand:hover, .navbar-brand {color: #433684; background-color: #ffffff}
@@ -22,3 +22,5 @@
 
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
     color: #ffffff;     background-color: #5c4ab5;}
+
+.dt-buttons { float:right !important; padding-top:1px !important;}

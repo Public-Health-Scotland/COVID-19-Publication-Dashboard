@@ -20,17 +20,17 @@ data_table <- reactive({  # Change dataset depending on what user selected
                                                                  `Cumulative Rate per 100,000` = CumulativeRatePer100000),
 
                        "LabCases_AgeSex" = LabCases_AgeSex %>%  dplyr::rename(Sex = sex,
-                                                                       
+
                                                                        `Age Group` = `age_group`,
-                                                                       
+
                                                                        `Number of Cases` = number,
-                                                                       
+
                                                                        `Rate per 100,000 population` = rate),
-                       
-                       "LabCases_SIMD" = LabCases_SIMD %>% mutate(cases_pc = cases_pc/100) %>% 
+
+                       "LabCases_SIMD" = LabCases_SIMD %>% mutate(cases_pc = cases_pc/100) %>%
                                                            dplyr::rename(`Number of Cases` = cases,
                                                                   Percent = cases_pc),
-                                                                  
+
 
                        "Cases_AgeGrp" = Cases_AgeGrp %>% dplyr::rename('Week ending' = 'Date',
                                                                        'Percentage of weekly cases' = 'Percent'),
@@ -68,7 +68,7 @@ data_table <- reactive({  # Change dataset depending on what user selected
 
                                                                     `Age Group` = `age_group`,
 
-                                                                    `Number of Cases` = number,
+                                                                    `Number of ICU Admissions` = number,
 
                                                                     `Rate per 100,000 population` = rate),
 
@@ -162,23 +162,6 @@ data_table <- reactive({  # Change dataset depending on what user selected
 
 
 
-  } else if (input$data_select %in% "LabCases") {
-    
-    table_data <- table_data %>%
-      
-      dplyr::rename("Number of PCR Cases" = "Number of Cases",
-                    "Cumulative PCR Cases" = "Cumulative Cases")
-    
-    
-    
-  } else if (input$data_select %in% c("Cases_AgeGrp", "Cases_Adm")) {
-    
-    table_data <- table_data %>%
-      
-      dplyr::rename("Percentage of weekly PCR cases" = "Percentage of weekly cases")
-    
-    
-    
   } else if (input$data_select %in% "Admissions") {
 
     table_data <- table_data %>%
@@ -187,25 +170,7 @@ data_table <- reactive({  # Change dataset depending on what user selected
 
 
 
-  } else if (input$data_select %in% c("Admissions_AgeSex", "Admissions_SIMD", 
-                                      "ICU_AgeSex", "ICU_SIMD",
-                                      "LabCases_AgeSex", "LabCases_SIMD")) {
-    
-    table_data <- table_data %>%
-      
-      dplyr::rename("Number of PCR cases" = "Number of Cases")
-    
-    
-    
-  } else if (input$data_select %in% c("Prop_Adm_AgeGrp")) {
-    
-    table_data <- table_data %>%
-      
-      dplyr::rename("PCR cases" = "Cases")
-    
-    
-    
-  }  else if (input$data_select %in% "ICU") {
+  } else if (input$data_select %in% "ICU") {
 
     table_data <- table_data %>%
 
@@ -285,21 +250,20 @@ output$data_tab_table <- renderUI({
 
 
 output$table_filtered <- DT::renderDataTable({
-  
-  datatab_table(data_table(), 
+
+  datatab_table(data_table(),
                 add_separator_cols = table_params_data()$separator_cols,
                 add_separator_cols_1dp = table_params_data()$separator_cols_1dp,
                 add_percentage_cols = table_params_data()$percentage_cols,
                 maxrows = table_params_data()$maxrows
                 ) # from functions_tables.R
-  
+
 })
 
 table_params_data <- reactive({
-  
+
   # Columns to add 1,000 comma separator to for each table
   separator_cols = switch(input$data_select,
-                           
                            "LabCases" = c(2,3),
                            "LabCases_AgeSex" = c(3),
                            "LabCases_SIMD" = c(2),
@@ -325,7 +289,7 @@ table_params_data <- reactive({
                            "SAS_all" = c(2),
                            c() # default
   )
-  
+
   # Columns to add 1,000 comma separator with 1dp to for each table
   separator_cols_1dp = switch(input$data_select,
                                "LabCases" = c(4,5),
@@ -339,12 +303,12 @@ table_params_data <- reactive({
                                "AssessmentHub_SIMD" = c(2),
                                "SAS_AgeSex" = c(4),
                                "SAS_SIMD" = c(2),
-                               c() #default 
+                               c() #default
   )
-  
+
   # Columns to add percentage formatting to for each table
   percentage_cols = switch(input$data_select,
-                            
+
                             "LabCases_SIMD" = c(3),
                             "Cases_AgeGrp" = c(3),
                             "Cases_Adm" = c(2),
@@ -355,9 +319,9 @@ table_params_data <- reactive({
                             "SAS_SIMD" = c(3),
                             c() # default
   )
-  
+
   maxrows = switch(input$data_select,
-                    
+
                     "LabCases_AgeSex" = 44,
                     "Cases_AgeGrp" = 11,
                     "Admissions_AgeSex" = 30,
@@ -368,22 +332,22 @@ table_params_data <- reactive({
                     "AssessmentHub_AgeSex" = 32,
                     "SAS_AgeSex" = 36,
                     14 #default
-                    
+
   )
-  
-  list("separator_cols" = separator_cols, 
-       "separator_cols_1dp" = separator_cols_1dp, 
-       "percentage_cols" = percentage_cols, 
+
+  list("separator_cols" = separator_cols,
+       "separator_cols_1dp" = separator_cols_1dp,
+       "percentage_cols" = percentage_cols,
        "maxrows" = maxrows)
-  
-  
+
+
 })
 
 
 # Number of max rows per page for each table (default is 10 if unlisted)
 maxrows <- reactive({
   maxrows <- switch(input$data_select,
-                           
+
                          "LabCases_AgeSex" = 44,
                          "Cases_AgeGrp" = 11,
                          "Admissions_AgeSex" = 30,
@@ -394,9 +358,9 @@ maxrows <- reactive({
                          "AssessmentHub_AgeSex" = 32,
                          "SAS_AgeSex" = 36,
                           14 #default
-                    
+
   )
-  
+
 })
 
 ###############################################.

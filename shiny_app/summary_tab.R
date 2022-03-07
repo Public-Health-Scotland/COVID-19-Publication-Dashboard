@@ -162,7 +162,7 @@ observeEvent(input$btn_dataset_inform, { showModal(inform_modal) })
 output$data_explorer <- renderUI({
 
   # text for titles of cut charts
-  datasettrend <- case_when(input$measure_select == "LabCases" ~ "Positive COVID-19 PCR cases",
+  datasettrend <- case_when(input$measure_select == "LabCases" ~ "Positive COVID-19 cases",
                             input$measure_select == "Admissions" ~ "COVID-19 admissions to hospital",
                             input$measure_select == "ICU" ~ "COVID-19 admissions to ICU",
                             input$measure_select == "NHS24" ~ "NHS 24 111 COVID-19 Contacts and COVID-19 Advice Helpline calls",
@@ -170,7 +170,7 @@ output$data_explorer <- renderUI({
                             input$measure_select == "SAS" ~ "SAS incidents (suspected COVID-19)")
 
   # text for titles of cut charts
-  dataset <- case_when(input$measure_select == "LabCases" ~ "Positive COVID-19 PCR cases",
+  dataset <- case_when(input$measure_select == "LabCases" ~ "Positive COVID-19 cases",
                        input$measure_select == "Admissions" ~ "COVID-19 admissions to hospital",
                        input$measure_select == "ICU" ~ "COVID-19 admissions to ICU",
                        input$measure_select == "NHS24" ~ "COVID-19 related NHS24 contacts",
@@ -255,24 +255,42 @@ cut_charts_subheading <- function(title, source, data_name) {
 # Charts and rest of UI
 if (input$measure_select == "LabCases") { #Positive Cases
 
-  tagList(h3("Daily number of positive COVID-19 PCR cases"),
+  tagList(h3("Daily number of positive COVID-19 cases"),
+          p("On 05 January 2022, the Scottish Government",
+            tags$a(href= "https://www.gov.scot/news/self-isolation-and-testing-changes/",
+                   "announced",
+                   class = "externallink"),
+            "that asymptomatic people who return a positive lateral flow device (LFD) no longer have to confirm their positive result with a PCR test."),
+          p(strong(style="color:black", "The statistics presented in this section reflect the change in case definition (an individual’s first positive PCR or LFD from 05 January 22).",
+                   "More information available on the Public Health Scotland website",
+            tags$a(href="https://publichealthscotland.scot/news/2022/february/update-on-enhancements-to-covid-19-reporting/",
+                   "here.", class="externallink"))),
           actionButton("btn_dataset_modal", paste0("Data source: ", "ECOSS"), icon = icon('question-circle')),
           actionButton("btn_modal_simd", "What is SIMD?", icon = icon('question-circle')),
-          plot_box("Daily number of Positive COVID-19 PCR cases", plot_output = "LabCases_overall"),
+          plot_box("Daily number of Positive COVID-19 cases", plot_output = "LabCases_overall"),
           plot_box("Cumulative rate per 100,000", plot_output = "LabCasesRate"),
-          plot_box("Weekly COVID-19 PCR cases by age group",
+          plot_box("Weekly COVID-19 cases by age group",
                    plot_output="labcases_age_groups"),
-          plot_cut_box(paste0("Positive COVID-19 PCR cases per 100,000 population by age \n(28 February 2020 to ", Labcases_date, ")"), "LabCases_AgeSex",
-                       paste0("Positive COVID-19 PCR cases by deprivation category (SIMD) \n(28 February 2020 to ", Labcases_date, ")"), "LabCases_SIMD"))
+          plot_cut_box(paste0("Positive COVID-19 cases per 100,000 population by age \n(28 February 2020 to ", Labcases_date, ")"), "LabCases_AgeSex",
+                       paste0("Positive COVID-19 cases by deprivation category (SIMD) \n(28 February 2020 to ", Labcases_date, ")"), "LabCases_SIMD"))
 
 } else if (input$measure_select == "Admissions") { #Admissions
   tagList(actionButton("btn_modal_simd", "What is SIMD?", icon = icon('question-circle')),
+          p("On 05 January 2022, the Scottish Government",
+            tags$a(href= "https://www.gov.scot/news/self-isolation-and-testing-changes/",
+                   "announced",
+                   class = "externallink"),
+            "that asymptomatic people who return a positive lateral flow device (LFD) no longer have to confirm their positive result with a PCR test."),
+          p(strong(style="color:black", "The statistics presented in this section reflect the change in case definition (an individual’s first positive PCR or LFD from 05 January 22).",
+                   "More information available on the Public Health Scotland website",
+                   tags$a(href="https://publichealthscotland.scot/news/2022/february/update-on-enhancements-to-covid-19-reporting/",
+                          "here.", class="externallink"))),
     cut_charts_subheading(title= "Daily number of COVID-19 admissions to hospital",
                         source = data_source, data_name = "Admissions"),
   # percent admissions
-  plot_box("Proportion of weekly cases admitted to hospital within 14 days of a first positive PCR test",
+  plot_box("Proportion of weekly cases admitted to hospital within 14 days of a first positive test",
            plot_output = "prop_admissions"),
-  plot_box("Weekly cases admitted to hospital within 14 days of a first positive PCR test, by age group",
+  plot_box("Weekly cases admitted to hospital within 14 days of a first positive test, by age group",
            plot_output="cases_age_groups")
 )
 
@@ -322,6 +340,7 @@ if (input$measure_select == "LabCases") { #Positive Cases
   tagList(h3("COVID-19 admissions to hospital by ethnicity"),
           p("COVID-19 related admissions have been identified as the following: A patient may have tested positive for COVID-19 14 days prior to admission to hospital,
             on the day of their admission or during their stay in hospital."),
+          p("Please note that the data on hospital admissions by ethnicity only refers to laboratory confirmed (PCR) COVID-19 tests."),
           p("These data will next be updated in February 2022."),
           p("Click on legend to select or deselect categories: "),
           tags$li("Single click on an item in the legend to remove it from the plot"),
@@ -338,8 +357,8 @@ if (input$measure_select == "LabCases") { #Positive Cases
 
 # Creating plots for each cut and dataset
 # Trend Charts
-output$LabCases_overall <- renderPlotly({plot_overall_chart(LabCases, data_name = "LabCases")})
-output$Admissions_overall <- renderPlotly({plot_overall_chart(Admissions, data_name = "Admissions")})
+output$LabCases_overall <- renderPlotly({plot_overall_chart(LabCases, data_name = "LabCases", include_vline=T)})
+output$Admissions_overall <- renderPlotly({plot_overall_chart(Admissions, data_name = "Admissions", include_vline=T)})
 output$ICU_overall <- renderPlotly({plot_overall_chart(ICU, data_name = "ICU")})
 output$NHS24_overall <- renderPlotly({plot_overall_chartNHS24(NHS24, data_name = "NHS24")})
 output$AssessmentHub_overall <- renderPlotly({plot_overall_chartAssessmentHub(AssessmentHub, data_name = "AssessmentHub")})
@@ -367,10 +386,10 @@ output$SAS_all <- renderPlotly({plot_singletrace_chart(SAS_all, data_name = "SAS
 output$ChildDataPositives <- renderPlotly({plot_overall_chartChild(Child, data_name = "Child", childdata = "ChildPositive")})
 output$ChildDataNegatives <- renderPlotly({plot_overall_chartChild(Child, data_name = "Child", childdata = "ChildNegative")})
 output$ChildDataCases <- renderPlotly({plot_overall_chartChild(Child, data_name = "Child", childdata = "ChildPer")})
-output$LabCasesRate <- renderPlotly({plot_singlerate_chart(LabCases, data_name = "LabCases")})
+output$LabCasesRate <- renderPlotly({plot_singlerate_chart(LabCases, data_name = "LabCases", include_vline=T)})
 
 #extra admissions charts
-output$prop_admissions <- renderPlotly({plot_singletrace_chart(Cases_Adm, data_name = "Cases_Adm")})
+output$prop_admissions <- renderPlotly({plot_singletrace_chart(Cases_Adm, data_name = "Cases_Adm", include_vline=T)})
 #output$cases_age_groups <- renderPlotly({stacked_cases_age_chart(Cases_AgeGrp, data_name = "Cases_AgeGrp")})
 output$cases_age_groups <- renderPlotly({cases_age_chart_3_week(Cases_AgeGrp, data_name = "Cases_AgeGrp")})
 
