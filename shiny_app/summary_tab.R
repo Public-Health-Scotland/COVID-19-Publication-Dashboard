@@ -261,9 +261,12 @@ if (input$measure_select == "LabCases") { #Positive Cases
                    "announced",
                    class = "externallink"),
             "that asymptomatic people who return a positive lateral flow device (LFD) no longer have to confirm their positive result with a PCR test."),
-          p(strong(style="color:black", "The statistics presented in this section reflect the change in case definition (an individual’s first positive PCR or LFD from 05 January 22).",
+          p(strong(style="color:black", "From 01 March 2022, PHS now include episodes of reinfection within COVID-19 reporting.
+                    Prior to this date COVID-19 cases were based on an individual’s first positive test result only.
+                    The new daily calculation includes both new infections and possible reinfections.
+                    Possible reinfections are defined as individuals who test positive, by PCR (polymerase chain reaction) or LFD (lateral flow device), 90 days or more after their last positive test.",
                    "More information available on the Public Health Scotland website",
-            tags$a(href="https://publichealthscotland.scot/news/2022/february/update-on-enhancements-to-covid-19-reporting/",
+            tags$a(href="https://publichealthscotland.scot/news/2022/february/covid-19-reporting-to-include-further-data-on-reinfections/",
                    "here.", class="externallink"))),
           actionButton("btn_dataset_modal", paste0("Data source: ", "ECOSS"), icon = icon('question-circle')),
           actionButton("btn_modal_simd", "What is SIMD?", icon = icon('question-circle')),
@@ -281,10 +284,18 @@ if (input$measure_select == "LabCases") { #Positive Cases
                    "announced",
                    class = "externallink"),
             "that asymptomatic people who return a positive lateral flow device (LFD) no longer have to confirm their positive result with a PCR test."),
-          p(strong(style="color:black", "The statistics presented in this section reflect the change in case definition (an individual’s first positive PCR or LFD from 05 January 22).",
+          p(strong(style="color:black", "The statistics presented in this section reflect the change in case definition (an individual’s first positive PCR or LFD from 05 January 22)."),
+            "In the process of updating the hospital admissions reporting to include reinfections, we have had to review existing methodology.
+         In order to provide the best possible linkage of COVID-19 cases to hospital admissions, each admission record is required to have a discharge date,
+         to allow us to better match the most appropriate COVID-19 positive episode details to an admission. This means that in cases where the discharge date
+         is missing (either due to the patient still being treated, delays in discharge information being submitted, or date quality issues), it has to be estimated.
+         Estimating a discharge date for historic records means that the average stay for those with missing dates is reduced, and fewer stays overlap with records of positive tests.",
+            strong("The result of these changes has meant that approximately 1,200 historic COVID-19 admissions have been removed due to improvements in methodology
+                to handle missing discharge dates, while approximately 820 have been added to the cumulative total with inclusion of reinfections."),
+
                    "More information available on the Public Health Scotland website",
                    tags$a(href="https://publichealthscotland.scot/news/2022/february/update-on-enhancements-to-covid-19-reporting/",
-                          "here.", class="externallink"))),
+                          "here.", class="externallink")),
     cut_charts_subheading(title= "Daily number of COVID-19 admissions to hospital",
                         source = data_source, data_name = "Admissions"),
   # percent admissions
