@@ -47,7 +47,8 @@ g_adm_agebd <- i_chiadm %>%
                                       age_year < 70 ~ '65-69',
                                       age_year < 75 ~ '70-74',
                                       age_year < 80 ~ '75-79',
-                                      age_year < 200 ~ '80+')) %>% 
+                                      age_year < 200 ~ '80+',
+                                      is.na(age_year) ~ 'Unknown')) %>% 
   group_by(Admission_date_week_ending_Tuesday, custom_age_group) %>% 
   summarise(count_by_agegroup = n()) %>% 
   ungroup() %>% 
@@ -79,11 +80,13 @@ g_adm_agesex <- i_chiadm %>%
                                         age_year < 65 ~ '45-64',
                                         age_year < 75 ~ '65-74',
                                         age_year < 85 ~ '75-84',
-                                        age_year < 200 ~ '85+')) %>% 
+                                        age_year < 200 ~ '85+',
+                                        is.na(age_year) ~ 'Unknown')) %>% 
   group_by(custom_age_group_2, sex) %>% 
   summarise(number = n()) %>% 
   dplyr::rename(age_group = custom_age_group_2) %>% 
   select(sex, age_group, number)
+
 
 g_adm_agesex$sex[g_adm_agesex$sex == "F"] <- "Female"
 g_adm_agesex$sex[g_adm_agesex$sex == "M"] <- "Male"
