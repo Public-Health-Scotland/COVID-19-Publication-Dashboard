@@ -391,6 +391,8 @@ plot_singletrace_chart <- function(dataset, data_name, yaxis_title, xaxis_title,
    p %<>% add_vline("2022-01-05", color=phs_colours("phs-magenta"), width=3.0) %>%
      layout(annotations=annotation)
  }
+ 
+ return(p)
 }
 
 plot_singlerate_chart <- function(dataset, data_name, yaxis_title, area = T, include_vline=F) {
