@@ -17,7 +17,11 @@ o_adm_simd <- read.csv(glue("{output_folder}/Admissions_SIMD.csv"), header = TRU
 
 ### a) Admissions
 
-g_adm <- i_adm$`12 Admissions Positives` %>% 
+g_adm <- i_adm$`12 Admissions Positives` 
+# Replace any NA with 0
+g_adm[is.na(g_adm)] <- 0
+
+g_adm %<>% 
   dplyr::rename(ADMISSION_DATE1 = admission_date,
                 TESTEDIN = TestDIn) %>% 
   mutate(Average7 = zoo::rollmean(TESTEDIN, k = 7, fill = NA, align="right"))
