@@ -3,10 +3,9 @@
 
 ##### 6. Lab Data
 
-
-
 i_labdata <- read_all_sheets(glue("Input data/Lab_Data_New_{format(report_date-2, format='%Y-%m-%d')}.xlsx"))
 i_barchart <- read_csv_with_options(glue("Input data/cases_agegrp_chart_data_{format(report_date-2, format='%Y-%m-%d')}.csv"))
+
 
 o_labcases <- read.csv(glue("{output_folder}/LabCases.csv"), header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)
 o_labcases_agesex <- read.csv(glue("{output_folder}/LabCases_AgeSex.csv"), header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)
@@ -81,10 +80,9 @@ g_lsimd <- i_labdata$SIMD
 
 g_lsimd$`SIMD Quintile`[g_lsimd$`SIMD Quintile` == "Missing"] <- "Unknown"
 
-
-g_lsimd %<>% 
-  drop_na(`SIMD Quintile`) %>% 
-  subset(`SIMD Quintile` != "Total") %>% 
+g_lsimd %<>%
+  drop_na(`SIMD Quintile`) %>%
+  subset(`SIMD Quintile` != "Total") %>%
   dplyr::rename(cases_pc = `% cases per quintile`,
                 cases = Cases,
                 SIMD = `SIMD Quintile`)

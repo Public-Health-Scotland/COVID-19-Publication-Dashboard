@@ -108,7 +108,11 @@ saveRDS(Cases_Adm, "data/Cases_Adm.rds")
 Cases_Age <- read_csv("data/Cases_AgeGrp.csv") %>%
   group_by(Date) %>%
   mutate(Percent = round_half_up(100*Cases/sum(Cases), 2)) %>%
-  select(-Cases)
+  select(-Cases) %>%
+  # Removing square brackets
+  dplyr::mutate(Age = gsub(pattern = "\\[|\\]",
+                                   replacement = "",
+                                   Age))
 saveRDS(Cases_Age, "data/Cases_AgeGrp.rds")
 
 Prop_Adm_AgeGrp = read_csv("data/Prop_Admitted_AgeGrp.csv")
