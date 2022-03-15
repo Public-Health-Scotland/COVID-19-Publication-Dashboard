@@ -195,8 +195,7 @@ output$data_explorer <- renderUI({
   agesex_title <- paste0(dataset, " per 100,000 population by age \n(", start_date, " to ", end_date, ")")
   simd_title <- paste0(dataset, " by deprivation category (SIMD) \n(", start_date, " to ", end_date, ")")
 
-  subheading <- case_when(input$measure_select == "Admissions" ~ "COVID-19 related admissions have been identified as the following: A patient’s first positive test for COVID-19 up to 14 days prior to admission to hospital, on the day of their admission or during their stay in hospital.
-                          If a patient’s first positive test is after their date of discharge from hospital, they are not included in the analysis.  An admission is defined as a period of stay in a single hospital. If the patient has been transferred to another hospital during treatment, each transfer will create a new admission record.",
+  subheading <- case_when(input$measure_select == "Admissions" ~ "These admissions are identified from Rapid and Preliminary Inpatient Data (RAPID) and defined as the following: A positive PCR or LFD test of the episode of infection (including reinfections at 90 days or more after their last positive test) for COVID-19 up to 14 days prior to admission to hospital, on the day of their admission or during their stay in hospital. If a patient's first positive PCR or LFD test of the episode of infection is after their date of discharge from hospital, they are not included in the analysis.",
                           input$measure_select == "NHS24" ~ paste0("The launch of the Redesign of Urgent Care programme will see an increase in NHS 24 activity from the 1st December 2020 onwards as a result of the launch of the programme. For more information see: https://www.gov.scot/policies/healthcare-standards/unscheduled-care/
                                              Since 15th September 2020, figures for the COVID helpline include calls made to the new flu helpline.
                                              In late September, the first batch of flu vaccination letters sent to those eligible by NHS Health Boards included the coronavirus number.
@@ -284,18 +283,14 @@ if (input$measure_select == "LabCases") { #Positive Cases
                    "announced",
                    class = "externallink"),
             "that asymptomatic people who return a positive lateral flow device (LFD) no longer have to confirm their positive result with a PCR test."),
-          p(strong(style="color:black", "The statistics presented in this section reflect the change in case definition (an individual’s first positive PCR or LFD from 05 January 22)."),
-            "In the process of updating the hospital admissions reporting to include reinfections, we have had to review existing methodology.
-         In order to provide the best possible linkage of COVID-19 cases to hospital admissions, each admission record is required to have a discharge date,
-         to allow us to better match the most appropriate COVID-19 positive episode details to an admission. This means that in cases where the discharge date
-         is missing (either due to the patient still being treated, delays in discharge information being submitted, or date quality issues), it has to be estimated.
-         Estimating a discharge date for historic records means that the average stay for those with missing dates is reduced, and fewer stays overlap with records of positive tests.",
-            strong("The result of these changes has meant that approximately 1,200 historic COVID-19 admissions have been removed due to improvements in methodology
-                to handle missing discharge dates, while approximately 820 have been added to the cumulative total with inclusion of reinfections."),
-
+          p(strong(style="color:black", "From 01 March 2022, PHS now include episodes of reinfection within COVID-19 reporting.
+                          Prior to this date COVID-19 cases were based on an individual’s first positive test result only.
+                          The new daily calculation includes both new infections and possible reinfections.
+                          Possible reinfections are defined as individuals who test positive, by PCR (polymerase chain reaction) or LFD (lateral flow device), 90 days or more after their last positive test.
+                          Currently hospital admissions do not include reinfections, although this will be updated in coming weeks.",
                    "More information available on the Public Health Scotland website",
-                   tags$a(href="https://publichealthscotland.scot/news/2022/february/update-on-enhancements-to-covid-19-reporting/",
-                          "here.", class="externallink")),
+                   tags$a(href="https://publichealthscotland.scot/news/2022/february/covid-19-reporting-to-include-further-data-on-reinfections/",
+                          "here.", class="externallink"))),
     cut_charts_subheading(title= "Daily number of COVID-19 admissions to hospital",
                         source = data_source, data_name = "Admissions"),
   # percent admissions
