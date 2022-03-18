@@ -34,9 +34,24 @@ g_labcases %<>%
 
 write.csv(g_labcases, glue("Test output/LabCases.csv"), row.names = FALSE)
 
-rm(g_labcases, pop_grandtotal)
+### b) Reinfections
 
-### b) LabCases_AgeSex
+g_reinf <- i_labdata$Reinfections %>%
+  tail(-1) %>%
+  dplyr::rename(NumberCasesperDay = `Number of cases per day`)
+
+g_reinf$NumberCasesperDay <- as.numeric(g_reinf$NumberCasesperDay)
+g_reinf$Cumulative <- as.numeric(g_reinf$Cumulative)
+
+g_reinf %<>%
+  mutate(Average7 = zoo::rollmean(NumberCasesperDay, k = 7, fill = NA, align="right")) %>%
+  mutate(CumulativeRatePer100000 = 100000 * Cumulative / pop_grandtotal)
+
+write.csv(g_reinf, glue("Test output/LabCasesReinfections.csv"), row.names = FALSE)
+
+rm(g_labcases, pop_grandtotal, g_reinf)
+
+### c) LabCases_AgeSex
 
 #g_lagesex <- i_labdata[5:16,7:11]
 
@@ -70,7 +85,7 @@ write.csv(g_lagesex, glue("Test output/LabCases_AgeSex.csv"), row.names = FALSE)
 
 rm(g_lagesex)
 
-### c) LabCases_SIMD
+### d) LabCases_SIMD
 
 #g_lsimd <- i_labdata[26:35,7:9]
 
@@ -93,7 +108,7 @@ write.csv(g_lsimd, glue("Test output/LabCases_SIMD.csv"), row.names = FALSE)
 rm(g_lsimd)
 
 
-### d) LabCases_Age
+### e) LabCases_Age
 
 o_barchart <- i_barchart %>%
   dplyr::rename(Age = age_group,
@@ -102,3 +117,5 @@ o_barchart <- i_barchart %>%
   select(Date, Age, Cases)
 
 write.csv(o_barchart, glue("Test output/LabCases_Age.csv"), row.names=FALSE)
+
+
