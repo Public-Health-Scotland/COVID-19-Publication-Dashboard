@@ -19,6 +19,16 @@ data_table <- reactive({  # Change dataset depending on what user selected
 
                                                                  `Cumulative Rate per 100,000` = CumulativeRatePer100000),
 
+
+                       "LabCasesReinfections" = LabCasesReinfections %>%  dplyr::rename (`Number of Reinfections` = Count,
+
+                                                                 `Cumulative Reinfections` = Cumulative,
+
+                                                                 `7 day average` = Average7,
+
+                                                                 `Cumulative Rate per 100,000` = CumulativeRatePer100000),
+
+
                        "LabCases_AgeSex" = LabCases_AgeSex %>%  dplyr::rename(Sex = sex,
 
                                                                        `Age Group` = `age_group`,
@@ -265,6 +275,7 @@ table_params_data <- reactive({
   # Columns to add 1,000 comma separator to for each table
   separator_cols = switch(input$data_select,
                            "LabCases" = c(2,3),
+                           "LabCasesReinfections" = c(2,3),
                            "LabCases_AgeSex" = c(3),
                            "LabCases_SIMD" = c(2),
                            "Admissions" = c(2),
@@ -293,6 +304,7 @@ table_params_data <- reactive({
   # Columns to add 1,000 comma separator with 1dp to for each table
   separator_cols_1dp = switch(input$data_select,
                                "LabCases" = c(4,5),
+                               "LabCasesReinfections" = c(4,5),
                                "LabCases_AgeSex" = c(4),
                                "Admissions" = c(3),
                                "Admissions_AgeSex" = c(4),
