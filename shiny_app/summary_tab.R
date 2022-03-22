@@ -298,7 +298,8 @@ if (input$measure_select == "LabCases") { #Positive Cases
           actionButton("btn_dataset_modal", paste0("Data source: ", "ECOSS"), icon = icon('question-circle')),
           actionButton("btn_modal_simd", "What is SIMD?", icon = icon('question-circle')),
           plot_box("Daily number of COVID-19 reinfections", plot_output = "LabCasesReinfections_overall"),
-          plot_box("Cumulative rate per 100,000", plot_output = "LabCasesReinfectionsRate"))
+          plot_box("Cumulative rate per 100,000", plot_output = "LabCasesReinfectionsRate"),
+          plot_box("Percentage of cases that are reinfections", plot_output = "ReinfectionsBarchart"))
   }else if (input$measure_select == "Admissions") { #Admissions
   tagList(actionButton("btn_modal_simd", "What is SIMD?", icon = icon('question-circle')),
           p("On 05 January 2022, the Scottish Government",
@@ -429,6 +430,10 @@ output$EthnicityChartPercentage <- renderPlotly({plot_overall_chartEthnicityPerc
 # output$ChildDataPositives <- renderPlotly({plot_overall_chartChildPositive(Child, data_name = "Child")})
 # output$ChildDataNegatives <- renderPlotly({plot_overall_chartChildNegative(Child, data_name = "Child")})
 # output$ChildDataCases <- renderPlotly({plot_overall_chartChildCases(Child, data_name = "Child")})
+
+# Reinfections bar chart
+output$ReinfectionsBarchart <- renderPlotly({plot_reinfections_barchart(LabCases, LabCasesReinfections)})
+
 
 ## Data downloads ----
 

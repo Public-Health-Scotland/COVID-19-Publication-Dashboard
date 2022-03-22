@@ -561,6 +561,58 @@ stacked_cases_age_chart <- function(dataset, data_name, area = T) {
 
 }
 
+## Reinfections Proportion barchart
+
+plot_reinfections_barchart <- function(casesdata, reinfdata) {
+
+   yaxis_plots[["title"]] <- "Percentage of cases that are reinfections"
+   xaxis_plots[["title"]] <- "Specimen Date by Week Ending"
+
+   names(casesdata) <- unlist(purrr::map(names(casesdata), ~ paste0(.x, " Cases")))
+   names(reinfdata) <- unlist(purrr::map(names(reinfdata), ~ paste0(.x, " Reinfections")))
+
+   newdf <- merge(casesdata, reinfdata, by.x="Date Cases", by.y="Date Reinfections") %>%
+     dplyr::rename("Cases" = "Count Cases",
+                   "Reinfections" = "Count Reinfections",
+                   "Date" = "Date Cases") %>%
+     select(c("Date", "Cases", "Reinfections")) %>%
+     dplyr::mutate(`Cases Proportion` = Cases/(Cases + Reinfections),
+                   `Reinfections Proportion` = Reinfections/(Cases + Reinfections)) %>%
+     select(c("Date", "Cases Proportion", "Reinfections Proportion")) %>%
+     dplyr::rename("Cases" = "Cases Proportion",
+                   "Reinfections" = "Reinfections Proportion") %>%
+     gather(key="reinfection_flag", value="count", -`Date`) %>%
+     dplyr::mutate(`Week Ending` = ceiling_date(Date, unit="week", change_on_boundary = FALSE)) %>%
+     select(-Date) %>%
+     group_by(`Week Ending`, reinfection_flag) %>%
+     summarise(total_count = sum(count)) %>%
+     dplyr::mutate(total_count = 100/7 * total_count) %>% # get as percentage
+     arrange(`Week Ending`) %>%
+     tail(40)
+
+
+   tooltip_trend <- glue("Week Ending: {newdf$`Week Ending`}<br>",
+                                          "{newdf$reinfection_flag}: {newdf$total_count}")
+
+  # Creating barchart
+   newdf %>%
+     plot_ly(x = ~`Week Ending`, y = ~total_count) %>%
+     add_bars(color = ~reinfection_flag, #colour group
+              colors = pal_CT, #palette
+              stroke = I("black"), #outline
+              text = tooltip_trend,
+              hoverinfo = "text",
+              name = ~reinfection_flag) %>%
+     #Layout
+     layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
+            yaxis = yaxis_plots, xaxis = xaxis_plots,
+            legend = list(x = 100, y = 0.5), #position of legend
+            barmode = "stack") %>% #split by group
+     # leaving only save plot button
+     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
+
+
+}
 
 plot_nhs24_selfhelp_chart <- function(dataset, data_name, yaxis_title, area = T) {
 
@@ -1280,6 +1332,10 @@ travel_outside_scotland_chart <- function(dataset, area = T){
 
 
 }
+
+
+
+
 
 
 ### END
