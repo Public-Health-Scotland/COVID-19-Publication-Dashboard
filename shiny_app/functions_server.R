@@ -391,7 +391,7 @@ plot_singletrace_chart <- function(dataset, data_name, yaxis_title, xaxis_title,
    p %<>% add_vline("2022-01-05", color=phs_colours("phs-magenta"), width=3.0) %>%
      layout(annotations=annotation)
  }
- 
+
  return(p)
 }
 
@@ -1228,7 +1228,7 @@ plot_prox_uploads_chart <- function(dataset, yaxis_title, xaxis_title, area = T,
 plot_LFDs <- function(dataset, area = T) {
 
   # Filtering dataset to include only overall figures
-  trend_data <- dataset %>% utils::head(-1) # Removing incomplete previous week
+  trend_data <- dataset
 
   #Modifying standard layout
   yaxis_plots[["title"]] <- "Number of LFD Tests"
