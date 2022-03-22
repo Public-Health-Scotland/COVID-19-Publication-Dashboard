@@ -576,10 +576,10 @@ plot_reinfections_barchart <- function(casesdata, reinfdata) {
                    "Reinfections" = "Count Reinfections",
                    "Date" = "Date Cases") %>%
      select(c("Date", "Cases", "Reinfections")) %>%
-     dplyr::mutate(`Cases Proportion` = Cases/(Cases + Reinfections),
-                   `Reinfections Proportion` = Reinfections/(Cases + Reinfections)) %>%
-     select(c("Date", "Cases Proportion", "Reinfections Proportion")) %>%
-     dplyr::rename("Cases" = "Cases Proportion",
+     dplyr::mutate(`First Infections Proportion` = (Cases-Reinfections)/Cases,
+                   `Reinfections Proportion` = Reinfections/Cases) %>%
+     select(c("Date", "First Infections Proportion", "Reinfections Proportion")) %>%
+     dplyr::rename("First Infections" = "First Infections Proportion",
                    "Reinfections" = "Reinfections Proportion") %>%
      gather(key="reinfection_flag", value="count", -`Date`) %>%
      dplyr::mutate(`Week Ending` = ceiling_date(Date, unit="week", change_on_boundary = FALSE)) %>%
