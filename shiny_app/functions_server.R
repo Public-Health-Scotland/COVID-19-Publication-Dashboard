@@ -404,15 +404,17 @@ plot_singlerate_chart <- function(dataset, data_name, yaxis_title, area = T, inc
 
   ###############################################.
   # Creating objects that change depending on dataset
-  yaxis_title <- case_when(data_name == "LabCases" ~ "Cumulative rate of cases per 100,000")
-  xaxis_title <- case_when(data_name == "LabCases" ~ "Specimen date")
+  yaxis_title <- case_when(data_name == "LabCases" ~ "Cumulative rate of cases per 100,000",
+                           data_name == "LabCasesReinfections" ~ "Cumulative rate of reinfections per 100,000")
+  xaxis_title <- case_when(data_name %in% c("LabCases", "LabCasesReinfections") ~ "Specimen date")
 
 
   #Modifying standard layout
   yaxis_plots[["title"]] <- yaxis_title
   xaxis_plots[["title"]] <- xaxis_title
 
-  measure_name <- case_when(data_name == "LabCases" ~ "Cumulative rate of cases per 100,000")
+  measure_name <- case_when(data_name == "LabCases" ~ "Cumulative rate of cases per 100,000",
+                            data_name == "LabCasesReinfections" ~ "Cumulative rate of reinfections per 100,000")
 
   #Text for tooltip
   tooltip_trend <- glue("Date: {format(trend_data$Date, '%d %b %y')}<br>",
