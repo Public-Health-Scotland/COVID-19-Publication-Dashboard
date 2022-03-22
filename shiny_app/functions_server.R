@@ -25,6 +25,7 @@ plot_overall_chart <- function(dataset, data_name,  area = T, include_vline=F) {
   ###############################################.
   # Creating objects that change depending on dataset
   yaxis_title <- case_when(data_name == "LabCases" ~ "Number of positive cases",
+                           data_name == "LabCasesReinfections" ~ "Number of reinfections",
                            data_name == "Admissions" ~ "Number of admissions",
                            data_name == "ICU" ~ "Number of ICU admissions",
                            data_name == "NHS24" ~ "Number of NHS24 contacts")
@@ -37,6 +38,7 @@ plot_overall_chart <- function(dataset, data_name,  area = T, include_vline=F) {
   xaxis_plots[["title"]] <- xaxis_title
 
   measure_name <- case_when(data_name == "LabCases" ~ "Number of Cases: ",
+                            data_name == "LabCasesReinfections" ~ "Reinfections: ",
                             data_name == "Admissions" ~ "Admissions: ",
                             data_name == "ICU" ~ "ICU admissions: ",
                             data_name == "NHS24" ~ "NHS24 Contacts: ")
