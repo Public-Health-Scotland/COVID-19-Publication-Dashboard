@@ -309,8 +309,7 @@ if (input$measure_select == "LabCases") { #Positive Cases
           p(strong(style="color:black", "From 01 March 2022, PHS now include episodes of reinfection within COVID-19 reporting.
                           Prior to this date COVID-19 cases were based on an individual’s first positive test result only.
                           The new daily calculation includes both new infections and possible reinfections.
-                          Possible reinfections are defined as individuals who test positive, by PCR (polymerase chain reaction) or LFD (lateral flow device), 90 days or more after their last positive test.
-                          Currently hospital admissions do not include reinfections, although this will be updated in coming weeks.",
+                          Possible reinfections are defined as individuals who test positive, by PCR (polymerase chain reaction) or LFD (lateral flow device), 90 days or more after their last positive test.",
                    "More information available on the Public Health Scotland website",
                    tags$a(href="https://publichealthscotland.scot/news/2022/february/covid-19-reporting-to-include-further-data-on-reinfections/",
                           "here.", class="externallink"))),
