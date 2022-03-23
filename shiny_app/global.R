@@ -291,6 +291,8 @@ pal_comm <- c("#3F3685", "#9B4393", "#0078D4", "#C73918", "#83BB26", "#6B5C85")
 #for female/male/total sex
 pal_sex <- c('#9B4393', '#0078D4', "#000000")
 
+pal_reinf <- c('#0078D4', '#9B4393')
+
 #for child charts
 pal_child <- c("#3F3685", "#9B4393", "#0078D4", "#83BB26", "#C73918", "#6B5C85")
 

@@ -590,15 +590,14 @@ plot_reinfections_barchart <- function(casesdata, reinfdata) {
      arrange(`Week Ending`) %>%
      tail(40)
 
-
    tooltip_trend <- glue("Week Ending: {newdf$`Week Ending`}<br>",
-                                          "{newdf$reinfection_flag}: {newdf$total_count}")
+                         "{newdf$reinfection_flag}: {scales::percent(newdf$total_count, accuracy=0.1, scale=1)}")
 
   # Creating barchart
    newdf %>%
      plot_ly(x = ~`Week Ending`, y = ~total_count) %>%
      add_bars(color = ~reinfection_flag, #colour group
-              colors = pal_CT, #palette
+              colors = pal_reinf, #palette
               stroke = I("black"), #outline
               text = tooltip_trend,
               hoverinfo = "text",
