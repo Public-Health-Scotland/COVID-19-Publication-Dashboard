@@ -102,6 +102,7 @@ plot_cut_missing <- function(title_plot, plot_output, extra_content = NULL) {
 
 
 LabCases <-readRDS("data/LabCases.rds")
+LabCasesReinfections <-readRDS("data/LabCasesReinfections.rds")
 Admissions <-readRDS("data/Admissions.rds")
 ICU <- readRDS("data/ICU.rds")
 NHS24 <- readRDS("data/NHS24.rds")
@@ -207,6 +208,7 @@ br3<-function(){tagList(br(),br(),br())}
 
 
 data_list <- c("Positive Cases" = "LabCases",
+               "Reinfections" = "LabCasesReinfections",
                "Hospital Admissions" = "Admissions",
                "Hospital Admissions by Ethnicity" = "Ethnicity_Chart",
                "ICU Admissions" = "ICU",
@@ -247,6 +249,7 @@ HCWdata_list_data_tab <- c ("Specialist Cancer Wards and Treatment Areas" = "Hea
 #extra choices for data tables
 
 data_list_data_tab <- c("Positive cases" = "LabCases",
+                        "Reinfections" = "LabCasesReinfections",
                         "Positive cases by age and sex" = "LabCases_AgeSex",
                         "Positive cases by deprivation" = "LabCases_SIMD",
                         "Distribution of COVID-19 cases by age group" = "Cases_AgeGrp",
@@ -287,6 +290,8 @@ pal_comm <- c("#3F3685", "#9B4393", "#0078D4", "#C73918", "#83BB26", "#6B5C85")
 
 #for female/male/total sex
 pal_sex <- c('#9B4393', '#0078D4', "#000000")
+
+pal_reinf <- c('#0078D4', '#9B4393')
 
 #for child charts
 pal_child <- c("#3F3685", "#9B4393", "#0078D4", "#83BB26", "#C73918", "#6B5C85")

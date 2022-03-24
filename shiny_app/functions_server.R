@@ -25,6 +25,7 @@ plot_overall_chart <- function(dataset, data_name,  area = T, include_vline=F) {
   ###############################################.
   # Creating objects that change depending on dataset
   yaxis_title <- case_when(data_name == "LabCases" ~ "Number of positive cases",
+                           data_name == "LabCasesReinfections" ~ "Number of reinfections",
                            data_name == "Admissions" ~ "Number of admissions",
                            data_name == "ICU" ~ "Number of ICU admissions",
                            data_name == "NHS24" ~ "Number of NHS24 contacts")
@@ -37,6 +38,7 @@ plot_overall_chart <- function(dataset, data_name,  area = T, include_vline=F) {
   xaxis_plots[["title"]] <- xaxis_title
 
   measure_name <- case_when(data_name == "LabCases" ~ "Number of Cases: ",
+                            data_name == "LabCasesReinfections" ~ "Reinfections: ",
                             data_name == "Admissions" ~ "Admissions: ",
                             data_name == "ICU" ~ "ICU admissions: ",
                             data_name == "NHS24" ~ "NHS24 Contacts: ")
@@ -391,7 +393,7 @@ plot_singletrace_chart <- function(dataset, data_name, yaxis_title, xaxis_title,
    p %<>% add_vline("2022-01-05", color=phs_colours("phs-magenta"), width=3.0) %>%
      layout(annotations=annotation)
  }
- 
+
  return(p)
 }
 
@@ -402,15 +404,17 @@ plot_singlerate_chart <- function(dataset, data_name, yaxis_title, area = T, inc
 
   ###############################################.
   # Creating objects that change depending on dataset
-  yaxis_title <- case_when(data_name == "LabCases" ~ "Cumulative rate of cases per 100,000")
-  xaxis_title <- case_when(data_name == "LabCases" ~ "Specimen date")
+  yaxis_title <- case_when(data_name == "LabCases" ~ "Cumulative rate of cases per 100,000",
+                           data_name == "LabCasesReinfections" ~ "Cumulative rate of reinfections per 100,000")
+  xaxis_title <- case_when(data_name %in% c("LabCases", "LabCasesReinfections") ~ "Specimen date")
 
 
   #Modifying standard layout
   yaxis_plots[["title"]] <- yaxis_title
   xaxis_plots[["title"]] <- xaxis_title
 
-  measure_name <- case_when(data_name == "LabCases" ~ "Cumulative rate of cases per 100,000")
+  measure_name <- case_when(data_name == "LabCases" ~ "Cumulative rate of cases per 100,000",
+                            data_name == "LabCasesReinfections" ~ "Cumulative rate of reinfections per 100,000")
 
   #Text for tooltip
   tooltip_trend <- glue("Date: {format(trend_data$Date, '%d %b %y')}<br>",
@@ -557,6 +561,57 @@ stacked_cases_age_chart <- function(dataset, data_name, area = T) {
 
 }
 
+## Reinfections Proportion barchart
+
+plot_reinfections_barchart <- function(casesdata, reinfdata) {
+
+   yaxis_plots[["title"]] <- "Percentage of cases that are reinfections"
+   xaxis_plots[["title"]] <- "Specimen Date by Week Ending"
+
+   names(casesdata) <- unlist(purrr::map(names(casesdata), ~ paste0(.x, " Cases")))
+   names(reinfdata) <- unlist(purrr::map(names(reinfdata), ~ paste0(.x, " Reinfections")))
+
+   newdf <- merge(casesdata, reinfdata, by.x="Date Cases", by.y="Date Reinfections") %>%
+     dplyr::rename("Cases" = "Count Cases",
+                   "Reinfections" = "Count Reinfections",
+                   "Date" = "Date Cases") %>%
+     select(c("Date", "Cases", "Reinfections")) %>%
+     dplyr::mutate(`First Infections Proportion` = (Cases-Reinfections)/Cases,
+                   `Reinfections Proportion` = Reinfections/Cases) %>%
+     select(c("Date", "First Infections Proportion", "Reinfections Proportion")) %>%
+     dplyr::rename("First Infections" = "First Infections Proportion",
+                   "Reinfections" = "Reinfections Proportion") %>%
+     gather(key="reinfection_flag", value="count", -`Date`) %>%
+     dplyr::mutate(`Week Ending` = ceiling_date(Date, unit="week", change_on_boundary = FALSE)) %>%
+     select(-Date) %>%
+     group_by(`Week Ending`, reinfection_flag) %>%
+     summarise(total_count = sum(count)) %>%
+     dplyr::mutate(total_count = 100/7 * total_count) %>% # get as percentage
+     arrange(`Week Ending`) %>%
+     tail(40)
+
+   tooltip_trend <- glue("Week Ending: {newdf$`Week Ending`}<br>",
+                         "{newdf$reinfection_flag}: {scales::percent(newdf$total_count, accuracy=0.1, scale=1)}")
+
+  # Creating barchart
+   newdf %>%
+     plot_ly(x = ~`Week Ending`, y = ~total_count) %>%
+     add_bars(color = ~reinfection_flag, #colour group
+              colors = pal_reinf, #palette
+              stroke = I("black"), #outline
+              text = tooltip_trend,
+              hoverinfo = "text",
+              name = ~reinfection_flag) %>%
+     #Layout
+     layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
+            yaxis = yaxis_plots, xaxis = xaxis_plots,
+            legend = list(x = 100, y = 0.5), #position of legend
+            barmode = "stack") %>% #split by group
+     # leaving only save plot button
+     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
+
+
+}
 
 plot_nhs24_selfhelp_chart <- function(dataset, data_name, yaxis_title, area = T) {
 
@@ -1228,7 +1283,7 @@ plot_prox_uploads_chart <- function(dataset, yaxis_title, xaxis_title, area = T,
 plot_LFDs <- function(dataset, area = T) {
 
   # Filtering dataset to include only overall figures
-  trend_data <- dataset %>% utils::head(-1) # Removing incomplete previous week
+  trend_data <- dataset
 
   #Modifying standard layout
   yaxis_plots[["title"]] <- "Number of LFD Tests"
@@ -1276,6 +1331,10 @@ travel_outside_scotland_chart <- function(dataset, area = T){
 
 
 }
+
+
+
+
 
 
 ### END
