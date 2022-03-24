@@ -32,6 +32,9 @@ ICU_extract_date <- format(pub_date - 2, "%A %d %B %Y") #format date
 LFD_date <- format(pub_date - 3, "%A %d %B %Y") #format date
 LFD_demo_date <- format(pub_date - 7, "%A %d %B %Y")
 
+#For vaccine certification
+vaccine_cert_date <- format(pub_date -4, "%d %B %Y")
+
 ###############################################.
 ## Packages ----
 

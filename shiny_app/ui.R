@@ -523,7 +523,7 @@ tagList(  #needed for shinyjs
     ### Vaccines
     tabPanel(
       title = "Vaccine Certification",
-      icon = icon("user-lock"),
+      icon = icon("passport"),
       value = "vaccinetab",
 
       h3("COVID-19 Vaccine Certification"),
@@ -535,6 +535,7 @@ tagList(  #needed for shinyjs
       p("Check the vaccine certification scheme guidance for ", tags$a(href="https://www.gov.scot/publications/coronavirus-covid-19-certification-businesses-event-organisers/", "businesses and event organisers", class="externallink"),  " and for ",
       tags$a(href="https://www.gov.scot/publications/coronavirus-covid-19-certification-information-for-customers/", "customers.", class="externallink")),
       p("For further information, you can refer to ", tags$a(href="https://www.gov.scot/news/living-safely-with-covid/", "https://www.gov.scot/news/living-safely-with-covid/.", class="externallink")),
+      p(glue("The figures in the table below are for up to midnight on {vaccine_cert_date}.")),
       hr(),
       downloadButton('download_vaccine_cert_data', 'Download data'),
       mainPanel(width = 12,
