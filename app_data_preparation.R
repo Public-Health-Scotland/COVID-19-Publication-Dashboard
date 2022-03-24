@@ -85,6 +85,10 @@ saveRDS(SelfHelp, "data/SelfHelp.rds")
 Quarantine <- read_csv("data/Quarantine.csv")
 saveRDS(Quarantine, "data/Quarantine.rds")
 
+#Vaccine Certification
+VaccineCertification <- read_csv("data/VaccineCertification.csv")
+saveRDS(VaccineCertification, "data/VaccineCertification.rds")
+
 #LFD
 LFD<- read_csv("data/LFD_Board.csv")
 saveRDS(LFD, "data/LFD.rds")
