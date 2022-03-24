@@ -518,7 +518,27 @@ tagList(  #needed for shinyjs
 
              mainPanel(width = 12,
                uiOutput("MTUOutputs")
-             ))
+             )),
+
+    ### Vaccines
+    tabPanel(
+      title = "Vaccine Certification",
+      icon = icon("user-lock"),
+      value = "vaccinetab",
+
+      h3("COVID-19 Vaccine Certification"),
+      p("The NHS Covid Status App was launched on 30 September 2021. It is free and offers digital proof of vaccination via a QR code for each vaccination received.",
+        "You can request a vaccine certificate if you are aged 12 and over and have been vaccinated in Scotland. The record will not show any vaccinations given outside of Scotland."),
+      p("You can show your COVID-19 vaccine status by using the", tags$a(href= "https://www.nhsinform.scot/covid-status", "NHS Scotland Covid Status app,", class ="externallink"),
+        " download a PDF copy of your status from the app or ", tags$a(href="https://www.nhsinform.scot/nhs-scotland-covid-status/", "get a paper record of your vaccine status from NHS Inform.", class="externallink")),
+      p("Vaccine certifications are no longer legally required in Scotland. The app will remain available so any business that wishes to continue certification on a voluntary basis to reassure customers will be able to do so."),
+      p("Check the vaccine certification scheme guidance for ", tags$a(href="https://www.gov.scot/publications/coronavirus-covid-19-certification-businesses-event-organisers/", "businesses and event organisers", class="externallink"),  " and for ",
+      tags$a(href="https://www.gov.scot/publications/coronavirus-covid-19-certification-information-for-customers/", "customers.", class="externallink")),
+      p("For further information, you can refer to ", tags$a(href="https://www.gov.scot/news/living-safely-with-covid/", "https://www.gov.scot/news/living-safely-with-covid/.", class="externallink")),
+      hr(),
+      downloadButton('download_quarantine_data', 'Download data'),
+      mainPanel(width = 12,
+                DT::dataTableOutput("quarantine_table")))
 
     #################### Ethnicity Chart ----
 

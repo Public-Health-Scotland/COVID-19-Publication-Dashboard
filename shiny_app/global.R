@@ -173,6 +173,9 @@ Care_Homes <- readRDS("data/Care_Homes.rds")
 # Quarantine
 Quarantine <- readRDS("data/Quarantine.rds")
 
+# Vaccine
+VaccineCertification <- readRDS("data/VaccineCertification.rds")
+
 # LFD
 LFD <- readRDS("data/LFD.rds")
 LFD_Weekly <- readRDS("data/LFD_Weekly.rds")
