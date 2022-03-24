@@ -536,9 +536,9 @@ tagList(  #needed for shinyjs
       tags$a(href="https://www.gov.scot/publications/coronavirus-covid-19-certification-information-for-customers/", "customers.", class="externallink")),
       p("For further information, you can refer to ", tags$a(href="https://www.gov.scot/news/living-safely-with-covid/", "https://www.gov.scot/news/living-safely-with-covid/.", class="externallink")),
       hr(),
-      downloadButton('download_quarantine_data', 'Download data'),
+      downloadButton('download_vaccine_cert_data', 'Download data'),
       mainPanel(width = 12,
-                DT::dataTableOutput("quarantine_table")))
+                DT::dataTableOutput("vaccine_cert_table")))
 
     #################### Ethnicity Chart ----
 
