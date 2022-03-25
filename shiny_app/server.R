@@ -5,67 +5,69 @@ function(input, output, session) {
   ###############################################.
   # Sourcing file with functions code
   source(file.path("functions_server.R"),  local = TRUE)$value
-  
+
   ###############################################.
   # Sourcing file with data table code
   source(file.path("functions_tables.R"),  local = TRUE)$value
-  
+
   ###############################################.
-  # Summary trends tab  
+  # Summary trends tab
   source(file.path("summary_tab.R"),  local = TRUE)$value
-  
-  
+
+
   ###############################################.
   # Data tab
   source(file.path("data_tab.R"),  local = TRUE)$value
-  
-  
+
+
   ###############################################.
   # Contact Tracing tab
   source(file.path("contact_tracing_tab.R"),  local = TRUE)$value
-  
-  
+
+
   ###############################################.
-  # Contact Tracing Data tab  
-  source(file.path("contact_tracing_data_tab.R"),  local = TRUE)$value  
+  # Contact Tracing Data tab
+  source(file.path("contact_tracing_data_tab.R"),  local = TRUE)$value
   ###############################################.
-  # Travel tab  
-  source(file.path("travel_tab.R"),  local = TRUE)$value  
-  
+  # Travel tab
+  source(file.path("travel_tab.R"),  local = TRUE)$value
+
   ###############################################.
-  # Settings tab  
-  source(file.path("setting_tab.R"),  local = TRUE)$value  
-  
+  # Settings tab
+  source(file.path("setting_tab.R"),  local = TRUE)$value
+
   ###############################################.
-  # HCW tab  
+  # HCW tab
   source(file.path("health_care_workers_data_tab.R"),  local = TRUE)$value
-  
+
   ###############################################.
-  # Quarantine tab  
+  # Quarantine tab
   source(file.path("quarantine_tab.R"),  local = TRUE)$value
-  
+
   ###############################################.
-  # LFD tab  
+  # LFD tab
   source(file.path("lfd_tab.R"),  local = TRUE)$value
   source(file.path("lft_demo_tab.R"), local = TRUE)$value
-  
+
   ###############################################.
-  # Care Homes tab  
+  # Care Homes tab
   source(file.path("care_home_data_tab.R"),  local = TRUE)$value
-  
+
   ###############################################.
-  # Mobile Testing Units tab  
+  # Mobile Testing Units tab
   source(file.path("mtu_key_points_function.R"), local = TRUE)$value
   source(file.path("mtu_tab.R"),  local = TRUE)$value
-  
+
   ###############################################.
-  # Ethnicity chart tab  
+  # Ethnicity chart tab
   #source(file.path("ethnicity_tab.R"),  local = TRUE)$value
-  
+
   ###############################################.
-  
+  # Vaccine tab
+  source(file.path("vaccine_tab.R"), local = TRUE)$value
+
   ## Observe events to improve navigation between tabs of the app
-  # To jump to data pages    
+  # To jump to data pages
   observeEvent(input$jump_to_summary, {updateTabsetPanel(session, "intabset", selected = "summary")})
   observeEvent(input$jump_to_table, {updateTabsetPanel(session, "intabset", selected = "table")})
   observeEvent(input$jump_to_CTtable, {updateTabsetPanel(session, "intabset", selected = "CTtable")})
@@ -76,7 +78,7 @@ function(input, output, session) {
   observeEvent(input$jump_to_LFTdemo, {updateTabsetPanel(session, "intabset", selected = "LFTdemoData")})
   observeEvent(input$jump_to_CH, {updateTabsetPanel(session, "intabset", selected = "CHData")})
   observeEvent(input$jump_to_mtu, {updateTabsetPanel(session, "intabset", selected = "MTUtab")})
-  
-  
-  
+  observeEvent(input$jump_to_vaccine, {updateTabsetPanel(session, "intabset", selected = "vaccinetab")})
+
+
 } # server end

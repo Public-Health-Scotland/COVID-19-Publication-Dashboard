@@ -128,6 +128,10 @@ source("Transfer scripts/transfer_LFD.R")
 
 # Hasn't been updated on the dashboard since August so leaving blank here for now
 
+##### 21. Vaccine certification
+
+source("Transfer scripts/transfer_vaccinecert.R")
+
 
 
 
