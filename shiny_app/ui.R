@@ -38,6 +38,7 @@ tagList(  #needed for shinyjs
              tags$li("Quarantine data"),
              tags$li("Lateral Flow Device Testing"),
              tags$li("Targeted Community Testing"),
+             tags$li("Vaccine Certification"),
              br(),
           #   p(strong("Please Note: SAS data by Age, Sex and SIMD, and Settings data are not availble for the 05/05/21 publication of this dashboard. Please expect this to be updated next week (12/05/21).")),
              p("Interactive charts on each of the topics are available in the ",
@@ -61,7 +62,9 @@ tagList(  #needed for shinyjs
              p("The LFD demographic data can be downloaded using the ",
              actionLink("jump_to_LFTdemo", "'LFD demographic' tab.")),
              p("Data surrounding Targeted Community Testing can be found in the",
-               actionLink("jump_to_mtu", "'Targeted Community Testing' Tab.")),
+             actionLink("jump_to_mtu", "'Targeted Community Testing' Tab.")),
+             p("Vaccine certification data can be found in the",
+             actionLink("jump_to_vaccine", "'Vaccine Certification' Tab.")),
 
 
              p("Metadata for this dashboard can be downloaded from the ",
