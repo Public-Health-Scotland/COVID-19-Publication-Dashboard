@@ -207,6 +207,10 @@ output$data_explorer <- renderUI({
                           input$measure_select == "AssessmentHub" ~  paste0("Please note that data are provisional and may be updated in future publications as further information is supplied and validated from health boards."),
                           input$measure_select == "SAS" ~ paste0(""))
 
+  notes <- case_when(input$measure_select %in% c("NHS24", "AssessmentHub")~ paste0("As of the 31st of March 2022 the COVID-19 Community Pathway will be closed. From this date patients who contact NHS24 with COVID-19 symptoms during the in-hours period will be advised to contact their own GP practice.",
+                   " For the out of hours period, the Out of Hours services will continue to manage COVID-19 patients directed by NHS 24 as a matter of course. This will have an impact on the NHS 24 data and COVID Hub/Assessment data contained in the dashboard."),
+                   TRUE ~ paste0(""))
+
   # data sources
   data_source <- case_when(input$measure_select == "LabCases" ~ "ECOSS",
                            input$measure_select == "LabCasesReinfections" ~ "ECOSS",
@@ -247,6 +251,7 @@ cut_charts_subheading <- function(title, source, data_name) {
   tagList(
     h3(title),
     p(subheading),
+    p(strong(notes)),
     actionButton("btn_dataset_modal", paste0("Data source: ", source), icon = icon('question-circle')),
     plot_box(paste0(total_title), paste0(data_name, "_overall")),
     plot_cut_box(paste0(agesex_title), paste0(data_name, "_AgeSex"),
@@ -335,6 +340,8 @@ if (input$measure_select == "LabCases") { #Positive Cases
   tagList(actionButton("btn_modal_simd", "What is SIMD?", icon = icon('question-circle')),
           cut_charts_subheading(title = "Daily number of COVID-19 related NHS24 contacts",
                                 source = data_source, data_name ="NHS24"),
+          p(strong("As of the 31st of March 2022 the COVID-19 Community Pathway will be closed. From this date patients who contact NHS24 with COVID-19 symptoms during the in-hours period will be advised to contact their own GP practice.",
+                   "For the out of hours period, the Out of Hours services will continue to manage COVID-19 patients directed by NHS 24 as a matter of course. This will have an impact on the NHS 24 data and COVID Hub/Assessment data contained in the dashboard.")),
           h3("NHS Inform"),
           # actionButton("btn_dataset_inform", "Data source: INFORM", icon = icon('question-circle')),
 
