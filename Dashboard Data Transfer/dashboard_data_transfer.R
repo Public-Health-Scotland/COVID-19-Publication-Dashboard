@@ -19,6 +19,13 @@ library(stats)
 library(zoo)
 library(tidyr)
 library(readxl)
+# remotes::install_github("RosalynLP/friendlyloader")
+# Provides the following functions:
+# ----------------------------------
+# read_csv_with_options
+# read_excel_with_options
+# read_all_sheets
+library(friendlyloader)
 
 setwd("/conf/PHSCOVID19_Analysis/COVID-19-Publication-Dashboard/Dashboard Data Transfer")
 
@@ -31,9 +38,9 @@ source("data_transfer_functions.R")
 
 # Getting population information
 # ------------------------------
-i_population <- read.csv("Input data/population.csv", header = TRUE, stringsAsFactors = FALSE)
+i_population <- read_csv_with_options("Input data/population.csv")
 
-i_population %<>% dplyr::rename(age_group = MYE..2020) %>%
+i_population %<>% dplyr::rename(age_group = contains("MYE")) %>%
   melt(id=c("age_group"), variable="sex") %>%
   dplyr::rename(pop_number=value)
 
