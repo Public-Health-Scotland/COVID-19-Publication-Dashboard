@@ -10,12 +10,12 @@ copyloc <- "/conf/PHSCOVID19_Analysis/COVID-19-Publication-Dashboard/Data Format
 copied_bool <- file.copy(copyfile, copyloc, overwrite = TRUE)
 
 if (copied_bool == FALSE) { # Check whether file successfully copied across
-  
-  stop(glue("Community Testing file '{copyfile}' could not be copied to '{copyloc}'. Terminating script."))   
-  
+
+  stop(glue("Community Testing file '{copyfile}' could not be copied to '{copyloc}'. Terminating script."))
+
 } else { # Continue the script
-  
-  print(glue("Community Testing file '{copyfile}' successfully copied to '{copyloc}'.") )
+
+  message(glue("Community Testing file '{copyfile}' successfully copied to '{copyloc}'.") )
 }
 
 # Next run data prep script
@@ -27,11 +27,11 @@ source("/conf/PHSCOVID19_Analysis/COVID-19-Publication-Dashboard/Data Formatting
 todaystring <- strftime(report_date-2,format='%Y%m%d')
 
 if (todaystring == date){
-  
-  print("Checked MTU data prep script for community testing used correct date.")
-  
+
+  message("Checked MTU data prep script for community testing used correct date.")
+
 } else {
-  
+
   stop(glue("MTU data prep script for community testing used date '{date}' but today's date is '{todaystring}'. Please amend {copyloc}/MTU data prep V1.0.R to use today's date."))
 }
 
