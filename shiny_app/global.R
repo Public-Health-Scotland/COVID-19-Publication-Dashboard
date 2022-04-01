@@ -178,6 +178,7 @@ LFD_Weekly <- readRDS("data/LFD_Weekly.rds")
 # Get data from LFT dashboard
 #lft_dash_path <- "/conf/C19_Test_and_Protect/Test & Protect - Warehouse/LFT Dashboard/Calum P/AM_COVID-19_LateralFlowTests/shiny_app/data"
 lfd_demographics_data <- readRDS("data/Demographics.rds") %>% filter(indicator != "Local Authority")
+LFD_TestGroup <- readRDS("data/LFD_TestGroup.rds")
 
 people_output_selection <- c("Age Group and Sex", "SIMD")
 plot_output_selection <- c("All Individuals", "Positive Testing Individuals")
