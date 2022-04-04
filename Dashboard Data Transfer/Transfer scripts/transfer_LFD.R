@@ -23,11 +23,10 @@ write.csv(g_lfdtrend, glue("Test output/LFD_Weekly.csv"), row.names = FALSE)
 
 ### c) Weekly trend by test group
 
-g_lfdtestgroup <- i_lfd$`` %>%
+g_lfdtestgroup <- i_lfd$`Test Groups Dashboard` %>%
   dplyr::rename(`Week Ending` = week_ending,
-                `Test Group` = test_group,
-                `Number of LFD Tests` = LFD_tests,
-                `Number of Positive Tests` = LFD_positives) #  %>% head(-1) is this needed?
+                `Test Group` = test_group)  %>%
+  filter(`Week Ending` < report_date) # Removing entries in the future
 
 write.csv(g_lfdtestgroup, glue("Test output/LFD_TestGroup.csv"), row.names = FALSE)
 
