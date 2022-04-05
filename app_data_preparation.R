@@ -13,8 +13,12 @@ setwd("/conf/PHSCOVID19_Analysis/COVID-19-Publication-Dashboard/shiny_app")
 library(lubridate)#dates
 library(tidyverse)
 library(janitor) # round_half_up
+library(readxl)
+library(glue)
 
 non_empty_cols <- function(x) { sum(!is.na(x)) > 0  }
+
+week_start <- format( floor_date( today()+1, unit='week', week_start=1 ), "%d%m%Y")
 
 # Lab Cases
 LabCases <- read_csv("data/LabCases.csv") %>%
@@ -413,3 +417,30 @@ saveRDS(mtu_4, "data/TCT_HBTestSiteType.rds")
 # # Key Points
 mtu_5 <- read_csv("data/CommunityTesting_key_points.csv")
 saveRDS(mtu_5, "data/TCT_KeyPoints.rds")
+
+
+
+### Care home time series ----
+
+CareHomeTimeSeries <- read_excel(
+  glue( '//PHI_conf/Real_Time_Epi/Routine_Reporting/Time_Series/Outputs/PCR_LFD',
+        '/Care Home Time Series (PCRLFD Reinfections) {week_start}_all.xlsx' )
+) %>% 
+  select( specimen_date, RESIDENT, STAFF ) %>% 
+  filter( !is.na(as.numeric(specimen_date)) ) %>% 
+  mutate( specimen_date = as.Date( as.numeric(specimen_date), origin='1900-01-01' ),
+          `Week Ending` = ceiling_date( specimen_date, unit='week', week_start = c(1),
+                                        change_on_boundary = FALSE) ) %>% 
+  group_by( `Week Ending` ) %>% 
+  mutate( StWk = sum(STAFF), ReWk = sum(RESIDENT), TOTAL = StWk + ReWk ) %>% 
+  ungroup() %>% 
+  mutate( Staff = case_when( between(StWk, 1, 4) ~ '*',
+                             TRUE ~ as.character(StWk)),
+          Resident = case_when( between(ReWk, 1, 4) ~ '*',
+                               TRUE ~ as.character(ReWk)),
+          Total = case_when( between(StWk, 1, 4) | between(ReWk, 1, 4) ~ '*',
+                             TRUE ~ as.character(TOTAL) )) %>% 
+  select( `Week Ending`, Resident, Staff, Total) %>% 
+  distinct()
+
+saveRDS(CareHomeTimeSeries, "data/CareHomeTimeSeries.rds")
