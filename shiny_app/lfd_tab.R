@@ -20,11 +20,10 @@ output$LFD_table <- DT::renderDataTable({
 output$LFD_grouptable <- DT::renderDataTable({
 
 
-  bytestgroup_data_table(LFD_TestGroup,
-                     "Test Group",  # Name of the column with test groups
-                     add_separator_cols=c(2,3), # Column indices to add thousand separators to
-                     rows_to_display=16,
-                     flip_order=TRUE)
+  datatab_table(LFD_TestGroup,
+                     add_separator_cols=c(3,4), # Column indices to add thousand separators to
+                     maxrows=16,
+                     flip_order=FALSE)
 
 })
 
@@ -67,15 +66,21 @@ output$download_LFD_testgroup <- downloadHandler(
 output$LFD_output <-renderUI({
 
     tagList(h3("Number of LFD Tests Week Ending"),
-            p("The chart below shows the number of LFD tests each week, the data for which can be downloaded by clicking the button above."),
+            p("The chart below shows the number of LFD tests each week, the data for which can be downloaded
+              by clicking the button at the top of the page."),
             plot_box("", plot_output = "LFD_trend"),
             h3("Number of LFD Tests by Health Board"),
-            p(glue("The table below shows the number of LFD tests up to {LFD_date} by NHS Board of Residence (based on the postcode provided by the individual taking the test). You can download the data by clicking the button above.")),
+            p(glue("The table below shows the number of LFD tests up to {LFD_date} by NHS Board of Residence
+                   (based on the postcode provided by the individual taking the test). You can download the
+                   data by clicking the button at the top of the page.")),
             DT::dataTableOutput("LFD_table"),
             h3("Number of LFD Tests by Test Group"),
-            p(glue("The table below shows the number of LFD tests from 19th November 2020 to {LFD_date} by test group (based on self-reported reason for testing by the individual registering the test). You can download the data by clicking the button above." #,
-                   #"Data from 03 March 2022 have been re-categorised accordingly into two new categories: ‘Checking Covid-19 Status During Isolation’ and ‘Close Contact Eligible for Daily Testing’"
-                   )),
+            p(glue("The table below shows the number of LFD tests from 19 November 2020 to {LFD_date} by test group"),
+              "(based on self-reported reason for testing by the individual registering the test). You can download the
+              data by clicking the button at the top of the page." #,
+                   #"Data from 03 March 2022 have been re-categorised accordingly into two new categories:
+              #‘Checking Covid-19 Status During Isolation’ and ‘Close Contact Eligible for Daily Testing’"
+                   ),
             DT::dataTableOutput("LFD_grouptable"))
 
 })
