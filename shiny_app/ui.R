@@ -408,6 +408,20 @@ tagList(  #needed for shinyjs
       title = "Care Homes Data",
       icon = icon("home"),
       value = "CHData",
+      
+      h3('Testing in Care Homes'),
+      p('As of 06 April 2022, Public Health Scotland took over reporting of weekly data on COVID-19 ',
+        'cases in adult Care Homes in Scotland. A positive case includes both new infections and ',
+        'possible reinfections. Possible reinfections are defined as individuals who tests positive ',
+        'by PCR (polymerase chain reaction) or LFD (lateral flow device), 90 or more clear days ',
+        'after their last positive test. Data Sources: PCR - UK Gov and NHS Labs; LFD – Self ',
+        'reporting NSS portal and UK Gov. The source data are dynamic, and additional test results ',
+        'received will be reflected in future calculations of cases, which may affect figures ',
+        'retrospectively.'),
+      mainPanel(width = 12,
+                DT::dataTableOutput('CareHomeSeriesTable')#,
+                #plotlyOutput( 'CareHomeSeriesGraph', width='100%' )
+                ),
 
       h3("Number of Staff and Residents in Care Homes with Confirmed COVID-19"),
       p("As of 20 January 2021, Public Health Scotland took over reporting of weekly data on COVID-19 in adult Care Homes in Scotland – data prior to 11 January 2021 can be found on the ", a(href = "https://www.gov.scot/publications/coronavirus-covid-19-additional-data-about-adult-care-homes-in-scotland/", "Scottish Government website."),
@@ -418,7 +432,8 @@ tagList(  #needed for shinyjs
       hr(),
       downloadButton('download_care_home_data', 'Download data'),
       mainPanel(width = 12,
-                DT::dataTableOutput("care_homes_table"))),
+                DT::dataTableOutput("care_homes_table"))
+      ),
 
     ### Quarantine
     tabPanel(

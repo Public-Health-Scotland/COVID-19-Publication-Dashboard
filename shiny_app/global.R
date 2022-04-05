@@ -173,6 +173,9 @@ Ethnicity_Chart <- readRDS("data/Ethnicity_Chart.rds")
 # Care Homes
 Care_Homes <- readRDS("data/Care_Homes.rds")
 
+# Care home time series
+CareHomeTimeSeries <- readRDS('data/CareHomeTimeSeries.rds')
+
 # Quarantine
 Quarantine <- readRDS("data/Quarantine.rds")
 

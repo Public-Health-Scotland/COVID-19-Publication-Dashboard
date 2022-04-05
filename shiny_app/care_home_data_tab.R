@@ -22,3 +22,25 @@ output$download_care_home_data <- downloadHandler(
     write_csv(care_home_data_download(),
               file)
   })
+
+
+
+### Time series data from RTE ----
+
+output$CareHomeSeriesTable <- DT::renderDataTable({
+  
+  #DT::datatable(CareHomeTimeSeries)
+  datatab_table(CareHomeTimeSeries,
+                add_separator_cols = c(2,3,4) )
+  
+})
+
+### Time series 
+
+output$CareHomeSeriesGraph <- renderPlotly({
+  
+  CareHomeGraph <- plot_ly( CareHomeTimeSeries, x = ~`Week Ending` ) %>% 
+    add_trace( y = ~Staff, name= 'Staff', mode = 'lines' ) %>% 
+    add_trace( y = ~Resident, name = 'Residents', mode = 'lines' )
+  
+})
