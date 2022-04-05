@@ -41,10 +41,16 @@ output$CareHomeSeriesTable <- DT::renderDataTable({
 
 output$CareHomeSeriesGraph <- renderPlotly({
   
-  CareHomeGraph <- plot_ly( CareHomeTimeSeries, x = ~`Week Ending` ) %>% 
+  CareHomeGraph <- CareHomeTimeSeries %>% 
     select( `Week Ending`, Resident, Staff ) %>% 
     mutate( Resident = as.numeric(Resident), Staff = as.numeric(Staff) ) %>% 
-    add_trace( y = ~Staff, name= 'Staff', mode = 'lines' ) %>% 
-    add_trace( y = ~Resident, name = 'Residents', mode = 'lines' )
+    plot_ly( x = ~`Week Ending` ) %>% 
+    add_trace( 
+      y = ~Staff, line=list(color=phs_colours('phs-magenta-80')), name='Staff', mode='lines' 
+      ) %>% 
+    add_trace( 
+      y = ~Resident, line=list(color=phs_colours('phs-blue-80')), name='Residents', mode='lines' 
+      ) %>% 
+    config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
   
 })
