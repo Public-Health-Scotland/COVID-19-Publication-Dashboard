@@ -35,11 +35,15 @@ output$CareHomeSeriesTable <- DT::renderDataTable({
   
 })
 
+
+
 ### Time series 
 
 output$CareHomeSeriesGraph <- renderPlotly({
   
   CareHomeGraph <- plot_ly( CareHomeTimeSeries, x = ~`Week Ending` ) %>% 
+    select( `Week Ending`, Resident, Staff ) %>% 
+    mutate( Resident = as.numeric(Resident), Staff = as.numeric(Staff) ) %>% 
     add_trace( y = ~Staff, name= 'Staff', mode = 'lines' ) %>% 
     add_trace( y = ~Resident, name = 'Residents', mode = 'lines' )
   

@@ -432,11 +432,11 @@ CareHomeTimeSeries <- read_excel(
   group_by( `Week Ending` ) %>% 
   mutate( StWk = sum(STAFF), ReWk = sum(RESIDENT), TOTAL = StWk + ReWk ) %>% 
   ungroup() %>% 
-  mutate( Staff = case_when( between(StWk, 1, 2) ~ '*',
+  mutate( Staff = case_when( between(StWk, 1, 4) ~ '*',
                              TRUE ~ as.character(StWk)),
-          Resident = case_when( between(ReWk, 1, 2) ~ '*',
+          Resident = case_when( between(ReWk, 1, 4) ~ '*',
                                TRUE ~ as.character(ReWk)),
-          Total = case_when( between(StWk, 1, 2) | between(ReWk, 1, 2) ~ '*',
+          Total = case_when( between(StWk, 1, 4) | between(ReWk, 1, 4) ~ '*',
                              TRUE ~ as.character(TOTAL) )) %>% 
   select( `Week Ending`, Resident, Staff, Total) %>% 
   distinct()

@@ -419,8 +419,8 @@ tagList(  #needed for shinyjs
         'received will be reflected in future calculations of cases, which may affect figures ',
         'retrospectively.'),
       mainPanel(width = 12,
-                DT::dataTableOutput('CareHomeSeriesTable')#,
-                #plotlyOutput( 'CareHomeSeriesGraph', width='100%' )
+                DT::dataTableOutput('CareHomeSeriesTable'),
+                plotlyOutput( 'CareHomeSeriesGraph', width='100%' )
                 ),
 
       h3("Number of Staff and Residents in Care Homes with Confirmed COVID-19"),
