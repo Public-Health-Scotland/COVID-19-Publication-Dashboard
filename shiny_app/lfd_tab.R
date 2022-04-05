@@ -20,11 +20,10 @@ output$LFD_table <- DT::renderDataTable({
 output$LFD_grouptable <- DT::renderDataTable({
 
 
-  bytestgroup_data_table(LFD_TestGroup,
-                     "Test Group",  # Name of the column with test groups
-                     add_separator_cols=c(2,3), # Column indices to add thousand separators to
-                     rows_to_display=16,
-                     flip_order=TRUE)
+  datatab_table(LFD_TestGroup,
+                     add_separator_cols=c(3,4), # Column indices to add thousand separators to
+                     maxrows=16,
+                     flip_order=FALSE)
 
 })
 
