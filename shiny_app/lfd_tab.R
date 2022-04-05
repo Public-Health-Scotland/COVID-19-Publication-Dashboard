@@ -22,6 +22,7 @@ output$LFD_grouptable <- DT::renderDataTable({
 
   datatab_table(LFD_TestGroup,
                      add_separator_cols=c(3,4), # Column indices to add thousand separators to
+                     add_percentage_cols = 5, # with % symbol and 2dp
                      maxrows=16,
                      flip_order=FALSE)
 

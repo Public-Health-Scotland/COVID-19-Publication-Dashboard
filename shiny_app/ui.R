@@ -463,7 +463,7 @@ tagList(  #needed for shinyjs
       downloadButton('download_LFD_testgroup', 'Download test group data'),
       mainPanel(width = 12,
                 uiOutput("LFD_output"),
-                br3(), br3(), br3(),
+                br3(), br3(), br3()
                 )),
 
     tabPanel(
