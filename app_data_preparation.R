@@ -94,6 +94,8 @@ LFD<- read_csv("data/LFD_Board.csv")
 saveRDS(LFD, "data/LFD.rds")
 LFD_Weekly<- read_csv("data/LFD_Weekly.csv")
 saveRDS(LFD_Weekly, "data/LFD_Weekly.rds")
+LFD_TestGroup <- read_csv("data/LFD_TestGroup.csv")
+saveRDS(LFD_TestGroup, "data/LFD_TestGroup.rds")
 
 #read age/sex/deprivation data
 LabCases_AgeSex <- read_csv("data/LabCases_AgeSex.csv")

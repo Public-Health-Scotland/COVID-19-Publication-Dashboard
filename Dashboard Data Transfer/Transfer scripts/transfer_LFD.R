@@ -13,12 +13,21 @@ g_lfd <- i_lfd$`NHS Board`
 
 write.csv(g_lfd, glue("Test output/LFD_Board.csv"), row.names = FALSE)
 
-### b) Weekly trend 
+### b) Weekly trend
 
-g_lfdtrend <- i_lfd$`Number of Tests Weekly` %>% 
+g_lfdtrend <- i_lfd$`Number of Tests Weekly` %>%
   dplyr::rename(`Week Ending` = week_ending,
                 `Number of LFD Tests` = n) %>% head(-1) # Removing last entry as not complete
 
 write.csv(g_lfdtrend, glue("Test output/LFD_Weekly.csv"), row.names = FALSE)
 
-rm(i_lfd, g_lfd)
+### c) Weekly trend by test group
+
+g_lfdtestgroup <- i_lfd$`Test Groups Dashboard` %>%
+  dplyr::rename(`Week Ending` = week_ending,
+                `Test Group` = test_group)  %>%
+  filter(`Week Ending` < report_date) # Removing entries in the future
+
+write.csv(g_lfdtestgroup, glue("Test output/LFD_TestGroup.csv"), row.names = FALSE)
+
+rm(i_lfd, g_lfd, g_lfdtestgroup)

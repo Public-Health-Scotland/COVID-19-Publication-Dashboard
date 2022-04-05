@@ -460,9 +460,10 @@ tagList(  #needed for shinyjs
      hr(),
       downloadButton('download_LFD_weekly_data', 'Download weekly totals'),
       downloadButton('download_LFD_data', 'Download cumulative Health Board data'),
+      downloadButton('download_LFD_testgroup', 'Download test group data'),
       mainPanel(width = 12,
                 uiOutput("LFD_output"),
-                br3(), br3(), br3()
+                br3(), br3(), br3(),
                 )),
 
     tabPanel(
