@@ -8,7 +8,7 @@
 ## Data extraction dates ----
 
 #publication date
-pub_date <- as.Date("2022-02-16")
+pub_date <- as.Date("2022-04-06")
 
 Labcases_date <- format(pub_date - 3, "%d %B %Y")
 ICU_date <- format(pub_date - 4, "%d %B %Y")
@@ -174,7 +174,8 @@ Ethnicity_Chart <- readRDS("data/Ethnicity_Chart.rds")
 Care_Homes <- readRDS("data/Care_Homes.rds")
 
 # Care home time series
-CareHomeTimeSeries <- readRDS('data/CareHomeTimeSeries.rds')
+CareHomeTimeSeries <- readRDS('data/CareHomeTimeSeries.rds') %>%
+  head(-1)
 
 # Quarantine
 Quarantine <- readRDS("data/Quarantine.rds")
@@ -234,18 +235,18 @@ CTdata_list_chart_tab <- c ("Contact Tracing time performance %",
 
 
 CTdata_list_data_tab <- c (#"Contact Tracing Weekly by Health Board" = "ContactTracing",
-                           "Contact Tracing time performance measures" = "ContactTime",
-                         #  "Cases reporting an occupation in the Education and Childcare sector" = "ContactEC",
-                           "Cases recorded in contact tracing software" = "ContactWeeklyCases",
-                           "Cumulative cases recorded in contact tracing software" ="ContactTracingWeeklyCumulative",
-                           #"Average number of contacts per case" = "ContactTracingAveragesAge",
-                           "Number of Contacts Positive Within 10 Days of Exposure" = "ContactTracingTestingPositive",
-                           "Incomplete index cases by reason incomplete" = "ContactTracingFail",
-                           "Protect Scotland App" = "ProximityApp")
+  "Contact Tracing time performance measures" = "ContactTime",
+  #  "Cases reporting an occupation in the Education and Childcare sector" = "ContactEC",
+  "Cases recorded in contact tracing software" = "ContactWeeklyCases",
+  "Cumulative cases recorded in contact tracing software" ="ContactTracingWeeklyCumulative",
+  #"Average number of contacts per case" = "ContactTracingAveragesAge",
+  "Number of Contacts Positive Within 10 Days of Exposure" = "ContactTracingTestingPositive",
+  "Incomplete index cases by reason incomplete" = "ContactTracingFail",
+  "Protect Scotland App" = "ProximityApp")
 
-                            #"Index and contact cases by age" = "ContactTracingDemoAge",
-                           #"Index and contact cases by sex" = "ContactTracingDemoSex",
-                           #"Index and contact cases by SIMD quintile" = "ContactTracingDemoSIMD")
+#"Index and contact cases by age" = "ContactTracingDemoAge",
+#"Index and contact cases by sex" = "ContactTracingDemoSex",
+#"Index and contact cases by SIMD quintile" = "ContactTracingDemoSIMD")
 
 
 
