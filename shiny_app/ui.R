@@ -66,7 +66,7 @@ tagList(  #needed for shinyjs
              actionLink("jump_to_mtu", "'Targeted Community Testing' Tab.")),
           tags$li("Vaccine certification data can be found in the",
              actionLink("jump_to_vaccine", "'Vaccine Certification' Tab.")),
-
+             
           h3("Information"),
           tags$li("Metadata for this dashboard can be downloaded from the ",
                tags$a(
@@ -114,6 +114,7 @@ tagList(  #needed for shinyjs
                    href = "mailto:phs.comms@phs.scot",
                    "phs.comms@phs.scot",
                    class = "externallink")),"."),
+
           tags$li("The GitHub repository supporting this dashboard can be found ",
             tags$b(
               tags$a(
@@ -121,7 +122,7 @@ tagList(  #needed for shinyjs
                 "at this location",
                 class = "externallink")),".")#,
              # ".")
-    ), #tabPanel bracket
+             ), #tabPanel bracket
 
 
     #################### Trend Charts ----
@@ -147,9 +148,9 @@ tagList(  #needed for shinyjs
                  actionButton(inputId='ab1', label='Metadata',
                               icon = icon("th"),
                               onclick ="window.open('https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/',
-                            '_blank')"))
+                              '_blank')"))
 
-        ), #wellPanel bracket
+          ), #wellPanel bracket
 
         mainPanel(width = 12,
                   uiOutput("data_explorer")
@@ -163,12 +164,13 @@ tagList(  #needed for shinyjs
         icon = icon("table"),
         value = "table",
         p("This section allows you to view the data in table format.
-        You can use the filters to select the data you are interested in.
-        You can also download the data as a csv using the download button.
-        The data are also hosted in the",
+          You can use the filters to select the data you are interested in.
+          You can also download the data as a csv using the download button.
+          The data are also hosted in the",
           tags$a(href = "https://www.opendata.nhs.scot/dataset?groups=covid-19",
                  "Scottish Health and Social Care Open Data portal",
                  class = "externallink"),"."),
+
        tags$li("On 05 January 2022, the Scottish Government",
           tags$a(href= "https://www.gov.scot/news/self-isolation-and-testing-changes/",
                  "announced",
@@ -211,10 +213,10 @@ tagList(  #needed for shinyjs
                  value = "contacttracing",
                  p("Scotland’s approach to contact tracing has continued to adapt throughout the pandemic to reflect changing circumstances, variability in cases, and increasing proportion of the population fully
                    vaccinated since the roll out of the vaccination programme. The most recent",
-                 tags$a(href = "https://www.gov.scot/publications/coronavirus-covid-19-scotlands-strategic-framework-update-november-2021/",
-                        "Strategic Framework",
-                        class = "externallink"),
-                 "issued by the Scottish Government in November 2021 sets out how Scotland will continue to adapt now that we are in the phase described as “beyond level zero”. That will require a constant review
+                   tags$a(href = "https://www.gov.scot/publications/coronavirus-covid-19-scotlands-strategic-framework-update-november-2021/",
+                          "Strategic Framework",
+                          class = "externallink"),
+                   "issued by the Scottish Government in November 2021 sets out how Scotland will continue to adapt now that we are in the phase described as “beyond level zero”. That will require a constant review
                    of the associated management information compiled in the weekly report. The information we produce will change over time to reflect the most critical information to help understand, plan and deliver
                    contact tracing at any given point in time."),
                  p("On 05 January 2022, the Scottish Government",
@@ -249,15 +251,15 @@ tagList(  #needed for shinyjs
                           actionButton(inputId='ab2', label='Metadata',
                                        icon = icon("th"),
                                        onclick ="window.open('https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/',
-                            '_blank')"))
+                                       '_blank')"))
 
-                 ), #wellPanel bracket
+                   ), #wellPanel bracket
 
                  mainPanel(width = 12,
                            uiOutput("ContactTracing_explorer")
                  )# mainPanel bracket
 
-               ),# tabpanel bracket
+                 ),# tabpanel bracket
 
                #################### Contact Tracing Data ----
                tabPanel(
@@ -290,41 +292,42 @@ tagList(  #needed for shinyjs
       br(),
       p(),
 
-      column(8,
-             selectInput("CTdata_select", "Select the data you want to explore.",
-                         choices = CTdata_list_data_tab)),
-      column(4, downloadButton('CTdownload_table_csv', 'Download data'),
-             fluidRow(br()),
-             actionButton(inputId='ab1', label='Metadata',
-                          icon = icon("th"),
-                          onclick ="window.open('https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/',
-                          '_blank')")),
 
-      mainPanel(width = 12,
-                uiOutput("CT_Data_Tab_table"))
+                 column(8,
+                        selectInput("CTdata_select", "Select the data you want to explore.",
+                                    choices = CTdata_list_data_tab)),
+                 column(4, downloadButton('CTdownload_table_csv', 'Download data'),
+                        fluidRow(br()),
+                        actionButton(inputId='ab1', label='Metadata',
+                                     icon = icon("th"),
+                                     onclick ="window.open('https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/',
+                                     '_blank')")),
 
-      ), # tabpanel bracket
+                 mainPanel(width = 12,
+                           uiOutput("CT_Data_Tab_table"))
 
-      tabPanel(
-        title = "Travel outside Scotland",
-        icon = icon("plane-departure"),
-        value = "travelData",
+                 ), # tabpanel bracket
 
-        h3("Travel outside of Scotland cases"),
-        p("Since 28 September 2020 fields have been available to record information about whether a case has travelled outside of Scotland.",
-         "The information in the chart and table below is collected on the contact tracing interview and is where outside of Scotland travel information is recorded.",
-          strong("Please note we are aware of an undercount for those travelled outside Scotland."),
-          strong("This is a data quality issue due to recording of the travel information."),
-          strong("From 16 February 2022 these data resources are no longer updated.")
-          ),
-        hr(),
-        downloadButton('download_travel_data', 'Download data'),
-        mainPanel(width = 12,
-                  plot_box("", "travel_chart"),
-                  DT::dataTableOutput("travel_table"))
+               tabPanel(
+                 title = "Travel outside Scotland",
+                 icon = icon("plane-departure"),
+                 value = "travelData",
 
-      ) # tabpanel bracket
-    ), # navbar menu bracket
+                 h3("Travel outside of Scotland cases"),
+                 p("Since 28 September 2020 fields have been available to record information about whether a case has travelled outside of Scotland.",
+                   "The information in the chart and table below is collected on the contact tracing interview and is where outside of Scotland travel information is recorded.",
+                   strong("Please note we are aware of an undercount for those travelled outside Scotland."),
+                   strong("This is a data quality issue due to recording of the travel information."),
+                   strong("From 16 February 2022 these data resources are no longer updated.")
+                 ),
+                 hr(),
+                 downloadButton('download_travel_data', 'Download data'),
+                 mainPanel(width = 12,
+                           plot_box("", "travel_chart"),
+                           DT::dataTableOutput("travel_table"))
+
+               ) # tabpanel bracket
+                 ), # navbar menu bracket
 
 
     #################### Setting Charts ----
@@ -379,8 +382,6 @@ tagList(  #needed for shinyjs
         and wards within mental health services where the anticipated length of stay is also over three months.
         A data collection was initially set up to monitor the expansion of testing starting in July 2020. "),
       p(strong("Please note: ")),
-      tags$li("These are developmental statistics and ongoing work is in place
-        to improve recording of data to increase accuracy (further information available in the metadata)" ),
       tags$li("This management information must be treated with caution as it may be subject to change as the quality of the data improves"),
       tags$li("Work was undertaken with Boards to improve the quality of the data and this collection has moved over to Public Health Scotland"),
     #  tags$li("Public Health Scotland is working closely with SG and Boards to improve data definitions and quality to ensure consistency across Scotland.
@@ -397,7 +398,7 @@ tagList(  #needed for shinyjs
         NHS Lanarkshire confirmed this does not represent a full week of testing since some was done after the reporting period."),
        p("You can use the filters to select the data you are interested in.
         You can also download the data as a csv using the download button."),
-      p(""),
+      p(strong("From 13 April, due to changes in testing policy, these data resources are no longer updated.")),
       br(),
 
       column(8,
@@ -412,7 +413,7 @@ tagList(  #needed for shinyjs
 
       mainPanel(width = 12,
                 DT::dataTableOutput("HCWtable_filtered"))
-    ),# tabpanel bracket
+      ),# tabpanel bracket
 
     tabPanel(
       title = "Care Homes Data",
@@ -420,11 +421,14 @@ tagList(  #needed for shinyjs
       value = "CHData",
 
       h3('Testing in Care Homes'),
-      tags$li('As of 06 April 2022, Public Health Scotland took over reporting of weekly data on COVID-19 ',
-        'cases in adult Care Homes in Scotland.'),
-      tags$li('A positive case includes both new infections and ',
+      tags$li('As of 06 April 2022, Public Health Scotland are reporting weekly data on COVID-19 ',
+        'cases in adult Care Homes in Scotland, previously reported by the ',
+        tags$a(href="https://www.gov.scot/publications/coronavirus-covid-19-daily-data-for-scotland/",
+               "Scottish Government.",
+               class = "externallink")),
+        tags$li(' A positive case includes both new infections and ',
         'possible reinfections.'),
-      tags$li(' Possible reinfections are defined as individuals who tests positive ',
+         tags$li('Possible reinfections are defined as individuals who test positive ',
         'by PCR (polymerase chain reaction) or LFD (lateral flow device), 90 or more clear days ',
         'after their last positive test. '),
       tags$li('Data Sources: PCR - UK Gov and NHS Labs; LFD – Self ',
@@ -435,7 +439,7 @@ tagList(  #needed for shinyjs
       mainPanel(width = 12,
                 DT::dataTableOutput('CareHomeSeriesTable'),
                 plotlyOutput( 'CareHomeSeriesGraph', width='100%' )
-                ),
+      ),
 
       h3("Number of Staff and Residents in Care Homes with Confirmed COVID-19"),
       tags$li("As of 20 January 2021, Public Health Scotland took over reporting of weekly data on COVID-19 in adult Care Homes in Scotland."),
@@ -509,40 +513,40 @@ tagList(  #needed for shinyjs
                 br3(), br3(), br3()
                 )),
 
-    tabPanel(
-      title = "LFD demographic",
-      icon = icon("user-friends"),
-      value = "LFTdemoData",
+      tabPanel(
+        title = "LFD demographic",
+        icon = icon("user-friends"),
+        value = "LFTdemoData",
 
 
-      h3("LFD Test Demographics"),
-      p("This section allows you to view the total number of individuals tested and the
-              number of individuals testing positive at least once within Scotland. Data available by
-              age & gender and Scottish Index of Multiple Deprivation (SIMD) quintile (where SIMD 1 is the most deprived and SIMD 5 is the least deprived - see",
-        tags$a(
-          href = "https://www.gov.scot/collections/scottish-index-of-multiple-deprivation-2020/?utm_source=redirect&utm_medium=shorturl&utm_campaign=simd",
-          "here for more information.)",
-          class = "externallink") ),
-      p(glue("Data were extracted on {LFD_demo_date}. The data in this tab only cover submissions with a valid CHI.")),
+        h3("LFD Test Demographics"),
+        p("This section allows you to view the total number of individuals tested and the
+          number of individuals testing positive at least once within Scotland. Data available by
+          age & gender and Scottish Index of Multiple Deprivation (SIMD) quintile (where SIMD 1 is the most deprived and SIMD 5 is the least deprived - see",
+          tags$a(
+            href = "https://www.gov.scot/collections/scottish-index-of-multiple-deprivation-2020/?utm_source=redirect&utm_medium=shorturl&utm_campaign=simd",
+            "here for more information.)",
+            class = "externallink") ),
+        p(glue("Data were extracted on {LFD_demo_date}. The data in this tab only cover submissions with a valid CHI.")),
 
-      hr(),
-      fluidRow(
-        column(width = 6,
-               div(title = "people_output_select", # tooltip
-                   selectInput("people_output_selection", label = "Demographic Selection",
-                               choices = people_output_selection))),
-        column(width = 6,
-               div(title = "plot_output_select", # tooltip
-                   selectInput("plot_output_selection", label = "Output Selection",
-                               choices = plot_output_selection)))
-      ), #fluidRow bracket
+        hr(),
+        fluidRow(
+          column(width = 6,
+                 div(title = "people_output_select", # tooltip
+                     selectInput("people_output_selection", label = "Demographic Selection",
+                                 choices = people_output_selection))),
+          column(width = 6,
+                 div(title = "plot_output_select", # tooltip
+                     selectInput("plot_output_selection", label = "Output Selection",
+                                 choices = plot_output_selection)))
+        ), #fluidRow bracket
 
-      hr(),
-      uiOutput("people_tab"),
+        hr(),
+        uiOutput("people_tab"),
 
-      br3(), br3(), br3()
+        br3(), br3(), br3()
 
-    )
+        )
     ),
 
     ### Mobile Testing Units
@@ -555,16 +559,16 @@ tagList(  #needed for shinyjs
                "Use the dropdown to explore the outputs which detail the numbers of tests carried out by the Community Testing Programme."),
 
 
-               selectInput(inputId = "MTU_select", width = "100%",
-                           label = "Use the Dropdown Menu to Select an Output",
-                           choices =  list("Key Points" = "summary",
+             selectInput(inputId = "MTU_select", width = "100%",
+                         label = "Use the Dropdown Menu to Select an Output",
+                         choices =  list("Key Points" = "summary",
                                          #  "Test Centre Details" = "details",
-                                           "Community Testing Over Time" = "heatmap",
-                                           "Cumulative Totals" = "cumul_totals",
-                                           "Data" = "data")),
+                                         "Community Testing Over Time" = "heatmap",
+                                         "Cumulative Totals" = "cumul_totals",
+                                         "Data" = "data")),
 
              mainPanel(width = 12,
-               uiOutput("MTUOutputs")
+                       uiOutput("MTUOutputs")
              )),
 
     ### Vaccines
@@ -614,5 +618,5 @@ tagList(  #needed for shinyjs
     ## End -----------
 
       ) # page bracket
-             ) # taglist bracket
+  ) # taglist bracket
 ##END
