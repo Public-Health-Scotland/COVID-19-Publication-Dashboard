@@ -26,7 +26,14 @@ write.csv(g_lfdtrend, glue("Test output/LFD_Weekly.csv"), row.names = FALSE)
 g_lfdtestgroup <- i_lfd$`Test Groups Dashboard` %>%
   dplyr::rename(`Week Ending` = week_ending,
                 `Test Group` = test_group)  %>%
-  filter(`Week Ending` < report_date) # Removing entries in the future
+  filter(`Week Ending` < report_date) %>%  # Removing entries in the future
+  mutate(`Number of Positive Tests` = ifelse(`Number of Positive Tests` < 5,
+                                             "*",
+                                             `Number of Positive Tests`),
+         `Percentage LFD positive` = ifelse(`Number of Positive Tests` == "*",
+                                            "*",
+                                            `Percentage LFD positive`))
+
 
 write.csv(g_lfdtestgroup, glue("Test output/LFD_TestGroup.csv"), row.names = FALSE)
 

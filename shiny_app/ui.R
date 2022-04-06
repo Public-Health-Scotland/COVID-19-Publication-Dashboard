@@ -40,7 +40,7 @@ tagList(  #needed for shinyjs
              tags$li("Targeted Community Testing"),
              tags$li("Vaccine Certification"),
              br(),
-          #   p(strong("Please Note: SAS data by Age, Sex and SIMD, and Settings data are not availble for the 05/05/21 publication of this dashboard. Please expect this to be updated next week (12/05/21).")),
+             #   p(strong("Please Note: SAS data by Age, Sex and SIMD, and Settings data are not availble for the 05/05/21 publication of this dashboard. Please expect this to be updated next week (12/05/21).")),
              p("Interactive charts on each of the topics are available in the ",
                actionLink("jump_to_summary", "'Trend Charts' tab.")),
              p("The underlying data used to create the interactive charts can be downloaded using the ",
@@ -56,15 +56,15 @@ tagList(  #needed for shinyjs
              p("The Care Homes Data can be downloaded using the ",
                actionLink("jump_to_CH", "'Care Home Data' tab.")),
              p("The quarantine data can be downloaded using the ",
-             actionLink("jump_to_quarantine", "'Quarantine Data' tab.")),
+               actionLink("jump_to_quarantine", "'Quarantine Data' tab.")),
              p("The LFD trend data can be downloaded using the ",
-             actionLink("jump_to_LFD", "'LFD' tab.")),
+               actionLink("jump_to_LFD", "'LFD' tab.")),
              p("The LFD demographic data can be downloaded using the ",
-             actionLink("jump_to_LFTdemo", "'LFD demographic' tab.")),
+               actionLink("jump_to_LFTdemo", "'LFD demographic' tab.")),
              p("Data surrounding Targeted Community Testing can be found in the",
-             actionLink("jump_to_mtu", "'Targeted Community Testing' Tab.")),
+               actionLink("jump_to_mtu", "'Targeted Community Testing' Tab.")),
              p("Vaccine certification data can be found in the",
-             actionLink("jump_to_vaccine", "'Vaccine Certification' Tab.")),
+               actionLink("jump_to_vaccine", "'Vaccine Certification' Tab.")),
 
 
              p("Metadata for this dashboard can be downloaded from the ",
@@ -113,14 +113,14 @@ tagList(  #needed for shinyjs
                    href = "mailto:phs.comms@phs.scot",
                    "phs.comms@phs.scot",
                    class = "externallink")),"."),
-          p("The GitHub repository supporting this dashboard can be found ",
-            tags$b(
-              tags$a(
-                href = "https://github.com/Public-Health-Scotland/COVID-19-Publication-Dashboard",
-                "at this location",
-                class = "externallink")),".")#,
+             p("The GitHub repository supporting this dashboard can be found ",
+               tags$b(
+                 tags$a(
+                   href = "https://github.com/Public-Health-Scotland/COVID-19-Publication-Dashboard",
+                   "at this location",
+                   class = "externallink")),".")#,
              # ".")
-    ), #tabPanel bracket
+             ), #tabPanel bracket
 
 
     #################### Trend Charts ----
@@ -146,9 +146,9 @@ tagList(  #needed for shinyjs
                  actionButton(inputId='ab1', label='Metadata',
                               icon = icon("th"),
                               onclick ="window.open('https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/',
-                            '_blank')"))
+                              '_blank')"))
 
-        ), #wellPanel bracket
+          ), #wellPanel bracket
 
         mainPanel(width = 12,
                   uiOutput("data_explorer")
@@ -162,35 +162,35 @@ tagList(  #needed for shinyjs
         icon = icon("table"),
         value = "table",
         p("This section allows you to view the data in table format.
-        You can use the filters to select the data you are interested in.
-        You can also download the data as a csv using the download button.
-        The data are also hosted in the",
+          You can use the filters to select the data you are interested in.
+          You can also download the data as a csv using the download button.
+          The data are also hosted in the",
           tags$a(href = "https://www.opendata.nhs.scot/dataset?groups=covid-19",
                  "Scottish Health and Social Care Open Data portal",
                  class = "externallink"),"."),
-       tags$li("On 05 January 2022, the Scottish Government",
-          tags$a(href= "https://www.gov.scot/news/self-isolation-and-testing-changes/",
-                 "announced",
-                 class = "externallink"),
-          "that asymptomatic people who return a positive lateral flow device (LFD) no longer have to confirm their positive result with a PCR test."),
-       tags$li(strong(style="color:black", "From 01 March 2022, PHS now include episodes of reinfection within COVID-19 reporting.
-                 Prior to this date COVID-19 cases were based on an individual’s first positive test result only.
-                 The new daily calculation includes both new infections and possible reinfections.
-                 Possible reinfections are defined as individuals who test positive, by PCR (polymerase chain reaction) or LFD (lateral flow device), 90 days or more after their last positive test.",
-                 "More information available on the Public Health Scotland website",
-                 tags$a(href="https://publichealthscotland.scot/news/2022/february/covid-19-reporting-to-include-further-data-on-reinfections/",
-                        "here.", class="externallink"))),
+        tags$li("On 05 January 2022, the Scottish Government",
+                tags$a(href= "https://www.gov.scot/news/self-isolation-and-testing-changes/",
+                       "announced",
+                       class = "externallink"),
+                "that asymptomatic people who return a positive lateral flow device (LFD) no longer have to confirm their positive result with a PCR test."),
+        tags$li(strong(style="color:black", "From 01 March 2022, PHS now include episodes of reinfection within COVID-19 reporting.
+                       Prior to this date COVID-19 cases were based on an individual’s first positive test result only.
+                       The new daily calculation includes both new infections and possible reinfections.
+                       Possible reinfections are defined as individuals who test positive, by PCR (polymerase chain reaction) or LFD (lateral flow device), 90 days or more after their last positive test.",
+                       "More information available on the Public Health Scotland website",
+                       tags$a(href="https://publichealthscotland.scot/news/2022/february/covid-19-reporting-to-include-further-data-on-reinfections/",
+                              "here.", class="externallink"))),
 
-#       tags$li("In the process of updating the hospital admissions reporting to include reinfections, we have had to review existing methodology.
-#         In order to provide the best possible linkage of COVID-19 cases to hospital admissions, each admission record is required to have a discharge date,
-#         to allow us to better match the most appropriate COVID-19 positive episode details to an admission. This means that in cases where the discharge date
-#         is missing (either due to the patient still being treated, delays in discharge information being submitted, or date quality issues), it has to be estimated.
-#         Estimating a discharge date for historic records means that the average stay for those with missing dates is reduced, and fewer stays overlap with records of positive tests."),
-#       tags$li(strong("The result of these changes has meant that approximately 1,200 historic COVID-19 admissions have been removed due to improvements in methodology
-#                to handle missing discharge dates, while approximately 820 have been added to the cumulative total with inclusion of reinfections.")),
-       tags$li("Please note that the data on hospital admissions by ethnicity only refers to laboratory confirmed (PCR) COVID-19 tests."),
+        #       tags$li("In the process of updating the hospital admissions reporting to include reinfections, we have had to review existing methodology.
+        #         In order to provide the best possible linkage of COVID-19 cases to hospital admissions, each admission record is required to have a discharge date,
+        #         to allow us to better match the most appropriate COVID-19 positive episode details to an admission. This means that in cases where the discharge date
+        #         is missing (either due to the patient still being treated, delays in discharge information being submitted, or date quality issues), it has to be estimated.
+        #         Estimating a discharge date for historic records means that the average stay for those with missing dates is reduced, and fewer stays overlap with records of positive tests."),
+        #       tags$li(strong("The result of these changes has meant that approximately 1,200 historic COVID-19 admissions have been removed due to improvements in methodology
+        #                to handle missing discharge dates, while approximately 820 have been added to the cumulative total with inclusion of reinfections.")),
+        tags$li("Please note that the data on hospital admissions by ethnicity only refers to laboratory confirmed (PCR) COVID-19 tests."),
 
-       column(6,
+        column(6,
                selectInput("data_select", "Select the data you want to explore.",
                            choices = data_list_data_tab)),
         column(6, downloadButton('download_table_csv', 'Download data')),
@@ -209,10 +209,10 @@ tagList(  #needed for shinyjs
                  value = "contacttracing",
                  p("Scotland’s approach to contact tracing has continued to adapt throughout the pandemic to reflect changing circumstances, variability in cases, and increasing proportion of the population fully
                    vaccinated since the roll out of the vaccination programme. The most recent",
-                 tags$a(href = "https://www.gov.scot/publications/coronavirus-covid-19-scotlands-strategic-framework-update-november-2021/",
-                        "Strategic Framework",
-                        class = "externallink"),
-                 "issued by the Scottish Government in November 2021 sets out how Scotland will continue to adapt now that we are in the phase described as “beyond level zero”. That will require a constant review
+                   tags$a(href = "https://www.gov.scot/publications/coronavirus-covid-19-scotlands-strategic-framework-update-november-2021/",
+                          "Strategic Framework",
+                          class = "externallink"),
+                   "issued by the Scottish Government in November 2021 sets out how Scotland will continue to adapt now that we are in the phase described as “beyond level zero”. That will require a constant review
                    of the associated management information compiled in the weekly report. The information we produce will change over time to reflect the most critical information to help understand, plan and deliver
                    contact tracing at any given point in time."),
                  p("On 05 January 2022, the Scottish Government",
@@ -247,78 +247,78 @@ tagList(  #needed for shinyjs
                           actionButton(inputId='ab2', label='Metadata',
                                        icon = icon("th"),
                                        onclick ="window.open('https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/',
-                            '_blank')"))
+                                       '_blank')"))
 
-                 ), #wellPanel bracket
+                   ), #wellPanel bracket
 
                  mainPanel(width = 12,
                            uiOutput("ContactTracing_explorer")
                  )# mainPanel bracket
 
-               ),# tabpanel bracket
+                 ),# tabpanel bracket
 
                #################### Contact Tracing Data ----
                tabPanel(
                  title = "Contact Tracing Data",
                  icon = icon("table"),
                  value = "CTtable",
-      p("This section allows you to view the contact tracing data and time performance indicators
-        in a table format."),
-      p("Please note that during a data quality exercise some historic figures have been revised."),
-      p("You can use the filters to select the data you are interested in.
-        You can also download the data as a csv using the download button."),
-      p("On 05 January 2022, the Scottish Government",
-        tags$a(href= "https://www.gov.scot/news/self-isolation-and-testing-changes/",
-               "announced",
-               class = "externallink"),
-        "that asymptomatic people who return a positive lateral flow device (LFD) no longer have to confirm their positive result with a PCR test."),
-      p(strong(style="color:black", "From 01 March 2022, PHS now include episodes of reinfection within COVID-19 reporting.
+                 p("This section allows you to view the contact tracing data and time performance indicators
+                   in a table format."),
+                 p("Please note that during a data quality exercise some historic figures have been revised."),
+                 p("You can use the filters to select the data you are interested in.
+                   You can also download the data as a csv using the download button."),
+                 p("On 05 January 2022, the Scottish Government",
+                   tags$a(href= "https://www.gov.scot/news/self-isolation-and-testing-changes/",
+                          "announced",
+                          class = "externallink"),
+                   "that asymptomatic people who return a positive lateral flow device (LFD) no longer have to confirm their positive result with a PCR test."),
+                 p(strong(style="color:black", "From 01 March 2022, PHS now include episodes of reinfection within COVID-19 reporting.
                           Prior to this date COVID-19 cases were based on an individual’s first positive test result only.
                           The new daily calculation includes both new infections and possible reinfections.
                           Possible reinfections are defined as individuals who test positive, by PCR (polymerase chain reaction) or LFD (lateral flow device), 90 days or more after their last positive test.
                           Currently hospital admissions do not include reinfections, although this will be updated in coming weeks.",
-               "More information available on the Public Health Scotland website",
-               tags$a(href="https://publichealthscotland.scot/news/2022/february/covid-19-reporting-to-include-further-data-on-reinfections/",
-                      "here.", class="externallink"))),
-      p(),
-      strong(''),
-      p(),
+                          "More information available on the Public Health Scotland website",
+                          tags$a(href="https://publichealthscotland.scot/news/2022/february/covid-19-reporting-to-include-further-data-on-reinfections/",
+                                 "here.", class="externallink"))),
+                 p(),
+                 strong(''),
+                 p(),
 
-      column(8,
-             selectInput("CTdata_select", "Select the data you want to explore.",
-                         choices = CTdata_list_data_tab)),
-      column(4, downloadButton('CTdownload_table_csv', 'Download data'),
-             fluidRow(br()),
-             actionButton(inputId='ab1', label='Metadata',
-                          icon = icon("th"),
-                          onclick ="window.open('https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/',
-                          '_blank')")),
+                 column(8,
+                        selectInput("CTdata_select", "Select the data you want to explore.",
+                                    choices = CTdata_list_data_tab)),
+                 column(4, downloadButton('CTdownload_table_csv', 'Download data'),
+                        fluidRow(br()),
+                        actionButton(inputId='ab1', label='Metadata',
+                                     icon = icon("th"),
+                                     onclick ="window.open('https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/',
+                                     '_blank')")),
 
-      mainPanel(width = 12,
-                uiOutput("CT_Data_Tab_table"))
+                 mainPanel(width = 12,
+                           uiOutput("CT_Data_Tab_table"))
 
-      ), # tabpanel bracket
+                 ), # tabpanel bracket
 
-      tabPanel(
-        title = "Travel outside Scotland",
-        icon = icon("plane-departure"),
-        value = "travelData",
+               tabPanel(
+                 title = "Travel outside Scotland",
+                 icon = icon("plane-departure"),
+                 value = "travelData",
 
-        h3("Travel outside of Scotland cases"),
-        p("Since 28 September 2020 fields have been available to record information about whether a case has travelled outside of Scotland.",
-         "The information in the chart and table below is collected on the contact tracing interview and is where outside of Scotland travel information is recorded.",
-          strong("Please note we are aware of an undercount for those travelled outside Scotland."),
-          strong("This is a data quality issue due to recording of the travel information."),
-          strong("From 16 February 2022 these data resources are no longer updated.")
-          ),
-        hr(),
-        downloadButton('download_travel_data', 'Download data'),
-        mainPanel(width = 12,
-                  plot_box("", "travel_chart"),
-                  DT::dataTableOutput("travel_table"))
+                 h3("Travel outside of Scotland cases"),
+                 p("Since 28 September 2020 fields have been available to record information about whether a case has travelled outside of Scotland.",
+                   "The information in the chart and table below is collected on the contact tracing interview and is where outside of Scotland travel information is recorded.",
+                   strong("Please note we are aware of an undercount for those travelled outside Scotland."),
+                   strong("This is a data quality issue due to recording of the travel information."),
+                   strong("From 16 February 2022 these data resources are no longer updated.")
+                 ),
+                 hr(),
+                 downloadButton('download_travel_data', 'Download data'),
+                 mainPanel(width = 12,
+                           plot_box("", "travel_chart"),
+                           DT::dataTableOutput("travel_table"))
 
-      ) # tabpanel bracket
-    ), # navbar menu bracket
+               ) # tabpanel bracket
+                 ), # navbar menu bracket
 
 
     #################### Setting Charts ----
@@ -335,9 +335,9 @@ tagList(  #needed for shinyjs
       p(strong("Therefore, users of these data must exercise caution and cannot make inferences about the rank of settings and events where cases visited. The data presented below were analysed using data from the CMS which was designed for contact tracing purposes and not for identifying where transmission took place."), "This information is collected to help identify close contacts and to understand potential identification of source of exposure."),
       p("More information on event groupings can be found in the accompanying metadata document available on the",
         tags$a(
-                 href = "https://publichealthscotland.scot/publications/covid-19-statistical-report",
-                 "weekly statistical report page.",
-                 class = "externallink") ),
+          href = "https://publichealthscotland.scot/publications/covid-19-statistical-report",
+          "weekly statistical report page.",
+          class = "externallink") ),
       p(strong(style = "color:black", "From 28 August due to changes in contact tracing, these data resources are no longer updated.")),
       br(),
       p(strong(" ")),
@@ -371,24 +371,22 @@ tagList(  #needed for shinyjs
         and wards within mental health services where the anticipated length of stay is also over three months.
         A data collection was initially set up to monitor the expansion of testing starting in July 2020. "),
       p("This section shows weekly trend data, broken down by health board"),
-      p(strong("Please note these are developmental statistics and ongoing work is in place
-        to improve recording of data to increase accuracy (further information available in the metadata)." )),
-     p("Work was undertaken with Boards to improve the quality of the data and this collection has moved over to Public Health Scotland."),
-       p(strong("This management information must be treated with caution as it may be subject to change as the quality of the data improves.")),
+      p("Work was undertaken with Boards to improve the quality of the data and this collection has moved over to Public Health Scotland."),
+      p(strong("This management information must be treated with caution as it may be subject to change as the quality of the data improves.")),
       p("Public Health Scotland is working closely with SG and Boards to improve data definitions and quality to ensure consistency across Scotland.
         As a result, data may be revised in subsequent weeks and any changes will be clearly signposted. "),
-      p(strong("Please note some of the data are suppressed due to disclosure methodology being applied to protect patient/staff confidentiality")),
+      p(strong("Please note some of the data are suppressed due to disclosure methodology being applied to protect patient/staff confidentiality.")),
       p("Additional information:"),
-        tags$li("NHS Borders, NHS Fife and NHS Forth Valley advised they do not have any Long Stay Care of the Elderly units
-        that meet the 3 month criteria"),
-        tags$li("NHS Highland, NHS Tayside, NHS Orkney, NHS Shetland, and NHS Western Isles advised they do not have any long stay care of the elderly wards."),
-        tags$li("NHS Greater Glasgow & Clyde advised that over recent years they have significantly reduced the number of long stay beds for older people and invested in care at home and care homes
-        hence the low number of wards affected compared to other NHS Boards."),
-        tags$li("NHS Lanarkshire include one of the Care of the Elderly Units for reporting purposes.
-        NHS Lanarkshire confirmed this does not represent a full week of testing since some was done after the reporting period."),
-       p("You can use the filters to select the data you are interested in.
+      tags$li("NHS Borders, NHS Fife and NHS Forth Valley advised they do not have any Long Stay Care of the Elderly units
+              that meet the 3 month criteria"),
+      tags$li("NHS Highland, NHS Tayside, NHS Orkney, NHS Shetland, and NHS Western Isles advised they do not have any long stay care of the elderly wards."),
+      tags$li("NHS Greater Glasgow & Clyde advised that over recent years they have significantly reduced the number of long stay beds for older people and invested in care at home and care homes
+              hence the low number of wards affected compared to other NHS Boards."),
+      tags$li("NHS Lanarkshire include one of the Care of the Elderly Units for reporting purposes.
+              NHS Lanarkshire confirmed this does not represent a full week of testing since some was done after the reporting period."),
+      p("You can use the filters to select the data you are interested in.
         You can also download the data as a csv using the download button."),
-      p(""),
+      p(strong("From 13 April, due to changes in testing policy, these data resources are no longer updated.")),
 
       column(8,
              selectInput("HCWdata_select", "Select the data you want to explore.",
@@ -402,16 +400,20 @@ tagList(  #needed for shinyjs
 
       mainPanel(width = 12,
                 DT::dataTableOutput("HCWtable_filtered"))
-    ),# tabpanel bracket
+      ),# tabpanel bracket
 
     tabPanel(
       title = "Care Homes Data",
       icon = icon("home"),
       value = "CHData",
-      
+
       h3('Testing in Care Homes'),
-      p('As of 06 April 2022, Public Health Scotland took over reporting of weekly data on COVID-19 ',
-        'cases in adult Care Homes in Scotland. A positive case includes both new infections and ',
+      p('As of 06 April 2022, Public Health Scotland are reporting weekly data on COVID-19 ',
+        'cases in adult Care Homes in Scotland, previously reported by the ',
+        tags$a(href="https://www.gov.scot/publications/coronavirus-covid-19-daily-data-for-scotland/",
+               "Scottish Government.",
+               class = "externallink"),
+        ' A positive case includes both new infections and ',
         'possible reinfections. Possible reinfections are defined as individuals who tests positive ',
         'by PCR (polymerase chain reaction) or LFD (lateral flow device), 90 or more clear days ',
         'after their last positive test. Data Sources: PCR - UK Gov and NHS Labs; LFD – Self ',
@@ -421,7 +423,7 @@ tagList(  #needed for shinyjs
       mainPanel(width = 12,
                 DT::dataTableOutput('CareHomeSeriesTable'),
                 plotlyOutput( 'CareHomeSeriesGraph', width='100%' )
-                ),
+      ),
 
       h3("Number of Staff and Residents in Care Homes with Confirmed COVID-19"),
       p("As of 20 January 2021, Public Health Scotland took over reporting of weekly data on COVID-19 in adult Care Homes in Scotland – data prior to 11 January 2021 can be found on the ", a(href = "https://www.gov.scot/publications/coronavirus-covid-19-additional-data-about-adult-care-homes-in-scotland/", "Scottish Government website."),
@@ -449,7 +451,7 @@ tagList(  #needed for shinyjs
         "Up to 23 June 2021, a sample of those individuals quarantining at home were contacted by the NCC. These calls were paused in order to prioritise contact tracing.  Since 13 July 2021, these call have resumed.",
         "All travellers (except those exempt and those under 18 years of age) will receive an email, providing them with appropriate public health information on self-isolation and testing.  Unvaccinated travellers arriving from an Amber country are also called by the NCC.",
         "Fully vaccinated travellers arriving from an Amber country, or travellers arriving from a Green country, receive a SMS and email.  Arrivals from a Red country receive an email and continue to be managed via quarantine.  Travellers under the age of 18 are not contacted."
-        ),
+      ),
       p(strong(style = "color:black", "From 09 February these data resources are no longer updated. ")),
       hr(),
       downloadButton('download_quarantine_data', 'Download data'),
@@ -462,59 +464,59 @@ tagList(  #needed for shinyjs
       title = "LFDs",
       icon = icon("thermometer"),
 
-    tabPanel(
-      title = "LFD Testing",
-      icon = icon("file-medical"),
-      value = "LFDData",
+      tabPanel(
+        title = "LFD Testing",
+        icon = icon("file-medical"),
+        value = "LFDData",
 
-      h3("Lateral Flow Device Testing"),
-      p("Across Scotland, there are numerous testing pathways being rolled out using Lateral Flow Devices (LFD) - a clinically validated swab antigen test taken that does not require a laboratory for processing. This test can produce rapid results within 45 minutes at the location of the test. \n \n",
-        "Some of the areas using LFD tests are: schools, health and social care workers, care homes and more. Public Health Scotland has collected the information on the number of LFD tests carried out across Scotland and will now publish this information weekly. \n \n",
-        "LFD testing in Scotland expanded from 26 April 2021, with everyone able to access rapid COVID-19 testing even if they had no symptoms. Any individual who receives a positive test result using a Lateral Flow Device is advised to self-isolate and arrange for a confirmatory PCR test.",
-        "The PCR result will determine the number of cases of COVID-19 in Scotland."),
-     hr(),
-      downloadButton('download_LFD_weekly_data', 'Download weekly totals'),
-      downloadButton('download_LFD_data', 'Download cumulative Health Board data'),
-      downloadButton('download_LFD_testgroup', 'Download test group data'),
-      mainPanel(width = 12,
-                uiOutput("LFD_output"),
-                br3(), br3(), br3()
-                )),
+        h3("Lateral Flow Device Testing"),
+        p("Across Scotland, there are numerous testing pathways being rolled out using Lateral Flow Devices (LFD) - a clinically validated swab antigen test taken that does not require a laboratory for processing. This test can produce rapid results within 45 minutes at the location of the test. \n \n",
+          "Some of the areas using LFD tests are: schools, health and social care workers, care homes and more. Public Health Scotland has collected the information on the number of LFD tests carried out across Scotland and will now publish this information weekly. \n \n",
+          "LFD testing in Scotland expanded from 26 April 2021, with everyone able to access rapid COVID-19 testing even if they had no symptoms. Any individual who receives a positive test result using a Lateral Flow Device is advised to self-isolate and arrange for a confirmatory PCR test.",
+          "The PCR result will determine the number of cases of COVID-19 in Scotland."),
+        hr(),
+        downloadButton('download_LFD_weekly_data', 'Download weekly totals'),
+        downloadButton('download_LFD_data', 'Download cumulative Health Board data'),
+        downloadButton('download_LFD_testgroup', 'Download test group data'),
+        mainPanel(width = 12,
+                  uiOutput("LFD_output"),
+                  br3(), br3(), br3()
+        )),
 
-    tabPanel(
-      title = "LFD demographic",
-      icon = icon("user-friends"),
-      value = "LFTdemoData",
+      tabPanel(
+        title = "LFD demographic",
+        icon = icon("user-friends"),
+        value = "LFTdemoData",
 
 
-      h3("LFD Test Demographics"),
-      p("This section allows you to view the total number of individuals tested and the
-              number of individuals testing positive at least once within Scotland. Data available by
-              age & gender and Scottish Index of Multiple Deprivation (SIMD) quintile (where SIMD 1 is the most deprived and SIMD 5 is the least deprived - see",
-        tags$a(
-          href = "https://www.gov.scot/collections/scottish-index-of-multiple-deprivation-2020/?utm_source=redirect&utm_medium=shorturl&utm_campaign=simd",
-          "here for more information.)",
-          class = "externallink") ),
-      p(glue("Data were extracted on {LFD_demo_date}. The data in this tab only cover submissions with a valid CHI.")),
+        h3("LFD Test Demographics"),
+        p("This section allows you to view the total number of individuals tested and the
+          number of individuals testing positive at least once within Scotland. Data available by
+          age & gender and Scottish Index of Multiple Deprivation (SIMD) quintile (where SIMD 1 is the most deprived and SIMD 5 is the least deprived - see",
+          tags$a(
+            href = "https://www.gov.scot/collections/scottish-index-of-multiple-deprivation-2020/?utm_source=redirect&utm_medium=shorturl&utm_campaign=simd",
+            "here for more information.)",
+            class = "externallink") ),
+        p(glue("Data were extracted on {LFD_demo_date}. The data in this tab only cover submissions with a valid CHI.")),
 
-      hr(),
-      fluidRow(
-        column(width = 6,
-               div(title = "people_output_select", # tooltip
-                   selectInput("people_output_selection", label = "Demographic Selection",
-                               choices = people_output_selection))),
-        column(width = 6,
-               div(title = "plot_output_select", # tooltip
-                   selectInput("plot_output_selection", label = "Output Selection",
-                               choices = plot_output_selection)))
-      ), #fluidRow bracket
+        hr(),
+        fluidRow(
+          column(width = 6,
+                 div(title = "people_output_select", # tooltip
+                     selectInput("people_output_selection", label = "Demographic Selection",
+                                 choices = people_output_selection))),
+          column(width = 6,
+                 div(title = "plot_output_select", # tooltip
+                     selectInput("plot_output_selection", label = "Output Selection",
+                                 choices = plot_output_selection)))
+        ), #fluidRow bracket
 
-      hr(),
-      uiOutput("people_tab"),
+        hr(),
+        uiOutput("people_tab"),
 
-      br3(), br3(), br3()
+        br3(), br3(), br3()
 
-    )
+        )
     ),
 
     ### Mobile Testing Units
@@ -527,16 +529,16 @@ tagList(  #needed for shinyjs
                "Use the dropdown to explore the outputs which detail the numbers of tests carried out by the Community Testing Programme."),
 
 
-               selectInput(inputId = "MTU_select", width = "100%",
-                           label = "Use the Dropdown Menu to Select an Output",
-                           choices =  list("Key Points" = "summary",
+             selectInput(inputId = "MTU_select", width = "100%",
+                         label = "Use the Dropdown Menu to Select an Output",
+                         choices =  list("Key Points" = "summary",
                                          #  "Test Centre Details" = "details",
-                                           "Community Testing Over Time" = "heatmap",
-                                           "Cumulative Totals" = "cumul_totals",
-                                           "Data" = "data")),
+                                         "Community Testing Over Time" = "heatmap",
+                                         "Cumulative Totals" = "cumul_totals",
+                                         "Data" = "data")),
 
              mainPanel(width = 12,
-               uiOutput("MTUOutputs")
+                       uiOutput("MTUOutputs")
              )),
 
     ### Vaccines
@@ -552,7 +554,7 @@ tagList(  #needed for shinyjs
         " download a PDF copy of your status from the app or ", tags$a(href="https://www.nhsinform.scot/nhs-scotland-covid-status/", "get a paper record of your vaccine status from NHS Inform.", class="externallink")),
       p("Vaccine certifications are no longer legally required in Scotland. The app will remain available so any business that wishes to continue certification on a voluntary basis to reassure customers will be able to do so."),
       p("Check the vaccine certification scheme guidance for ", tags$a(href="https://www.gov.scot/publications/coronavirus-covid-19-certification-businesses-event-organisers/", "businesses and event organisers", class="externallink"),  " and for ",
-      tags$a(href="https://www.gov.scot/publications/coronavirus-covid-19-certification-information-for-customers/", "customers.", class="externallink")),
+        tags$a(href="https://www.gov.scot/publications/coronavirus-covid-19-certification-information-for-customers/", "customers.", class="externallink")),
       p("For further information, you can refer to ", tags$a(href="https://www.gov.scot/news/living-safely-with-covid/", "https://www.gov.scot/news/living-safely-with-covid/.", class="externallink")),
       p(glue("The figures in the table below are for up to midnight on {vaccine_cert_date}.")),
       hr(),
@@ -586,5 +588,5 @@ tagList(  #needed for shinyjs
     ## End -----------
 
       ) # page bracket
-             ) # taglist bracket
+  ) # taglist bracket
 ##END
