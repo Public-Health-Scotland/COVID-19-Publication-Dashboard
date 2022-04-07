@@ -336,7 +336,13 @@ care_homes <- read_csv("data/CareHomes.csv") %>%
           # Suppression stuff
           across( contains('with Confirmed'), as.numeric ),
           across( contains('with Confirmed'), 
-                  function(x) { if_else( is.na(x) | between(x,1,4), '*', as.character(x) ) } ) )
+                  function(x) { if_else( is.na(x) | between(x,1,4), '*', as.character(x) ) } ) ) %>% 
+  rename(
+    # Ugh long names
+    `Number Staff in Care Homes with COVID-19`=`Number Staff in Care Homes with Confirmed COVID-19`,
+    `Number of Residents in Care Homes with COVID-19` =  `Number of Residents in Care Homes with Confirmed COVID-19`,
+    `Number of Staff in Care Homes with no COVID-19` = `Number of Staff in Care Homes with no Confirmed COVID-19 Cases`
+    )
 saveRDS(care_homes, "data/Care_Homes.rds")
 
 
