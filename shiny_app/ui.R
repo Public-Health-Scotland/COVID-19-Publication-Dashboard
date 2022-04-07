@@ -420,7 +420,7 @@ tagList(  #needed for shinyjs
       icon = icon("home"),
       value = "CHData",
 
-      h3('Testing in Care Homes'),
+      h3('Number of COVID-19 cases for care home residents and staff'),
       tags$li('As of 06 April 2022, Public Health Scotland are reporting weekly data on COVID-19 ',
         'cases in adult Care Homes in Scotland, previously reported by the ',
         tags$a(href="https://www.gov.scot/publications/coronavirus-covid-19-daily-data-for-scotland/",
@@ -441,12 +441,16 @@ tagList(  #needed for shinyjs
                 plotlyOutput( 'CareHomeSeriesGraph', width='100%' )
       ),
 
-      h3("Number of Staff and Residents in Care Homes with Confirmed COVID-19"),
+      h3("Numbers of staff and residents tested in care homes with (and without) confirmed COVID-19 cases"),
       tags$li("As of 20 January 2021, Public Health Scotland took over reporting of weekly data on COVID-19 in adult Care Homes in Scotland."),
       tags$li(" Data prior to 11 January 2021 can be found on the ", a(href = "https://www.gov.scot/publications/coronavirus-covid-19-additional-data-about-adult-care-homes-in-scotland/", "Scottish Government website.")),
       tags$li(
         "These data are provisional management information submitted to the Turas Care Home Management system by Care Homes, and details numbers of people (i.e. staff and residents) tested in the last week. "),
-      tags$li(" The numbers capture both those tests undertaken via NHS routes and those done via the Scottish Social Care portal. "),
+      tags$li("The numbers capture both those tests undertaken via NHS routes and those done via ",
+              "the Scottish Social Care portal and include the number of staff eligible for ",
+              "testing with an outbreak; the number of residents required for testing in homes ",
+              "without an outbreak; and the number of staff eligible for testing in homes without ",
+              "an outbreak."),
       tags$li("
         Figures are an undercount in some cases as complete data were not collected for all Care Homes."),
       tags$li("
