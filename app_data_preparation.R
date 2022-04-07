@@ -432,7 +432,7 @@ saveRDS(mtu_5, "data/TCT_KeyPoints.rds")
 
 ### Care home time series ----
 
-CareHomeTimeSeries <- read_xlsx(
+CareHomeTimeSeries <- read_excel(
   glue( '//PHI_conf/Real_Time_Epi/Routine_Reporting/Time_Series/Outputs/PCR_LFD',
         '/Care Home Time Series (PCRLFD Reinfections) {week_start}_all.xlsx' )
 ) %>% 
