@@ -129,6 +129,10 @@ AssessmentHub_SIMD <- readRDS("data/AssessmentHub_SIMD.rds")
 SAS_AgeSex <- readRDS("data/SAS_AgeSex.rds")
 SAS_SIMD <- readRDS("data/SAS_SIMD.rds")
 
+# Length of Stay Data
+LOS_Data = readRDS("data/Length_of_Stay.rds")%>%
+  filter(`Age Group` != "Unknown")
+
 Cases_Adm <- readRDS("data/Cases_Adm.rds")
 Cases_AgeGrp <- readRDS("data/Cases_AgeGrp.rds")
 Prop_Adm_AgeGrp = readRDS("data/Prop_Admitted_AgeGrp.rds")
@@ -270,6 +274,7 @@ data_list_data_tab <- c("Positive cases" = "LabCases",
                         "Proportion of weekly cases admitted to hospital within 14 days of a first positive test" = "Cases_Adm",
                         "Proportion of weekly cases admitted to hospital by age group" = "Prop_Adm_AgeGrp",
                         "Hospital admissions by ethnicity" = "Ethnicity",
+                        "Length of stay of acute hospital admissions by age group" = "LOS_Data",
                         "ICU admissions" = "ICU",
                         "ICU admissions by age" = "ICU_AgeSex",
                         "NHS24 contacts" = "NHS24",
@@ -305,6 +310,9 @@ pal_reinf <- c('#0078D4', '#9B4393')
 
 #for child charts
 pal_child <- c("#3F3685", "#9B4393", "#0078D4", "#83BB26", "#C73918", "#6B5C85")
+
+# Length of Stay - PHS Blues
+phs_blues <- c("#004785", "#00a2e5", "#4c7ea9")
 
 #for contact tracing charts
 #pal_CT <- c('#0078D4', '#3393DD', '#80BCEA',  '#B3D7F2','#000000')

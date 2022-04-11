@@ -305,6 +305,7 @@ if (input$measure_select == "LabCases") { #Positive Cases
           plot_box("Daily number of COVID-19 reinfections", plot_output = "LabCasesReinfections_overall"),
           plot_box("Cumulative rate per 100,000", plot_output = "LabCasesReinfectionsRate"),
           plot_box("Percentage of cases that are reinfections", plot_output = "ReinfectionsBarchart"))
+
   }else if (input$measure_select == "Admissions") { #Admissions
   tagList(actionButton("btn_modal_simd", "What is SIMD?", icon = icon('question-circle')),
           p("On 05 January 2022, the Scottish Government",
@@ -321,6 +322,25 @@ if (input$measure_select == "LabCases") { #Positive Cases
                           "here.", class="externallink"))),
     cut_charts_subheading(title= "Daily number of COVID-19 admissions to hospital",
                         source = data_source, data_name = "Admissions"),
+
+    h3("Length of stay of acute COVID-19 hospital admissions"),
+    p("Use the drop-down menu to select an age group of interest."),
+    p("Please note that in cases where there are no hospital admissions, there will be a gap in the chart."),
+    fluidRow(
+      column(3,
+             selectInput("los_age",
+                         label = "Select Age Group",
+                         choices = unique(LOS_Data$`Age Group`),
+                         selected = "All Ages") %>%
+               config(displaylogo = F,
+                      displayModeBar = TRUE,
+                      modeBarButtonsToRemove = bttn_remove )),
+      column(9,
+             renderPlotly({los_chart_fn(LOS_Data)}))
+
+      ),
+
+
   # percent admissions
   plot_box("Proportion of weekly cases admitted to hospital within 14 days of a first positive test",
            plot_output = "prop_admissions"),
@@ -431,6 +451,8 @@ output$LabCasesReinfectionsRate <- renderPlotly({plot_singlerate_chart(LabCasesR
 output$prop_admissions <- renderPlotly({plot_singletrace_chart(Cases_Adm, data_name = "Cases_Adm", include_vline=T)})
 #output$cases_age_groups <- renderPlotly({stacked_cases_age_chart(Cases_AgeGrp, data_name = "Cases_AgeGrp")})
 output$cases_age_groups <- renderPlotly({cases_age_chart_3_week(Cases_AgeGrp, data_name = "Cases_AgeGrp")})
+
+
 
 output$EthnicityChart <- renderPlotly({plot_overall_chartEthnicity(Ethnicity_Chart, data_name = "Ethnicity_Chart")})
 output$EthnicityChartPercentage <- renderPlotly({plot_overall_chartEthnicityPercent(Ethnicity_Chart, data_name = "Ethnicity_Chart")})
