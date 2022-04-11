@@ -27,11 +27,16 @@ library(readxl)
 # read_all_sheets
 library(friendlyloader)
 
-setwd("/conf/PHSCOVID19_Analysis/COVID-19-Publication-Dashboard/Dashboard Data Transfer")
+
+# Getting main script location for working directory
+path_main_script_location = dirname(rstudioapi::getActiveDocumentContext()$path)
+
+setwd(path_main_script_location)
 
 report_date <- floor_date(today(), "week", 1) + 2
 
-output_folder <- "/conf/PHSCOVID19_Analysis/COVID-19-Publication-Dashboard/shiny_app/data/"
+
+output_folder <- "/conf/C19_Test_and_Protect/Analyst Space/Ruben (Analyst Space)/COVID-19-Publication-Dashboard/shiny_app/data/"
 
 # Getting useful functions
 source("data_transfer_functions.R")
@@ -140,7 +145,9 @@ source("Transfer scripts/transfer_LFD.R")
 source("Transfer scripts/transfer_vaccinecert.R")
 
 
+##### 22. Length of Stay
 
+source("Transfer scripts/transfer_los.R")
 
 
 
