@@ -1334,7 +1334,32 @@ travel_outside_scotland_chart <- function(dataset, area = T){
 
 
 
+#### Length of Stay Chart
 
+los_chart_fn = function(data) {
+
+    table = data %>%
+      filter(`Age Group` == input$los_age) %>%
+      mutate(`Length of Stay` = factor(`Length of Stay`,
+                          levels = c("< 24 Hours",
+                                     "24-48 Hours",
+                                     ">= 48 Hours")))
+
+    table %>%
+      plot_ly(x = ~`Week Ending`,
+              y = ~prop*100,
+              color = ~`Length of Stay`,
+              type = 'bar',
+              colors = phs_blues,
+              marker = list(line = list(width=.5,
+                                        color = 'rgb(0,0,0)'))) %>%
+      layout(barmode = "stack",
+             yaxis = list(title = 'Percentage of Admissions',
+                          ticksuffix = "%"),
+             xaxis = list(title = 'Admission Date by Week Ending')) %>%
+      # leaving only save plot button
+      config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
+  }
 
 
 ### END

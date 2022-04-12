@@ -67,6 +67,12 @@ data_table <- reactive({  # Change dataset depending on what user selected
                        "Cases_Adm" = Cases_Adm %>% dplyr::rename('Week ending'= 'date',
                                                                  'Percentage of weekly cases'='count'),
 
+                       "LOS_Data" = LOS_Data %>% dplyr::mutate(prop = prop*100) %>%
+                         dplyr::select(`Week Ending`,
+                                       `Age Group`,
+                                       `Length of Stay`,
+                                       "Percentage of Age Group"=prop),
+
 
                        "Ethnicity" = Ethnicity,
 
@@ -329,6 +335,7 @@ table_params_data <- reactive({
                             "NHS24_SIMD" = c(3),
                             "AssessmentHub_SIMD" = c(3),
                             "SAS_SIMD" = c(3),
+                            "LOS_Data" = c(4),
                             c() # default
   )
 

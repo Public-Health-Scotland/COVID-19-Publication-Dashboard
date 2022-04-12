@@ -27,18 +27,27 @@ library(readxl)
 # read_all_sheets
 library(friendlyloader)
 
-setwd("/conf/PHSCOVID19_Analysis/COVID-19-Publication-Dashboard/Dashboard Data Transfer")
+
+# Getting main script location for working directory
+path_main_script_location = dirname(rstudioapi::getActiveDocumentContext()$path)
+
+setwd(path_main_script_location)
 
 report_date <- floor_date(today(), "week", 1) + 2
 
-output_folder <- "/conf/PHSCOVID19_Analysis/COVID-19-Publication-Dashboard/shiny_app/data/"
+
+dashboard_folder <- "/conf/PHSCOVID19_Analysis/COVID-19-Publication-Dashboard/"
+output_folder <- glue(dashboard_folder, "shiny_app/data/")
+input_data <- glue(dashboard_folder, "Dashboard Data Transfer/Input data/")
+test_output <- glue(dashboard_folder, "Dashboard Data Transfer/Test output/")
+
 
 # Getting useful functions
 source("data_transfer_functions.R")
 
 # Getting population information
 # ------------------------------
-i_population <- read_csv_with_options("Input data/population.csv")
+i_population <- read_csv_with_options(glue(input_data, "population.csv"))
 
 i_population %<>% dplyr::rename(age_group = contains("MYE")) %>%
   melt(id=c("age_group"), variable="sex") %>%
@@ -140,7 +149,9 @@ source("Transfer scripts/transfer_LFD.R")
 source("Transfer scripts/transfer_vaccinecert.R")
 
 
+##### 22. Length of Stay
 
+source("Transfer scripts/transfer_los.R")
 
 
 

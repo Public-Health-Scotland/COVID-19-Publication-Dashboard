@@ -4,7 +4,7 @@
 
 # First copy file from input data to folder for analysis
 
-copyfile <- glue("Input data/{format(report_date -2,'%Y%m%d')}_Community Testing_pub_output.xlsx")
+copyfile <- glue(input_data, "{format(report_date -2,'%Y%m%d')}_Community Testing_pub_output.xlsx")
 copyloc <- "/conf/PHSCOVID19_Analysis/COVID-19-Publication-Dashboard/Data Formatting/MTU DATA/"
 
 copied_bool <- file.copy(copyfile, copyloc, overwrite = TRUE)

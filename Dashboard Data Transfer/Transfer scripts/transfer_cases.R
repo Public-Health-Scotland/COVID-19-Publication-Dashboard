@@ -3,8 +3,8 @@
 
 ##### 13. Hospital Admissions
 
-i_cadm <- read_csv_with_options(glue("Input data/Hospital Admissions/{format(report_date -2,'%Y%m%d')}_Cases_Adm_Wk_Scotland.csv"))
-i_cag <- read_csv_with_options(glue("Input data/Hospital Admissions/{format(report_date -2,'%Y%m%d')}_Cases_Adm_Wk_AgeGrp.csv"))
+i_cadm <- read_csv_with_options(glue(input_data, "Hospital Admissions/{format(report_date -2,'%Y%m%d')}_Cases_Adm_Wk_Scotland.csv"))
+i_cag <- read_csv_with_options(glue(input_data, "Hospital Admissions/{format(report_date -2,'%Y%m%d')}_Cases_Adm_Wk_AgeGrp.csv"))
 
 o_cadm <- read.csv(glue("{output_folder}/Cases_Adm.csv"), header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)
 o_cag <- read.csv(glue("{output_folder}/Cases_AgeGrp.csv"), header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)
@@ -16,7 +16,7 @@ g_cadm <- i_cadm %>%
   dplyr::rename(Date = week_ending,
                 Percent = p.admissions)
 
-write.csv(g_cadm, glue("Test output/Cases_Adm.csv"), row.names = FALSE)
+write.csv(g_cadm, glue(test_output, "Cases_Adm.csv"), row.names = FALSE)
 
 rm(i_cadm, g_cadm, o_cadm)
 
@@ -28,7 +28,7 @@ g_cag <- i_cag %>%
                 Age = age_band,
                 Cases = cases)
 
-write.csv(g_cag, glue("Test output/Cases_AgeGrp.csv"), row.names = FALSE)
+write.csv(g_cag, glue(test_output, "Cases_AgeGrp.csv"), row.names = FALSE)
 
 rm(g_cag, o_cag)
 
@@ -64,6 +64,6 @@ prop_adm = i_cag %>%
                 Admissions = admissions,
                 "Proportion Admitted" = p.admissions)
 
-write.csv(prop_adm, glue("Test output/Prop_Admitted_AgeGrp.csv"), row.names=FALSE)
+write.csv(prop_adm, glue(test_output, "Prop_Admitted_AgeGrp.csv"), row.names=FALSE)
 
 rm(prop_adm, i_cag)

@@ -332,11 +332,11 @@ saveRDS(Ethnicity_Chart, "data/Ethnicity_Chart.rds")
 
 #### Care Homes ----------------------------------------------------------------
 care_homes <- read_csv("data/CareHomes.csv") %>%
-  mutate( `Week Ending` = ymd(`Week Ending`), 
+  mutate( `Week Ending` = ymd(`Week Ending`),
           # Suppression stuff
           across( contains('with Confirmed'), as.numeric ),
-          across( contains('with Confirmed'), 
-                  function(x) { if_else( is.na(x) | between(x,1,4), '*', as.character(x) ) } ) ) %>% 
+          across( contains('with Confirmed'),
+                  function(x) { if_else( is.na(x) | between(x,1,4), '*', as.character(x) ) } ) ) %>%
   rename(
     # Ugh long names
     `Number Staff in Care Homes with COVID-19`=`Number Staff in Care Homes with Confirmed COVID-19`,
@@ -435,27 +435,33 @@ saveRDS(mtu_5, "data/TCT_KeyPoints.rds")
 CareHomeTimeSeries <- read_excel(
   glue( '//PHI_conf/Real_Time_Epi/Routine_Reporting/Time_Series/Outputs/PCR_LFD',
         '/Care Home Time Series (PCRLFD Reinfections) {week_start}_all.xlsx' )
-) %>% 
-  select( specimen_date, RESIDENT, STAFF ) %>% 
+) %>%
+  select( specimen_date, RESIDENT, STAFF ) %>%
   # Filter out non-numeric entries in date (the current extract has the excel 44010 style dates)
-  filter( !is.na(as.numeric(specimen_date)) ) %>% 
+  filter( !is.na(as.numeric(specimen_date)) ) %>%
   mutate( specimen_date = as.Date( as.numeric(specimen_date), origin='1899-12-30' ),
           # Week ending Friday
           `Week Ending` = ceiling_date( specimen_date, unit='week', week_start = c(5),
-                                        change_on_boundary = FALSE) ) %>% 
+                                        change_on_boundary = FALSE) ) %>%
   # Remove entries from after last Friday
   filter( specimen_date <= ceiling_date( Sys.Date()-7, unit = 'week', week_start = c(5),
-                                         change_on_boundary = FALSE ) ) %>% 
-  group_by( `Week Ending` ) %>% 
-  mutate( StWk = sum(STAFF), ReWk = sum(RESIDENT), TOTAL = StWk + ReWk ) %>% 
-  ungroup() %>% 
+                                         change_on_boundary = FALSE ) ) %>%
+  group_by( `Week Ending` ) %>%
+  mutate( StWk = sum(STAFF), ReWk = sum(RESIDENT), TOTAL = StWk + ReWk ) %>%
+  ungroup() %>%
   mutate( Staff = case_when( between(StWk, 1, 4) ~ '*',
                              TRUE ~ as.character(StWk)),
           Resident = case_when( between(ReWk, 1, 4) ~ '*',
                                TRUE ~ as.character(ReWk)),
           Total = case_when( between(StWk, 1, 4) | between(ReWk, 1, 4) ~ '*',
-                             TRUE ~ as.character(TOTAL) )) %>% 
-  select( `Week Ending`, Resident, Staff, Total ) %>% 
+                             TRUE ~ as.character(TOTAL) )) %>%
+  select( `Week Ending`, Resident, Staff, Total ) %>%
   distinct()
 
 saveRDS(CareHomeTimeSeries, "data/CareHomeTimeSeries.rds")
+
+
+### Length of Stay ----
+
+los <- read_csv("data/Length_of_Stay.csv")
+saveRDS(los, "data/Length_of_Stay.rds")
