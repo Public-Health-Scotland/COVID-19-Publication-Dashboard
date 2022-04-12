@@ -454,8 +454,13 @@ plot_singlerate_chart <- function(dataset, data_name, yaxis_title, area = T, inc
 }
 
 
-cases_age_chart_3_week <- function(dataset, data_name, area = T){
-  yaxis_title <- "Percent of Cases"
+cases_age_chart_3_week <- function(dataset, data_name, area = T, type = cases){
+  if (type == "cases") {
+    yaxis_title <- "Percent of Cases"
+  } else if (type == "admissions") {
+    yaxis_title <- "Percent of Admissions"
+  }
+
   xaxis_title <- "Age Group"
 
   latest_date <- max(dataset$Date)
@@ -482,9 +487,16 @@ cases_age_chart_3_week <- function(dataset, data_name, area = T){
   xaxis_plots[["title"]] <- xaxis_title
 
   #Text for tooltip
-  tooltip_trend <- glue("Percent of Cases: {trend_data$Percent}<br>",
-                        "Week Ending: {trend_data$Date}<br>",
-                        "Age Group: {trend_data$Age}")
+  if (type == "cases") {
+    tooltip_trend <- glue("Percent of Cases: {trend_data$Percent}<br>",
+                          "Week Ending: {trend_data$Date}<br>",
+                          "Age Group: {trend_data$Age}")
+  } else if (type == "admissions") {
+    tooltip_trend <- glue("Percent of Admissions: {trend_data$Percent}<br>",
+                          "Week Ending: {trend_data$Date}<br>",
+                          "Age Group: {trend_data$Age}")
+  }
+
 
   #Creating contact tracing time
   trend_data %>%

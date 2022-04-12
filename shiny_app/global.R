@@ -121,6 +121,7 @@ LabCases_SIMD <- readRDS("data/LabCases_SIMD.rds")
 Admissions_AgeSex <- readRDS("data/Admissions_AgeSex.rds")
 Admissions_SIMD <- readRDS("data/Admissions_SIMD.rds")
 Admissions_AgeBD <- readRDS("data/Admissions_AgeBD.rds")
+Admissions_AgeGrp <- readRDS("data/Admissions_AgeGrp.rds")
 ICU_AgeSex <- readRDS("data/ICU_AgeSex.rds")
 NHS24_AgeSex <- readRDS("data/NHS24_AgeSex.rds")
 NHS24_SIMD <- readRDS("data/NHS24_SIMD.rds")
@@ -128,6 +129,7 @@ AssessmentHub_AgeSex <- readRDS("data/AssessmentHub_AgeSex.rds")
 AssessmentHub_SIMD <- readRDS("data/AssessmentHub_SIMD.rds")
 SAS_AgeSex <- readRDS("data/SAS_AgeSex.rds")
 SAS_SIMD <- readRDS("data/SAS_SIMD.rds")
+
 
 # Length of Stay Data
 LOS_Data = readRDS("data/Length_of_Stay.rds")%>%

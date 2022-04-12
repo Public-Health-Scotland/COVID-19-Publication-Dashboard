@@ -66,4 +66,14 @@ prop_adm = i_cag %>%
 
 write.csv(prop_adm, glue(test_output, "Prop_Admitted_AgeGrp.csv"), row.names=FALSE)
 
-rm(prop_adm, i_cag)
+### d) Cases by Age Group
+
+adm_agegrp <- i_cag %>%
+  select(week_ending, age_band, admissions) %>%
+  dplyr::rename(Date = week_ending,
+                Age = age_band,
+                Admissions = admissions)
+
+write.csv(adm_agegrp, glue(test_output, "Admissions_AgeGrp.csv"), row.names = FALSE)
+
+rm(prop_adm, i_cag, adm_agegrp)
