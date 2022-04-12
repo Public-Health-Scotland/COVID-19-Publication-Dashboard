@@ -3,7 +3,7 @@
 
 ##### 11. Care Homes
 
-i_carehomes <- read_excel_with_options(glue("Input data/{format(report_date -1,'%Y%m%d')}_CareHomeWeekly.xlsx"))
+i_carehomes <- read_excel_with_options(glue(input_data, "{format(report_date -1,'%Y%m%d')}_CareHomeWeekly.xlsx"))
 
 o_carehomes <- read.csv(glue("{output_folder}/CareHomes.csv"), header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)
 
@@ -29,6 +29,6 @@ o_carehomes %<>% filter(`Week Ending` < week_ending_recent)
 g_carehomes <- rbind(o_carehomes, maintable)
 
 
-write.csv(g_carehomes, glue("Test output/CareHomes.csv"), row.names = FALSE)
+write.csv(g_carehomes, glue(test_output, "CareHomes.csv"), row.names = FALSE)
 
 rm(o_carehomes, i_carehomes, g_carehomes, summaryfigs, maintable, week_ending_recent)

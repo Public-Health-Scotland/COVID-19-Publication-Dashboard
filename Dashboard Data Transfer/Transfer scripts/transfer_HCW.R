@@ -3,9 +3,9 @@
 
 ##### 10. Health Care Workers
 
-i_elderly <- read_all_sheets(glue("Input data/HCW/{format(report_date -2,'%Y%m%d')}_long_stay_care_of_the_elderly.xlsx"))
-i_psychiatry <- read_all_sheets(glue("Input data/HCW/{format(report_date -2,'%Y%m%d')}_long_stay_psychiatry_and_learning_disability.xlsx"))
-i_cancer <- read_all_sheets(glue("Input data/HCW/{format(report_date -2,'%Y%m%d')}_specialist_cancer_wards_and_treatment_areas.xlsx"))
+i_elderly <- read_all_excel_sheets(glue(input_data, "HCW/{format(report_date -2,'%Y%m%d')}_long_stay_care_of_the_elderly.xlsx"))
+i_psychiatry <- read_all_excel_sheets(glue(input_data, "HCW/{format(report_date -2,'%Y%m%d')}_long_stay_psychiatry_and_learning_disability.xlsx"))
+i_cancer <- read_all_excel_sheets(glue(input_data, "HCW/{format(report_date -2,'%Y%m%d')}_specialist_cancer_wards_and_treatment_areas.xlsx"))
 
 o_elderly <- read.csv(glue("{output_folder}/HCW_CareOfElderly.csv"), header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)
 o_psychiatry <- read.csv(glue("{output_folder}/HCW_Psychiatry.csv"), header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)
@@ -13,25 +13,25 @@ o_cancer <- read.csv(glue("{output_folder}/HCW_SpecialistCancer.csv"), header = 
 
 ################ Function to apply suppression#### ################
 
-HCW_suppress <- function(    df, 
+HCW_suppress <- function(    df,
                              suppress_under = 5,
                              cols_to_ignore = 2,
                              replace_with = "*"){
-  
+
   #  TODO: Make this less horrendous
   #  df: data frame to suppress rowwise
   #  suppress_under: number to suppress under, default = 5
   #  cols_to_ignore: number of columns at start of dataframe not to be suppressed, default = 0
   #  replace_with: character to replace suppressed values with, default = "*"
   #  constraints: number of constraints, e.g. if there is a Total column this is one constraint
-  
+
   # Change dataframe column type to char so that can replace with "*"
   df[is.na(df)] <- 0
   chardf <- mutate_if(df, is.integer,as.character) %>% mutate_if(is.numeric,as.character)
-  
+
   # Primary
   chardf[df < suppress_under & df != 0] <- replace_with
-  
+
   # Secondary
   # If only one *, star out the next smallest
   for(i in seq(1,nrow(df))){
@@ -68,7 +68,7 @@ HCW_suppress <- function(    df,
     }
   }
   return(chardf)
-  
+
 }
 
 
@@ -76,26 +76,26 @@ HCW_suppress <- function(    df,
 ################ Function to produce and save outputs for each of the categories ################
 
 hcw_transfer <- function(i_file, o_file, tag){
-  
+
   g_file <- i_file$`Sheet 1`
-  
+
   # Getting most recent week
-  g_file <- g_file[g_file$`Week Ending` == max(g_file$`Week Ending`),] %>% 
-    dplyr::rename(`Number of staff not tested exc. Declines` = `Number of staff not tested (excl decline/operational)`) %>% 
+  g_file <- g_file[g_file$`Week Ending` == max(g_file$`Week Ending`),] %>%
+    dplyr::rename(`Number of staff not tested exc. Declines` = `Number of staff not tested (excl decline/operational)`) %>%
     select(names(o_file))
-  
+
   o_file$`Week Ending` <- as.Date(o_file$`Week Ending`, format="%Y-%m-%d")
-  o_file %<>% filter(`Week Ending` != max(g_file$`Week Ending`)) 
-  
+  o_file %<>% filter(`Week Ending` != max(g_file$`Week Ending`))
+
   # Suppress entries <5, note 2 constraints because in terms of columns of g_file,
   # 3 = 4 + 7 + 8 + 9; 6 = 5/4 are two constraints
   g_file <- HCW_suppress(g_file, suppress_under = 5, cols_to_ignore = 2, replace_with = "*")
-  
+
   g_file <- rbind(o_file, g_file)
 
-  write.csv(g_file, glue("Test output/HCW_{tag}.csv"), row.names = FALSE)
-  
-  
+  write.csv(g_file, glue(test_output, "HCW_{tag}.csv"), row.names = FALSE)
+
+
 }
 
 ##################################################################################################

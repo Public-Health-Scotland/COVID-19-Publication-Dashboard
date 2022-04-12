@@ -36,14 +36,18 @@ setwd(path_main_script_location)
 report_date <- floor_date(today(), "week", 1) + 2
 
 
-output_folder <- "/conf/C19_Test_and_Protect/Analyst Space/Ruben (Analyst Space)/COVID-19-Publication-Dashboard/shiny_app/data/"
+dashboard_folder <- "/conf/PHSCOVID19_Analysis/COVID-19-Publication-Dashboard/"
+output_folder <- glue(dashboard_folder, "shiny_app/data/")
+input_data <- glue(dashboard_folder, "Dashboard Data Transfer/Input data/")
+test_output <- glue(dashboard_folder, "Dashboard Data Transfer/Test output/")
+
 
 # Getting useful functions
 source("data_transfer_functions.R")
 
 # Getting population information
 # ------------------------------
-i_population <- read_csv_with_options("Input data/population.csv")
+i_population <- read_csv_with_options(glue(input_data, "population.csv"))
 
 i_population %<>% dplyr::rename(age_group = contains("MYE")) %>%
   melt(id=c("age_group"), variable="sex") %>%
