@@ -1356,7 +1356,9 @@ los_chart_fn = function(data) {
       layout(barmode = "stack",
              yaxis = list(title = 'Percentage of Admissions',
                           ticksuffix = "%"),
-             xaxis = list(title = 'Admission Date by Week Ending'))
+             xaxis = list(title = 'Admission Date by Week Ending')) %>%
+      # leaving only save plot button
+      config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
   }
 
 
