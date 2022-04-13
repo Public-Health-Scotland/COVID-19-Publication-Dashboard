@@ -68,3 +68,19 @@ output$CareHomeSeriesGraph <- renderPlotly({
 
 
 })
+
+
+
+## Data downloads ----
+
+care_home_timeseries_data_download <- reactive({
+  CareHomeTimeSeries
+})
+
+# For the charts at the moment the data download is for the overall one,
+output$download_care_home_timeseries_data <- downloadHandler(
+  filename ="Care_Home_Time_Series_Data.csv",
+  content = function(file) {
+    write_csv(care_home_timeseries_data_download(),
+              file)
+  })
