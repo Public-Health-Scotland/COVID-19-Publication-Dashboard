@@ -145,6 +145,12 @@ Admissions_SIMD <- read_csv("data/Admissions_SIMD.csv") %>%
   mutate(cases_pc = cases_pc * 100) %>% select(1:3)
 saveRDS(Admissions_SIMD, "data/Admissions_SIMD.rds")
 
+Admissions_AgeGrp = read_csv("data/Admissions_AgeGrp.csv") %>%
+  group_by(Date) %>%
+  mutate(Percent = round_half_up(100*Admissions/sum(Admissions), 2)) %>%
+  select(-Admissions)
+saveRDS(Admissions_AgeGrp, "data/Admissions_AgeGrp.rds")
+
 ICU_AgeSex <- read_csv("data/ICU_AgeSex.csv")
 saveRDS(ICU_AgeSex, "data/ICU_AgeSex.rds")
 

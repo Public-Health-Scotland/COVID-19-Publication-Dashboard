@@ -345,7 +345,7 @@ if (input$measure_select == "LabCases") { #Positive Cases
   plot_box("Proportion of weekly cases admitted to hospital within 14 days of a first positive test",
            plot_output = "prop_admissions"),
   plot_box("Weekly cases admitted to hospital within 14 days of a first positive test, by age group",
-           plot_output="cases_age_groups")
+           plot_output="admissions_age_groups")
 )
 
 } else if (input$measure_select == "ICU") {# ICU
@@ -451,7 +451,7 @@ output$LabCasesReinfectionsRate <- renderPlotly({plot_singlerate_chart(LabCasesR
 output$prop_admissions <- renderPlotly({plot_singletrace_chart(Cases_Adm, data_name = "Cases_Adm", include_vline=T)})
 #output$cases_age_groups <- renderPlotly({stacked_cases_age_chart(Cases_AgeGrp, data_name = "Cases_AgeGrp")})
 output$cases_age_groups <- renderPlotly({cases_age_chart_3_week(Cases_AgeGrp, data_name = "Cases_AgeGrp")})
-
+output$admissions_age_groups <- renderPlotly({cases_age_chart_3_week(Admissions_AgeGrp, data_name = "Admissions_AgeGrp", type = "admissions")})
 
 
 output$EthnicityChart <- renderPlotly({plot_overall_chartEthnicity(Ethnicity_Chart, data_name = "Ethnicity_Chart")})
