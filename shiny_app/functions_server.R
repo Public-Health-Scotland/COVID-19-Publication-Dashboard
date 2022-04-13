@@ -454,7 +454,7 @@ plot_singlerate_chart <- function(dataset, data_name, yaxis_title, area = T, inc
 }
 
 
-cases_age_chart_3_week <- function(dataset, data_name, area = T, type = cases){
+cases_age_chart_3_week <- function(dataset, data_name, area = T, type = "cases"){
   if (type == "cases") {
     yaxis_title <- "Percent of Cases"
   } else if (type == "admissions") {
