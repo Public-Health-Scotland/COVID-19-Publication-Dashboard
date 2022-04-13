@@ -488,11 +488,11 @@ cases_age_chart_3_week <- function(dataset, data_name, area = T, type = "cases")
 
   #Text for tooltip
   if (type == "cases") {
-    tooltip_trend <- glue("Percent of Cases: {trend_data$Percent}<br>",
+    tooltip_trend <- glue("Percent of Cases: {trend_data$Percent}%<br>",
                           "Week Ending: {trend_data$Date}<br>",
                           "Age Group: {trend_data$Age}")
   } else if (type == "admissions") {
-    tooltip_trend <- glue("Percent of Admissions: {trend_data$Percent}<br>",
+    tooltip_trend <- glue("Percent of Admissions: {trend_data$Percent}%<br>",
                           "Week Ending: {trend_data$Date}<br>",
                           "Age Group: {trend_data$Age}")
   }
