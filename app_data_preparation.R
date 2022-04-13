@@ -345,6 +345,11 @@ care_homes <- read_csv("data/CareHomes.csv") %>%
     )
 saveRDS(care_homes, "data/Care_Homes.rds")
 
+### Care home time series ------------------------------------------------------
+
+CareHomeTimeSeries <- read_csv("data/CareHomeTimeSeries.csv")
+saveRDS(CareHomeTimeSeries, "data/CareHomeTimeSeries.rds")
+
 
 #### Community Testing ---------------------------------------------------------
 replace_zero <- function(x){
@@ -428,36 +433,6 @@ saveRDS(mtu_4, "data/TCT_HBTestSiteType.rds")
 mtu_5 <- read_csv("data/CommunityTesting_key_points.csv")
 saveRDS(mtu_5, "data/TCT_KeyPoints.rds")
 
-
-
-### Care home time series ----
-
-CareHomeTimeSeries <- read_excel(
-  glue( '//PHI_conf/Real_Time_Epi/Routine_Reporting/Time_Series/Outputs/PCR_LFD',
-        '/Care Home Time Series (PCRLFD Reinfections) {week_start}_all.xlsx' )
-) %>%
-  select( specimen_date, RESIDENT, STAFF ) %>%
-  filter(specimen_date != "Total") %>%
-  mutate(specimen_date = ymd(specimen_date),
-         `Week Ending` = ceiling_date(specimen_date,
-                                      unit='week',
-                                      week_start = c(5),
-                                      change_on_boundary = FALSE)) %>%
-  filter( specimen_date <= ceiling_date( Sys.Date()-7, unit = 'week', week_start = c(5),
-                                         change_on_boundary = FALSE ) ) %>%
-  group_by( `Week Ending` ) %>%
-  mutate( StWk = sum(STAFF), ReWk = sum(RESIDENT), TOTAL = StWk + ReWk ) %>%
-  ungroup() %>%
-  mutate( Staff = case_when( between(StWk, 1, 4) ~ '*',
-                             TRUE ~ as.character(StWk)),
-          Resident = case_when( between(ReWk, 1, 4) ~ '*',
-                                TRUE ~ as.character(ReWk)),
-          Total = case_when( between(StWk, 1, 4) | between(ReWk, 1, 4) ~ '*',
-                             TRUE ~ as.character(TOTAL) )) %>%
-  select( `Week Ending`, Resident, Staff, Total ) %>%
-  distinct()
-
-saveRDS(CareHomeTimeSeries, "data/CareHomeTimeSeries.rds")
 
 
 ### Length of Stay ----
