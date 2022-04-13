@@ -102,7 +102,7 @@ source("Transfer scripts/transfer_communitytesting.R")
 
 ##### 10. Health Care Workers
 
-source("Transfer scripts/transfer_HCW.R")
+#source("Transfer scripts/transfer_HCW.R")
 
 ##### 11. Care Homes
 
