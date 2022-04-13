@@ -66,7 +66,7 @@ tagList(  #needed for shinyjs
              actionLink("jump_to_mtu", "'Targeted Community Testing' Tab.")),
           tags$li("Vaccine certification data can be found in the",
              actionLink("jump_to_vaccine", "'Vaccine Certification' Tab.")),
-             
+
           h3("Information"),
           tags$li("Metadata for this dashboard can be downloaded from the ",
                tags$a(
@@ -436,6 +436,7 @@ tagList(  #needed for shinyjs
       tags$li(' The source data are dynamic, and additional test results ',
         'received will be reflected in future calculations of cases, which may affect figures ',
         'retrospectively.'),
+      downloadButton('download_care_home_timeseries_data', 'Download time series data'),
       mainPanel(width = 12,
                 DT::dataTableOutput('CareHomeSeriesTable'),
                 plotlyOutput( 'CareHomeSeriesGraph', width='100%' )
@@ -458,7 +459,7 @@ tagList(  #needed for shinyjs
       br(),
       p(strong("Please use this information with caution.")),
       hr(),
-      downloadButton('download_care_home_data', 'Download data'),
+      downloadButton('download_care_home_data', 'Download testing data'),
       mainPanel(width = 12,
                 DT::dataTableOutput("care_homes_table"))
       ),

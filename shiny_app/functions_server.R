@@ -1374,4 +1374,39 @@ los_chart_fn = function(data) {
   }
 
 
+#### Care Homes Time Series Chart
+
+care_home_time_series_chart <- function(data){
+
+  tooltip_trend <- c(paste0("Week Ending: ", format(data$`Week Ending`, "%d %b %y"),
+                            "<br>", "Staff: ", format(as.numeric(data$Staff), big.mark=","),
+                            "<br>", "Residents: ", format(as.numeric(data$Resident), big.mark=",")))
+
+  yaxis_plots[["title"]] <- "Tests"
+  xaxis_plots[["title"]] <- "Week Ending"
+
+  CareHomeGraph <- data %>%
+    select( `Week Ending`, Resident, Staff ) %>%
+    mutate( Resident = as.numeric(Resident), Staff = as.numeric(Staff) ) %>%
+    plot_ly( x = ~`Week Ending` ) %>%
+    add_lines(
+      y = ~Staff, line=list(color=phs_colours('phs-magenta-80')), name='Staff', mode='lines',
+      text = tooltip_trend, hoverinfo="text"
+    ) %>%
+    add_lines(
+      y = ~Resident, line=list(color=phs_colours('phs-blue-80')), name='Residents', mode='lines',
+      text = tooltip_trend, hoverinfo="text"
+    ) %>%
+    layout(margin = list(b = 80, t = 5),
+           yaxis = yaxis_plots, xaxis = xaxis_plots,
+           legend = list(x = 100, y = 0.5)) %>%
+    config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
+
+  return(CareHomeGraph)
+
+
+}
+
+
+
 ### END
