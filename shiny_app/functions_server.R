@@ -391,7 +391,7 @@ plot_singletrace_chart <- function(dataset, data_name, yaxis_title, xaxis_title,
    p %<>% add_vline("2022-01-05", color=phs_colours("phs-magenta"), width=3.0) %>%
      layout(annotations=annotation)
  }
- 
+
  return(p)
 }
 
@@ -1249,7 +1249,68 @@ plot_LFDs <- function(dataset, area = T) {
     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
 }
 
+############ Chart for LFD trend by test group
+LFD_time_series_chart <- function(data){
 
+  tooltip_trend <- c(paste0("Week Ending: ", format(data$`Week Ending`, "%d %b %y"),
+                            "<br>", "Education Testing: ", format(as.numeric(data$`Education Testing`), big.mark=","),
+                            "<br>", "Other: ", format(as.numeric(data$`Other`), big.mark=","),
+                            "<br>", "Care Home Testing: ", format(as.numeric(data$`Care Home Testing`), big.mark=","),
+                            "<br>", "Healthcare Testing: ", format(as.numeric(data$`Healthcare Testing`), big.mark=","),
+                            "<br>", "Social Care: ", format(as.numeric(data$`Social Care`), big.mark=","),
+                            "<br>", "Community Testing: ", format(as.numeric(data$`Community Testing`), big.mark=","),
+                            "<br>", "Workplace Testing: ", format(as.numeric(data$`Workplace Testing`), big.mark=","),
+                            "<br>", "Universal Offer: ", format(as.numeric(data$`Universal Offer`), big.mark=",")))
+
+  yaxis_plots[["title"]] <- "Tests"
+  xaxis_plots[["title"]] <- "Week Ending"
+
+  LFD_tests_graph <- data %>%
+    select( `Week Ending`, `Education Testing`, `Other`, `Care Home Testing`, `Healthcare Testing`,
+            `Social Care`, `Community Testing`, `Workplace Testing`, `Universal Offer` ) %>%
+    #mutate( Resident = as.numeric(Resident), Staff = as.numeric(Staff) ) %>%
+    plot_ly( x = ~`Week Ending` ) %>%
+    add_lines(
+      y = ~`Education Testing`, line=list(color=phs_colours('phs-magenta-80')), name='Education Testing', mode='lines',
+      text = tooltip_trend, hoverinfo="text"
+    ) %>%
+    add_lines(
+      y = ~`Other`, line=list(color=phs_colours('phs-blue-80')), name='Other', mode='lines',
+      text = tooltip_trend, hoverinfo="text"
+    ) %>%
+    add_lines(
+      y = ~`Care Home Testing`, line=list(color=phs_colours('phs-green-80')), name='Care Home Testing', mode='lines',
+      text = tooltip_trend, hoverinfo="text"
+    ) %>%
+    add_lines(
+      y = ~`Healthcare Testing`, line=list(color=phs_colours('phs-purple-80')), name='Healthcare Testing', mode='lines',
+      text = tooltip_trend, hoverinfo="text"
+    ) %>%
+    add_lines(
+      y = ~`Social Care`, line=list(color=phs_colours('phs-teal-80')), name='Social Care', mode='lines',
+      text = tooltip_trend, hoverinfo="text"
+    ) %>%
+    add_lines(
+      y = ~`Community Testing`, line=list(color=phs_colours('phs-liberty-80')), name='Community Testing', mode='lines',
+      text = tooltip_trend, hoverinfo="text"
+    ) %>%
+    add_lines(
+      y = ~`Workplace Testing`, line=list(color=phs_colours('phs-purple-30')), name='Workplace Testing', mode='lines',
+      text = tooltip_trend, hoverinfo="text"
+    ) %>%
+    add_lines(
+      y = ~`Universal Offer`, line=list(color=phs_colours('phs-magenta-30')), name='Universal Offer', mode='lines',
+      text = tooltip_trend, hoverinfo="text"
+    ) %>%
+    layout(margin = list(b = 80, t = 5),
+           yaxis = yaxis_plots, xaxis = xaxis_plots,
+           legend = list(x = 100, y = 0.5)) #%>% commented out to check function works
+  config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
+
+  return(LFD_tests_graph)
+
+
+}
 
 #### Travel outside Scotland Chart
 
