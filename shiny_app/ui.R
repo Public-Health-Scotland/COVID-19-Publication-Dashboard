@@ -443,7 +443,7 @@ tagList(  #needed for shinyjs
       ),
 
       h3("Numbers of staff and residents tested in care homes with (and without) confirmed COVID-19 cases"),
-      tags$li("As of 20 January 2021, Public Health Scotland took over reporting of weekly data on COVID-19 in adult Care Homes in Scotland."),
+      tags$li("As of 20 January 2021, Public Health Scotland reports weekly data on COVID-19 in adult Care Homes in Scotland, previously reported by the Scottish Government."),
       tags$li(" Data prior to 11 January 2021 can be found on the ", a(href = "https://www.gov.scot/publications/coronavirus-covid-19-additional-data-about-adult-care-homes-in-scotland/", "Scottish Government website.")),
       tags$li(
         "These data are provisional management information submitted to the Turas Care Home Management system by Care Homes, and details numbers of people (i.e. staff and residents) tested in the last week. "),
