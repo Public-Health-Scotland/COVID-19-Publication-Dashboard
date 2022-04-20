@@ -1250,7 +1250,11 @@ plot_LFDs <- function(dataset, area = T) {
 }
 
 ############ Chart for LFD trend by test group
-LFD_time_series_chart <- function(data){
+LFD_time_series_chart <- function(testdata, posdata){
+
+  if (input$LFD_timeseries_select == "Number of LFD Tests"){
+    data <- testdata
+    } else { data <- posdata }
 
   tooltip_trend <- c(paste0("Week Ending: ", format(data$`Week Ending`, "%d %b %y"),
                             "<br>", "Education Testing: ", format(as.numeric(data$`Education Testing`), big.mark=","),
@@ -1265,10 +1269,17 @@ LFD_time_series_chart <- function(data){
   yaxis_plots[["title"]] <- "Tests"
   xaxis_plots[["title"]] <- "Week Ending"
 
-  LFD_tests_graph <- data %>%
+  p <- data %>%
     select( `Week Ending`, `Education Testing`, `Other`, `Care Home Testing`, `Healthcare Testing`,
             `Social Care`, `Community Testing`, `Workplace Testing`, `Universal Offer` ) %>%
-    #mutate( Resident = as.numeric(Resident), Staff = as.numeric(Staff) ) %>%
+    mutate( `Education Testing` = as.numeric(`Education Testing`),
+            `Other` = as.numeric(`Other`),
+            `Care Home Testing` = as.numeric(`Care Home Testing`),
+            `Healthcare Testing` = as.numeric(`Healthcare Testing`),
+            `Social Care` = as.numeric(`Social Care`),
+            `Community Testing` = as.numeric(`Community Testing`),
+            `Workplace Testing` = as.numeric(`Workplace Testing`),
+            `Universal Offer` = as.numeric(`Universal Offer`)) %>%
     plot_ly( x = ~`Week Ending` ) %>%
     add_lines(
       y = ~`Education Testing`, line=list(color=phs_colours('phs-magenta-80')), name='Education Testing', mode='lines',
@@ -1295,19 +1306,19 @@ LFD_time_series_chart <- function(data){
       text = tooltip_trend, hoverinfo="text"
     ) %>%
     add_lines(
-      y = ~`Workplace Testing`, line=list(color=phs_colours('phs-purple-30')), name='Workplace Testing', mode='lines',
+      y = ~`Workplace Testing`, line=list(color=phs_colours('phs-rust')), name='Workplace Testing', mode='lines',
       text = tooltip_trend, hoverinfo="text"
     ) %>%
     add_lines(
-      y = ~`Universal Offer`, line=list(color=phs_colours('phs-magenta-30')), name='Universal Offer', mode='lines',
+      y = ~`Universal Offer`, line=list(color="black"), name='Universal Offer', mode='lines',
       text = tooltip_trend, hoverinfo="text"
     ) %>%
     layout(margin = list(b = 80, t = 5),
            yaxis = yaxis_plots, xaxis = xaxis_plots,
-           legend = list(x = 100, y = 0.5)) #%>% commented out to check function works
+           legend = list(x = 100, y = 0.5)) %>% #commented out to check function works
   config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
 
-  return(LFD_tests_graph)
+  return(p)
 
 
 }
