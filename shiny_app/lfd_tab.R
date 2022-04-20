@@ -26,10 +26,11 @@ LFD_tests <- LFD_TestGroup %>%
 
 LFD_positives <- LFD_TestGroup %>%
   select(`Week Ending`, `Test Group`, `Number of Positive Tests`) %>%
+
   pivot_wider(names_from = `Test Group`,
               values_from = `Number of Positive Tests`)
 
-output$LFD_TestGroup_trend <- renderPlotly({LFD_time_series_chart(LFD_tests)})
+#output$LFD_TestGroup_graph <- renderPlotly({LFD_time_series_chart(LFD_positives)})
 
 output$LFD_grouptable <- DT::renderDataTable({
 
@@ -96,7 +97,18 @@ output$LFD_output <-renderUI({
             #"Data from 03 March 2022 have been re-categorised accordingly into two new categories:
             #‘Checking Covid-19 Status During Isolation’ and ‘Close Contact Eligible for Daily Testing’"
           ),
-          plot_box("", plot_output = "LFD_TestGroup_trend"),
+                   selectInput("LFD_timeseries_select",
+                               label = "Select to view number of LFD tests or number of LFD positives",
+                               choices = c("Number of LFD Tests", "Number of LFD Positives"),
+                               selected = "Number of LFD Tests") %>%
+                     config(displaylogo = F,
+                            displayModeBar = TRUE,
+                            modeBarButtonsToRemove = bttn_remove ),
+                   renderPlotly({LFD_time_series_chart(LFD_tests, LFD_positives)}
+                                ),
+          #plot_box("", plot_output = "LFD_TestGroup_graph"),
           DT::dataTableOutput("LFD_grouptable"))
 
 })
+
+
