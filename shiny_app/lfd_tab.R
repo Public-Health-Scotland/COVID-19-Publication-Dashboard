@@ -16,15 +16,30 @@ output$LFD_table <- DT::renderDataTable({
 
 })
 
+### Graph
+
+# data prep
+LFD_tests <- LFD_TestGroup %>%
+  select(`Week Ending`, `Test Group`, `Number of Tests`) %>%
+  pivot_wider(names_from = `Test Group`,
+              values_from = `Number of Tests`)
+
+LFD_positives <- LFD_TestGroup %>%
+  select(`Week Ending`, `Test Group`, `Number of Positive Tests`) %>%
+
+  pivot_wider(names_from = `Test Group`,
+              values_from = `Number of Positive Tests`)
+
+#output$LFD_TestGroup_graph <- renderPlotly({LFD_time_series_chart(LFD_positives)})
 
 output$LFD_grouptable <- DT::renderDataTable({
 
 
   datatab_table(LFD_TestGroup,
-                     add_separator_cols=c(3,4), # Column indices to add thousand separators to
-                     add_percentage_cols = 5, # with % symbol and 2dp
-                     maxrows=16,
-                     flip_order=FALSE)
+                add_separator_cols=c(3,4), # Column indices to add thousand separators to
+                add_percentage_cols = 5, # with % symbol and 2dp
+                maxrows=16,
+                flip_order=FALSE)
 
 })
 
@@ -66,23 +81,34 @@ output$download_LFD_testgroup <- downloadHandler(
 
 output$LFD_output <-renderUI({
 
-    tagList(h3("Number of LFD Tests Week Ending"),
-            p("The chart below shows the number of LFD tests each week, the data for which can be downloaded
+  tagList(h3("Number of LFD Tests Week Ending"),
+          p("The chart below shows the number of LFD tests each week, the data for which can be downloaded
               by clicking the button at the top of the page."),
-            plot_box("", plot_output = "LFD_trend"),
-            h3("Number of LFD Tests by Health Board"),
-            p(glue("The table below shows the number of LFD tests up to {LFD_date} by NHS Board of Residence
+          plot_box("", plot_output = "LFD_trend"),
+          h3("Number of LFD Tests by Health Board"),
+          p(glue("The table below shows the number of LFD tests up to {LFD_date} by NHS Board of Residence
                    (based on the postcode provided by the individual taking the test). You can download the
                    data by clicking the button at the top of the page.")),
-            DT::dataTableOutput("LFD_table"),
-            h3("Number of LFD Tests by Test Group"),
-            p(glue("The table below shows the number of LFD tests from 19 November 2020 to {LFD_date} by test group"),
-              "(based on self-reported reason for testing by the individual registering the test). You can download the
+          DT::dataTableOutput("LFD_table"),
+          h3("Number of LFD Tests by Test Group"),
+          p(glue("The graph and table below show the number of LFD tests from 19 November 2020 to {LFD_date} by test group"),
+            "(based on self-reported reason for testing by the individual registering the test). You can download the
               data by clicking the button at the top of the page." #,
-                   #"Data from 03 March 2022 have been re-categorised accordingly into two new categories:
-              #‘Checking Covid-19 Status During Isolation’ and ‘Close Contact Eligible for Daily Testing’"
-                   ),
-            DT::dataTableOutput("LFD_grouptable"))
+            #"Data from 03 March 2022 have been re-categorised accordingly into two new categories:
+            #‘Checking Covid-19 Status During Isolation’ and ‘Close Contact Eligible for Daily Testing’"
+          ),
+                   selectInput("LFD_timeseries_select",
+                               label = "Select to view number of LFD tests or number of LFD positives",
+                               choices = c("Number of LFD Tests", "Number of LFD Positives"),
+                               selected = "Number of LFD Tests") %>%
+                     config(displaylogo = F,
+                            displayModeBar = TRUE,
+                            modeBarButtonsToRemove = bttn_remove ),
+                   renderPlotly({LFD_time_series_chart(LFD_tests, LFD_positives)}
+                                ),
+          #plot_box("", plot_output = "LFD_TestGroup_graph"),
+          DT::dataTableOutput("LFD_grouptable"))
 
 })
+
 

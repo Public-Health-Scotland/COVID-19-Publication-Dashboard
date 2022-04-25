@@ -1316,7 +1316,79 @@ plot_LFDs <- function(dataset, area = T) {
     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
 }
 
+############ Chart for LFD trend by test group
+LFD_time_series_chart <- function(testdata, posdata){
 
+  if (input$LFD_timeseries_select == "Number of LFD Tests"){
+    data <- testdata
+    } else { data <- posdata }
+
+  tooltip_trend <- c(paste0("Week Ending: ", format(data$`Week Ending`, "%d %b %y"),
+                            "<br>", "Education Testing: ", format(as.numeric(data$`Education Testing`), big.mark=","),
+                            "<br>", "Other: ", format(as.numeric(data$`Other`), big.mark=","),
+                            "<br>", "Care Home Testing: ", format(as.numeric(data$`Care Home Testing`), big.mark=","),
+                            "<br>", "Healthcare Testing: ", format(as.numeric(data$`Healthcare Testing`), big.mark=","),
+                            "<br>", "Social Care: ", format(as.numeric(data$`Social Care`), big.mark=","),
+                            "<br>", "Community Testing: ", format(as.numeric(data$`Community Testing`), big.mark=","),
+                            "<br>", "Workplace Testing: ", format(as.numeric(data$`Workplace Testing`), big.mark=","),
+                            "<br>", "Universal Offer: ", format(as.numeric(data$`Universal Offer`), big.mark=",")))
+
+  yaxis_plots[["title"]] <- "Tests"
+  xaxis_plots[["title"]] <- "Week Ending"
+
+  p <- data %>%
+    select( `Week Ending`, `Education Testing`, `Other`, `Care Home Testing`, `Healthcare Testing`,
+            `Social Care`, `Community Testing`, `Workplace Testing`, `Universal Offer` ) %>%
+    mutate( `Education Testing` = as.numeric(`Education Testing`),
+            `Other` = as.numeric(`Other`),
+            `Care Home Testing` = as.numeric(`Care Home Testing`),
+            `Healthcare Testing` = as.numeric(`Healthcare Testing`),
+            `Social Care` = as.numeric(`Social Care`),
+            `Community Testing` = as.numeric(`Community Testing`),
+            `Workplace Testing` = as.numeric(`Workplace Testing`),
+            `Universal Offer` = as.numeric(`Universal Offer`)) %>%
+    plot_ly( x = ~`Week Ending` ) %>%
+    add_lines(
+      y = ~`Education Testing`, line=list(color=phs_colours('phs-magenta-80')), name='Education Testing', mode='lines',
+      text = tooltip_trend, hoverinfo="text"
+    ) %>%
+    add_lines(
+      y = ~`Other`, line=list(color=phs_colours('phs-blue-80')), name='Other', mode='lines',
+      text = tooltip_trend, hoverinfo="text"
+    ) %>%
+    add_lines(
+      y = ~`Care Home Testing`, line=list(color=phs_colours('phs-green-80')), name='Care Home Testing', mode='lines',
+      text = tooltip_trend, hoverinfo="text"
+    ) %>%
+    add_lines(
+      y = ~`Healthcare Testing`, line=list(color=phs_colours('phs-purple-80')), name='Healthcare Testing', mode='lines',
+      text = tooltip_trend, hoverinfo="text"
+    ) %>%
+    add_lines(
+      y = ~`Social Care`, line=list(color=phs_colours('phs-teal-80')), name='Social Care', mode='lines',
+      text = tooltip_trend, hoverinfo="text"
+    ) %>%
+    add_lines(
+      y = ~`Community Testing`, line=list(color=phs_colours('phs-liberty-80')), name='Community Testing', mode='lines',
+      text = tooltip_trend, hoverinfo="text"
+    ) %>%
+    add_lines(
+      y = ~`Workplace Testing`, line=list(color=phs_colours('phs-rust')), name='Workplace Testing', mode='lines',
+      text = tooltip_trend, hoverinfo="text"
+    ) %>%
+    add_lines(
+      y = ~`Universal Offer`, line=list(color="black"), name='Universal Offer', mode='lines',
+      text = tooltip_trend, hoverinfo="text"
+    ) %>%
+    layout(margin = list(b = 80, t = 5),
+           yaxis = yaxis_plots, xaxis = xaxis_plots,
+           legend = list(x = 100, y = 0.5)) %>% #commented out to check function works
+  config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
+
+  return(p)
+
+
+}
 
 #### Travel outside Scotland Chart
 
