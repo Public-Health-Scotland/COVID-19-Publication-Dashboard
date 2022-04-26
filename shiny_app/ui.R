@@ -100,16 +100,16 @@ tagList(  #needed for shinyjs
 
     #################### Infection levels and cases -----
     navbarMenu(
-      title = "Cases & Infection Levels",
+      title = "Cases & infection levels",
       icon = icon("chart-area"),
       tabPanel(
-        title = "Cases and Infection Levels",
+        title = "Cases and infection levels",
         icon = icon("chart-area"),
         value = "InfCases",
         wellPanel(
           column(4,
                  div(title = "Select the data you want to explore.", # tooltip
-                     radioGroupButtons("measure_select",
+                     radioGroupButtons("measure_select_infcases",
                                        label = "Select the data you want to explore.",
                                        choices = inf_levels_cases_list,
                                        status = "primary",
@@ -141,7 +141,7 @@ tagList(  #needed for shinyjs
       icon = icon("thermometer"),
 
       tabPanel(
-        title = "LFD Testing",
+        title = "LFD testing",
         icon = icon("file-medical"),
         value = "LFDData",
 
@@ -168,7 +168,7 @@ tagList(  #needed for shinyjs
         value = "LFDdemoData",
 
 
-        h3("LFD Test Demographics"),
+        h3("LFD test demographics"),
         p("This section allows you to view the total number of individuals tested and the
           number of individuals testing positive at least once within Scotland. Data available by
           age & gender and Scottish Index of Multiple Deprivation (SIMD) quintile (where SIMD 1 is the most deprived and SIMD 5 is the least deprived - see",
@@ -200,16 +200,16 @@ tagList(  #needed for shinyjs
 
     #################### Severe illness -----
     navbarMenu(
-      title = "Severe Illness",
+      title = "Severe illness",
       icon = icon("chart-area"),
       tabPanel(
-        title = "Severe Illness",
+        title = "Severe illness",
         icon = icon("chart-area"),
         value = "SevereIllness",
         wellPanel(
           column(4,
                  div(title = "Select the data you want to explore.", # tooltip
-                     radioGroupButtons("measure_select",
+                     radioGroupButtons("measure_select_severe_illness",
                                        label = "Select the data you want to explore.",
                                        choices = severe_illness_list,
                                        status = "primary",

@@ -1,3 +1,10 @@
+## Data explorer selection ---
+
+data_explorer_selection <- reactive({
+  case_when(input$intabset == "SevereIllness" ~ input$measure_select_severe_illness,
+            input$intabset == "InfCases" ~ input$measure_select_infcases)
+  })
+
 
 ## Modals ----
 
@@ -5,7 +12,7 @@
 # Link action button click to modal launch
 observeEvent(input$btn_dataset_modal,
 
-             if (input$measure_select %in% c("LabCases", "LabCasesReinfections")) { # Positive Cases MODAL
+             if (data_explorer_selection() %in% c("LabCases", "LabCasesReinfections")) { # Positive Cases MODAL
                showModal(modalDialog(
                  title = "What is the data source?",
                  p("ECOSS (Electronic Communication of Surveillance in Scotland) Database"),
@@ -21,7 +28,7 @@ observeEvent(input$btn_dataset_modal,
                  size = "m",
                  easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)")))
 
-             } else if (input$measure_select == "Admissions") { #Admissions MODAL
+             } else if (data_explorer_selection() == "Admissions") { #Admissions MODAL
                showModal(modalDialog(
                  title = "What is the data source?",
                  p("ECOSS (Electronic Communication of Surveillance in Scotland) and
@@ -36,7 +43,7 @@ observeEvent(input$btn_dataset_modal,
                  size = "m",
                  easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)")))
 
-             } else if (input$measure_select == "ICU") { #ICU MODAL
+             } else if (data_explorer_selection() == "ICU") { #ICU MODAL
                showModal(modalDialog(
                  title = "What is the data source?",
                  p("SICSAG"),
@@ -68,7 +75,7 @@ observeEvent(input$btn_dataset_modal,
                  size = "m",
                  easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)")))
 
-             } else if (input$measure_select == "NHS24") { #NHS24 MODAL
+             } else if (data_explorer_selection() == "NHS24") { #NHS24 MODAL
                showModal(modalDialog(
                  title = "What is the data source?",
                  p("NHS24 Systems Applications and Products Business Warehouse",
@@ -81,7 +88,7 @@ observeEvent(input$btn_dataset_modal,
                    size = "m",
                    easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)"))))
 
-             } else if (input$measure_select == "AssessmentHub") { #NHS24 MODAL
+             } else if (data_explorer_selection() == "AssessmentHub") { #NHS24 MODAL
                showModal(modalDialog(
                  title = "What is the data source?",
                  p("GP Out of Hours (OOH) ",
@@ -92,7 +99,7 @@ observeEvent(input$btn_dataset_modal,
                    size = "m",
                    easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)"))))
 
-             } else if (input$measure_select == "SAS") {
+             } else if (data_explorer_selection() == "SAS") {
                #SAS MODAL
                showModal(modalDialog(
                  title = "What is the data source?",
@@ -109,7 +116,7 @@ observeEvent(input$btn_dataset_modal,
                  size = "m",
                  easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)")))
 
-             } else if (input$measure_select == "Child") {
+             } else if (data_explorer_selection() == "Child") {
                showModal(modalDialog(
                  title = "What is the data source?",
                  p("ECOSS (Electronic Communication of Surveillance in Scotland) Database",
@@ -117,7 +124,7 @@ observeEvent(input$btn_dataset_modal,
                    size = "m",
                    easyClose = TRUE, fade=FALSE,footer = modalButton("Close (Esc)"))))
 
-             } else if (input$measure_select == "Ethnicity_Chart") {
+             } else if (data_explorer_selection() == "Ethnicity_Chart") {
                showModal(modalDialog(
                  title = "What is the data source?",
                  p("RAPID (Rapid Preliminary Inpatient Data)"),
@@ -164,69 +171,69 @@ output$data_explorer_severe_illness <- output$data_explorer_infcases <- renderUI
 
 
   # text for titles of cut charts
-  datasettrend <- case_when(input$measure_select == "LabCases" ~ "Positive COVID-19 cases",
-                            input$measure_select == "LabCasesReinfections" ~ "COVID-19 Reinfections",
-                            input$measure_select == "Admissions" ~ "COVID-19 admissions to hospital",
-                            input$measure_select == "ICU" ~ "COVID-19 admissions to ICU",
-                            input$measure_select == "NHS24" ~ "NHS 24 111 COVID-19 Contacts and COVID-19 Advice Helpline calls",
-                            input$measure_select == "AssessmentHub" ~ "Consultations",
-                            input$measure_select == "SAS" ~ "SAS incidents (suspected COVID-19)")
+  datasettrend <- case_when(data_explorer_selection() == "LabCases" ~ "Positive COVID-19 cases",
+                            data_explorer_selection() == "LabCasesReinfections" ~ "COVID-19 Reinfections",
+                            data_explorer_selection() == "Admissions" ~ "COVID-19 admissions to hospital",
+                            data_explorer_selection() == "ICU" ~ "COVID-19 admissions to ICU",
+                            data_explorer_selection() == "NHS24" ~ "NHS 24 111 COVID-19 Contacts and COVID-19 Advice Helpline calls",
+                            data_explorer_selection() == "AssessmentHub" ~ "Consultations",
+                            data_explorer_selection() == "SAS" ~ "SAS incidents (suspected COVID-19)")
 
   # text for titles of cut charts
-  dataset <- case_when(input$measure_select == "LabCases" ~ "Positive COVID-19 cases",
-                       input$measure_select == "LabCasesReinfections" ~ "COVID-19 Reinfections",
-                       input$measure_select == "Admissions" ~ "COVID-19 admissions to hospital",
-                       input$measure_select == "ICU" ~ "COVID-19 admissions to ICU",
-                       input$measure_select == "NHS24" ~ "COVID-19 related NHS24 contacts",
-                       input$measure_select == "AssessmentHub" ~ "Individuals",
-                       input$measure_select == "SAS" ~ "SAS incidents (suspected COVID-19)")
+  dataset <- case_when(data_explorer_selection() == "LabCases" ~ "Positive COVID-19 cases",
+                       data_explorer_selection() == "LabCasesReinfections" ~ "COVID-19 Reinfections",
+                       data_explorer_selection() == "Admissions" ~ "COVID-19 admissions to hospital",
+                       data_explorer_selection() == "ICU" ~ "COVID-19 admissions to ICU",
+                       data_explorer_selection() == "NHS24" ~ "COVID-19 related NHS24 contacts",
+                       data_explorer_selection() == "AssessmentHub" ~ "Individuals",
+                       data_explorer_selection() == "SAS" ~ "SAS incidents (suspected COVID-19)")
 
-  start_date <- case_when(input$measure_select == "LabCases" ~ "28 February 2020",
-                          input$measure_select == "LabCasesReinfections" ~ "28 February 2020",
-                          input$measure_select == "Admissions" ~ "1 March 2020",
-                          input$measure_select == "ICU" ~ "11 March 2020",
-                          input$measure_select == "NHS24" ~ "13 February 2020",
-                          input$measure_select == "AssessmentHub" ~ "23 March 2020",
-                          input$measure_select == "SAS" ~ "22 January 2020")
+  start_date <- case_when(data_explorer_selection() == "LabCases" ~ "28 February 2020",
+                          data_explorer_selection() == "LabCasesReinfections" ~ "28 February 2020",
+                          data_explorer_selection() == "Admissions" ~ "1 March 2020",
+                          data_explorer_selection() == "ICU" ~ "11 March 2020",
+                          data_explorer_selection() == "NHS24" ~ "13 February 2020",
+                          data_explorer_selection() == "AssessmentHub" ~ "23 March 2020",
+                          data_explorer_selection() == "SAS" ~ "22 January 2020")
 
-  end_date <- case_when(input$measure_select == "LabCases" ~ Labcases_date,
-                        input$measure_select == "LabCasesReinfections" ~ Labcases_date,
-                        input$measure_select == "Admissions" ~ Admissions_date,
-                        input$measure_select == "ICU" ~ ICU_date,
-                        input$measure_select == "NHS24" ~ NHS24_date,
-                        input$measure_select == "AssessmentHub" ~ AssessmentHub_date,
-                        input$measure_select == "SAS" ~ SAS_date)
+  end_date <- case_when(data_explorer_selection() == "LabCases" ~ Labcases_date,
+                        data_explorer_selection() == "LabCasesReinfections" ~ Labcases_date,
+                        data_explorer_selection() == "Admissions" ~ Admissions_date,
+                        data_explorer_selection() == "ICU" ~ ICU_date,
+                        data_explorer_selection() == "NHS24" ~ NHS24_date,
+                        data_explorer_selection() == "AssessmentHub" ~ AssessmentHub_date,
+                        data_explorer_selection() == "SAS" ~ SAS_date)
 
   total_title <- glue("Daily number of {datasettrend}")
   agesex_title <- paste0(dataset, " per 100,000 population by age \n(", start_date, " to ", end_date, ")")
   simd_title <- paste0(dataset, " by deprivation category (SIMD) \n(", start_date, " to ", end_date, ")")
 
-  subheading <- case_when(input$measure_select == "Admissions" ~ "These admissions are identified from Rapid and Preliminary Inpatient Data (RAPID) and defined as the following: A positive PCR or LFD test of the episode of infection (including reinfections at 90 days or more after their last positive test) for COVID-19 up to 14 days prior to admission to hospital, on the day of their admission or during their stay in hospital. If a patient's first positive PCR or LFD test of the episode of infection is after their date of discharge from hospital, they are not included in the analysis.",
-                          input$measure_select == "NHS24" ~ paste0("The launch of the Redesign of Urgent Care programme will see an increase in NHS 24 activity from the 1st December 2020 onwards as a result of the launch of the programme. For more information see: https://www.gov.scot/policies/healthcare-standards/unscheduled-care/
+  subheading <- case_when(data_explorer_selection() == "Admissions" ~ "These admissions are identified from Rapid and Preliminary Inpatient Data (RAPID) and defined as the following: A positive PCR or LFD test of the episode of infection (including reinfections at 90 days or more after their last positive test) for COVID-19 up to 14 days prior to admission to hospital, on the day of their admission or during their stay in hospital. If a patient's first positive PCR or LFD test of the episode of infection is after their date of discharge from hospital, they are not included in the analysis.",
+                          data_explorer_selection() == "NHS24" ~ paste0("The launch of the Redesign of Urgent Care programme will see an increase in NHS 24 activity from the 1st December 2020 onwards as a result of the launch of the programme. For more information see: https://www.gov.scot/policies/healthcare-standards/unscheduled-care/
                                              Since 15th September 2020, figures for the COVID helpline include calls made to the new flu helpline.
                                              In late September, the first batch of flu vaccination letters sent to those eligible by NHS Health Boards included the coronavirus number.
                                              The peaks in calls are consistent with the timing of those letters being sent."),
-                          input$measure_select == "AssessmentHub" ~  paste0("Please note that data are provisional and may be updated in future publications as further information is supplied and validated from health boards."),
-                          input$measure_select == "SAS" ~ paste0(""),
+                          data_explorer_selection() == "AssessmentHub" ~  paste0("Please note that data are provisional and may be updated in future publications as further information is supplied and validated from health boards."),
+                          data_explorer_selection() == "SAS" ~ paste0(""),
                           TRUE ~ paste0(""))
 
-  notes <- case_when(input$measure_select %in% c("NHS24", "AssessmentHub")~ paste0("As of the 31st of March 2022 the COVID-19 Community Pathway will be closed. From this date patients who contact NHS24 with COVID-19 symptoms during the in-hours period will be advised to contact their own GP practice.",
+  notes <- case_when(data_explorer_selection() %in% c("NHS24", "AssessmentHub")~ paste0("As of the 31st of March 2022 the COVID-19 Community Pathway will be closed. From this date patients who contact NHS24 with COVID-19 symptoms during the in-hours period will be advised to contact their own GP practice.",
                    " For the out of hours period, the Out of Hours services will continue to manage COVID-19 patients directed by NHS 24 as a matter of course. This will have an impact on the NHS 24 data and COVID Hub/Assessment data contained in the dashboard."),
                    TRUE ~ paste0(""))
 
   # data sources
-  data_source <- case_when(input$measure_select == "LabCases" ~ "ECOSS",
-                           input$measure_select == "LabCasesReinfections" ~ "ECOSS",
-                           input$measure_select == "Admissions" ~ "ECOSS/RAPID",
-                           input$measure_select == "ICU" ~ "SICSAG",
-                         input$measure_select == "NHS24" ~ "NHS 24 SAP BW",
-                         input$measure_select == "AssessmentHub" ~ "GP Out of Hours (OOH)",
-                         input$measure_select == "SAS"~ "SAS and Unscheduled Care Datamart")
+  data_source <- case_when(data_explorer_selection() == "LabCases" ~ "ECOSS",
+                           data_explorer_selection() == "LabCasesReinfections" ~ "ECOSS",
+                           data_explorer_selection() == "Admissions" ~ "ECOSS/RAPID",
+                           data_explorer_selection() == "ICU" ~ "SICSAG",
+                         data_explorer_selection() == "NHS24" ~ "NHS 24 SAP BW",
+                         data_explorer_selection() == "AssessmentHub" ~ "GP Out of Hours (OOH)",
+                         data_explorer_selection() == "SAS"~ "SAS and Unscheduled Care Datamart")
 
 # Set up Charts for each section ------------------------------------------
 
 # Charts and rest of UI
-if (input$measure_select == "LabCases") { #Positive Cases
+if (data_explorer_selection() == "LabCases") { #Positive Cases
 
   tagList(h3("Daily number of positive COVID-19 cases"),
           p("On 05 January 2022, the Scottish Government",
@@ -250,7 +257,7 @@ if (input$measure_select == "LabCases") { #Positive Cases
           plot_cut_box(paste0("Positive COVID-19 cases per 100,000 population by age \n(28 February 2020 to ", Labcases_date, ")"), "LabCases_AgeSex",
                        paste0("Positive COVID-19 cases by deprivation category (SIMD) \n(28 February 2020 to ", Labcases_date, ")"), "LabCases_SIMD"))
 
-}else if (input$measure_select == "LabCasesReinfections"){ #Reinfections
+}else if (data_explorer_selection() == "LabCasesReinfections"){ #Reinfections
   tagList(h3("Daily number of COVID-19 reinfections"),
           p("On 05 January 2022, the Scottish Government",
             tags$a(href= "https://www.gov.scot/news/self-isolation-and-testing-changes/",
@@ -270,7 +277,7 @@ if (input$measure_select == "LabCases") { #Positive Cases
           plot_box("Cumulative rate per 100,000", plot_output = "LabCasesReinfectionsRate"),
           plot_box("Percentage of cases that are reinfections", plot_output = "ReinfectionsBarchart"))
 
-  }else if (input$measure_select == "Admissions") { #Admissions
+  }else if (data_explorer_selection() == "Admissions") { #Admissions
   tagList(actionButton("btn_modal_simd", "What is SIMD?", icon = icon('question-circle')),
           p("On 05 January 2022, the Scottish Government",
             tags$a(href= "https://www.gov.scot/news/self-isolation-and-testing-changes/",
@@ -317,12 +324,13 @@ if (input$measure_select == "LabCases") { #Positive Cases
            plot_output="admissions_age_groups")
 )
 
-} else if (input$measure_select == "ICU") {# ICU
+} else if (data_explorer_selection() == "ICU") {# ICU
   cut_charts_missing(title = "Daily number of COVID-19 admissions to ICU",
                      source = data_source, data_name ="ICU",
-                     agesex_title = agesex_title)
+                     agesex_title = agesex_title,
+                     total_title = total_title)
 
-} else if (input$measure_select == "NHS24") {# NHS 24 contacts
+} else if (data_explorer_selection() == "NHS24") {# NHS 24 contacts
   NHS_Inform_title <- paste0("NHS Inform hits to COVID-19 section (",start_date, " to ", end_date, ")" )
   SelfHelpTitle <- paste0("NHS24 COVID-19 self help guides completed (",start_date, " to ", end_date, ")" )
   OutcomesTitle <- paste0("NHS24 COVID-19 outcomes (",start_date, " to ", end_date, ")" )
@@ -345,7 +353,7 @@ if (input$measure_select == "LabCases") { #Positive Cases
           plot_box(SelfHelpTitle, "NHS24_selfhelp"),
           plot_box(OutcomesTitle, "NHS24_community"))
 
-} else if (input$measure_select == "AssessmentHub") { # Assessment Hub
+} else if (data_explorer_selection() == "AssessmentHub") { # Assessment Hub
  tagList( actionButton("btn_modal_simd", "What is SIMD?", icon = icon('question-circle')),
   cut_charts_subheading(title= "Daily number of COVID-19 consultations",
                         source = data_source, data_name = "AssessmentHub",
@@ -356,7 +364,7 @@ if (input$measure_select == "LabCases") { #Positive Cases
                         simd_title = simd_title
                         ))
 
-} else if (input$measure_select == "SAS") { # SAS data
+} else if (data_explorer_selection() == "SAS") { # SAS data
   tagList(h3("Scottish Ambulance Service"),
     p("SAS currently publish weekly unscheduled care operational statistics at the following location:",
     tags$a(
@@ -379,7 +387,7 @@ if (input$measure_select == "LabCases") { #Positive Cases
                           agesex_title = agesex_title,
                           simd_title = simd_title),
     plot_box("SAS - all incidents", plot_output = "SAS_all"))
-}  else if (input$measure_select == "Ethnicity_Chart") { # Ethnicity data
+}  else if (data_explorer_selection() == "Ethnicity_Chart") { # Ethnicity data
   tagList(h3("COVID-19 admissions to hospital by ethnicity"),
           p("COVID-19 related admissions have been identified as the following: A patient may have tested positive for COVID-19 14 days prior to admission to hospital,
             on the day of their admission or during their stay in hospital."),
@@ -459,7 +467,7 @@ output$ReinfectionsBarchart <- renderPlotly({plot_reinfections_barchart(LabCases
 # Reactive dataset that gets the data the user is visualisaing ready to download
 overall_data_download <- reactive({
   switch(
-    input$measure_select,
+    data_explorer_selection(),
     "LabCases" = LabCases,
     "LabCasesReinfections" = LabCasesReinfections,
     "Admissions" = Admissions,

@@ -12,7 +12,7 @@ cut_charts <- function(title, source, data_name, total_title, agesex_title, simd
 }
 
 #for e.g. ICU admissions where no SIMD data
-cut_charts_missing <- function(title, source, data_name, agesex_title) {
+cut_charts_missing <- function(title, source, data_name, agesex_title, total_title) {
   tagList(
     h3(title),
     p("SICSAG data are stored in a dynamic database and subject to ongoing validations therefore on a week to week basis the data may change."),
