@@ -203,24 +203,11 @@ mtu_cumul_pos <- readRDS("data/TCT_HBPercentPositive.rds")
 mtu_cumul_site <- readRDS("data/TCT_HBTestSiteType.rds")
 mtu_keypoints <- readRDS("data/TCT_KeyPoints.rds")
 
-# No longer on dashboard ----
-
-#ChildCases <- readRDS("data/ChildCases.rds")
-#ChildTests <- readRDS("data/ChildTests.rds")
-#Child <- readRDS("data/Child.rds")
-
-#Contact Tracing
-#ContactTracing<- readRDS("data/ContactTracingWeekly.rds")
-
-
-#ContactTracingDemoAge <-readRDS("data/ContactTracingDemoAge.rds")
-#ContactTracingDemoSex <-readRDS("data/ContactTracingDemoSex.rds")
-#ContactTracingDemoSIMD <-readRDS("data/ContactTracingDemoSIMD.rds")
-
 
 ###############################################.
 ## Data lists --------------------------------------------------------------
 
+# Lists for trend graphs
 
 data_list <- c("Positive Cases" = "LabCases",
                "Reinfections" = "LabCasesReinfections",
@@ -231,28 +218,30 @@ data_list <- c("Positive Cases" = "LabCases",
                "Community Hubs and Assessment Centres" = "AssessmentHub",
                "Scottish Ambulance Service" = "SAS")
 
+inf_levels_cases_list <- c("Positive Cases" = "LabCases",
+                           "Reinfections" = "LabCasesReinfections")
 
-CTdata_list_chart_tab <- c ("Contact Tracing time performance %",
+severe_illness_list <- c("Hospital Admissions" = "Admissions",
+                         "Hospital Admissions by Ethnicity" = "Ethnicity_Chart",
+                         "ICU Admissions" = "ICU")
+
+surveillance_list <- c("NHS24 Contacts" = "NHS24",
+                       "Community Hubs and Assessment Centres" = "AssessmentHub",
+                       "Scottish Ambulance Service" = "SAS")
+
+CTdata_list_chart_tab <- c("Contact Tracing time performance %",
                             "Contact Tracing time performance cases",
                             "Average number of contacts per case",
                             "Protect Scotland App")
 
 
-CTdata_list_data_tab <- c (#"Contact Tracing Weekly by Health Board" = "ContactTracing",
+CTdata_list_data_tab <- c(
   "Contact Tracing time performance measures" = "ContactTime",
-  #  "Cases reporting an occupation in the Education and Childcare sector" = "ContactEC",
   "Cases recorded in contact tracing software" = "ContactWeeklyCases",
   "Cumulative cases recorded in contact tracing software" ="ContactTracingWeeklyCumulative",
-  #"Average number of contacts per case" = "ContactTracingAveragesAge",
   "Number of Contacts Positive Within 10 Days of Exposure" = "ContactTracingTestingPositive",
   "Incomplete index cases by reason incomplete" = "ContactTracingFail",
   "Protect Scotland App" = "ProximityApp")
-
-#"Index and contact cases by age" = "ContactTracingDemoAge",
-#"Index and contact cases by sex" = "ContactTracingDemoSex",
-#"Index and contact cases by SIMD quintile" = "ContactTracingDemoSIMD")
-
-
 
 SettingList <- c(sort(unique(Settings$`Setting Type`)))
 
@@ -261,36 +250,40 @@ HCWdata_list_data_tab <- c ("Specialist Cancer Wards and Treatment Areas" = "Hea
                             "Long Stay Old Age Psychiatry and Learning Disability Wards" = "HealthCareWorkerPsychiatry")
 
 
-#extra choices for data tables
+# Lists for drop-down data tables
 
-data_list_data_tab <- c("Positive cases" = "LabCases",
-                        "Reinfections" = "LabCasesReinfections",
-                        "Positive cases by age and sex" = "LabCases_AgeSex",
-                        "Positive cases by deprivation" = "LabCases_SIMD",
-                        "Distribution of COVID-19 cases by age group" = "Cases_AgeGrp",
-                        "Hospital admissions" = "Admissions",
-                        "Hospital admissions by age and sex" = "Admissions_AgeSex",
-                        "Hospital admissions by deprivation" = "Admissions_SIMD",
-                        "Weekly hospital admissions by age" = 'Admissions_AgeBD',
-                        "Proportion of weekly cases admitted to hospital within 14 days of a first positive test" = "Cases_Adm",
-                        "Proportion of weekly cases admitted to hospital by age group" = "Prop_Adm_AgeGrp",
-                        "Hospital admissions by ethnicity" = "Ethnicity",
-                        "Length of stay of acute hospital admissions by age group" = "LOS_Data",
-                        "ICU admissions" = "ICU",
-                        "ICU admissions by age" = "ICU_AgeSex",
-                        "NHS24 contacts" = "NHS24",
-                        "NHS24 contacts by age and sex" = "NHS24_AgeSex",
-                        "NHS24 contacts by deprivation" = "NHS24_SIMD",
-                        "NHS Inform hits" = "NHS24_inform",
-                        "NHS24 self help guides" = "NHS24_selfhelp",
-                        "NHS24 community outcomes"  = "NHS24_community",
-                        "Community hubs and assessment centres" = "AssessmentHub",
-                        "Community hubs and assessment centres by age" = "AssessmentHub_AgeSex",
-                        "Community hubs and assessment centres by deprivation" = "AssessmentHub_SIMD",
-                        "Scottish Ambulance Service" = "SAS",
-                        "Scottish Ambulance Service by age and sex" = "SAS_AgeSex",
-                        "Scottish Ambulance Service by deprivation" = "SAS_SIMD",
-                        "Scottish Ambulance Service - all incidents" = "SAS_all")
+inf_levels_cases_data_list <- c("Positive cases" = "LabCases",
+                                "Reinfections" = "LabCasesReinfections",
+                                "Positive cases by age and sex" = "LabCases_AgeSex",
+                                "Positive cases by deprivation" = "LabCases_SIMD",
+                                "Distribution of COVID-19 cases by age group" = "Cases_AgeGrp")
+
+severe_illness_data_list <- c("Hospital admissions" = "Admissions",
+                              "Hospital admissions by age and sex" = "Admissions_AgeSex",
+                              "Hospital admissions by deprivation" = "Admissions_SIMD",
+                              "Weekly hospital admissions by age" = 'Admissions_AgeBD',
+                              "Proportion of weekly cases admitted to hospital within 14 days of a first positive test" = "Cases_Adm",
+                              "Proportion of weekly cases admitted to hospital by age group" = "Prop_Adm_AgeGrp",
+                              "Hospital admissions by ethnicity" = "Ethnicity",
+                              "Length of stay of acute hospital admissions by age group" = "LOS_Data",
+                              "ICU admissions" = "ICU",
+                              "ICU admissions by age" = "ICU_AgeSex")
+
+surveillance_data_list <- c("NHS24 contacts" = "NHS24",
+                            "NHS24 contacts by age and sex" = "NHS24_AgeSex",
+                            "NHS24 contacts by deprivation" = "NHS24_SIMD",
+                            "NHS Inform hits" = "NHS24_inform",
+                            "NHS24 self help guides" = "NHS24_selfhelp",
+                            "NHS24 community outcomes"  = "NHS24_community",
+                            "Community hubs and assessment centres" = "AssessmentHub",
+                            "Community hubs and assessment centres by age" = "AssessmentHub_AgeSex",
+                            "Community hubs and assessment centres by deprivation" = "AssessmentHub_SIMD",
+                            "Scottish Ambulance Service" = "SAS",
+                            "Scottish Ambulance Service by age and sex" = "SAS_AgeSex",
+                            "Scottish Ambulance Service by deprivation" = "SAS_SIMD",
+                            "Scottish Ambulance Service - all incidents" = "SAS_all")
+
+
 
 data_list_quarantine_tab <- c("Quarantine statistics by date" = "Quarantine")
 
@@ -316,8 +309,6 @@ pal_child <- c("#3F3685", "#9B4393", "#0078D4", "#83BB26", "#C73918", "#6B5C85")
 phs_blues <- c("#004785", "#00a2e5", "#4c7ea9")
 
 #for contact tracing charts
-#pal_CT <- c('#0078D4', '#3393DD', '#80BCEA',  '#B3D7F2','#000000')
-
 pal_CT <- c(phs_colours("phs-blue"),
             phs_colours("phs-purple"),
             phs_colours("phs-magenta"),
