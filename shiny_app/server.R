@@ -3,13 +3,12 @@
 function(input, output, session) {
 
   ###############################################.
-  # Sourcing file with functions code
+  # Functions for graphs
   source(file.path("functions_server.R"),  local = TRUE)$value
-
-  ###############################################.
-  # Sourcing file with data table code
+  # Data table
   source(file.path("functions_tables.R"),  local = TRUE)$value
-
+  # Chart layout
+  source(file.path("functions_chart_layout.R"),  local = TRUE)$value
   ###############################################.
   # Sourcing individual tabs
   ###############################################.
