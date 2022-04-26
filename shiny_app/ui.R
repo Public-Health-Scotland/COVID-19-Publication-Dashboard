@@ -233,6 +233,42 @@ tagList(  #needed for shinyjs
       )
       ## End -----------
 
+    ), # page bracket
+    #################### Surveillance -----
+    navbarMenu(
+      title = "Surveillance",
+      icon = icon("chart-area"),
+      tabPanel(
+        title = "Surveillance",
+        icon = icon("chart-area"),
+        value = "Surveillance",
+        wellPanel(
+          column(4,
+                 div(title = "Select the data you want to explore.", # tooltip
+                     radioGroupButtons("measure_select_surveillance",
+                                       label = "Select the data you want to explore.",
+                                       choices = surveillance_list,
+                                       status = "primary",
+                                       selected = surveillance_list[[1]],
+                                       direction = "vertical",
+                                       justified = T))),
+          column(4,
+                 downloadButton('download_surveillance_data', 'Download data'),
+                 fluidRow(br()),
+                 actionButton(inputId='ab1', label='Metadata',
+                              icon = icon("th"),
+                              onclick ="window.open('https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/',
+                              '_blank')"))
+
+        ), #wellPanel bracket
+
+        mainPanel(width = 12,
+                  uiOutput("data_explorer_surveillance")
+        )# mainPanel bracket
+
+      )
+      ## End -----------
+
     ) # page bracket
 
 

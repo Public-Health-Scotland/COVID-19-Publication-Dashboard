@@ -1,8 +1,12 @@
 ## Data explorer selection ---
 
+# This is a reactive which works out what tab the user is on and then takes the
+# data choice from the selected button on that page
+
 data_explorer_selection <- reactive({
   case_when(input$intabset == "SevereIllness" ~ input$measure_select_severe_illness,
-            input$intabset == "InfCases" ~ input$measure_select_infcases)
+            input$intabset == "InfCases" ~ input$measure_select_infcases,
+            input$intabset == "Surveillance" ~ input$measure_select_surveillance)
   })
 
 
@@ -166,9 +170,10 @@ observeEvent(input$btn_dataset_inform, { showModal(inform_modal) })
 
 ## Reactive Charts  ----
 # The charts and text shown on the app will depend on what the user wants to see
-output$data_explorer_severe_illness <- output$data_explorer_infcases <- renderUI({
-
-
+# Note that we have to pass the renderUI through to multiple different objects
+# because we can't repeat the same object in shiny ui as this will lead to
+# corrupted HTML
+output$data_explorer_severe_illness <- output$data_explorer_infcases <- output$data_explorer_surveillance <- renderUI({
 
   # text for titles of cut charts
   datasettrend <- case_when(data_explorer_selection() == "LabCases" ~ "Positive COVID-19 cases",
@@ -481,7 +486,7 @@ overall_data_download <- reactive({
   # mutate(week_ending = format(week_ending, "%d %b %y"))
 })
 
-output$download_chart_data <- downloadHandler(
+output$download_infcases_data <- output$download_severe_illness_data <- output$download_surveillance_data <- downloadHandler(
   filename ="data_extract.csv",
   content = function(file) {
     write_csv(overall_data_download(),
