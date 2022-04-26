@@ -12,6 +12,8 @@ function(input, output, session) {
   ###############################################.
   # Sourcing individual tabs
   ###############################################.
+  # Summary info
+  source(file.path("summary_tab.R"), local = TRUE)$value
   # Infection levels and cases
   source(file.path("infection_levels_cases.R"), local = TRUE)$value
   # LFDs

@@ -159,7 +159,9 @@ observeEvent(input$btn_dataset_inform, { showModal(inform_modal) })
 
 ## Reactive Charts  ----
 # The charts and text shown on the app will depend on what the user wants to see
-output$data_explorer <- renderUI({
+output$data_explorer_severe_illness <- output$data_explorer_infcases <- renderUI({
+
+
 
   # text for titles of cut charts
   datasettrend <- case_when(input$measure_select == "LabCases" ~ "Positive COVID-19 cases",
@@ -205,7 +207,8 @@ output$data_explorer <- renderUI({
                                              In late September, the first batch of flu vaccination letters sent to those eligible by NHS Health Boards included the coronavirus number.
                                              The peaks in calls are consistent with the timing of those letters being sent."),
                           input$measure_select == "AssessmentHub" ~  paste0("Please note that data are provisional and may be updated in future publications as further information is supplied and validated from health boards."),
-                          input$measure_select == "SAS" ~ paste0(""))
+                          input$measure_select == "SAS" ~ paste0(""),
+                          TRUE ~ paste0(""))
 
   notes <- case_when(input$measure_select %in% c("NHS24", "AssessmentHub")~ paste0("As of the 31st of March 2022 the COVID-19 Community Pathway will be closed. From this date patients who contact NHS24 with COVID-19 symptoms during the in-hours period will be advised to contact their own GP practice.",
                    " For the out of hours period, the Out of Hours services will continue to manage COVID-19 patients directed by NHS 24 as a matter of course. This will have an impact on the NHS 24 data and COVID Hub/Assessment data contained in the dashboard."),
@@ -219,45 +222,6 @@ output$data_explorer <- renderUI({
                          input$measure_select == "NHS24" ~ "NHS 24 SAP BW",
                          input$measure_select == "AssessmentHub" ~ "GP Out of Hours (OOH)",
                          input$measure_select == "SAS"~ "SAS and Unscheduled Care Datamart")
-
-
-
-# Functions for Chart Layouts ---------------------------------------------
-# Function to create the standard layout for all the different charts/sections
-cut_charts <- function(title, source, data_name) {
-  tagList(
-    h3(title),
-    actionButton("btn_dataset_modal", paste0("Data source: ", source), icon = icon('question-circle')),
-    plot_box(paste0(total_title), paste0(data_name, "_overall")),
-    plot_cut_box(paste0(agesex_title), paste0(data_name, "_AgeSex"),
-                 paste0(simd_title), paste0(data_name, "_SIMD")))
-}
-
-#for e.g. ICU admissions where no SIMD data
-cut_charts_missing <- function(title, source, data_name) {
-  tagList(
-    h3(title),
-    p("SICSAG data are stored in a dynamic database and subject to ongoing validations therefore on a week to week basis the data may change."),
-    p("On 30 October 2020, Public Health Scotland became aware of an ongoing issue when linking ICU data to laboratory data for COVID-19 test results.
-      Any COVID-19 positive patients with a missing a CHI number that had a first positive test in the community are unable to be linked to ICU data.
-      As a result, the COVID-19 positive ICU patients could be underreported by up to 10%."),
-    actionButton("btn_dataset_modal", paste0("Data source: ", source), icon = icon('question-circle')),
-    plot_box(paste0(total_title), paste0(data_name, "_overall")),
-    plot_cut_missing(paste0(agesex_title), paste0(data_name, "_AgeSex")))
-}
-
-# Function to create the standard layout for all the different charts/sections
-cut_charts_subheading <- function(title, source, data_name) {
-  tagList(
-    h3(title),
-    p(subheading),
-    p(strong(notes)),
-    actionButton("btn_dataset_modal", paste0("Data source: ", source), icon = icon('question-circle')),
-    plot_box(paste0(total_title), paste0(data_name, "_overall")),
-    plot_cut_box(paste0(agesex_title), paste0(data_name, "_AgeSex"),
-                 paste0(simd_title), paste0(data_name, "_SIMD")))
-}
-
 
 # Set up Charts for each section ------------------------------------------
 
@@ -321,7 +285,12 @@ if (input$measure_select == "LabCases") { #Positive Cases
                    tags$a(href="https://publichealthscotland.scot/news/2022/february/covid-19-reporting-to-include-further-data-on-reinfections/",
                           "here.", class="externallink"))),
     cut_charts_subheading(title= "Daily number of COVID-19 admissions to hospital",
-                        source = data_source, data_name = "Admissions"),
+                        source = data_source, data_name = "Admissions",
+                        notes = notes,
+                        subheading = subheading,
+                        total_title = total_title,
+                        agesex_title = agesex_title,
+                        simd_title = simd_title),
 
     h3("Length of stay of acute COVID-19 hospital admissions"),
     p("Use the drop-down menu to select an age group of interest."),
@@ -349,8 +318,9 @@ if (input$measure_select == "LabCases") { #Positive Cases
 )
 
 } else if (input$measure_select == "ICU") {# ICU
-  cut_charts_missing(title= "Daily number of COVID-19 admissions to ICU",
-                     source = data_source, data_name ="ICU")
+  cut_charts_missing(title = "Daily number of COVID-19 admissions to ICU",
+                     source = data_source, data_name ="ICU",
+                     agesex_title = agesex_title)
 
 } else if (input$measure_select == "NHS24") {# NHS 24 contacts
   NHS_Inform_title <- paste0("NHS Inform hits to COVID-19 section (",start_date, " to ", end_date, ")" )
@@ -359,7 +329,13 @@ if (input$measure_select == "LabCases") { #Positive Cases
 
   tagList(actionButton("btn_modal_simd", "What is SIMD?", icon = icon('question-circle')),
           cut_charts_subheading(title = "Daily number of COVID-19 related NHS24 contacts",
-                                source = data_source, data_name ="NHS24"),
+                                subheading = subheading,
+                                notes = notes,
+                                source = data_source,
+                                total_title = total_title,
+                                data_name ="NHS24",
+                                agesex_title = agesex_title,
+                                simd_title = simd_title),
           p(strong("As of the 31st of March 2022 the COVID-19 Community Pathway will be closed. From this date patients who contact NHS24 with COVID-19 symptoms during the in-hours period will be advised to contact their own GP practice.",
                    "For the out of hours period, the Out of Hours services will continue to manage COVID-19 patients directed by NHS 24 as a matter of course. This will have an impact on the NHS 24 data and COVID Hub/Assessment data contained in the dashboard.")),
           h3("NHS Inform"),
@@ -372,7 +348,13 @@ if (input$measure_select == "LabCases") { #Positive Cases
 } else if (input$measure_select == "AssessmentHub") { # Assessment Hub
  tagList( actionButton("btn_modal_simd", "What is SIMD?", icon = icon('question-circle')),
   cut_charts_subheading(title= "Daily number of COVID-19 consultations",
-                        source = data_source, data_name = "AssessmentHub"))
+                        source = data_source, data_name = "AssessmentHub",
+                        notes = notes,
+                        subheading = subheading,
+                        total_title = total_title,
+                        agesex_title = agesex_title,
+                        simd_title = simd_title
+                        ))
 
 } else if (input$measure_select == "SAS") { # SAS data
   tagList(h3("Scottish Ambulance Service"),
@@ -390,7 +372,12 @@ if (input$measure_select == "LabCases") { #Positive Cases
   ),
   actionButton("btn_modal_simd", "What is SIMD?", icon = icon('question-circle')),
     cut_charts_subheading(title= "Daily attended incidents by Scottish Ambulance Service (suspected COVID-19)",
-                          source = data_source, data_name ="SAS"),
+                          source = data_source, data_name ="SAS",
+                          notes = notes,
+                          subheading = subheading,
+                          total_title = total_title,
+                          agesex_title = agesex_title,
+                          simd_title = simd_title),
     plot_box("SAS - all incidents", plot_output = "SAS_all"))
 }  else if (input$measure_select == "Ethnicity_Chart") { # Ethnicity data
   tagList(h3("COVID-19 admissions to hospital by ethnicity"),

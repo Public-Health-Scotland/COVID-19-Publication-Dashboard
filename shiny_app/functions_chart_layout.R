@@ -2,7 +2,7 @@
 
 # Functions for Chart Layouts ---------------------------------------------
 # Function to create the standard layout for all the different charts/sections
-cut_charts <- function(title, source, data_name) {
+cut_charts <- function(title, source, data_name, total_title, agesex_title, simd_title) {
   tagList(
     h3(title),
     actionButton("btn_dataset_modal", paste0("Data source: ", source), icon = icon('question-circle')),
@@ -12,7 +12,7 @@ cut_charts <- function(title, source, data_name) {
 }
 
 #for e.g. ICU admissions where no SIMD data
-cut_charts_missing <- function(title, source, data_name) {
+cut_charts_missing <- function(title, source, data_name, agesex_title) {
   tagList(
     h3(title),
     p("SICSAG data are stored in a dynamic database and subject to ongoing validations therefore on a week to week basis the data may change."),
@@ -25,7 +25,8 @@ cut_charts_missing <- function(title, source, data_name) {
 }
 
 # Function to create the standard layout for all the different charts/sections
-cut_charts_subheading <- function(title, source, data_name) {
+cut_charts_subheading <- function(title, subheading, notes, source, total_title, data_name,
+                                  agesex_title, simd_title) {
   tagList(
     h3(title),
     p(subheading),

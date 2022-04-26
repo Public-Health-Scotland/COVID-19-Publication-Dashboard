@@ -113,6 +113,7 @@ tagList(  #needed for shinyjs
                                        label = "Select the data you want to explore.",
                                        choices = inf_levels_cases_list,
                                        status = "primary",
+                                       selected = inf_levels_cases_list[[1]],
                                        direction = "vertical",
                                        justified = T))),
           column(4,
@@ -126,15 +127,14 @@ tagList(  #needed for shinyjs
           ), #wellPanel bracket
 
         mainPanel(width = 12,
-                  uiOutput("data_explorer")
+                  uiOutput("data_explorer_infcases")
         )# mainPanel bracket
 
       )
-    ## End -----------
 
       ), # page bracket
 
-    ### LFD
+    #################### LFDs -----
 
     navbarMenu(
       title = "LFDs",
@@ -196,7 +196,47 @@ tagList(  #needed for shinyjs
         br3(), br3(), br3()
 
         )
-    )
+    ),
+
+    #################### Severe illness -----
+    navbarMenu(
+      title = "Severe Illness",
+      icon = icon("chart-area"),
+      tabPanel(
+        title = "Severe Illness",
+        icon = icon("chart-area"),
+        value = "SevereIllness",
+        wellPanel(
+          column(4,
+                 div(title = "Select the data you want to explore.", # tooltip
+                     radioGroupButtons("measure_select",
+                                       label = "Select the data you want to explore.",
+                                       choices = severe_illness_list,
+                                       status = "primary",
+                                       selected = severe_illness_list[[1]],
+                                       direction = "vertical",
+                                       justified = T))),
+          column(4,
+                 downloadButton('download_severe_illness_data', 'Download data'),
+                 fluidRow(br()),
+                 actionButton(inputId='ab1', label='Metadata',
+                              icon = icon("th"),
+                              onclick ="window.open('https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/',
+                              '_blank')"))
+
+        ), #wellPanel bracket
+
+        mainPanel(width = 12,
+                  uiOutput("data_explorer_severe_illness")
+        )# mainPanel bracket
+
+      )
+      ## End -----------
+
+    ) # page bracket
+
+
+###########################################################################
   ) # taglist bracket
 
 )
