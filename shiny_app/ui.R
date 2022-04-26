@@ -132,7 +132,71 @@ tagList(  #needed for shinyjs
       )
     ## End -----------
 
-      ) # page bracket
+      ), # page bracket
+
+    ### LFD
+
+    navbarMenu(
+      title = "LFDs",
+      icon = icon("thermometer"),
+
+      tabPanel(
+        title = "LFD Testing",
+        icon = icon("file-medical"),
+        value = "LFDData",
+
+        h3("Lateral Flow Device Testing"),
+        tags$li("Across Scotland, there are numerous testing pathways being rolled out using Lateral Flow Devices (LFD) - a clinically validated swab antigen test taken that does not require a laboratory for processing."),
+        tags$li(" This test can produce rapid results within 45 minutes at the location of the test. "),
+        tags$li("Some of the areas using LFD tests are: schools, health and social care workers, care homes and more."),
+        tags$li(" Public Health Scotland has collected the information on the number of LFD tests carried out across Scotland and will now publish this information weekly. "),
+        tags$li("LFD testing in Scotland expanded from 26 April 2021, with everyone able to access rapid COVID-19 testing even if they had no symptoms."),
+        tags$li(" Any individual who receives a positive test result using a Lateral Flow Device is advised to self-isolate and arrange for a confirmatory PCR test."),
+        tags$li("The PCR result will determine the number of cases of COVID-19 in Scotland."),
+        hr(),
+        downloadButton('download_LFD_weekly_data', 'Download weekly totals'),
+        downloadButton('download_LFD_data', 'Download cumulative Health Board data'),
+        downloadButton('download_LFD_testgroup', 'Download test group data'),
+        mainPanel(width = 12,
+                  uiOutput("LFD_output"),
+                  br3(), br3(), br3()
+        )),
+
+      tabPanel(
+        title = "LFD demographic",
+        icon = icon("user-friends"),
+        value = "LFDdemoData",
+
+
+        h3("LFD Test Demographics"),
+        p("This section allows you to view the total number of individuals tested and the
+          number of individuals testing positive at least once within Scotland. Data available by
+          age & gender and Scottish Index of Multiple Deprivation (SIMD) quintile (where SIMD 1 is the most deprived and SIMD 5 is the least deprived - see",
+          tags$a(
+            href = "https://www.gov.scot/collections/scottish-index-of-multiple-deprivation-2020/?utm_source=redirect&utm_medium=shorturl&utm_campaign=simd",
+            "here for more information.)",
+            class = "externallink") ),
+        p(glue("Data were extracted on {LFD_demo_date}. The data in this tab only cover submissions with a valid CHI.")),
+
+        hr(),
+        fluidRow(
+          column(width = 6,
+                 div(title = "people_output_select", # tooltip
+                     selectInput("people_output_selection", label = "Demographic Selection",
+                                 choices = people_output_selection))),
+          column(width = 6,
+                 div(title = "plot_output_select", # tooltip
+                     selectInput("plot_output_selection", label = "Output Selection",
+                                 choices = plot_output_selection)))
+        ), #fluidRow bracket
+
+        hr(),
+        uiOutput("people_tab"),
+
+        br3(), br3(), br3()
+
+        )
+    )
   ) # taglist bracket
 
 )
