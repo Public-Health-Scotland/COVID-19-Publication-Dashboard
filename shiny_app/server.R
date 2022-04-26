@@ -14,17 +14,11 @@ function(input, output, session) {
   ###############################################.
   # Summary info
   source(file.path("summary_tab.R"), local = TRUE)$value
-  # Infection levels and cases
-  source(file.path("infection_levels_cases.R"), local = TRUE)$value
   # LFDs
   source(file.path("lfd_tab.R"),  local = TRUE)$value
   source(file.path("lft_demo_tab.R"), local = TRUE)$value
-  # Severe illness
-  source(file.path("severe_illness.R"), local = TRUE)$value
   # Populations of interest
   source(file.path("populations_of_interest.R"), local = TRUE)$value
-  # Surveillance
-  source(file.path("surveillance.R"), local = TRUE)$value
   # Vaccinations
   source(file.path("vaccinations.R"), local = TRUE)$value
   ###############################################.
