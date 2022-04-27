@@ -395,7 +395,7 @@ if (data_explorer_selection() == "LabCases") { #Positive Cases
                       displayModeBar = TRUE,
                       modeBarButtonsToRemove = bttn_remove )),
       column(9,
-             plotlyOutput("LOSChart")
+             plot_box("", "LOSChart")
              )
 
       ),
