@@ -154,7 +154,9 @@ source("Transfer scripts/transfer_vaccinecert.R")
 source("Transfer scripts/transfer_los.R")
 
 
+##### 23. Vaccine Wastage
 
+source("Transfer scripts/transfer_vaccinewaste.R")
 
 
 
