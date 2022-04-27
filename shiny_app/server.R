@@ -14,6 +14,7 @@ function(input, output, session) {
   ###############################################.
   # Summary info
   source(file.path("summary_tab.R"), local = TRUE)$value
+  source(file.path("data_tab.R"), local = TRUE)$value
   # LFDs
   source(file.path("lfd_tab.R"),  local = TRUE)$value
   source(file.path("lft_demo_tab.R"), local = TRUE)$value
@@ -37,12 +38,15 @@ function(input, output, session) {
   ## Observe events to improve navigation between tabs of the app
   # To jump to data pages
   observeEvent(input$jump_to_inf_cases, {updateTabsetPanel(session, "intabset", selected = "InfCases")})
+  observeEvent(input$jump_to_inf_cases_data, {updateTabsetPanel(session, "intabset", selected = "InfCasesData")})
   observeEvent(input$jump_to_LFD, {updateTabsetPanel(session, "intabset", selected = "LFDData")})
   observeEvent(input$jump_to_LFDdemo, {updateTabsetPanel(session, "intabset", selected = "LFDdemoData")})
   observeEvent(input$jump_to_severe_illness, {updateTabsetPanel(session, "intabset", selected = "SevereIllness")})
+  observeEvent(input$jump_to_severe_illness_data, {updateTabsetPanel(session, "intabset", selected = "SevereIllnessData")})
   observeEvent(input$jump_to_pop_interest, {updateTabsetPanel(session, "intabset", selected = "PopInterest")})
   observeEvent(input$jump_to_care_homes, {updateTabsetPanel(session, "intabset", selected = "CareHomes")})
   observeEvent(input$jump_to_surveillance, {updateTabsetPanel(session, "intabset", selected = "Surveillance")})
+  observeEvent(input$jump_to_surveillance_data, {updateTabsetPanel(session, "intabset", selected = "SurveillanceData")})
   observeEvent(input$jump_to_vaccinations, {updateTabsetPanel(session, "intabset", selected = "Vaccinations")})
 
   # Archived

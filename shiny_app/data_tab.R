@@ -1,6 +1,15 @@
 
 ## Reactive data ----
 
+# This is a reactive which works out what tab the user is on and then takes the
+# data choice from the selected button on that page
+
+data_select_combined <- reactive({
+  case_when(input$intabset == "SevereIllnessData" ~ input$data_select_severe_illness,
+            input$intabset == "InfCasesData" ~ input$data_select_infcases,
+            input$intabset == "SurveillanceData" ~ input$data_select_surveillance,
+            TRUE ~ "LabCases")
+})
 
 
 ##reactive data to show in app
@@ -9,7 +18,7 @@ data_table <- reactive({  # Change dataset depending on what user selected
 
 
 
-  table_data <- switch(input$data_select,
+  table_data <- switch(data_select_combined(),
 
                        "LabCases" = LabCases %>%  dplyr::rename (`Number of Cases` = Count,
 
@@ -168,7 +177,7 @@ data_table <- reactive({  # Change dataset depending on what user selected
 
 
 
-  if (input$data_select %in% c("LabData")) {
+  if (data_select_combined() %in% c("LabData")) {
 
     table_data <- table_data %>%
 
@@ -178,7 +187,7 @@ data_table <- reactive({  # Change dataset depending on what user selected
 
 
 
-  } else if (input$data_select %in% "Admissions") {
+  } else if (data_select_combined() %in% "Admissions") {
 
     table_data <- table_data %>%
 
@@ -186,7 +195,7 @@ data_table <- reactive({  # Change dataset depending on what user selected
 
 
 
-  } else if (input$data_select %in% "ICU") {
+  } else if (data_select_combined() %in% "ICU") {
 
     table_data <- table_data %>%
 
@@ -194,7 +203,7 @@ data_table <- reactive({  # Change dataset depending on what user selected
 
 
 
-  } else if (input$data_select %in% "NHS24") {
+  } else if (data_select_combined() %in% "NHS24") {
 
     table_data <- table_data #%>%
 
@@ -202,7 +211,7 @@ data_table <- reactive({  # Change dataset depending on what user selected
 
 
 
-  } else if (input$data_select %in% "AssessmentHub") {
+  } else if (data_select_combined() %in% "AssessmentHub") {
 
     table_data <- table_data #%>%
 
@@ -210,13 +219,13 @@ data_table <- reactive({  # Change dataset depending on what user selected
 
 
 
-  } else if (input$data_select %in% "SAS") {
+  } else if (data_select_combined() %in% "SAS") {
 
     table_data <- table_data #%>%
 
     #  select(Date, `Number of Admissions`)
 
-  } else if (input$data_select %in% "Ethnicity") {
+  } else if (data_select_combined() %in% "Ethnicity") {
 
     table_data <- table_data #%>%
 
@@ -242,25 +251,10 @@ data_table <- reactive({  # Change dataset depending on what user selected
 
 
 
-output$data_tab_table <- renderUI({
+output$infcases_table <- output$severe_illness_table <- output$surveillance_table <- renderUI({
 
-  if(input$data_select %in% c("ChildCases", "ChildTests")){
-
-    tagList(
-
-      p(strong("Information on COVID-19 in children and young people of educational age, education staff and educational settings is now presenting in the",
-
-               tags$a(href ="https://publichealthscotland.scot/our-areas-of-work/covid-19/covid-19-data-and-intelligence/enhanced-surveillance-of-covid-19-in-education-settings/covid-19-education-surveillance-dashboard/",
-
-                      "COVID-19 Education Surveillance dashboard.", target = "_blank")))
-
-    )
-
-  } else {
-
-    DT::dataTableOutput("table_filtered")
-
-  }
+    cat(file=stderr(), "data_select_combined is", data_select_combined(), "\n")
+    withSpinner(DT::dataTableOutput("table_filtered"))
 
 })
 
@@ -279,7 +273,7 @@ output$table_filtered <- DT::renderDataTable({
 table_params_data <- reactive({
 
   # Columns to add 1,000 comma separator to for each table
-  separator_cols = switch(input$data_select,
+  separator_cols = switch(data_select_combined(),
                            "LabCases" = c(2,3),
                            "LabCasesReinfections" = c(2,3),
                            "LabCases_AgeSex" = c(3),
@@ -308,7 +302,7 @@ table_params_data <- reactive({
   )
 
   # Columns to add 1,000 comma separator with 1dp to for each table
-  separator_cols_1dp = switch(input$data_select,
+  separator_cols_1dp = switch(data_select_combined(),
                                "LabCases" = c(4,5),
                                "LabCasesReinfections" = c(4,5),
                                "LabCases_AgeSex" = c(4),
@@ -325,7 +319,7 @@ table_params_data <- reactive({
   )
 
   # Columns to add percentage formatting to for each table
-  percentage_cols = switch(input$data_select,
+  percentage_cols = switch(data_select_combined(),
 
                             "LabCases_SIMD" = c(3),
                             "Cases_AgeGrp" = c(3),
@@ -339,7 +333,7 @@ table_params_data <- reactive({
                             c() # default
   )
 
-  maxrows = switch(input$data_select,
+  maxrows = switch(data_select_combined(),
 
                     "LabCases_AgeSex" = 44,
                     "Cases_AgeGrp" = 11,
@@ -365,7 +359,7 @@ table_params_data <- reactive({
 
 # Number of max rows per page for each table (default is 10 if unlisted)
 maxrows <- reactive({
-  maxrows <- switch(input$data_select,
+  maxrows <- switch(data_select_combined(),
 
                          "LabCases_AgeSex" = 44,
                          "Cases_AgeGrp" = 11,
@@ -390,7 +384,7 @@ maxrows <- reactive({
 
 # Data download of data table.
 
-output$download_table_csv <- downloadHandler(
+output$download_infcases_table_csv <- output$download_severe_illness_table_csv <- output$download_surveillance_table_csv <- downloadHandler(
 
   filename ="data_extract.csv",
 

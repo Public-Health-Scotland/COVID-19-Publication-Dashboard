@@ -173,15 +173,6 @@ mtu_keypoints <- readRDS("data/TCT_KeyPoints.rds")
 
 # Lists for trend graphs
 
-data_list <- c("Positive Cases" = "LabCases",
-               "Reinfections" = "LabCasesReinfections",
-               "Hospital Admissions" = "Admissions",
-               "Hospital Admissions by Ethnicity" = "Ethnicity_Chart",
-               "ICU Admissions" = "ICU",
-               "NHS24 Contacts" = "NHS24",
-               "Community Hubs and Assessment Centres" = "AssessmentHub",
-               "Scottish Ambulance Service" = "SAS")
-
 inf_levels_cases_list <- c("Positive Cases" = "LabCases",
                            "Reinfections" = "LabCasesReinfections")
 

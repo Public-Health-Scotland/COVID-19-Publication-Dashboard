@@ -6,7 +6,8 @@
 data_explorer_selection <- reactive({
   case_when(input$intabset == "SevereIllness" ~ input$measure_select_severe_illness,
             input$intabset == "InfCases" ~ input$measure_select_infcases,
-            input$intabset == "Surveillance" ~ input$measure_select_surveillance)
+            input$intabset == "Surveillance" ~ input$measure_select_surveillance,
+            TRUE ~ "LabCases")
   })
 
 
