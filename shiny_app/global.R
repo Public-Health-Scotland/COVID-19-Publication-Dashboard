@@ -61,42 +61,6 @@ library(tidyr)
 library(magrittr)
 
 ###############################################.
-## Functions ----
-
-plot_box <- function(title_plot, plot_output) {
-  tagList(h4(title_plot),
-          withSpinner(plotlyOutput(plot_output)))
-}
-
-
-plot_box_2 <- function(title_plot, subtitle_plot = "", plot_output) {
-  tagList(h4(title_plot),p(tags$i(subtitle_plot)),
-          withSpinner(plotlyOutput(plot_output), proxy.height = "500px"))
-}
-
-plot_cut_box <- function(title_plot1, plot_output1,
-                         title_plot2, plot_output2, extra_content = NULL) {
-  tagList(
-    fluidRow(column(6, h4(title_plot1)),
-             column(6, h4(title_plot2))),
-    extra_content,
-    fluidRow(column(6, withSpinner(plotlyOutput(plot_output1))),
-             column(6, withSpinner(plotlyOutput(plot_output2))))
-  )
-}
-
-#if missing plot (e.g. no SIMD)
-plot_cut_missing <- function(title_plot, plot_output, extra_content = NULL) {
-  tagList(
-    fluidRow(column(6, h4(title_plot))),
-    extra_content,
-    fluidRow(column(6, withSpinner(plotlyOutput(plot_output))))
-  )
-}
-
-br3<-function(){tagList(br(),br(),br())}
-
-###############################################.
 ## Data ----
 
 # Infection levels and cases ----
