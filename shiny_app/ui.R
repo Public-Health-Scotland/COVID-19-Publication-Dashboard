@@ -1,6 +1,8 @@
 #UI
 tagList(  #needed for shinyjs
   useShinyjs(),  # Include shinyjs
+  # specify most recent fontawesome library
+  tags$style("@import url(https://use.fontawesome.com/releases/v6.1.1/css/all.css);"),
   navbarPage(
     id = "intabset",# id used for jumping between tabs
     title = div(
@@ -101,7 +103,7 @@ tagList(  #needed for shinyjs
     #################### Infection levels and cases -----
     navbarMenu(
       title = "Cases & infection levels",
-      icon = icon("chart-area"),
+      icon = icon("virus-covid", verify_fa=FALSE),
       tabPanel(
         title = "Charts",
         icon = icon("chart-area"),
@@ -174,11 +176,11 @@ tagList(  #needed for shinyjs
 
     navbarMenu(
       title = "LFDs",
-      icon = icon("thermometer"),
+      icon = icon("vial-virus", verify_fa=F),
 
       tabPanel(
         title = "LFD testing",
-        icon = icon("file-medical"),
+        icon = icon("vial-circle-check", verify_fa=F),
         value = "LFDData",
 
         h3("Lateral Flow Device Testing"),
@@ -200,7 +202,7 @@ tagList(  #needed for shinyjs
 
       tabPanel(
         title = "LFD demographic",
-        icon = icon("user-friends"),
+        icon = icon("vials"),
         value = "LFDdemoData",
 
 
@@ -237,7 +239,7 @@ tagList(  #needed for shinyjs
     #################### Severe illness -----
     navbarMenu(
       title = "Severe illness",
-      icon = icon("chart-area"),
+      icon = icon("bed-pulse", verify_fa=F),
       tabPanel(
         title = "Charts",
         icon = icon("chart-area"),
@@ -308,7 +310,7 @@ tagList(  #needed for shinyjs
     #################### Populations of interest -----
     navbarMenu(
       title = "Populations of interest",
-      icon = icon("chart-area"),
+      icon = icon("people-group", verify_fa=F),
       tabPanel(
         title = "Care Homes",
         icon = icon("home"),
@@ -338,6 +340,14 @@ tagList(  #needed for shinyjs
 
         )# mainPanel bracket
 
+      ),
+      tabPanel(
+        title = "Healthcare workers",
+        icon = icon("user-doctor", verify_fa=F),
+        value = "HCW",
+
+        h3('Number of COVID-19 cases for healthcare workers')
+
       )
       ## End -----------
 
@@ -345,7 +355,7 @@ tagList(  #needed for shinyjs
     #################### Surveillance -----
     navbarMenu(
       title = "Surveillance",
-      icon = icon("chart-area"),
+      icon = icon("desktop"),
       tabPanel(
         title = "Charts",
         icon = icon("chart-area"),
@@ -416,10 +426,10 @@ tagList(  #needed for shinyjs
     #################### Vaccinations -----
     navbarMenu(
       title = "Vaccinations",
-      icon = icon("chart-area"),
+      icon = icon("syringe"),
       tabPanel(
         title = "Vaccine wastage",
-        icon = icon("chart-area"),
+        icon = icon("dumpster", verify_fa=F),
         value = "Vaccinations",
 
         h3("COVID-19 vaccine wastage")
@@ -431,7 +441,7 @@ tagList(  #needed for shinyjs
     #################### Archive -----
     navbarMenu(
       title = "Archive",
-      icon = icon("chart-area"),
+      icon = icon("floppy-disk", verify_fa=F),
       tabPanel(
         title = "Contact Tracing",
         icon = icon("address-book"),
@@ -489,7 +499,7 @@ tagList(  #needed for shinyjs
       #################### Contact Tracing Data ----
       tabPanel(
         title = "Contact Tracing Data",
-        icon = icon("table"),
+        icon = icon("address-book"),
         value = "CTtable",
         p(strong("Information: ")),
         tags$li("This section allows you to view the contact tracing data and time performance indicators
