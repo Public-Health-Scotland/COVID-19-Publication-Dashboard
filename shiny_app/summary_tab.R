@@ -167,13 +167,91 @@ observeEvent(input$btn_dataset_inform, { showModal(inform_modal) })
 
 
 ###############################################.
+###############################################.
+## Charts ----
+
+# Creating plots for each cut and dataset
+# Overall
+output$LabCases_overall <- renderPlotly({plot_overall_chart(LabCases, data_name = "LabCases", include_vline=T)})
+output$LabCasesReinfections_overall <- renderPlotly({plot_overall_chart(LabCasesReinfections, data_name = "LabCasesReinfections", include_vline=T)})
+output$Admissions_overall <- renderPlotly({plot_overall_chart(Admissions, data_name = "Admissions", include_vline=T)})
+output$ICU_overall <- renderPlotly({plot_overall_chart(ICU, data_name = "ICU")})
+output$NHS24_overall <- renderPlotly({plot_overall_chartNHS24(NHS24, data_name = "NHS24")})
+output$AssessmentHub_overall <- renderPlotly({plot_overall_chartAssessmentHub(AssessmentHub, data_name = "AssessmentHub")})
+output$SAS_overall <- renderPlotly({plot_overall_chartSAS(SAS, data_name = "SAS")})
+
+# Age/sex and SIMD charts
+output$LabCases_AgeSex <- renderPlotly({plot_agesex_chart(LabCases_AgeSex, data_name = "LabCases_AgeSex")})
+output$LabCases_SIMD <- renderPlotly({plot_simd_chart(LabCases_SIMD, data_name = "LabCases_SIMD")})
+output$Admissions_AgeSex <- renderPlotly({plot_agesex_chart(Admissions_AgeSex, data_name = "Admissions_AgeSex")})
+output$Admissions_SIMD <- renderPlotly({plot_simd_chart(Admissions_SIMD, data_name = "Admissions_SIMD")})
+output$ICU_AgeSex <- renderPlotly({plot_agesex_chart(ICU_AgeSex, data_name = "ICU_AgeSex")})
+output$NHS24_AgeSex <- renderPlotly({plot_agesex_chart(NHS24_AgeSex, data_name = "NHS24_AgeSex")})
+output$NHS24_SIMD <- renderPlotly({plot_simd_chart(NHS24_SIMD, data_name = "NHS24_SIMD")})
+output$AssessmentHub_AgeSex <- renderPlotly({plot_agesex_chart(AssessmentHub_AgeSex, data_name = "AssessmentHub_AgeSex")})
+output$AssessmentHub_SIMD <- renderPlotly({plot_simd_chart(AssessmentHub_SIMD, data_name = "AssessmentHub_SIMD")})
+output$SAS_AgeSex <- renderPlotly({plot_agesex_chart(SAS_AgeSex, data_name = "SAS_AgeSex")})
+output$SAS_SIMD <- renderPlotly({plot_simd_chart(SAS_SIMD, data_name = "SAS_SIMD")})
+
+# Extra infections and cases charts
+output$ReinfectionsBarchart <- renderPlotly({plot_reinfections_barchart(LabCases, LabCasesReinfections)})
+output$labcases_age_groups <- renderPlotly({cases_age_chart_3_week(LabCases_Age, data_name = "LabCases_Age")})
+
+# Extra severe illness charts
+output$prop_admissions <- renderPlotly({plot_singletrace_chart(Cases_Adm, data_name = "Cases_Adm", include_vline=T)})
+output$cases_age_groups <- renderPlotly({cases_age_chart_3_week(Cases_AgeGrp, data_name = "Cases_AgeGrp")})
+output$admissions_age_groups <- renderPlotly({cases_age_chart_3_week(Admissions_AgeGrp, data_name = "Admissions_AgeGrp", type = "admissions")})
+output$EthnicityChart <- renderPlotly({plot_overall_chartEthnicity(Ethnicity_Chart, data_name = "Ethnicity_Chart")})
+output$EthnicityChartPercentage <- renderPlotly({plot_overall_chartEthnicityPercent(Ethnicity_Chart, data_name = "Ethnicity_Chart")})
+output$LOSChart <- renderPlotly({los_chart_fn(LOS_Data)})
+
+# Extra surveillance charts
+output$NHS24_inform <- renderPlotly({plot_singletrace_chart(NHS24_inform, data_name = "NHS24_inform")})
+output$NHS24_selfhelp <- renderPlotly({plot_nhs24_selfhelp_chart(NHS24_selfhelp, data_name = "NHS24_selfhelp")})
+output$NHS24_community <- renderPlotly({plot_nhs24_community_chart(NHS24_community, data_name = "NHS24_community")})
+output$SAS_all <- renderPlotly({plot_singletrace_chart(SAS_all, data_name = "SAS_all")})
+output$LabCasesRate <- renderPlotly({plot_singlerate_chart(LabCases, data_name = "LabCases", include_vline=T)})
+output$LabCasesReinfectionsRate <- renderPlotly({plot_singlerate_chart(LabCasesReinfections, data_name = "LabCasesReinfections", include_vline=T)})
+
+
+## Data downloads ----
+
+# For the charts at the moment the data download is for the overall one,
+# need to think how to allow downloading for each chart
+# Reactive dataset that gets the data the user is visualisaing ready to download
+overall_data_download <- reactive({
+  switch(
+    data_explorer_selection(),
+    "LabCases" = LabCases,
+    "LabCasesReinfections" = LabCasesReinfections,
+    "Admissions" = Admissions,
+    "ICU" = ICU,
+    "NHS24" = NHS24,
+    "AssessmentHub" = AssessmentHub,
+    "SAS" = SAS,
+    "Ethnicity_Chart" = Ethnicity_Chart) #%>%
+  #select(area_name, week_ending, count, starts_with("average")) %>%
+  # mutate(week_ending = format(week_ending, "%d %b %y"))
+})
+
+# Note that we have to pass the downloadHandler through to multiple different objects
+# because we can't repeat the same object in shiny ui as this will lead to
+# corrupted HTML
+output$download_infcases_data <- output$download_severe_illness_data <- output$download_surveillance_data <- downloadHandler(
+  filename ="data_extract.csv",
+  content = function(file) {
+    write_csv(overall_data_download(),
+              file) }
+)
+
 
 ## Reactive Charts  ----
 # The charts and text shown on the app will depend on what the user wants to see
 # Note that we have to pass the renderUI through to multiple different objects
 # because we can't repeat the same object in shiny ui as this will lead to
 # corrupted HTML
-output$data_explorer_severe_illness <- output$data_explorer_infcases <- output$data_explorer_surveillance <- renderUI({
+
+ui_content <-  reactive({
 
   # text for titles of cut charts
   datasettrend <- case_when(data_explorer_selection() == "LabCases" ~ "Positive COVID-19 cases",
@@ -231,9 +309,9 @@ output$data_explorer_severe_illness <- output$data_explorer_infcases <- output$d
                            data_explorer_selection() == "LabCasesReinfections" ~ "ECOSS",
                            data_explorer_selection() == "Admissions" ~ "ECOSS/RAPID",
                            data_explorer_selection() == "ICU" ~ "SICSAG",
-                         data_explorer_selection() == "NHS24" ~ "NHS 24 SAP BW",
-                         data_explorer_selection() == "AssessmentHub" ~ "GP Out of Hours (OOH)",
-                         data_explorer_selection() == "SAS"~ "SAS and Unscheduled Care Datamart")
+                           data_explorer_selection() == "NHS24" ~ "NHS 24 SAP BW",
+                           data_explorer_selection() == "AssessmentHub" ~ "GP Out of Hours (OOH)",
+                           data_explorer_selection() == "SAS"~ "SAS and Unscheduled Care Datamart")
 
 # Set up Charts for each section ------------------------------------------
 
@@ -296,7 +374,7 @@ if (data_explorer_selection() == "LabCases") { #Positive Cases
                    "More information available on the Public Health Scotland website",
                    tags$a(href="https://publichealthscotland.scot/news/2022/february/covid-19-reporting-to-include-further-data-on-reinfections/",
                           "here.", class="externallink"))),
-    cut_charts_subheading(title= "Daily number of COVID-19 admissions to hospital",
+    cut_charts_subheading(title = "Daily number of COVID-19 admissions to hospital",
                         source = data_source, data_name = "Admissions",
                         notes = notes,
                         subheading = subheading,
@@ -317,7 +395,8 @@ if (data_explorer_selection() == "LabCases") { #Positive Cases
                       displayModeBar = TRUE,
                       modeBarButtonsToRemove = bttn_remove )),
       column(9,
-             renderPlotly({los_chart_fn(LOS_Data)}))
+             plotlyOutput("LOSChart")
+             )
 
       ),
 
@@ -408,87 +487,7 @@ if (data_explorer_selection() == "LabCases") { #Positive Cases
 
 })
 
-###############################################.
-## Charts ----
+output$data_explorer_severe_illness <- renderUI({ui_content()})
+output$data_explorer_infcases <-  renderUI({ui_content()})
+output$data_explorer_surveillance <- renderUI({ui_content()})
 
-# Creating plots for each cut and dataset
-# Trend Charts
-output$LabCases_overall <- renderPlotly({plot_overall_chart(LabCases, data_name = "LabCases", include_vline=T)})
-output$LabCasesReinfections_overall <- renderPlotly({plot_overall_chart(LabCasesReinfections, data_name = "LabCasesReinfections", include_vline=T)})
-output$Admissions_overall <- renderPlotly({plot_overall_chart(Admissions, data_name = "Admissions", include_vline=T)})
-output$ICU_overall <- renderPlotly({plot_overall_chart(ICU, data_name = "ICU")})
-output$NHS24_overall <- renderPlotly({plot_overall_chartNHS24(NHS24, data_name = "NHS24")})
-output$AssessmentHub_overall <- renderPlotly({plot_overall_chartAssessmentHub(AssessmentHub, data_name = "AssessmentHub")})
-output$SAS_overall <- renderPlotly({plot_overall_chartSAS(SAS, data_name = "SAS")})
-output$labcases_age_groups <- renderPlotly({cases_age_chart_3_week(LabCases_Age, data_name = "LabCases_Age")})
-
-#age/sex and SIMD charts
-output$LabCases_AgeSex <- renderPlotly({plot_agesex_chart(LabCases_AgeSex, data_name = "LabCases_AgeSex")})
-output$LabCases_SIMD <- renderPlotly({plot_simd_chart(LabCases_SIMD, data_name = "LabCases_SIMD")})
-output$Admissions_AgeSex <- renderPlotly({plot_agesex_chart(Admissions_AgeSex, data_name = "Admissions_AgeSex")})
-output$Admissions_SIMD <- renderPlotly({plot_simd_chart(Admissions_SIMD, data_name = "Admissions_SIMD")})
-output$ICU_AgeSex <- renderPlotly({plot_agesex_chart(ICU_AgeSex, data_name = "ICU_AgeSex")})
-output$NHS24_AgeSex <- renderPlotly({plot_agesex_chart(NHS24_AgeSex, data_name = "NHS24_AgeSex")})
-output$NHS24_SIMD <- renderPlotly({plot_simd_chart(NHS24_SIMD, data_name = "NHS24_SIMD")})
-output$AssessmentHub_AgeSex <- renderPlotly({plot_agesex_chart(AssessmentHub_AgeSex, data_name = "AssessmentHub_AgeSex")})
-output$AssessmentHub_SIMD <- renderPlotly({plot_simd_chart(AssessmentHub_SIMD, data_name = "AssessmentHub_SIMD")})
-output$SAS_AgeSex <- renderPlotly({plot_agesex_chart(SAS_AgeSex, data_name = "SAS_AgeSex")})
-output$SAS_SIMD <- renderPlotly({plot_simd_chart(SAS_SIMD, data_name = "SAS_SIMD")})
-
-#extra NHS24/SAS charts
-output$NHS24_inform <- renderPlotly({plot_singletrace_chart(NHS24_inform, data_name = "NHS24_inform")})
-output$NHS24_selfhelp <- renderPlotly({plot_nhs24_selfhelp_chart(NHS24_selfhelp, data_name = "NHS24_selfhelp")})
-output$NHS24_community <- renderPlotly({plot_nhs24_community_chart(NHS24_community, data_name = "NHS24_community")})
-output$SAS_all <- renderPlotly({plot_singletrace_chart(SAS_all, data_name = "SAS_all")})
-output$ChildDataPositives <- renderPlotly({plot_overall_chartChild(Child, data_name = "Child", childdata = "ChildPositive")})
-output$ChildDataNegatives <- renderPlotly({plot_overall_chartChild(Child, data_name = "Child", childdata = "ChildNegative")})
-output$ChildDataCases <- renderPlotly({plot_overall_chartChild(Child, data_name = "Child", childdata = "ChildPer")})
-output$LabCasesRate <- renderPlotly({plot_singlerate_chart(LabCases, data_name = "LabCases", include_vline=T)})
-output$LabCasesReinfectionsRate <- renderPlotly({plot_singlerate_chart(LabCasesReinfections, data_name = "LabCasesReinfections", include_vline=T)})
-
-
-#extra admissions charts
-output$prop_admissions <- renderPlotly({plot_singletrace_chart(Cases_Adm, data_name = "Cases_Adm", include_vline=T)})
-#output$cases_age_groups <- renderPlotly({stacked_cases_age_chart(Cases_AgeGrp, data_name = "Cases_AgeGrp")})
-output$cases_age_groups <- renderPlotly({cases_age_chart_3_week(Cases_AgeGrp, data_name = "Cases_AgeGrp")})
-output$admissions_age_groups <- renderPlotly({cases_age_chart_3_week(Admissions_AgeGrp, data_name = "Admissions_AgeGrp", type = "admissions")})
-
-
-output$EthnicityChart <- renderPlotly({plot_overall_chartEthnicity(Ethnicity_Chart, data_name = "Ethnicity_Chart")})
-output$EthnicityChartPercentage <- renderPlotly({plot_overall_chartEthnicityPercent(Ethnicity_Chart, data_name = "Ethnicity_Chart")})
-# output$ChildDataPositives <- renderPlotly({plot_overall_chartChildPositive(Child, data_name = "Child")})
-# output$ChildDataNegatives <- renderPlotly({plot_overall_chartChildNegative(Child, data_name = "Child")})
-# output$ChildDataCases <- renderPlotly({plot_overall_chartChildCases(Child, data_name = "Child")})
-
-# Reinfections bar chart
-output$ReinfectionsBarchart <- renderPlotly({plot_reinfections_barchart(LabCases, LabCasesReinfections)})
-
-
-## Data downloads ----
-
-
-# For the charts at the moment the data download is for the overall one,
-# need to think how to allow downloading for each chart
-# Reactive dataset that gets the data the user is visualisaing ready to download
-overall_data_download <- reactive({
-  switch(
-    data_explorer_selection(),
-    "LabCases" = LabCases,
-    "LabCasesReinfections" = LabCasesReinfections,
-    "Admissions" = Admissions,
-    "ICU" = ICU,
-    "NHS24" = NHS24,
-    "AssessmentHub" = AssessmentHub,
-    "SAS" = SAS,
-    "Child" = Child,
-    "Ethnicity_Chart" = Ethnicity_Chart) #%>%
-  #select(area_name, week_ending, count, starts_with("average")) %>%
-  # mutate(week_ending = format(week_ending, "%d %b %y"))
-})
-
-output$download_infcases_data <- output$download_severe_illness_data <- output$download_surveillance_data <- downloadHandler(
-  filename ="data_extract.csv",
-  content = function(file) {
-    write_csv(overall_data_download(),
-              file) }
-)
