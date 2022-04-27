@@ -41,6 +41,7 @@ function(input, output, session) {
   observeEvent(input$jump_to_LFDdemo, {updateTabsetPanel(session, "intabset", selected = "LFDdemoData")})
   observeEvent(input$jump_to_severe_illness, {updateTabsetPanel(session, "intabset", selected = "SevereIllness")})
   observeEvent(input$jump_to_pop_interest, {updateTabsetPanel(session, "intabset", selected = "PopInterest")})
+  observeEvent(input$jump_to_care_homes, {updateTabsetPanel(session, "intabset", selected = "CareHomes")})
   observeEvent(input$jump_to_surveillance, {updateTabsetPanel(session, "intabset", selected = "Surveillance")})
   observeEvent(input$jump_to_vaccinations, {updateTabsetPanel(session, "intabset", selected = "Vaccinations")})
 
