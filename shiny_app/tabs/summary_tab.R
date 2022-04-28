@@ -173,46 +173,49 @@ observeEvent(input$btn_dataset_inform, { showModal(inform_modal) })
 
 # Creating plots for each cut and dataset
 # Overall
-output$LabCases_overall <- renderPlotly({plot_overall_chart(LabCases, data_name = "LabCases", include_vline=T)})
-output$LabCasesReinfections_overall <- renderPlotly({plot_overall_chart(LabCasesReinfections, data_name = "LabCasesReinfections", include_vline=T)})
-output$Admissions_overall <- renderPlotly({plot_overall_chart(Admissions, data_name = "Admissions", include_vline=T)})
-output$ICU_overall <- renderPlotly({plot_overall_chart(ICU, data_name = "ICU")})
-output$NHS24_overall <- renderPlotly({plot_overall_chartNHS24(NHS24, data_name = "NHS24")})
-output$AssessmentHub_overall <- renderPlotly({plot_overall_chartAssessmentHub(AssessmentHub, data_name = "AssessmentHub")})
-output$SAS_overall <- renderPlotly({plot_overall_chartSAS(SAS, data_name = "SAS")})
+
+values <- reactiveValues()
+
+values$LabCases_overall <- renderPlotly({plot_overall_chart(LabCases, data_name = "LabCases", include_vline=T)})
+values$LabCasesReinfections_overall <- renderPlotly({plot_overall_chart(LabCasesReinfections, data_name = "LabCasesReinfections", include_vline=T)})
+values$Admissions_overall <- renderPlotly({plot_overall_chart(Admissions, data_name = "Admissions", include_vline=T)})
+values$ICU_overall <- renderPlotly({plot_overall_chart(ICU, data_name = "ICU")})
+values$NHS24_overall <- renderPlotly({plot_overall_chartNHS24(NHS24, data_name = "NHS24")})
+values$AssessmentHub_overall <- renderPlotly({plot_overall_chartAssessmentHub(AssessmentHub, data_name = "AssessmentHub")})
+values$SAS_overall <- renderPlotly({plot_overall_chartSAS(SAS, data_name = "SAS")})
 
 # Age/sex and SIMD charts
-output$LabCases_AgeSex <- renderPlotly({plot_agesex_chart(LabCases_AgeSex, data_name = "LabCases_AgeSex")})
-output$LabCases_SIMD <- renderPlotly({plot_simd_chart(LabCases_SIMD, data_name = "LabCases_SIMD")})
-output$Admissions_AgeSex <- renderPlotly({plot_agesex_chart(Admissions_AgeSex, data_name = "Admissions_AgeSex")})
-output$Admissions_SIMD <- renderPlotly({plot_simd_chart(Admissions_SIMD, data_name = "Admissions_SIMD")})
-output$ICU_AgeSex <- renderPlotly({plot_agesex_chart(ICU_AgeSex, data_name = "ICU_AgeSex")})
-output$NHS24_AgeSex <- renderPlotly({plot_agesex_chart(NHS24_AgeSex, data_name = "NHS24_AgeSex")})
-output$NHS24_SIMD <- renderPlotly({plot_simd_chart(NHS24_SIMD, data_name = "NHS24_SIMD")})
-output$AssessmentHub_AgeSex <- renderPlotly({plot_agesex_chart(AssessmentHub_AgeSex, data_name = "AssessmentHub_AgeSex")})
-output$AssessmentHub_SIMD <- renderPlotly({plot_simd_chart(AssessmentHub_SIMD, data_name = "AssessmentHub_SIMD")})
-output$SAS_AgeSex <- renderPlotly({plot_agesex_chart(SAS_AgeSex, data_name = "SAS_AgeSex")})
-output$SAS_SIMD <- renderPlotly({plot_simd_chart(SAS_SIMD, data_name = "SAS_SIMD")})
+values$LabCases_AgeSex <- renderPlotly({plot_agesex_chart(LabCases_AgeSex, data_name = "LabCases_AgeSex")})
+values$LabCases_SIMD <- renderPlotly({plot_simd_chart(LabCases_SIMD, data_name = "LabCases_SIMD")})
+values$Admissions_AgeSex <- renderPlotly({plot_agesex_chart(Admissions_AgeSex, data_name = "Admissions_AgeSex")})
+values$Admissions_SIMD <- renderPlotly({plot_simd_chart(Admissions_SIMD, data_name = "Admissions_SIMD")})
+values$ICU_AgeSex <- renderPlotly({plot_agesex_chart(ICU_AgeSex, data_name = "ICU_AgeSex")})
+values$NHS24_AgeSex <- renderPlotly({plot_agesex_chart(NHS24_AgeSex, data_name = "NHS24_AgeSex")})
+values$NHS24_SIMD <- renderPlotly({plot_simd_chart(NHS24_SIMD, data_name = "NHS24_SIMD")})
+values$AssessmentHub_AgeSex <- renderPlotly({plot_agesex_chart(AssessmentHub_AgeSex, data_name = "AssessmentHub_AgeSex")})
+values$AssessmentHub_SIMD <- renderPlotly({plot_simd_chart(AssessmentHub_SIMD, data_name = "AssessmentHub_SIMD")})
+values$SAS_AgeSex <- renderPlotly({plot_agesex_chart(SAS_AgeSex, data_name = "SAS_AgeSex")})
+values$SAS_SIMD <- renderPlotly({plot_simd_chart(SAS_SIMD, data_name = "SAS_SIMD")})
 
 # Extra infections and cases charts
-output$ReinfectionsBarchart <- renderPlotly({plot_reinfections_barchart(LabCases, LabCasesReinfections)})
-output$labcases_age_groups <- renderPlotly({cases_age_chart_3_week(LabCases_Age, data_name = "LabCases_Age")})
+values$ReinfectionsBarchart <- renderPlotly({plot_reinfections_barchart(LabCases, LabCasesReinfections)})
+values$labcases_age_groups <- renderPlotly({cases_age_chart_3_week(LabCases_Age, data_name = "LabCases_Age")})
 
 # Extra severe illness charts
-output$prop_admissions <- renderPlotly({plot_singletrace_chart(Cases_Adm, data_name = "Cases_Adm", include_vline=T)})
-output$cases_age_groups <- renderPlotly({cases_age_chart_3_week(Cases_AgeGrp, data_name = "Cases_AgeGrp")})
-output$admissions_age_groups <- renderPlotly({cases_age_chart_3_week(Admissions_AgeGrp, data_name = "Admissions_AgeGrp", type = "admissions")})
-output$EthnicityChart <- renderPlotly({plot_overall_chartEthnicity(Ethnicity_Chart, data_name = "Ethnicity_Chart")})
-output$EthnicityChartPercentage <- renderPlotly({plot_overall_chartEthnicityPercent(Ethnicity_Chart, data_name = "Ethnicity_Chart")})
-output$LOSChart <- renderPlotly({los_chart_fn(LOS_Data)})
+values$prop_admissions <- renderPlotly({plot_singletrace_chart(Cases_Adm, data_name = "Cases_Adm", include_vline=T)})
+values$cases_age_groups <- renderPlotly({cases_age_chart_3_week(Cases_AgeGrp, data_name = "Cases_AgeGrp")})
+values$admissions_age_groups <- renderPlotly({cases_age_chart_3_week(Admissions_AgeGrp, data_name = "Admissions_AgeGrp", type = "admissions")})
+values$EthnicityChart <- renderPlotly({plot_overall_chartEthnicity(Ethnicity_Chart, data_name = "Ethnicity_Chart")})
+values$EthnicityChartPercentage <- renderPlotly({plot_overall_chartEthnicityPercent(Ethnicity_Chart, data_name = "Ethnicity_Chart")})
+values$LOSChart <- renderPlotly({los_chart_fn(LOS_Data)})
 
 # Extra surveillance charts
-output$NHS24_inform <- renderPlotly({plot_singletrace_chart(NHS24_inform, data_name = "NHS24_inform")})
-output$NHS24_selfhelp <- renderPlotly({plot_nhs24_selfhelp_chart(NHS24_selfhelp, data_name = "NHS24_selfhelp")})
-output$NHS24_community <- renderPlotly({plot_nhs24_community_chart(NHS24_community, data_name = "NHS24_community")})
-output$SAS_all <- renderPlotly({plot_singletrace_chart(SAS_all, data_name = "SAS_all")})
-output$LabCasesRate <- renderPlotly({plot_singlerate_chart(LabCases, data_name = "LabCases", include_vline=T)})
-output$LabCasesReinfectionsRate <- renderPlotly({plot_singlerate_chart(LabCasesReinfections, data_name = "LabCasesReinfections", include_vline=T)})
+values$NHS24_inform <- renderPlotly({plot_singletrace_chart(NHS24_inform, data_name = "NHS24_inform")})
+values$NHS24_selfhelp <- renderPlotly({plot_nhs24_selfhelp_chart(NHS24_selfhelp, data_name = "NHS24_selfhelp")})
+values$NHS24_community <- renderPlotly({plot_nhs24_community_chart(NHS24_community, data_name = "NHS24_community")})
+values$SAS_all <- renderPlotly({plot_singletrace_chart(SAS_all, data_name = "SAS_all")})
+values$LabCasesRate <- renderPlotly({plot_singlerate_chart(LabCases, data_name = "LabCases", include_vline=T)})
+values$LabCasesReinfectionsRate <- renderPlotly({plot_singlerate_chart(LabCasesReinfections, data_name = "LabCasesReinfections", include_vline=T)})
 
 
 ## Data downloads ----
@@ -334,11 +337,11 @@ if (data_explorer_selection() == "LabCases") { #Positive Cases
                    "here.", class="externallink"))),
           actionButton("btn_dataset_modal", paste0("Data source: ", "ECOSS"), icon = icon('question-circle')),
           actionButton("btn_modal_simd", "What is SIMD?", icon = icon('question-circle')),
-          plot_box("Daily number of Positive COVID-19 cases", plot_output = "LabCases_overall"),
-          plot_box("Cumulative rate per 100,000", plot_output = "LabCasesRate"),
-          plot_box("Weekly COVID-19 cases by age group",
-                   plot_output="labcases_age_groups"),
-          plot_cut_box(paste0("Positive COVID-19 cases per 100,000 population by age \n(28 February 2020 to ", Labcases_date, ")"), "LabCases_AgeSex",
+          plot_box_values("Daily number of Positive COVID-19 cases", valuename = "LabCases_overall"),
+          plot_box_values("Cumulative rate per 100,000", valuename = "LabCasesRate"),
+          plot_box_values("Weekly COVID-19 cases by age group",
+                   valuename="labcases_age_groups"),
+          plot_cut_box_values(paste0("Positive COVID-19 cases per 100,000 population by age \n(28 February 2020 to ", Labcases_date, ")"), "LabCases_AgeSex",
                        paste0("Positive COVID-19 cases by deprivation category (SIMD) \n(28 February 2020 to ", Labcases_date, ")"), "LabCases_SIMD"))
 
 }else if (data_explorer_selection() == "LabCasesReinfections"){ #Reinfections
@@ -357,9 +360,9 @@ if (data_explorer_selection() == "LabCases") { #Positive Cases
                           "here.", class="externallink"))),
           actionButton("btn_dataset_modal", paste0("Data source: ", "ECOSS"), icon = icon('question-circle')),
           actionButton("btn_modal_simd", "What is SIMD?", icon = icon('question-circle')),
-          plot_box("Daily number of COVID-19 reinfections", plot_output = "LabCasesReinfections_overall"),
-          plot_box("Cumulative rate per 100,000", plot_output = "LabCasesReinfectionsRate"),
-          plot_box("Percentage of cases that are reinfections", plot_output = "ReinfectionsBarchart"))
+          plot_box_values("Daily number of COVID-19 reinfections", valuename = "LabCasesReinfections_overall"),
+          plot_box_values("Cumulative rate per 100,000", valuename = "LabCasesReinfectionsRate"),
+          plot_box_values("Percentage of cases that are reinfections", valuename = "ReinfectionsBarchart"))
 
   }else if (data_explorer_selection() == "Admissions") { #Admissions
   tagList(actionButton("btn_modal_simd", "What is SIMD?", icon = icon('question-circle')),
@@ -396,17 +399,17 @@ if (data_explorer_selection() == "LabCases") { #Positive Cases
                       displayModeBar = TRUE,
                       modeBarButtonsToRemove = bttn_remove )),
       column(9,
-             plot_box("", "LOSChart")
+             plot_box_values("", "LOSChart")
              )
 
       ),
 
 
   # percent admissions
-  plot_box("Proportion of weekly cases admitted to hospital within 14 days of a first positive test",
-           plot_output = "prop_admissions"),
-  plot_box("Weekly cases admitted to hospital within 14 days of a first positive test, by age group",
-           plot_output="admissions_age_groups")
+  plot_box_values("Proportion of weekly cases admitted to hospital within 14 days of a first positive test",
+           valuename = "prop_admissions"),
+  plot_box_values("Weekly cases admitted to hospital within 14 days of a first positive test, by age group",
+           valuename="admissions_age_groups")
 )
 
 } else if (data_explorer_selection() == "ICU") {# ICU
@@ -434,9 +437,9 @@ if (data_explorer_selection() == "LabCases") { #Positive Cases
           h3("NHS Inform"),
           # actionButton("btn_dataset_inform", "Data source: INFORM", icon = icon('question-circle')),
 
-          plot_box(NHS_Inform_title, "NHS24_inform"),
-          plot_box(SelfHelpTitle, "NHS24_selfhelp"),
-          plot_box(OutcomesTitle, "NHS24_community"))
+          plot_box_values(NHS_Inform_title, "NHS24_inform"),
+          plot_box_values(SelfHelpTitle, "NHS24_selfhelp"),
+          plot_box_values(OutcomesTitle, "NHS24_community"))
 
 } else if (data_explorer_selection() == "AssessmentHub") { # Assessment Hub
  tagList( actionButton("btn_modal_simd", "What is SIMD?", icon = icon('question-circle')),
@@ -471,7 +474,7 @@ if (data_explorer_selection() == "LabCases") { #Positive Cases
                           total_title = total_title,
                           agesex_title = agesex_title,
                           simd_title = simd_title),
-    plot_box("SAS - all incidents", plot_output = "SAS_all"))
+    plot_box_values("SAS - all incidents", valuename = "SAS_all"))
 }  else if (data_explorer_selection() == "Ethnicity_Chart") { # Ethnicity data
   tagList(h3("COVID-19 admissions to hospital by ethnicity"),
           p("COVID-19 related admissions have been identified as the following: A patient may have tested positive for COVID-19 14 days prior to admission to hospital,
@@ -482,8 +485,8 @@ if (data_explorer_selection() == "LabCases") { #Positive Cases
           tags$li("Single click on an item in the legend to remove it from the plot"),
           tags$li("Double click on an item in the legend to view only that line"),
           actionButton("btn_dataset_modal", paste0("Data source: ", "RAPID"), icon = icon('question-circle')),
-          plot_box("COVID-19 admissions to hospital by ethnicity - Cases", plot_output = "EthnicityChart"),
-          plot_box("COVID-19 admissions to hospital by ethnicity - Percentage", plot_output = "EthnicityChartPercentage"))
+          plot_box_values("COVID-19 admissions to hospital by ethnicity - Cases", valuename = "EthnicityChart"),
+          plot_box_values("COVID-19 admissions to hospital by ethnicity - Percentage", valuename = "EthnicityChartPercentage"))
 }
 
 })
