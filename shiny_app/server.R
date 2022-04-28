@@ -4,36 +4,36 @@ function(input, output, session) {
 
   ###############################################.
   # Functions for graphs
-  source(file.path("functions_server.R"),  local = TRUE)$value
+  source(file.path("functions/functions_server.R"),  local = TRUE)$value
   # Data table
-  source(file.path("functions_tables.R"),  local = TRUE)$value
+  source(file.path("functions/functions_tables.R"),  local = TRUE)$value
   # Chart layout
-  source(file.path("functions_chart_layout.R"),  local = TRUE)$value
+  source(file.path("functions/functions_chart_layout.R"),  local = TRUE)$value
   ###############################################.
   # Sourcing individual tabs
   ###############################################.
   # Summary info
-  source(file.path("summary_tab.R"), local = TRUE)$value
-  source(file.path("data_tab.R"), local = TRUE)$value
+  source(file.path("tabs/summary_tab.R"), local = TRUE)$value
+  source(file.path("tabs/data_tab.R"), local = TRUE)$value
   # LFDs
-  source(file.path("lfd_tab.R"),  local = TRUE)$value
-  source(file.path("lft_demo_tab.R"), local = TRUE)$value
+  source(file.path("tabs/lfd_tab.R"),  local = TRUE)$value
+  source(file.path("tabs/lfd_demo_tab.R"), local = TRUE)$value
   # Populations of interest
-  source(file.path("populations_of_interest.R"), local = TRUE)$value
+  source(file.path("tabs/populations_of_interest_tab.R"), local = TRUE)$value
   # Vaccinations
-  source(file.path("vaccinations.R"), local = TRUE)$value
+  source(file.path("tabs/vaccinations_tab.R"), local = TRUE)$value
   ###############################################.
   # Archived tabs
-  source(file.path("archived_tabs/contact_tracing_tab.R"),  local = TRUE)$value
-  source(file.path("archived_tabs/contact_tracing_data_tab.R"),  local = TRUE)$value
-  source(file.path("archived_tabs/travel_tab.R"),  local = TRUE)$value
-  source(file.path("archived_tabs/setting_tab.R"),  local = TRUE)$value
-  source(file.path("archived_tabs/health_care_workers_data_tab.R"),  local = TRUE)$value
-  source(file.path("archived_tabs/quarantine_tab.R"),  local = TRUE)$value
-  source(file.path("archived_tabs/care_home_data_tab.R"),  local = TRUE)$value
-  source(file.path("archived_tabs/mtu_key_points_function.R"), local = TRUE)$value
-  source(file.path("archived_tabs/mtu_tab.R"),  local = TRUE)$value
-  source(file.path("archived_tabs/vaccine_tab.R"), local = TRUE)$value
+  source(file.path("tabs/archived_tabs/contact_tracing_tab.R"),  local = TRUE)$value
+  source(file.path("tabs/archived_tabs/contact_tracing_data_tab.R"),  local = TRUE)$value
+  source(file.path("tabs/archived_tabs/travel_tab.R"),  local = TRUE)$value
+  source(file.path("tabs/archived_tabs/setting_tab.R"),  local = TRUE)$value
+  source(file.path("tabs/archived_tabs/health_care_workers_data_tab.R"),  local = TRUE)$value
+  source(file.path("tabs/archived_tabs/quarantine_tab.R"),  local = TRUE)$value
+  source(file.path("tabs/archived_tabs/care_home_data_tab.R"),  local = TRUE)$value
+  source(file.path("tabs/archived_tabs/mtu_key_points_function.R"), local = TRUE)$value
+  source(file.path("tabs/archived_tabs/mtu_tab.R"),  local = TRUE)$value
+  source(file.path("tabs/archived_tabs/vaccine_certification_tab.R"), local = TRUE)$value
 
   ## Observe events to improve navigation between tabs of the app
   # To jump to data pages
