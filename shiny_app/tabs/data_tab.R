@@ -253,8 +253,6 @@ data_table <- reactive({  # Change dataset depending on what user selected
 
 ui_content_data <- reactive({
 
-    cat(file=stderr(), "data_select_combined is", data_select_combined(), "\n")
-
   DT::renderDataTable({
 
     datatab_table(data_table(),
