@@ -20,7 +20,7 @@ tagList(  #needed for shinyjs
     tabPanel("Introduction",
              icon = icon("info-circle"),
              value = "intro",
-             h3("COVID-19 Statistical Report"),
+             h3("COVID-19 statistical report"),
              h3("Background"),
              p("Since the start of the COVID-19 outbreak Public Health Scotland (PHS) has been working closely
                with Scottish Government and health and care colleagues in supporting the surveillance and monitoring
@@ -190,7 +190,7 @@ tagList(  #needed for shinyjs
         icon = icon("vial-circle-check", verify_fa=F),
         value = "LFDData",
 
-        h3("Lateral Flow Device Testing"),
+        h3("Lateral Flow Device testing"),
         tags$li("Across Scotland, there are numerous testing pathways being rolled out using Lateral Flow Devices (LFD) - a clinically validated swab antigen test taken that does not require a laboratory for processing."),
         tags$li(" This test can produce rapid results within 45 minutes at the location of the test. "),
         tags$li("Some of the areas using LFD tests are: schools, health and social care workers, care homes and more."),
@@ -213,7 +213,7 @@ tagList(  #needed for shinyjs
         value = "LFDdemoData",
 
 
-        h3("LFD test demographics"),
+        h3("Lateral Flow Device demographics"),
         p("This section allows you to view the total number of individuals tested and the
           number of individuals testing positive at least once within Scotland. Data available by
           age & gender and Scottish Index of Multiple Deprivation (SIMD) quintile (where SIMD 1 is the most deprived and SIMD 5 is the least deprived - see",
@@ -319,7 +319,7 @@ tagList(  #needed for shinyjs
       title = "Populations of interest",
       icon = icon("people-group", verify_fa=F),
       tabPanel(
-        title = "Care Homes",
+        title = "Care homes",
         icon = icon("home"),
         value = "CareHomes",
 
@@ -450,7 +450,7 @@ tagList(  #needed for shinyjs
       title = "Archive",
       icon = icon("floppy-disk", verify_fa=F),
       tabPanel(
-        title = "Contact Tracing",
+        title = "Contact tracing",
         icon = icon("address-book"),
         value = "contacttracing",
         p("Scotland’s approach to contact tracing has continued to adapt throughout the pandemic to reflect changing circumstances, variability in cases, and increasing proportion of the population fully
@@ -505,7 +505,7 @@ tagList(  #needed for shinyjs
 
       #################### Contact Tracing Data ----
       tabPanel(
-        title = "Contact Tracing Data",
+        title = "Contact tracing data",
         icon = icon("address-book"),
         value = "CTtable",
         p(strong("Information: ")),
@@ -571,7 +571,7 @@ tagList(  #needed for shinyjs
       ),
       #################### Health Care Worker Data ----
       tabPanel(
-        title = "Health Care Worker Data",
+        title = "Healthcare worker data",
         icon = icon("user-nurse"),
         value = "HCWtable",
         h3("Health Care Workers"),
@@ -615,7 +615,7 @@ tagList(  #needed for shinyjs
         ),# tabpanel bracket
 
       tabPanel(
-        title = "Care Homes Data",
+        title = "Care homes data",
         icon = icon("home"),
         value = "CHData",
 
@@ -643,11 +643,11 @@ tagList(  #needed for shinyjs
 
       ### Quarantine
       tabPanel(
-        title = "Quarantine Data",
+        title = "Quarantine data",
         icon = icon("user-lock"),
         value = "QData",
 
-        h3("Quarantining Statistics"),
+        h3("Quarantining statistics"),
         tags$li("These statistics provide a summary of the number of people entering Scotland from outside the UK, those required to quarantine, and the numbers contacted by the National Contact Centre (NCC). "),
         tags$li(" Passenger arrivals into Scotland are provided by the Home Office to PHS."),
         tags$li("
@@ -671,11 +671,11 @@ tagList(  #needed for shinyjs
 
       ),
       ### Mobile Testing Units
-      tabPanel(title = "Targeted Community Testing",
+      tabPanel(title = "Targeted community testing",
                icon = icon("hospital-user"),
                value = "MTUtab",
 
-               h3("Targeted Community Testing"),
+               h3("Targeted community testing"),
                p("The Community Testing Programme is ongoing across Scotland.  This is targeted at areas where there are concerns around community transmission levels, and offer testing to any member of that community.",
                  "Use the dropdown to explore the outputs which detail the numbers of tests carried out by the Community Testing Programme."),
 
@@ -694,11 +694,11 @@ tagList(  #needed for shinyjs
 
       ### Vaccines
       tabPanel(
-        title = "Vaccine Certification",
+        title = "Vaccine certification",
         icon = icon("passport"),
         value = "vaccinetab",
 
-        h3("COVID-19 Vaccine Certification"),
+        h3("COVID-19 vaccine certification"),
         tags$li("The NHS Covid Status App was launched on 30 September 2021. It is free and offers digital proof of vaccination via a QR code for each vaccination received."),
         tags$li("You can request a vaccine certificate if you are aged 12 and over and have been vaccinated in Scotland. The record will not show any vaccinations given outside of Scotland."),
         tags$li("You can show your COVID-19 vaccine status by using the", tags$a(href= "https://www.nhsinform.scot/covid-status", "NHS Scotland Covid Status app,", class ="externallink"),
