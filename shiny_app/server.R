@@ -37,6 +37,7 @@ function(input, output, session) {
 
   ## Observe events to improve navigation between tabs of the app
   # To jump to data pages
+  observeEvent(input$jump_to_notes, {updateTabsetPanel(session, "intabset", selected = "Notes")})
   observeEvent(input$jump_to_inf_cases, {updateTabsetPanel(session, "intabset", selected = "InfCases")})
   observeEvent(input$jump_to_inf_cases_data, {updateTabsetPanel(session, "intabset", selected = "InfCasesData")})
   observeEvent(input$jump_to_LFD, {updateTabsetPanel(session, "intabset", selected = "LFDData")})

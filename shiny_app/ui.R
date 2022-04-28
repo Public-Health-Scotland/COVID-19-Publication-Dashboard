@@ -98,6 +98,13 @@ tagList(  #needed for shinyjs
                 class = "externallink")),".")#,
              # ".")
              ), #tabPanel bracket
+    #################### Notes  ----
+    tabPanel("Notes",
+             icon = icon("file-lines", verify_fa=F),
+             value = "Notes",
+             h3("Notes and additional information")
+
+             ), #tabPanel bracket
 
 
     #################### Infection levels and cases -----
@@ -334,8 +341,8 @@ tagList(  #needed for shinyjs
                 'retrospectively.'),
         downloadButton('download_care_home_timeseries_data', 'Download time series data'),
         mainPanel(width = 12,
-                  DT::dataTableOutput('CareHomeSeriesTable'),
-                  plotlyOutput( 'CareHomeSeriesGraph', width='100%' )
+                  withSpinner(DT::dataTableOutput('CareHomeSeriesTable')),
+                  plot_box("", 'CareHomeSeriesGraph')
 
 
         )# mainPanel bracket
