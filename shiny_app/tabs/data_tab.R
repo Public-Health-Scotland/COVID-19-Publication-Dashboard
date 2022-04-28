@@ -251,24 +251,28 @@ data_table <- reactive({  # Change dataset depending on what user selected
 
 
 
-output$infcases_table <- output$severe_illness_table <- output$surveillance_table <- renderUI({
+ui_content_data <- reactive({
 
     cat(file=stderr(), "data_select_combined is", data_select_combined(), "\n")
-    withSpinner(DT::dataTableOutput("table_filtered"))
+
+  DT::renderDataTable({
+
+    datatab_table(data_table(),
+                  add_separator_cols = table_params_data()$separator_cols,
+                  add_separator_cols_1dp = table_params_data()$separator_cols_1dp,
+                  add_percentage_cols = table_params_data()$percentage_cols,
+                  maxrows = table_params_data()$maxrows
+    ) # from functions_tables.R
+
+})
 
 })
 
 
-output$table_filtered <- DT::renderDataTable({
+output$infcases_table <- renderUI({ui_content_data()})
+output$severe_illness_table <- renderUI({ui_content_data()})
+output$surveillance_table <- renderUI({ui_content_data()})
 
-  datatab_table(data_table(),
-                add_separator_cols = table_params_data()$separator_cols,
-                add_separator_cols_1dp = table_params_data()$separator_cols_1dp,
-                add_percentage_cols = table_params_data()$percentage_cols,
-                maxrows = table_params_data()$maxrows
-                ) # from functions_tables.R
-
-})
 
 table_params_data <- reactive({
 
