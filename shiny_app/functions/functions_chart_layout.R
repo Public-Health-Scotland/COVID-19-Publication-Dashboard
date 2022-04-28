@@ -1,4 +1,9 @@
 # Functions for Chart Layouts ---------------------------------------------
+
+# Notes: Need to define a new set of functions based off plot_box etc. but which display objects which
+# are members of the reactive value list called values, which is defined in summary_tab
+
+
 plot_box_values <- function(title_plot, valuename) {
   tagList(h4(title_plot),
           values[[valuename]])
