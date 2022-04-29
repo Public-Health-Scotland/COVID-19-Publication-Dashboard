@@ -37,7 +37,9 @@ g_adm_agebd <- i_chiadm %>%
   mutate(Admission_date_week_ending_Tuesday = ceiling_date(
     as.Date(admission_date),unit="week",week_start=2, change_on_boundary=FALSE)
   ) %>%
-  mutate(custom_age_group = case_when(age_year < 18 ~ 'Under 18',
+  mutate(
+    age_year = as.numeric(age_year),
+    custom_age_group = case_when(age_year < 18 ~ 'Under 18',
                                       age_year < 30 ~ '18-29',
                                       age_year < 40 ~ '30-39',
                                       age_year < 50 ~ '40-49',
