@@ -439,7 +439,12 @@ tagList(  #needed for shinyjs
         icon = icon("dumpster", verify_fa=F),
         value = "Vaccinations",
 
-        h3("COVID-19 vaccine wastage")
+        h3("COVID-19 vaccine wastage"),
+        downloadButton('download_VaccineWastage_data', 'Download vaccine wastage data'),
+        mainPanel(width = 12,
+                  uiOutput("VaccineWastage_output"),
+                  br3(), br3(), br3()
+        )
 
       )
       ## End -----------
