@@ -20,27 +20,76 @@ tagList(  #needed for shinyjs
     tabPanel("Introduction",
              icon = icon("info-circle"),
              value = "intro",
-             h3("COVID-19 statistical report"),
-             h3("Background"),
+             h2("Welcome to the COVID-19 statistical report dashboard"),
              p("Since the start of the COVID-19 outbreak Public Health Scotland (PHS) has been working closely
                with Scottish Government and health and care colleagues in supporting the surveillance and monitoring
-               of COVID-19 amongst the population. This interactive dashboard contains charts and data on the following topics:"),
-             tags$li("Positive Cases"),
-             tags$li("Acute Hospital Admissions"),
-             tags$li("ICU Admissions"),
-             tags$li("NHS24 Contacts"),
-             tags$li("Community Hubs and Assessment Centres"),
-             tags$li("Scottish Ambulance Service"),
-             tags$li("Contact Tracing"),
-             tags$li("Protect Scotland App"),
-             tags$li("Travel outside Scotland"),
-             tags$li("Setting"),
-             tags$li("Health Care Workers"),
-             tags$li("Care Homes"),
-             tags$li("Quarantine data"),
-             tags$li("Lateral Flow Device Testing"),
-             tags$li("Targeted Community Testing"),
-             tags$li("Vaccine Certification"),
+               of COVID-19 amongst the population."),
+             h3("What's on the dashboard?"),
+             # 1st row of boxes
+             fluidRow(
+               br(),
+               # Cases and infection levels
+               column(8, style = "padding-left: 0px; padding-right: 0px;",
+                        column(6, class="landing-page-column",
+                               lp_main_box(button_name = 'jump_to_inf_cases', title_box = "Cases and infection levels",
+                                           description = 'Reported cases and reinfections')),
+               # LFDs
+               column(6, class="landing-page-column",
+                               lp_main_box(button_name = 'jump_to_LFD', title_box = "Lateral Flow Devices",
+                                           description = 'Trends in LFD testing and demographic breakdown'))
+                      ),
+               # Severe illness
+               column(4, class="landing-page-column",
+                      lp_main_box(button_name = 'jump_to_severe_illness', title_box = "Severe illness",
+                                    description = 'Hospital and ICU admissions'))
+             ), # fluid row close
+             # End of first row
+             # 2nd row of boxes
+             fluidRow(
+               br(),
+               # Populations of interest
+               column(8, style = "padding-left: 0px; padding-right: 0px;",
+                        column(6, class="landing-page-column",
+                               lp_main_box(button_name = 'jump_to_pop_interest', title_box = "Populations of Interest",
+                                           description = 'Monitoring of care homes and healthcare workers')),
+               # Vaccinations
+               column(6, class="landing-page-column",
+                               lp_main_box(button_name = 'jump_to_vaccinations', title_box = "Vaccinations",
+                                           description = 'Vaccine wastage information'))
+                      ),
+               # Surveillance
+               column(4, class="landing-page-column",
+                     lp_main_box(button_name = 'jump_to_surveillance', title_box = "Surveillance",
+                                    description = 'Statistics from NHS24 and Scottish Ambulance Service'))
+             ), # fluid row close
+             # End of second row
+             br(),
+             br(),
+             h4("Archived information (no longer updated)"),
+             br(),
+             # 3rd row is split into two boxes per space
+             fluidRow(
+                        column(3, class="landing-page-column",
+                               lp_about_box(button_name = 'jump_to_CT',
+                                            title_box = "Contact tracing"),
+                               lp_about_box(button_name = 'jump_to_CTtable',
+                                            title_box = "Contact tracing data")),
+                        column(3, class="landing-page-column",
+                               lp_about_box(button_name = 'jump_to_HCW',
+                                            title_box = "Healthcare workers"),
+                               lp_about_box(button_name = 'jump_to_CH',
+                                            title_box = "Care homes archive")),
+                        column(3, class="landing-page-column",
+                               lp_about_box(button_name = 'jump_to_quarantine',
+                                            title_box = "Quarantine statistics"),
+                               lp_about_box(button_name = 'jump_to_mtu',
+                                            title_box = "Targeted community testing")),
+                        column(3, class="landing-page-column",
+                               lp_about_box(button_name = 'jump_to_vaccine',
+                                            title_box = "Vaccine certification"),
+                               lp_about_box(button_name = 'jump_to_travel',
+                                            title_box = "Travel outside Scotland"))
+             ), #Fluidrow bracket
              br(),
           h3("Information"),
           tags$li("Metadata for this dashboard can be downloaded from the ",
@@ -95,8 +144,7 @@ tagList(  #needed for shinyjs
               tags$a(
                 href = "https://github.com/Public-Health-Scotland/COVID-19-Publication-Dashboard",
                 "at this location",
-                class = "externallink")),".")#,
-             # ".")
+                class = "externallink")),".")
              ), #tabPanel bracket
     #################### Notes  ----
     tabPanel("Notes",
@@ -321,7 +369,7 @@ tagList(  #needed for shinyjs
       tabPanel(
         title = "Care homes",
         icon = icon("home"),
-        value = "CareHomes",
+        value = "PopInterest",
 
         h3('Number of COVID-19 cases for care home residents and staff'),
         tags$li('As of 06 April 2022, Public Health Scotland are reporting weekly data on COVID-19 ',
@@ -452,7 +500,7 @@ tagList(  #needed for shinyjs
       tabPanel(
         title = "Contact tracing",
         icon = icon("address-book"),
-        value = "contacttracing",
+        value = "CT",
         p("Scotland’s approach to contact tracing has continued to adapt throughout the pandemic to reflect changing circumstances, variability in cases, and increasing proportion of the population fully
           vaccinated since the roll out of the vaccination programme. The most recent",
           tags$a(href = "https://www.gov.scot/publications/coronavirus-covid-19-scotlands-strategic-framework-update-november-2021/",

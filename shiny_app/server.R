@@ -13,6 +13,7 @@ function(input, output, session) {
   # Sourcing individual tabs
   ###############################################.
   # Summary info
+  source(file.path("tabs/intro_tab.R"), local = TRUE)$value
   source(file.path("tabs/summary_tab.R"), local = TRUE)$value
   source(file.path("tabs/data_tab.R"), local = TRUE)$value
   # LFDs
@@ -45,15 +46,16 @@ function(input, output, session) {
   observeEvent(input$jump_to_severe_illness, {updateTabsetPanel(session, "intabset", selected = "SevereIllness")})
   observeEvent(input$jump_to_severe_illness_data, {updateTabsetPanel(session, "intabset", selected = "SevereIllnessData")})
   observeEvent(input$jump_to_pop_interest, {updateTabsetPanel(session, "intabset", selected = "PopInterest")})
-  observeEvent(input$jump_to_care_homes, {updateTabsetPanel(session, "intabset", selected = "CareHomes")})
   observeEvent(input$jump_to_surveillance, {updateTabsetPanel(session, "intabset", selected = "Surveillance")})
   observeEvent(input$jump_to_surveillance_data, {updateTabsetPanel(session, "intabset", selected = "SurveillanceData")})
   observeEvent(input$jump_to_vaccinations, {updateTabsetPanel(session, "intabset", selected = "Vaccinations")})
 
   # Archived
+  observeEvent(input$jump_to_CT, {updateTabsetPanel(session, "intabset", selected = "CT")})
   observeEvent(input$jump_to_CTtable, {updateTabsetPanel(session, "intabset", selected = "CTtable")})
   observeEvent(input$jump_to_travel, {updateTabsetPanel(session, "intabset", selected = "travelData")})
   observeEvent(input$jump_to_HCW, {updateTabsetPanel(session, "intabset", selected = "HCWtable")})
+  observeEvent(input$jump_to_care_homes, {updateTabsetPanel(session, "intabset", selected = "CareHomes")})
   observeEvent(input$jump_to_quarantine, {updateTabsetPanel(session, "intabset", selected = "QData")})
   observeEvent(input$jump_to_CH, {updateTabsetPanel(session, "intabset", selected = "CHData")})
   observeEvent(input$jump_to_mtu, {updateTabsetPanel(session, "intabset", selected = "MTUtab")})

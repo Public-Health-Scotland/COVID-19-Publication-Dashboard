@@ -337,5 +337,26 @@ plot_cut_missing <- function(title_plot, plot_output, extra_content = NULL) {
 }
 
 
+## Functions from ScotPHO dashboard https://github.com/Public-Health-Scotland/scotpho-profiles-tool/
+
+#Creating big boxes for main tabs in the landing page (see ui for formatting css)
+lp_main_box <- function(title_box, button_name, description) {
+  div(class="landing-page-box",
+      div(title_box, class = "landing-page-box-title"),
+      div(description, class = "landing-page-box-description"),
+      actionButton(button_name, NULL, class="landing-page-button")
+  )
+}
+
+
+#Creating small boxes for further information in the landing page (see ui for formatting css)
+lp_about_box <- function(title_box, button_name, description) {
+
+  div(class="landing-page-box-about",
+      div(title_box, class = "landing-page-box-title"),
+      (actionButton(button_name, NULL,
+                    class="landing-page-button")))
+}
+
 ## END
 
