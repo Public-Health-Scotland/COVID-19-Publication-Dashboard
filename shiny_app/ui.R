@@ -692,6 +692,46 @@ tagList(  #needed for shinyjs
                          uiOutput("MTUOutputs")
                )),
 
+      #################### Setting Charts ----
+
+      tabPanel(
+        title = "Setting",
+        icon = icon("landmark"),
+        value = "settingchart",
+
+        h3("Setting"),
+        tags$li("Public Health Scotland has been able to present information on settings and events that contact tracing index cases have attended over the previous 7 days. This is based on interviews conducted with cases identified in the Case Management System (CMS) and involves cases recalling where they have been in the 7 days prior to symptom onset (or date of test if asymptomatic)."),
+        tags$li("However,", strong("Public Health Scotland cannot infer from the figures whether a specific setting or an event indicates where the COVID-19 transmission took place."), "This is because cases may have attended multiple settings or events within a short space of time. In addition, it is possible that even though a case visited a few settings and events, transmission may have taken place elsewhere."),
+        tags$li(strong("Therefore, users of these data must exercise caution and cannot make inferences about the rank of settings and events where cases visited. The data presented below were analysed using data from the CMS which was designed for contact tracing purposes and not for identifying where transmission took place."), "This information is collected to help identify close contacts and to understand potential identification of source of exposure."),
+        tags$li("More information on event groupings can be found in the accompanying metadata document available on the",
+                tags$a(
+                  href = "https://publichealthscotland.scot/publications/covid-19-statistical-report",
+                  "weekly statistical report page.",
+                  class = "externallink") ),
+        br(),
+        p(strong(style = "color:black", "From 28 August due to changes in contact tracing, these data resources are no longer updated.")),
+        br(),
+        p(strong(" ")),
+
+        hr(),
+
+        column(4,
+               selectInput("Setting_select", "Select the setting type you want to view.",
+                           choices = SettingList)),
+        column(4,
+               downloadButton('download_setting_data', 'Download data'),
+               fluidRow(br()),
+               actionButton(inputId='ab3', label='Metadata',
+                            icon = icon("th"),
+                            onclick ="window.open('https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/',
+                          '_blank')")),
+
+        mainPanel(width = 12,
+                  uiOutput("Setting_explorer")
+        )# mainPanel bracket
+
+      ),# tabpanel bracket
+
       ### Vaccines
       tabPanel(
         title = "Vaccine certification",
