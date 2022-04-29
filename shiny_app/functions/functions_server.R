@@ -1486,7 +1486,7 @@ plot_VaccineWastage <- function(dataset, area = T) {
   yaxis_plots[["title"]] <- "Percentage of Doses Wasted"
 
   tooltip_trend <- glue("Month Beginning: {dataset$`Month Beginning`}<br>",
-                        "Percentage Wasted: {dataset$`% Wasted`}")
+                        "Percentage Wasted: {dataset$`% Wasted`}%")
 
   p <- plot_ly(data = dataset, x = ~`Month Beginning`) %>%
     add_lines(y = ~`% Wasted`, line = list(color = pal_overall[3]),
