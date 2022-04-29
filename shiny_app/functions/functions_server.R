@@ -1479,6 +1479,55 @@ care_home_time_series_chart <- function(data){
 
 }
 
+############ Chart for Vaccine Wastage trend
+plot_VaccineWastage <- function(dataset, area = T) {
+
+  #Modifying standard layout
+  yaxis_plots[["title"]] <- "Percentage of Doses Wasted"
+
+  tooltip_trend <- glue("Month Beginning: {dataset$`Month Beginning`}<br>",
+                        "Percentage Wasted: {dataset$`% Wasted`}")
+
+  p <- plot_ly(data = dataset, x = ~`Month Beginning`) %>%
+    add_lines(y = ~`% Wasted`, line = list(color = pal_overall[3]),
+              text = tooltip_trend, hoverinfo = "text",
+              name = "% Wasted") %>%
+    #Layout
+    layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
+           yaxis = yaxis_plots, xaxis = xaxis_plots,
+           legend = list(x = 100, y = 0.5)) %>% #position of legend
+    # leaving only save plot button
+    config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
+
+  # Adding vertical line
+  # Fraction of plot which is since 01 Dec 2021 (where we want to place text)
+  frac1 <- as.numeric(as.Date("2021-11-01") - min(dataset$`Month Beginning`))/as.numeric(max(dataset$`Month Beginning` - min(dataset$`Month Beginning`)))
+  frac2 <- as.numeric(as.Date("2022-01-12") - min(dataset$`Month Beginning`))/as.numeric(max(dataset$`Month Beginning` - min(dataset$`Month Beginning`)))
+
+  annotation1 <- list(yref = "paper",
+                     xref = "paper",
+                     y = 0.8,
+                     x = frac1,
+                     text = "<b>Doses 1 & 2</b>",
+                     bordercolor = phs_colours("phs-purple"),
+                     borderwidth = 2,
+                     showarrow=FALSE)
+
+  annotation2 <- list(yref = "paper",
+                      xref = "paper",
+                      y = 0.8,
+                      x = frac2,
+                      text = "<b>All Doses</b>",
+                      bordercolor = phs_colours("phs-purple"),
+                      borderwidth = 2,
+                      showarrow=FALSE)
+
+  p %<>% add_vline("2021-12-01", color=phs_colours("phs-purple"), width=3.0) %>%
+    layout(annotations=list(annotation1, annotation2))
+  return(p)
+}
+
+
 
 
 ### END
