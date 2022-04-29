@@ -25,6 +25,11 @@
 
 .dt-buttons { float:right !important; padding-top:1px !important;}
 
+/*Style for download buttons */
+.down{ background-color:#C5C3DA; color: #3F3685; background-image:none;
+       min-width: 23vh;  font-size: 14px; padding: 5px 10px;
+       margin-top: 5px; margin-left: 3px; border: 2px solid #3F3685;}
+
 /* landing page boxes adapted from scotpho  https://github.com/Public-Health-Scotland/scotpho-profiles-tool/*/
 
 

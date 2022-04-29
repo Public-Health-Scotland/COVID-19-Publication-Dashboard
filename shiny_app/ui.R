@@ -174,7 +174,7 @@ tagList(  #needed for shinyjs
                                        direction = "vertical",
                                        justified = T))),
           column(4,
-                 downloadButton('download_infcases_data', 'Download data'),
+                 downloadButton('download_infcases_data', 'Download data', class="down"),
                  fluidRow(br()),
                  actionButton(inputId='ab1', label='Metadata',
                               icon = icon("th"),
@@ -220,7 +220,7 @@ tagList(  #needed for shinyjs
         column(6,
                selectInput("data_select_infcases", "Select the data you want to explore.",
                            choices = inf_levels_cases_data_list)),
-        column(6, downloadButton('download_infcases_table_csv', 'Download data')),
+        column(6, downloadButton('download_infcases_table_csv', 'Download data', class="down")),
         mainPanel(width = 12,
                   uiOutput("infcases_table"))
       )# tabpanel bracket
@@ -247,9 +247,9 @@ tagList(  #needed for shinyjs
         tags$li(" Any individual who receives a positive test result using a Lateral Flow Device is advised to self-isolate and arrange for a confirmatory PCR test."),
         tags$li("The PCR result will determine the number of cases of COVID-19 in Scotland."),
         hr(),
-        downloadButton('download_LFD_weekly_data', 'Download weekly totals'),
-        downloadButton('download_LFD_data', 'Download cumulative Health Board data'),
-        downloadButton('download_LFD_testgroup', 'Download test group data'),
+        downloadButton('download_LFD_weekly_data', 'Download weekly totals', class="down"),
+        downloadButton('download_LFD_data', 'Download cumulative Health Board data', class="down"),
+        downloadButton('download_LFD_testgroup', 'Download test group data', class="down"),
         mainPanel(width = 12,
                   uiOutput("LFD_output"),
                   br3(), br3(), br3()
@@ -310,7 +310,7 @@ tagList(  #needed for shinyjs
                                        direction = "vertical",
                                        justified = T))),
           column(4,
-                 downloadButton('download_severe_illness_data', 'Download data'),
+                 downloadButton('download_severe_illness_data', 'Download data', class="down"),
                  fluidRow(br()),
                  actionButton(inputId='ab1', label='Metadata',
                               icon = icon("th"),
@@ -355,7 +355,7 @@ tagList(  #needed for shinyjs
         column(6,
                selectInput("data_select_severe_illness", "Select the data you want to explore.",
                            choices = severe_illness_data_list)),
-        column(6, downloadButton('download_severe_illness_table_csv', 'Download data')),
+        column(6, downloadButton('download_severe_illness_table_csv', 'Download data', class="down")),
         mainPanel(width = 12,
                   uiOutput("severe_illness_table"))
       )# tabpanel bracket
@@ -387,7 +387,7 @@ tagList(  #needed for shinyjs
         tags$li(' The source data are dynamic, and additional test results ',
                 'received will be reflected in future calculations of cases, which may affect figures ',
                 'retrospectively.'),
-        downloadButton('download_care_home_timeseries_data', 'Download time series data'),
+        downloadButton('download_care_home_timeseries_data', 'Download time series data', class="down"),
         mainPanel(width = 12,
                   withSpinner(DT::dataTableOutput('CareHomeSeriesTable')),
                   plot_box("", 'CareHomeSeriesGraph')
@@ -426,7 +426,7 @@ tagList(  #needed for shinyjs
                                        direction = "vertical",
                                        justified = T))),
           column(4,
-                 downloadButton('download_surveillance_data', 'Download data'),
+                 downloadButton('download_surveillance_data', 'Download data', class="down"),
                  fluidRow(br()),
                  actionButton(inputId='ab1', label='Metadata',
                               icon = icon("th"),
@@ -471,7 +471,7 @@ tagList(  #needed for shinyjs
         column(6,
                selectInput("data_select_surveillance", "Select the data you want to explore.",
                            choices = surveillance_data_list)),
-        column(6, downloadButton('download_surveillance_table_csv', 'Download data')),
+        column(6, downloadButton('download_surveillance_table_csv', 'Download data', class="down")),
         mainPanel(width = 12,
                   uiOutput("surveillance_table"))
       )# tabpanel bracket
@@ -536,7 +536,7 @@ tagList(  #needed for shinyjs
                                        justified = T))),
 
           column(4,
-                 downloadButton('download_CT_data', 'Download data'),
+                 downloadButton('download_CT_data', 'Download data', class="down"),
                  fluidRow(br()),
                  actionButton(inputId='ab2', label='Metadata',
                               icon = icon("th"),
@@ -586,7 +586,7 @@ tagList(  #needed for shinyjs
         column(8,
                selectInput("CTdata_select", "Select the data you want to explore.",
                            choices = CTdata_list_data_tab)),
-        column(4, downloadButton('CTdownload_table_csv', 'Download data'),
+        column(4, downloadButton('CTdownload_table_csv', 'Download data', class="down"),
                fluidRow(br()),
                actionButton(inputId='ab1', label='Metadata',
                             icon = icon("th"),
@@ -611,7 +611,7 @@ tagList(  #needed for shinyjs
           strong("From 16 February 2022 these data resources are no longer updated.")
         ),
         hr(),
-        downloadButton('download_travel_data', 'Download data'),
+        downloadButton('download_travel_data', 'Download data', class="down"),
         mainPanel(width = 12,
                   plot_box("", "travel_chart"),
                   DT::dataTableOutput("travel_table"))
@@ -651,7 +651,7 @@ tagList(  #needed for shinyjs
         column(8,
                selectInput("HCWdata_select", "Select the data you want to explore.",
                            choices = HCWdata_list_data_tab)),
-        column(4, downloadButton('HCWdownload_table_csv', 'Download data'),
+        column(4, downloadButton('HCWdownload_table_csv', 'Download data', class="down"),
                fluidRow(br()),
                actionButton(inputId='ab4', label='Metadata',
                             icon = icon("th"),
@@ -684,7 +684,7 @@ tagList(  #needed for shinyjs
         br(),
         p(strong("Please use this information with caution.")),
         hr(),
-        downloadButton('download_care_home_data', 'Download testing data'),
+        downloadButton('download_care_home_data', 'Download testing data', class="down"),
         mainPanel(width = 12,
                   DT::dataTableOutput("care_homes_table"))
       ),
@@ -711,7 +711,7 @@ tagList(  #needed for shinyjs
         br(),
         p(strong(style = "color:black", "From 09 February these data resources are no longer updated. ")),
         hr(),
-        downloadButton('download_quarantine_data', 'Download data'),
+        downloadButton('download_quarantine_data', 'Download data', class="down"),
         mainPanel(width = 12,
                   DT::dataTableOutput("quarantine_table"))
 
@@ -767,7 +767,7 @@ tagList(  #needed for shinyjs
                selectInput("Setting_select", "Select the setting type you want to view.",
                            choices = SettingList)),
         column(4,
-               downloadButton('download_setting_data', 'Download data'),
+               downloadButton('download_setting_data', 'Download data', class="down"),
                fluidRow(br()),
                actionButton(inputId='ab3', label='Metadata',
                             icon = icon("th"),
@@ -797,7 +797,7 @@ tagList(  #needed for shinyjs
         tags$li("For further information, you can refer to ", tags$a(href="https://www.gov.scot/news/living-safely-with-covid/", "https://www.gov.scot/news/living-safely-with-covid/.", class="externallink")),
         tags$li(glue("The figures in the table below are for up to midnight on {vaccine_cert_date}.")),
         hr(),
-        downloadButton('download_vaccine_cert_data', 'Download data'),
+        downloadButton('download_vaccine_cert_data', 'Download data', class="down"),
         mainPanel(width = 12,
                   DT::dataTableOutput("vaccine_cert_table"))
         )
