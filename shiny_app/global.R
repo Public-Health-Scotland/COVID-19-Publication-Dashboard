@@ -153,6 +153,8 @@ Quarantine <- readRDS("data/Quarantine.rds")
 
 VaccineCertification <- readRDS("data/VaccineCertification.rds")
 
+VaccineWastage <- readRDS("data/VaccineWastage.rds")
+
 mtu_heatmap_data <- readRDS("data/TCT_TestCentres.rds")
 mtu_heatmap_data2 <- mtu_heatmap_data %>%
   dplyr::mutate(Number_of_tests = replace_na(total_tests, 0)) %>%
