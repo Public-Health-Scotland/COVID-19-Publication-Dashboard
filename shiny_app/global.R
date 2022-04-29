@@ -153,7 +153,12 @@ Quarantine <- readRDS("data/Quarantine.rds")
 
 VaccineCertification <- readRDS("data/VaccineCertification.rds")
 
-VaccineWastage <- readRDS("data/VaccineWastage.rds")
+VaccineWastage <- readRDS("data/VaccineWastage.rds") %>%
+  dplyr::mutate(month = as.yearmon(month)) %>%
+  dplyr::rename(`Month` = month,
+                `Doses Administered` = number_of_doses_administered,
+                `Doses Wasted` = number_of_doses_wasted,
+                `% Wasted` = percentage_wasted)
 
 mtu_heatmap_data <- readRDS("data/TCT_TestCentres.rds")
 mtu_heatmap_data2 <- mtu_heatmap_data %>%
