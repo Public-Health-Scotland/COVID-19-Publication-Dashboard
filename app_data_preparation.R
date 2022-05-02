@@ -356,6 +356,10 @@ saveRDS(care_homes, "data/Care_Homes.rds")
 CareHomeTimeSeries <- read_csv("data/CareHomeTimeSeries.csv")
 saveRDS(CareHomeTimeSeries, "data/CareHomeTimeSeries.rds")
 
+### Vaccine Wastage
+
+VaccineWastage <- read_csv("data/VaccineWastage.csv")
+saveRDS(VaccineWastage, "data/VaccineWastage.rds")
 
 #### Community Testing ---------------------------------------------------------
 replace_zero <- function(x){
