@@ -5,6 +5,8 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
   color: #3F3685;
 }
 
+.externallink {color: #3F3685; font-weight: bold;}
+.externallink:hover {color: #AF69A9;}
 
 /* to avoid red text error messages in the whole app, take out for testing*/
 .shiny-output-error { visibility: hidden; }
