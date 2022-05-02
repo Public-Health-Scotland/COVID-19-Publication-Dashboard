@@ -5,6 +5,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
   color: #3F3685;
 }
 
+/* Style hyperlinks */
 .externallink {color: #3F3685; font-weight: bold;}
 .externallink:hover {color: #AF69A9;}
 
@@ -31,7 +32,6 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
     color: #ffffff;     background-color: #5c4ab5;}
 
-/*.dt-buttons { background-color:#C5C3DA; color: #3F3685; float:right !important; padding-top:1px !important;}
 
 /*Style for buttons */
 
