@@ -181,7 +181,7 @@ severe_illness_list <- c("Hospital Admissions" = "Admissions",
                          "ICU Admissions" = "ICU")
 
 surveillance_list <- c("NHS24 Contacts" = "NHS24",
-                       "Community Hubs and Assessment Centres" = "AssessmentHub",
+                       "Community Hubs & Assessment Centres" = "AssessmentHub",
                        "Scottish Ambulance Service" = "SAS")
 
 CTdata_list_chart_tab <- c("Contact Tracing time performance %",
