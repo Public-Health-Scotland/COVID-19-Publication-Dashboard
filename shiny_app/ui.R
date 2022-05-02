@@ -26,6 +26,7 @@ tagList(  #needed for shinyjs
                with Scottish Government and health and care colleagues in supporting the surveillance and monitoring
                of COVID-19 amongst the population."),
              h3("What's on the dashboard?"),
+             p("You can navigate around the dashboard using the tabs on the top banner, or by clicking one of the boxes below."),
              # 1st row of boxes
              fluidRow(
                br(),
