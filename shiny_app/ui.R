@@ -166,14 +166,16 @@ tagList(  #needed for shinyjs
         value = "InfCases",
         wellPanel(
           column(4,
-                 div(title = "Select the data you want to explore.", # tooltip
+                 div(title = "Select the data you want to explore.",
                      radioGroupButtons("measure_select_infcases",
+                                       status="btn",
                                        label = "Select the data you want to explore.",
                                        choices = inf_levels_cases_list,
-                                       status = "primary",
                                        selected = inf_levels_cases_list[[1]],
                                        direction = "vertical",
-                                       justified = T))),
+                                       justified = T)
+                     )
+                 ),
           column(4,
                  downloadButton('download_infcases_data', 'Download data', class="down"),
                  fluidRow(br()),
@@ -306,7 +308,7 @@ tagList(  #needed for shinyjs
                      radioGroupButtons("measure_select_severe_illness",
                                        label = "Select the data you want to explore.",
                                        choices = severe_illness_list,
-                                       status = "primary",
+                                       status = "btn",
                                        selected = severe_illness_list[[1]],
                                        direction = "vertical",
                                        justified = T))),
@@ -422,7 +424,7 @@ tagList(  #needed for shinyjs
                      radioGroupButtons("measure_select_surveillance",
                                        label = "Select the data you want to explore.",
                                        choices = surveillance_list,
-                                       status = "primary",
+                                       status = "btn",
                                        selected = surveillance_list[[1]],
                                        direction = "vertical",
                                        justified = T))),
@@ -532,7 +534,7 @@ tagList(  #needed for shinyjs
                      radioGroupButtons("ContactTracing_select",
                                        label = "Select the measure you want to view.",
                                        choices = CTdata_list_chart_tab,
-                                       status = "primary",
+                                       status = "btn",
                                        direction = "vertical",
                                        justified = T))),
 

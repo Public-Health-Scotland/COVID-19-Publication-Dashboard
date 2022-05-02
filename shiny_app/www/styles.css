@@ -1,11 +1,17 @@
 /* CSS styles used in the shiny app */
+/* Setting header colour */
+
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+  color: #3F3685;
+}
+
 
 /* to avoid red text error messages in the whole app, take out for testing*/
 .shiny-output-error { visibility: hidden; }
 .shiny-output-error:before { visibility: hidden; }
 
 /* Style sidebars/well panels */
-.well {background-color:#ffffff; border: 0 solid #336699;
+.well {background-color:#ffffff; border: 0 solid #9B4393;
        padding: 5px; box-shadow: none; }
 
 /* Navigation bar following PHS colour scheme */
@@ -23,12 +29,27 @@
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
     color: #ffffff;     background-color: #5c4ab5;}
 
-.dt-buttons { float:right !important; padding-top:1px !important;}
+/*.dt-buttons { background-color:#C5C3DA; color: #3F3685; float:right !important; padding-top:1px !important;}
 
-/*Style for download buttons */
-.down{ background-color:#C5C3DA; color: #3F3685; background-image:none;
-       min-width: 23vh;  font-size: 14px; padding: 5px 10px;
-       margin-top: 5px; margin-left: 3px; border: 2px solid #3F3685;}
+/*Style for buttons */
+
+.btn{ background-color: #CDA1C9; color: black; background-image:none; border: 2px solid #3F3685;
+  border-radius: 10px;
+}
+
+.btn:hover{background-color:#9F9BC2; border: 2px solid #C5C3DA;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 8px 20px 0 rgba(0,0,0,0.19);
+}
+
+.btn:focus{background-color:#9F9BC2; border: 2px solid #C5C3DA;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 8px 20px 0 rgba(0,0,0,0.19);}
+
+.btn:active{background-color:#9F9BC2; border: 2px solid #C5C3DA;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 8px 20px 0 rgba(0,0,0,0.19);}
+
+.btn:checked{background-color:#9F9BC2; border: 2px solid #C5C3DA;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 8px 20px 0 rgba(0,0,0,0.19);}
+
 
 /* landing page boxes adapted from scotpho  https://github.com/Public-Health-Scotland/scotpho-profiles-tool/*/
 
