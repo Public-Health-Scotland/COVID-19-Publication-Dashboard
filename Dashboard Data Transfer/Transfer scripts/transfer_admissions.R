@@ -134,7 +134,7 @@ g_adm_agesex$number <- as.numeric(g_adm_agesex$number)
 g_adm_agesex %<>% left_join(i_population, by=c("age_group", "sex")) %>%
   mutate(rate = 100000*number/pop_number) %>%
   select(-c("pop_number")) %>%
-  arrange(factor(age_group, levels= c("0-4", "5-14", "15-19", "20-24", "25-44","45-64", "65-74", "75-84", "85+"))) %>%
+  arrange(factor(age_group, levels= c("0-4", "5-14", "15-19", "20-24", "25-44","45-64", "65-74", "75-84", "85+", "Unknown"))) %>%
   arrange(factor(sex, levels = c("Male", "Female", "Unknown")))
 
 write.csv(g_adm_agesex, glue(test_output, "Admissions_AgeSex.csv"), row.names = FALSE)
