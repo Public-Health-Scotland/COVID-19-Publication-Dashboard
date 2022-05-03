@@ -13,7 +13,6 @@ function(input, output, session) {
   # Sourcing individual tabs
   ###############################################.
   # Summary info
-  source(file.path("tabs/intro_tab.R"), local = TRUE)$value
   source(file.path("tabs/summary_tab.R"), local = TRUE)$value
   source(file.path("tabs/data_tab.R"), local = TRUE)$value
   # LFDs
