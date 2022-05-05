@@ -14,7 +14,7 @@ build_peopletab_data_table <- function(data, dom_elements = "tB",
                                     buttons = list(
                                       list(
                                         extend = "copy",
-                                        className = "btn btn-primary",
+                                        className = "btn",
                                         exportOptions = list(
                                           modifier = list(
                                             page="all", search ="none"
@@ -22,7 +22,7 @@ build_peopletab_data_table <- function(data, dom_elements = "tB",
                                       ),
                                       list(
                                         extend = "csv",
-                                        className = "btn btn-primary",
+                                        className = "btn",
                                         exportOptions = list(
                                           modifier = list(
                                             page="all", search ="none"
@@ -30,7 +30,7 @@ build_peopletab_data_table <- function(data, dom_elements = "tB",
                                       ),
                                       list(
                                         extend = "excel",
-                                        className = "btn btn-primary",
+                                        className = "btn",
                                         exportOptions = list(
                                           modifier = list(
                                             page="all", search ="none"
@@ -210,7 +210,7 @@ table_params <- reactive({
 #### Build UI -----
 output$people_tab <- renderUI({
   tagList(
-    actionButton("btn_modal_simd", "What is SIMD?", icon = icon('question-circle')),
+    actionButton("btn_modal_simd", "What is SIMD?", icon = icon('question-circle'), class="action"),
 
     plot_box_2(title_plot = switch(input$plot_output_selection,
                                  "All Individuals" = "Number of Individuals to Record an LFD",
