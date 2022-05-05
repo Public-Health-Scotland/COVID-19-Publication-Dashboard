@@ -13,34 +13,85 @@ tagList(  #needed for shinyjs
     windowTitle = "PHS Weekly COVID-19 report",    #title for browser tab
     header = tags$head(includeCSS("www/styles.css"),  # CSS styles
                        tags$link(rel = "shortcut icon", href = "favicon_phs.ico"), #Icon for browser tab
-                       includeHTML("www/google-analytics.html"),
-                       HTML("<html lang='en'>")), #Including Google analytics
+                       #includeHTML("www/google-analytics.html"), #Including Google analytics
+                       HTML("<html lang='en'>")
+                       ),
 
     #################### Introduction ----
     tabPanel("Introduction",
              icon = icon("info-circle"),
              value = "intro",
-             h3("COVID-19 statistical report"),
-             h3("Background"),
+             h2("Welcome to the COVID-19 statistical report dashboard"),
              p("Since the start of the COVID-19 outbreak Public Health Scotland (PHS) has been working closely
                with Scottish Government and health and care colleagues in supporting the surveillance and monitoring
-               of COVID-19 amongst the population. This interactive dashboard contains charts and data on the following topics:"),
-             tags$li("Positive Cases"),
-             tags$li("Acute Hospital Admissions"),
-             tags$li("ICU Admissions"),
-             tags$li("NHS24 Contacts"),
-             tags$li("Community Hubs and Assessment Centres"),
-             tags$li("Scottish Ambulance Service"),
-             tags$li("Contact Tracing"),
-             tags$li("Protect Scotland App"),
-             tags$li("Travel outside Scotland"),
-             tags$li("Setting"),
-             tags$li("Health Care Workers"),
-             tags$li("Care Homes"),
-             tags$li("Quarantine data"),
-             tags$li("Lateral Flow Device Testing"),
-             tags$li("Targeted Community Testing"),
-             tags$li("Vaccine Certification"),
+               of COVID-19 amongst the population."),
+             h3("What's on the dashboard?"),
+             p("You can navigate around the dashboard using the tabs on the top banner, or by clicking one of the boxes below."),
+             # 1st row of boxes
+             fluidRow(
+               br(),
+               # Cases and infection levels
+               column(8, style = "padding-left: 0px; padding-right: 0px;",
+                        column(6, class="landing-page-column",
+                               lp_main_box(button_name = 'jump_to_inf_cases', title_box = "Cases and infection levels",
+                                           description = 'Reported cases and reinfections')),
+               # LFDs
+               column(6, class="landing-page-column",
+                               lp_main_box(button_name = 'jump_to_LFD', title_box = "Lateral Flow Devices",
+                                           description = 'Trends in LFD testing and demographic breakdown'))
+                      ),
+               # Severe illness
+               column(4, class="landing-page-column",
+                      lp_main_box(button_name = 'jump_to_severe_illness', title_box = "Severe illness",
+                                    description = 'Hospital and ICU admissions'))
+             ), # fluid row close
+             # End of first row
+             # 2nd row of boxes
+             fluidRow(
+               br(),
+               # Populations of interest
+               column(8, style = "padding-left: 0px; padding-right: 0px;",
+                        column(6, class="landing-page-column",
+                               lp_main_box(button_name = 'jump_to_pop_interest', title_box = "Populations of Interest",
+                                           description = 'Monitoring of care homes and healthcare workers')),
+               # Vaccinations
+               column(6, class="landing-page-column",
+                               lp_main_box(button_name = 'jump_to_vaccinations', title_box = "Vaccinations",
+                                           description = 'Vaccine wastage information'))
+                      ),
+               # Surveillance
+               column(4, class="landing-page-column",
+                     lp_main_box(button_name = 'jump_to_surveillance', title_box = "Surveillance",
+                                    description = 'Statistics from NHS24 and Scottish Ambulance Service'))
+             ), # fluid row close
+             # End of second row
+             br(),
+             br(),
+             h4("Archived information (no longer updated)"),
+             br(),
+             # 3rd row is split into two boxes per space
+             fluidRow(
+                        column(3, class="landing-page-column",
+                               lp_about_box(button_name = 'jump_to_CT',
+                                            title_box = "Contact tracing"),
+                               lp_about_box(button_name = 'jump_to_CTtable',
+                                            title_box = "Contact tracing data")),
+                        column(3, class="landing-page-column",
+                               lp_about_box(button_name = 'jump_to_HCW',
+                                            title_box = "Healthcare workers"),
+                               lp_about_box(button_name = 'jump_to_CH',
+                                            title_box = "Care homes archive")),
+                        column(3, class="landing-page-column",
+                               lp_about_box(button_name = 'jump_to_quarantine',
+                                            title_box = "Quarantine statistics"),
+                               lp_about_box(button_name = 'jump_to_mtu',
+                                            title_box = "Targeted community testing")),
+                        column(3, class="landing-page-column",
+                               lp_about_box(button_name = 'jump_to_vaccine',
+                                            title_box = "Vaccine certification"),
+                               lp_about_box(button_name = 'jump_to_travel',
+                                            title_box = "Travel outside Scotland"))
+             ), #Fluidrow bracket
              br(),
           h3("Information"),
           tags$li("Metadata for this dashboard can be downloaded from the ",
@@ -95,8 +146,7 @@ tagList(  #needed for shinyjs
               tags$a(
                 href = "https://github.com/Public-Health-Scotland/COVID-19-Publication-Dashboard",
                 "at this location",
-                class = "externallink")),".")#,
-             # ".")
+                class = "externallink")),".")
              ), #tabPanel bracket
     #################### Notes  ----
     tabPanel("Notes",
@@ -117,16 +167,18 @@ tagList(  #needed for shinyjs
         value = "InfCases",
         wellPanel(
           column(4,
-                 div(title = "Select the data you want to explore.", # tooltip
+                 div(title = "Select the data you want to explore.",
                      radioGroupButtons("measure_select_infcases",
+                                       status="btn",
                                        label = "Select the data you want to explore.",
                                        choices = inf_levels_cases_list,
-                                       status = "primary",
                                        selected = inf_levels_cases_list[[1]],
                                        direction = "vertical",
-                                       justified = T))),
+                                       justified = T)
+                     )
+                 ),
           column(4,
-                 downloadButton('download_infcases_data', 'Download data'),
+                 downloadButton('download_infcases_data', 'Download data', class="down"),
                  fluidRow(br()),
                  actionButton(inputId='ab1', label='Metadata',
                               icon = icon("th"),
@@ -172,7 +224,7 @@ tagList(  #needed for shinyjs
         column(6,
                selectInput("data_select_infcases", "Select the data you want to explore.",
                            choices = inf_levels_cases_data_list)),
-        column(6, downloadButton('download_infcases_table_csv', 'Download data')),
+        column(6, downloadButton('download_infcases_table_csv', 'Download data', class="down")),
         mainPanel(width = 12,
                   uiOutput("infcases_table"))
       )# tabpanel bracket
@@ -199,9 +251,9 @@ tagList(  #needed for shinyjs
         tags$li(" Any individual who receives a positive test result using a Lateral Flow Device is advised to self-isolate and arrange for a confirmatory PCR test."),
         tags$li("The PCR result will determine the number of cases of COVID-19 in Scotland."),
         hr(),
-        downloadButton('download_LFD_weekly_data', 'Download weekly totals'),
-        downloadButton('download_LFD_data', 'Download cumulative Health Board data'),
-        downloadButton('download_LFD_testgroup', 'Download test group data'),
+        downloadButton('download_LFD_weekly_data', 'Download weekly totals', class="down"),
+        downloadButton('download_LFD_data', 'Download cumulative Health Board data', class="down"),
+        downloadButton('download_LFD_testgroup', 'Download test group data', class="down"),
         mainPanel(width = 12,
                   uiOutput("LFD_output"),
                   br3(), br3(), br3()
@@ -257,12 +309,12 @@ tagList(  #needed for shinyjs
                      radioGroupButtons("measure_select_severe_illness",
                                        label = "Select the data you want to explore.",
                                        choices = severe_illness_list,
-                                       status = "primary",
+                                       status = "btn",
                                        selected = severe_illness_list[[1]],
                                        direction = "vertical",
                                        justified = T))),
           column(4,
-                 downloadButton('download_severe_illness_data', 'Download data'),
+                 downloadButton('download_severe_illness_data', 'Download data', class="down"),
                  fluidRow(br()),
                  actionButton(inputId='ab1', label='Metadata',
                               icon = icon("th"),
@@ -307,7 +359,7 @@ tagList(  #needed for shinyjs
         column(6,
                selectInput("data_select_severe_illness", "Select the data you want to explore.",
                            choices = severe_illness_data_list)),
-        column(6, downloadButton('download_severe_illness_table_csv', 'Download data')),
+        column(6, downloadButton('download_severe_illness_table_csv', 'Download data', class="down")),
         mainPanel(width = 12,
                   uiOutput("severe_illness_table"))
       )# tabpanel bracket
@@ -321,7 +373,7 @@ tagList(  #needed for shinyjs
       tabPanel(
         title = "Care homes",
         icon = icon("home"),
-        value = "CareHomes",
+        value = "PopInterest",
 
         h3('Number of COVID-19 cases for care home residents and staff'),
         tags$li('As of 06 April 2022, Public Health Scotland are reporting weekly data on COVID-19 ',
@@ -339,7 +391,7 @@ tagList(  #needed for shinyjs
         tags$li(' The source data are dynamic, and additional test results ',
                 'received will be reflected in future calculations of cases, which may affect figures ',
                 'retrospectively.'),
-        downloadButton('download_care_home_timeseries_data', 'Download time series data'),
+        downloadButton('download_care_home_timeseries_data', 'Download time series data', class="down"),
         mainPanel(width = 12,
                   withSpinner(DT::dataTableOutput('CareHomeSeriesTable')),
                   plot_box("", 'CareHomeSeriesGraph')
@@ -373,12 +425,12 @@ tagList(  #needed for shinyjs
                      radioGroupButtons("measure_select_surveillance",
                                        label = "Select the data you want to explore.",
                                        choices = surveillance_list,
-                                       status = "primary",
+                                       status = "btn",
                                        selected = surveillance_list[[1]],
                                        direction = "vertical",
                                        justified = T))),
           column(4,
-                 downloadButton('download_surveillance_data', 'Download data'),
+                 downloadButton('download_surveillance_data', 'Download data', class="down"),
                  fluidRow(br()),
                  actionButton(inputId='ab1', label='Metadata',
                               icon = icon("th"),
@@ -423,7 +475,7 @@ tagList(  #needed for shinyjs
         column(6,
                selectInput("data_select_surveillance", "Select the data you want to explore.",
                            choices = surveillance_data_list)),
-        column(6, downloadButton('download_surveillance_table_csv', 'Download data')),
+        column(6, downloadButton('download_surveillance_table_csv', 'Download data', class="down")),
         mainPanel(width = 12,
                   uiOutput("surveillance_table"))
       )# tabpanel bracket
@@ -440,7 +492,6 @@ tagList(  #needed for shinyjs
         value = "Vaccinations",
 
         h3("COVID-19 vaccine wastage"),
-        downloadButton('download_VaccineWastage_data', 'Download vaccine wastage data'),
         mainPanel(width = 12,
                   uiOutput("VaccineWastage_output"),
                   br3(), br3(), br3()
@@ -457,7 +508,7 @@ tagList(  #needed for shinyjs
       tabPanel(
         title = "Contact tracing",
         icon = icon("address-book"),
-        value = "contacttracing",
+        value = "CT",
         p("Scotland’s approach to contact tracing has continued to adapt throughout the pandemic to reflect changing circumstances, variability in cases, and increasing proportion of the population fully
           vaccinated since the roll out of the vaccination programme. The most recent",
           tags$a(href = "https://www.gov.scot/publications/coronavirus-covid-19-scotlands-strategic-framework-update-november-2021/",
@@ -488,12 +539,12 @@ tagList(  #needed for shinyjs
                      radioGroupButtons("ContactTracing_select",
                                        label = "Select the measure you want to view.",
                                        choices = CTdata_list_chart_tab,
-                                       status = "primary",
+                                       status = "btn",
                                        direction = "vertical",
                                        justified = T))),
 
           column(4,
-                 downloadButton('download_CT_data', 'Download data'),
+                 downloadButton('download_CT_data', 'Download data', class="down"),
                  fluidRow(br()),
                  actionButton(inputId='ab2', label='Metadata',
                               icon = icon("th"),
@@ -543,7 +594,7 @@ tagList(  #needed for shinyjs
         column(8,
                selectInput("CTdata_select", "Select the data you want to explore.",
                            choices = CTdata_list_data_tab)),
-        column(4, downloadButton('CTdownload_table_csv', 'Download data'),
+        column(4, downloadButton('CTdownload_table_csv', 'Download data', class="down"),
                fluidRow(br()),
                actionButton(inputId='ab1', label='Metadata',
                             icon = icon("th"),
@@ -568,7 +619,7 @@ tagList(  #needed for shinyjs
           strong("From 16 February 2022 these data resources are no longer updated.")
         ),
         hr(),
-        downloadButton('download_travel_data', 'Download data'),
+        downloadButton('download_travel_data', 'Download data', class="down"),
         mainPanel(width = 12,
                   plot_box("", "travel_chart"),
                   DT::dataTableOutput("travel_table"))
@@ -608,7 +659,7 @@ tagList(  #needed for shinyjs
         column(8,
                selectInput("HCWdata_select", "Select the data you want to explore.",
                            choices = HCWdata_list_data_tab)),
-        column(4, downloadButton('HCWdownload_table_csv', 'Download data'),
+        column(4, downloadButton('HCWdownload_table_csv', 'Download data', class="down"),
                fluidRow(br()),
                actionButton(inputId='ab4', label='Metadata',
                             icon = icon("th"),
@@ -641,7 +692,7 @@ tagList(  #needed for shinyjs
         br(),
         p(strong("Please use this information with caution.")),
         hr(),
-        downloadButton('download_care_home_data', 'Download testing data'),
+        downloadButton('download_care_home_data', 'Download testing data', class="down"),
         mainPanel(width = 12,
                   DT::dataTableOutput("care_homes_table"))
       ),
@@ -668,7 +719,7 @@ tagList(  #needed for shinyjs
         br(),
         p(strong(style = "color:black", "From 09 February these data resources are no longer updated. ")),
         hr(),
-        downloadButton('download_quarantine_data', 'Download data'),
+        downloadButton('download_quarantine_data', 'Download data', class="down"),
         mainPanel(width = 12,
                   DT::dataTableOutput("quarantine_table"))
 
@@ -724,7 +775,7 @@ tagList(  #needed for shinyjs
                selectInput("Setting_select", "Select the setting type you want to view.",
                            choices = SettingList)),
         column(4,
-               downloadButton('download_setting_data', 'Download data'),
+               downloadButton('download_setting_data', 'Download data', class="down"),
                fluidRow(br()),
                actionButton(inputId='ab3', label='Metadata',
                             icon = icon("th"),
@@ -754,7 +805,7 @@ tagList(  #needed for shinyjs
         tags$li("For further information, you can refer to ", tags$a(href="https://www.gov.scot/news/living-safely-with-covid/", "https://www.gov.scot/news/living-safely-with-covid/.", class="externallink")),
         tags$li(glue("The figures in the table below are for up to midnight on {vaccine_cert_date}.")),
         hr(),
-        downloadButton('download_vaccine_cert_data', 'Download data'),
+        downloadButton('download_vaccine_cert_data', 'Download data', class="down"),
         mainPanel(width = 12,
                   DT::dataTableOutput("vaccine_cert_table"))
         )
