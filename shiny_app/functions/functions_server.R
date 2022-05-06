@@ -7,7 +7,7 @@
 
 ## Functions to add lines and notes to charts -----
 
-vline = function(x, color="black", width=3.0, ...) {
+vline = function(x, width=3.0, color="black", ...) {
   l_shape = list(
     type = "line",
     y0 = 0, y1 = 1, yref = "paper", # i.e. y as a proportion of visible region
@@ -17,20 +17,20 @@ vline = function(x, color="black", width=3.0, ...) {
   return(l_shape)
 }
 
-annotation = function(x, y, note, color="black"){
+annotation = function(frac, y, note, ax, ay, color){
   ann = list(yref = "paper",
              xref = "paper",
              y = y,
-             x = x,
+             x = frac,
              text = note,
              arrowhead = 6,
              arrowsize = .8,
-             ax = -100,
-             ay = 40,
+             ax = ax,
+             ay = ay,
              # Styling annotations' text:
              font = list(color = color,
                          size = 14),
-             showarrow=TRUE)
+             showarrow=FALSE)
   return(ann)
 }
 
@@ -39,30 +39,20 @@ add_vline = function(p, x, ...){
   p %>% layout(shapes=list(l_shape))
 }
 
-add_lines_and_notes <- function(p, xs, ys, notes, colors=NULL, widths=NULL){
-  # Set up
-  stopifnot(length(xs) == length(notes))
-  stopifnot(length(xs) == length(ys))
-  colors <- ifelse(is.null(colors), rep("black", length(xs)), colors)
-  widths <- ifelse(is.null(widths), rep(3.0, length(xs)), widths)
+add_lines_and_notes <- function(p, xs, ys, fracs, notes, axs, ays, colors, widths=NULL){
 
-  shapes <- NULL
-  annotations <- NULL
+  shapes <- list()
+  annotations <- list()
   # Create vlines
-  for(i in length(xs)){
-    new_vline <- vline(xs[i], color=colors[i])
-    new_annotation <- annotation(xs[i], ys[i], notes[i], colors[i])
-    if (is.null(shapes)){
-      shapes <- new_vline
-      annotations <- new_annotation
-    } else {
-      shapes <- list(shapes, new_vline)
-      annotations <- list(annotations, new_annotation)
-    }
+  for(i in seq(length(xs))){
+    new_vline <- vline(as.Date(xs[i]), color=colors[i])
+    new_annotation <- annotation(fracs[i], ys[i], notes[i], axs[i], ays[i], colors[i])
+    shapes[[i]] <- new_vline
+    annotations[[i]] <- new_annotation
+
   }
 
-  #browser()
-
+ # browser()
   p %>% layout(annotations=annotations, shapes=shapes)
 
 }
@@ -118,50 +108,19 @@ plot_overall_chart <- function(dataset, data_name,  area = T, include_vline=F) {
 
   if(include_vline){
 
-    p %<>% add_lines_and_notes(xs=c(as.Date("2022-01-06"), as.Date("2022-05-01")),
+    xs <- c("2022-01-06", "2022-05-01")
+    fracs <- unlist(purrr::map(.x=xs,
+                               .f= ~ as.numeric(as.Date(.x) - min(trend_data$Date))/as.numeric(max(trend_data$Date - min(trend_data$Date)))))
+
+    p %<>% add_lines_and_notes(xs=xs,
                                ys=c(0.9, 0.6),
+                               fracs=fracs,
                                notes=c("<b>From 5 Jan \n cases include \n PCR + LFD</b>",
                                        "<b>Change in \n testing policy \n on 1 May</b>"),
+                               axs=c(-100, -50),
+                               ays=c(40, -40),
                                colors=c(phs_colours("phs-magenta"), phs_colours("phs-teal"))
                                )
-    # Fraction of plot which is since 01 Dec 2021 (where we want to place text)
-    # frac <- as.numeric(as.Date("2022-01-06") - min(trend_data$Date))/as.numeric(max(trend_data$Date - min(trend_data$Date)))
-    #
-    # annotation1 <- list(yref = "paper",
-    #                    xref = "paper",
-    #                    y = 0.9,
-    #                    x = frac,
-    #                    text = "<b>From 5 Jan \n cases include \n PCR + LFD</b>",
-    #                    arrowhead = 6,
-    #                    arrowsize = .8,
-    #                    ax = -100,
-    #                    ay = 40,
-    #                    # Styling annotations' text:
-    #                    font = list(color = phs_colours("phs-magenta"),
-    #                                size = 14),
-    #                    showarrow=TRUE)
-    #
-    # frac2 <- as.numeric(as.Date("2022-05-01") - min(trend_data$Date))/as.numeric(max(trend_data$Date - min(trend_data$Date)))
-    #
-    # annotation2 <- list(yref = "paper",
-    #                    xref = "paper",
-    #                    y = 0.6,
-    #                    x = frac2,
-    #                    text = "<b>Change in \n testing policy \n on 1 May</b>",
-    #                    arrowhead = 6,
-    #                    arrowsize = .8,
-    #                    ax = -50,
-    #                    ay = -40,
-    #                    # Styling annotations' text:
-    #                    font = list(color = phs_colours("phs-teal"),
-    #                                size = 14),
-    #                    showarrow=TRUE)
-    #
-    # vline1 <- vline("2022-01-06", color=phs_colours("phs-magenta"))
-    # vline2 <- vline("2022-04-18", color=phs_colours("phs-teal"))
-    #
-    # p %<>% layout(shapes=list(vline1, vline2),
-    #               annotations=list(annotation1, annotation2))
 
 
   }
@@ -462,44 +421,19 @@ plot_singletrace_chart <- function(dataset, data_name, yaxis_title, xaxis_title,
 
  if(include_vline){
 
-   # Fraction of plot which is since 01 Dec 2021 (where we want to place text)
-   frac <- as.numeric(as.Date("2022-01-06") - min(trend_data$date))/as.numeric(max(trend_data$date - min(trend_data$date)))
+   xs <- c("2022-01-06", "2022-05-01")
+   fracs <- unlist(purrr::map(.x=xs,
+                              .f= ~ as.numeric(as.Date(.x) - min(trend_data$date))/as.numeric(max(trend_data$date - min(trend_data$date)))))
 
-   annotation <- list(yref = "paper",
-                      xref = "paper",
-                      y = 0.9,
-                      x = frac,
-                      text = "<b>From 5 Jan \n cases include \n PCR + LFD</b>",
-                      arrowhead = 6,
-                      arrowsize = .8,
-                      ax = -100,
-                      ay = 40,
-                      # Styling annotations' text:
-                      font = list(color = phs_colours("phs-magenta"),
-                                  size = 14),
-                      showarrow=TRUE)
-
-   p %<>% add_vline("2022-01-06", color=phs_colours("phs-magenta"), width=3.0) %>%
-     layout(annotations=annotation)
-
-   frac2 <- as.numeric(as.Date("2022-05-01") - min(trend_data$date))/as.numeric(max(trend_data$date - min(trend_data$date)))
-
-   annotation2 <- list(yref = "paper",
-                       xref = "paper",
-                       y = 0.6,
-                       x = frac2,
-                       text = "<b>Change in \n testing policy \n on 1 May</b>",
-                       arrowhead = 6,
-                       arrowsize = .8,
-                       ax = -50,
-                       ay = -40,
-                       # Styling annotations' text:
-                       font = list(color = phs_colours("phs-teal"),
-                                   size = 14),
-                       showarrow=TRUE)
-
-   p %<>% add_vline("2022-05-01", color=phs_colours("phs-teal"), width=3.0) %>%
-     layout(annotations=annotation2)
+   p %<>% add_lines_and_notes(xs=xs,
+                              ys=c(0.9, 0.6),
+                              fracs=fracs,
+                              notes=c("<b>From 5 Jan \n cases include \n PCR + LFD</b>",
+                                      "<b>Change in \n testing policy \n on 1 May</b>"),
+                              axs=c(-100, -50),
+                              ays=c(40, -40),
+                              colors=c(phs_colours("phs-magenta"), phs_colours("phs-teal"))
+   )
 
  }
 
@@ -541,44 +475,20 @@ plot_singlerate_chart <- function(dataset, data_name, yaxis_title, area = T, inc
     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
 
   if(include_vline){
-    # Fraction of plot which is since 01 Dec 2021 (where we want to place text)
-    frac <- as.numeric(as.Date("2022-01-06") - min(trend_data$Date))/as.numeric(max(trend_data$Date - min(trend_data$Date)))
 
-    annotation <- list(yref = "paper",
-                       xref = "paper",
-                       y = 0.6,
-                       x = frac,
-                       text = "<b>From 5 Jan \n cases include \n PCR + LFD</b>",
-                       arrowhead = 6,
-                       arrowsize = .8,
-                       ax = -50,
-                       ay = -40,
-                       # Styling annotations' text:
-                       font = list(color = phs_colours("phs-magenta"),
-                                   size = 14),
-                       showarrow=TRUE)
+    xs <- c("2022-01-06", "2022-05-01")
+    fracs <- unlist(purrr::map(.x=xs,
+                               .f= ~ as.numeric(as.Date(.x) - min(trend_data$Date))/as.numeric(max(trend_data$Date - min(trend_data$Date)))))
 
-    p %<>% add_vline("2022-01-06", color=phs_colours("phs-magenta"), width=3.0) %>%
-      layout(annotations=annotation)
-
-    frac2 <- as.numeric(as.Date("2022-05-01") - min(trend_data$Date))/as.numeric(max(trend_data$Date - min(trend_data$Date)))
-
-    annotation2 <- list(yref = "paper",
-                        xref = "paper",
-                        y = 0.4,
-                        x = frac2,
-                        text = "<b>Change in \n testing policy \n on 1 May</b>",
-                        arrowhead = 6,
-                        arrowsize = .8,
-                        ax = -70,
-                        ay = -40,
-                        # Styling annotations' text:
-                        font = list(color = phs_colours("phs-teal"),
-                                    size = 14),
-                        showarrow=TRUE)
-
-    p %<>% add_vline("2022-05-01", color=phs_colours("phs-teal"), width=3.0) %>%
-      layout(annotations=annotation2)
+    p %<>% add_lines_and_notes(xs=xs,
+                               ys=c(0.9, 0.6),
+                               fracs=fracs,
+                               notes=c("<b>From 5 Jan \n cases include \n PCR + LFD</b>",
+                                       "<b>Change in \n testing policy \n on 1 May</b>"),
+                               axs=c(-100, -50),
+                               ays=c(40, -40),
+                               colors=c(phs_colours("phs-magenta"), phs_colours("phs-teal"))
+    )
 
   }
 
