@@ -149,12 +149,12 @@ tagList(  #needed for shinyjs
                 class = "externallink")),".")
              ), #tabPanel bracket
     #################### Notes  ----
-    tabPanel("Notes",
-             icon = icon("file-lines", verify_fa=F),
-             value = "Notes",
-             h3("Notes and additional information")
-
-             ), #tabPanel bracket
+  #  tabPanel("Notes",
+  #           icon = icon("file-lines", verify_fa=F),
+  #           value = "Notes",
+  #           h3("Notes and additional information")
+#
+#             ), #tabPanel bracket
 
 
     #################### Infection levels and cases -----
@@ -399,15 +399,15 @@ tagList(  #needed for shinyjs
 
         )# mainPanel bracket
 
-      ),
-      tabPanel(
-        title = "Healthcare workers",
-        icon = icon("user-doctor", verify_fa=F),
-        value = "HCW",
-
-        h3('Number of COVID-19 cases for healthcare workers')
-
-      )
+      )#,
+      # tabPanel(
+      #   title = "Healthcare workers",
+      #   icon = icon("user-doctor", verify_fa=F),
+      #   value = "HCW",
+      #
+      #   h3('Number of COVID-19 cases for healthcare workers')
+      #
+      # )
       ## End -----------
 
     ), # page bracket
