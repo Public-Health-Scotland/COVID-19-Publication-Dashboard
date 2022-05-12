@@ -12,6 +12,8 @@ function(input, output, session) {
   ###############################################.
   # Sourcing individual tabs
   ###############################################.
+  # Notes
+  source(file.path("tabs/notes_tab.R"), local = TRUE)$value
   # Summary info
   source(file.path("tabs/summary_tab.R"), local = TRUE)$value
   source(file.path("tabs/data_tab.R"), local = TRUE)$value
@@ -22,6 +24,8 @@ function(input, output, session) {
   source(file.path("tabs/populations_of_interest_tab.R"), local = TRUE)$value
   # Vaccinations
   source(file.path("tabs/vaccinations_tab.R"), local = TRUE)$value
+  # Wastewater Analysis
+  #source(file.path("tabs/wastewater_tab.R"), local = TRUE)$value
   ###############################################.
   # Archived tabs
   source(file.path("tabs/archived_tabs/contact_tracing_tab.R"),  local = TRUE)$value
@@ -36,7 +40,7 @@ function(input, output, session) {
   source(file.path("tabs/archived_tabs/vaccine_certification_tab.R"), local = TRUE)$value
 
   ## Observe events to improve navigation between tabs of the app
-  # To jump to data pages
+  # To jump to tabs and data pages
   observeEvent(input$jump_to_notes, {updateTabsetPanel(session, "intabset", selected = "Notes")})
   observeEvent(input$jump_to_inf_cases, {updateTabsetPanel(session, "intabset", selected = "InfCases")})
   observeEvent(input$jump_to_inf_cases_data, {updateTabsetPanel(session, "intabset", selected = "InfCasesData")})
@@ -48,6 +52,21 @@ function(input, output, session) {
   observeEvent(input$jump_to_surveillance, {updateTabsetPanel(session, "intabset", selected = "Surveillance")})
   observeEvent(input$jump_to_surveillance_data, {updateTabsetPanel(session, "intabset", selected = "SurveillanceData")})
   observeEvent(input$jump_to_vaccinations, {updateTabsetPanel(session, "intabset", selected = "Vaccinations")})
+  #observeEvent(input$jumpt_to_wastewater, {updateTabsetPanel(session, "intabset", selected = "Wastewater")})
+
+  # To jump to tabs and data pages for notes tab
+  observeEvent(input$jump_to_notes_n, {updateTabsetPanel(session, "intabset", selected = "Notes")})
+  observeEvent(input$jump_to_inf_cases_n, {updateTabsetPanel(session, "intabset", selected = "InfCases")})
+  observeEvent(input$jump_to_inf_cases_data_n, {updateTabsetPanel(session, "intabset", selected = "InfCasesData")})
+  observeEvent(input$jump_to_LFD_n, {updateTabsetPanel(session, "intabset", selected = "LFDData")})
+  observeEvent(input$jump_to_LFDdemo_n, {updateTabsetPanel(session, "intabset", selected = "LFDdemoData")})
+  observeEvent(input$jump_to_severe_illness_n, {updateTabsetPanel(session, "intabset", selected = "SevereIllness")})
+  observeEvent(input$jump_to_severe_illness_data_n, {updateTabsetPanel(session, "intabset", selected = "SevereIllnessData")})
+  observeEvent(input$jump_to_pop_interest_n, {updateTabsetPanel(session, "intabset", selected = "PopInterest")})
+  observeEvent(input$jump_to_surveillance_n, {updateTabsetPanel(session, "intabset", selected = "Surveillance")})
+  observeEvent(input$jump_to_surveillance_data_n, {updateTabsetPanel(session, "intabset", selected = "SurveillanceData")})
+  observeEvent(input$jump_to_vaccinations_n, {updateTabsetPanel(session, "intabset", selected = "Vaccinations")})
+  #observeEvent(input$jumpt_to_wastewater_n, {updateTabsetPanel(session, "intabset", selected = "Wastewater")})
 
   # Archived
   observeEvent(input$jump_to_CT, {updateTabsetPanel(session, "intabset", selected = "CT")})

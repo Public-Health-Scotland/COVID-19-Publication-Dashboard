@@ -152,7 +152,27 @@ tagList(  #needed for shinyjs
     tabPanel("Notes",
              icon = icon("file-lines", verify_fa=F),
              value = "Notes",
-             h3("Notes and additional information")
+             h3("Notes and additional information"),
+             wellPanel(column(12,
+                              p("Select a tab topic to find notes on the data."))),
+             wellPanel(column(2,
+                              p("Select topic:"),
+                              actionLink("cases_inf_button", "Cases & infection levels", width = "150px"),br(),
+                              actionLink("LFD_button", "Lateral Flow Devices (LFDs)", width = "150px"), br(),
+                              actionLink("severe_illness_button", "Severe illness", width = "150px"), br(),
+                              actionLink("population_int_button", "Populations of interest", width = "150px"), br(),
+                              actionLink("surveillance_button", "Surveillance", width = "150px"), br(),
+                              actionLink("vaccinations_button", "Vaccinations", width = "150px"), br()
+                              ),
+                       column(10,
+                              bsCollapse(id = "collapse_notes", open = "Panel 1",
+                                         bsCollapsePanel("Cases & infection levels", uiOutput("cases_inf_notes")),
+                                         bsCollapsePanel("LFDs", uiOutput("LFD_notes")),
+                                         bsCollapsePanel("Severe illness", uiOutput("severe_illness_notes")),
+                                         bsCollapsePanel("Populations of interest", uiOutput("population_int_notes")),
+                                         bsCollapsePanel("Surveillance", uiOutput("surveillance_notes")),
+                                         bsCollapsePanel("Vaccinations", uiOutput("vaccinations_notes"))
+                                         )))
 
              ), #tabPanel bracket
 
