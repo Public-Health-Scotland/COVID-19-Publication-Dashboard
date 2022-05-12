@@ -103,12 +103,5 @@ output$vaccinations_notes <-renderUI({
     )
 }) # render UI close bracket
 
-# Wastewater Analysis
-# output$wastewater_notes <-renderUI({
-#
-#   tagList(
-#     p("commentary here."),
-#     bsButton("jump_to_wastewater_n", label = "Go to tab")
-#   )
-# })
+
 

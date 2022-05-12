@@ -327,18 +327,18 @@ ui_content <-  reactive({
 if (data_explorer_selection() == "LabCases") { #Positive Cases
 
   tagList(h3("Daily number of positive COVID-19 cases"),
-          p("On 05 January 2022, the Scottish Government",
-            tags$a(href= "https://www.gov.scot/news/self-isolation-and-testing-changes/",
-                   "announced",
-                   class = "externallink"),
-            "that asymptomatic people who return a positive lateral flow device (LFD) no longer have to confirm their positive result with a PCR test."),
-          p(strong(style="color:black", "From 01 March 2022, PHS now include episodes of reinfection within COVID-19 reporting.
-                    Prior to this date COVID-19 cases were based on an individual’s first positive test result only.
-                    The new daily calculation includes both new infections and possible reinfections.
-                    Possible reinfections are defined as individuals who test positive, by PCR (polymerase chain reaction) or LFD (lateral flow device), 90 days or more after their last positive test.",
-                   "More information available on the Public Health Scotland website",
-            tags$a(href="https://publichealthscotland.scot/news/2022/february/covid-19-reporting-to-include-further-data-on-reinfections/",
-                   "here.", class="externallink"))),
+          # p("On 05 January 2022, the Scottish Government",
+          #   tags$a(href= "https://www.gov.scot/news/self-isolation-and-testing-changes/",
+          #          "announced",
+          #          class = "externallink"),
+          #   "that asymptomatic people who return a positive lateral flow device (LFD) no longer have to confirm their positive result with a PCR test."),
+          # p(strong(style="color:black", "From 01 March 2022, PHS now include episodes of reinfection within COVID-19 reporting.
+          #           Prior to this date COVID-19 cases were based on an individual’s first positive test result only.
+          #           The new daily calculation includes both new infections and possible reinfections.
+          #           Possible reinfections are defined as individuals who test positive, by PCR (polymerase chain reaction) or LFD (lateral flow device), 90 days or more after their last positive test.",
+          #          "More information available on the Public Health Scotland website",
+          #   tags$a(href="https://publichealthscotland.scot/news/2022/february/covid-19-reporting-to-include-further-data-on-reinfections/",
+          #          "here.", class="externallink"))),
           actionButton("btn_dataset_modal", paste0("Data source: ", "ECOSS"), icon = icon('question-circle')),
           actionButton("btn_modal_simd", "What is SIMD?", icon = icon('question-circle')),
           plot_box_values("Daily number of Positive COVID-19 cases", valuename = "LabCases_overall"),
@@ -350,18 +350,18 @@ if (data_explorer_selection() == "LabCases") { #Positive Cases
 
 }else if (data_explorer_selection() == "LabCasesReinfections"){ #Reinfections
   tagList(h3("Daily number of COVID-19 reinfections"),
-          p("On 05 January 2022, the Scottish Government",
-            tags$a(href= "https://www.gov.scot/news/self-isolation-and-testing-changes/",
-                   "announced",
-                   class = "externallink"),
-            "that asymptomatic people who return a positive lateral flow device (LFD) no longer have to confirm their positive result with a PCR test."),
-          p(strong(style="color:black", "From 01 March 2022, PHS now include episodes of reinfection within COVID-19 reporting.
-                    Prior to this date COVID-19 cases were based on an individual’s first positive test result only.
-                    The new daily calculation includes both new infections and possible reinfections.
-                    Possible reinfections are defined as individuals who test positive, by PCR (polymerase chain reaction) or LFD (lateral flow device), 90 days or more after their last positive test.",
-                   "More information available on the Public Health Scotland website",
-                   tags$a(href="https://publichealthscotland.scot/news/2022/february/covid-19-reporting-to-include-further-data-on-reinfections/",
-                          "here.", class="externallink"))),
+          # p("On 05 January 2022, the Scottish Government",
+          #   tags$a(href= "https://www.gov.scot/news/self-isolation-and-testing-changes/",
+          #          "announced",
+          #          class = "externallink"),
+          #   "that asymptomatic people who return a positive lateral flow device (LFD) no longer have to confirm their positive result with a PCR test."),
+          # p(strong(style="color:black", "From 01 March 2022, PHS now include episodes of reinfection within COVID-19 reporting.
+          #           Prior to this date COVID-19 cases were based on an individual’s first positive test result only.
+          #           The new daily calculation includes both new infections and possible reinfections.
+          #           Possible reinfections are defined as individuals who test positive, by PCR (polymerase chain reaction) or LFD (lateral flow device), 90 days or more after their last positive test.",
+          #          "More information available on the Public Health Scotland website",
+          #          tags$a(href="https://publichealthscotland.scot/news/2022/february/covid-19-reporting-to-include-further-data-on-reinfections/",
+          #                 "here.", class="externallink"))),
           actionButton("btn_dataset_modal", paste0("Data source: ", "ECOSS"), icon = icon('question-circle')),
           actionButton("btn_modal_simd", "What is SIMD?", icon = icon('question-circle')),
           plot_box_values("Daily number of COVID-19 reinfections", valuename = "LabCasesReinfections_overall"),
@@ -370,18 +370,18 @@ if (data_explorer_selection() == "LabCases") { #Positive Cases
 
   }else if (data_explorer_selection() == "Admissions") { #Admissions
   tagList(actionButton("btn_modal_simd", "What is SIMD?", icon = icon('question-circle')),
-          p("On 05 January 2022, the Scottish Government",
-            tags$a(href= "https://www.gov.scot/news/self-isolation-and-testing-changes/",
-                   "announced",
-                   class = "externallink"),
-            "that asymptomatic people who return a positive lateral flow device (LFD) no longer have to confirm their positive result with a PCR test."),
-          p(strong(style="color:black", "From 01 March 2022, PHS now include episodes of reinfection within COVID-19 reporting.
-                          Prior to this date COVID-19 cases were based on an individual’s first positive test result only.
-                          The new daily calculation includes both new infections and possible reinfections.
-                          Possible reinfections are defined as individuals who test positive, by PCR (polymerase chain reaction) or LFD (lateral flow device), 90 days or more after their last positive test.",
-                   "More information available on the Public Health Scotland website",
-                   tags$a(href="https://publichealthscotland.scot/news/2022/february/covid-19-reporting-to-include-further-data-on-reinfections/",
-                          "here.", class="externallink"))),
+          # p("On 05 January 2022, the Scottish Government",
+          #   tags$a(href= "https://www.gov.scot/news/self-isolation-and-testing-changes/",
+          #          "announced",
+          #          class = "externallink"),
+          #   "that asymptomatic people who return a positive lateral flow device (LFD) no longer have to confirm their positive result with a PCR test."),
+          # p(strong(style="color:black", "From 01 March 2022, PHS now include episodes of reinfection within COVID-19 reporting.
+          #                 Prior to this date COVID-19 cases were based on an individual’s first positive test result only.
+          #                 The new daily calculation includes both new infections and possible reinfections.
+          #                 Possible reinfections are defined as individuals who test positive, by PCR (polymerase chain reaction) or LFD (lateral flow device), 90 days or more after their last positive test.",
+          #          "More information available on the Public Health Scotland website",
+          #          tags$a(href="https://publichealthscotland.scot/news/2022/february/covid-19-reporting-to-include-further-data-on-reinfections/",
+          #                 "here.", class="externallink"))),
     cut_charts_subheading(title = "Daily number of COVID-19 admissions to hospital",
                         source = data_source, data_name = "Admissions",
                         notes = notes,
@@ -464,12 +464,12 @@ if (data_explorer_selection() == "LabCases") { #Positive Cases
       "(Unscheduled Care Operational Statistics).",
       class = "externallink"),
     "This details unscheduled care demand, response times and turnaround times."),
-  p("Please note that the data published by SAS are sourced from a different operational ",
-    "system than that used for the PHS reporting. This means that the data published by SAS will at times ",
-    " be slightly different to those reported by PHS source. The data published by PHS are less timely than the ",
-    "data used for the SAS publication, however the PHS data here can be linked in order to gain further insight ",
-    "into patient flow through unscheduled care."
-  ),
+  # p("Please note that the data published by SAS are sourced from a different operational ",
+  #   "system than that used for the PHS reporting. This means that the data published by SAS will at times ",
+  #   " be slightly different to those reported by PHS source. The data published by PHS are less timely than the ",
+  #   "data used for the SAS publication, however the PHS data here can be linked in order to gain further insight ",
+  #   "into patient flow through unscheduled care."
+  #),
   actionButton("btn_modal_simd", "What is SIMD?", icon = icon('question-circle')),
     cut_charts_subheading(title= "Daily attended incidents by Scottish Ambulance Service (suspected COVID-19)",
                           source = data_source, data_name ="SAS",
@@ -481,9 +481,9 @@ if (data_explorer_selection() == "LabCases") { #Positive Cases
     plot_box_values("SAS - all incidents", valuename = "SAS_all"))
 }  else if (data_explorer_selection() == "Ethnicity_Chart") { # Ethnicity data
   tagList(h3("COVID-19 admissions to hospital by ethnicity"),
-          p("COVID-19 related admissions have been identified as the following: A patient may have tested positive for COVID-19 14 days prior to admission to hospital,
-            on the day of their admission or during their stay in hospital."),
-          p("Please note that the data on hospital admissions by ethnicity only refers to laboratory confirmed (PCR) COVID-19 tests."),
+          # p("COVID-19 related admissions have been identified as the following: A patient may have tested positive for COVID-19 14 days prior to admission to hospital,
+          #   on the day of their admission or during their stay in hospital."),
+          # p("Please note that the data on hospital admissions by ethnicity only refers to laboratory confirmed (PCR) COVID-19 tests."),
           p("These data will next be updated in February 2022."),
           p("Click on legend to select or deselect categories: "),
           tags$li("Single click on an item in the legend to remove it from the plot"),
