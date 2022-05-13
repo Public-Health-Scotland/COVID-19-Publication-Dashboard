@@ -66,19 +66,19 @@ function(input, output, session) {
 
   # To jump to commentary tab from and ensures correct panel is expanded
   #requires multiple lines because action buttons must have unique ID
-  observeEvent(input$jump_to_notes_inf_cases, {updateTabsetPanel(session, "intabset", selected = "comment")
+  observeEvent(input$jump_to_notes_inf_cases, {updateTabsetPanel(session, "intabset", selected = "Notes")
     updateCollapse(session, "collapse_notes", open = "Cases & infection levels")})
-  observeEvent(input$jump_to_notes_LFD, {updateTabsetPanel(session, "intabset", selected = "comment")
+  observeEvent(input$jump_to_notes_LFD, {updateTabsetPanel(session, "intabset", selected = "Notes")
     updateCollapse(session, "collapse_notes", open = "Lateral Flow Devices (LFDs)")})
-  observeEvent(input$jump_to_notes_LFDdemo, {updateTabsetPanel(session, "intabset", selected = "comment")
+  observeEvent(input$jump_to_notes_LFDdemo, {updateTabsetPanel(session, "intabset", selected = "Notes")
     updateCollapse(session, "collapse_notes", open = "Lateral Flow Devices (LFDs)")})
-  observeEvent(input$jump_to_notes_severe_illness, {updateTabsetPanel(session, "intabset", selected = "comment")
+  observeEvent(input$jump_to_notes_severe_illness, {updateTabsetPanel(session, "intabset", selected = "Notes")
     updateCollapse(session, "collapse_notes", open = "Severe illness")})
-  observeEvent(input$jump_to_notes_pop_interest, {updateTabsetPanel(session, "intabset", selected = "comment")
+  observeEvent(input$jump_to_notes_pop_interest, {updateTabsetPanel(session, "intabset", selected = "Notes")
     updateCollapse(session, "collapse_notes", open = "Populations of interest")})
-  observeEvent(input$jump_to_notes_surveillance, {updateTabsetPanel(session, "intabset", selected = "comment")
+  observeEvent(input$jump_to_notes_surveillance, {updateTabsetPanel(session, "intabset", selected = "Notes")
     updateCollapse(session, "collapse_notes", open = "Surveillance")})
-  observeEvent(input$jump_to_notes_vaccinations, {updateTabsetPanel(session, "intabset", selected = "comment")
+  observeEvent(input$jump_to_notes_vaccinations, {updateTabsetPanel(session, "intabset", selected = "Notes")
     updateCollapse(session, "collapse_notes", open = "Vaccinations")})
 
   # Archived
