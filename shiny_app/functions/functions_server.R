@@ -39,7 +39,46 @@ add_vline = function(p, x, ...){
   p %>% layout(shapes=list(l_shape))
 }
 
-add_lines_and_notes <- function(p, xs, ys, fracs, notes, axs, ays, colors, widths=NULL){
+add_lines_and_notes <- function(p, dataframe, xcol, ycol, xs, notes, colors, axs=NULL, ays=NULL,
+                                widths=NULL, fracs=NULL, ys=NULL){
+
+  # Infer fracs and ys from xs
+  if (is.null(ys)){
+
+    gety <- function(x, df){
+      y <- df[df[[xcol]] == x, ][[ycol]]/
+        max(df[[ycol]])
+
+      return(y)
+
+    }
+    ys <- unlist(purrr::map(.x=xs, .f= gety, df=dataframe))
+  }
+  if (is.null(fracs)){
+
+    getfrac <- function(x, df){
+      frac <- as.numeric(as.Date(x) - min(df[[xcol]]))/
+        as.numeric(max(df[[xcol]]) - min(df[[xcol]]))
+
+      return(frac)
+    }
+
+    fracs <- unlist(purrr::map(.x=xs, .f=getfrac, df=dataframe))
+  }
+
+  # Set sensible axs and ays based off fracs and ys
+
+  if(is.null(axs)){
+    axs=c(-120, -120) # set axs to left as default
+    ays=c(40,40)
+  }
+
+
+  # If y placement is less than half way up, put
+  plusorminus <- function(y){ ifelse(y<0.5, 5000, -5000) }
+
+  ays = unlist(purrr::map(ys, plusorminus))
+
 
   shapes <- list()
   annotations <- list()
@@ -109,16 +148,18 @@ plot_overall_chart <- function(dataset, data_name,  area = T, include_vline=F) {
   if(include_vline){
 
     xs <- c("2022-01-06", "2022-05-01")
-    fracs <- unlist(purrr::map(.x=xs,
-                               .f= ~ as.numeric(as.Date(.x) - min(trend_data$Date))/as.numeric(max(trend_data$Date - min(trend_data$Date)))))
+   # fracs <- unlist(purrr::map(.x=xs,
+  #                             .f= ~ as.numeric(as.Date(.x) - min(trend_data$Date))/as.numeric(max(trend_data$Date - min(trend_data$Date)))))
 
-    p %<>% add_lines_and_notes(xs=xs,
-                               ys=c(0.9, 0.6),
-                               fracs=fracs,
+   # ys <- unlist(purrr::map(.x=xs,
+    #                        .f= ~ trend_data[trend_data$Date == .x, ]$Count/max(trend_data$Count)))
+
+    p %<>% add_lines_and_notes(dataframe = trend_data,
+                               xcol = "Date",
+                               ycol = "Count",
+                               xs=xs,
                                notes=c("<b>From 5 Jan \n cases include \n PCR + LFD</b>",
                                        "<b>Change in \n testing policy \n on 1 May</b>"),
-                               axs=c(-100, -50),
-                               ays=c(40, -40),
                                colors=c(phs_colours("phs-magenta"), phs_colours("phs-teal"))
                                )
 
