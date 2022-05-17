@@ -148,11 +148,6 @@ plot_overall_chart <- function(dataset, data_name,  area = T, include_vline=F) {
   if(include_vline){
 
     xs <- c("2022-01-06", "2022-05-01")
-   # fracs <- unlist(purrr::map(.x=xs,
-  #                             .f= ~ as.numeric(as.Date(.x) - min(trend_data$Date))/as.numeric(max(trend_data$Date - min(trend_data$Date)))))
-
-   # ys <- unlist(purrr::map(.x=xs,
-    #                        .f= ~ trend_data[trend_data$Date == .x, ]$Count/max(trend_data$Count)))
 
     p %<>% add_lines_and_notes(dataframe = trend_data,
                                xcol = "Date",
@@ -877,22 +872,18 @@ plot_contacttrace_Per_graph <- function(dataset, data_name, CTdata, yaxis_title,
     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
 
   if(include_vline){
-    # Fraction of plot which is since 01 Dec 2021 (where we want to place text)
-    frac <- as.numeric(as.Date("2021-12-25") - min(trend_data$week_ending))/as.numeric(
-      max(trend_data$week_ending - min(trend_data$week_ending)))
 
-    annotation <- list(yref = "paper",
-                       xref = "paper",
-                       y = 0.6,
-                       x = frac,
-                       text = "<b>From 5 Jan \n cases include \n PCR + LFD</b>",
-                       bordercolor = phs_colours("phs-magenta"),
-                       borderwidth = 2,
-                       textcolor = "red",
-                       showarrow=FALSE)
+    xs <- c("2022-01-06", "2022-05-01")
 
-    p %<>% add_vline("2022-01-06", color=phs_colours("phs-magenta"), width=3.0) %>%
-      layout(annotations=annotation)
+    p %<>% add_lines_and_notes(dataframe = trend_data,
+                               xcol = "week_ending",
+                               ycol = "% of Total Index Cases",
+                               xs=xs,
+                               notes=c("<b>From 5 Jan \n cases include \n PCR + LFD</b>",
+                                       "<b>Change in \n testing policy \n on 1 May</b>"),
+                               colors=c(phs_colours("phs-magenta"), phs_colours("phs-teal"))
+    )
+
 
   }
 
@@ -933,22 +924,17 @@ plot_contacttrace_graph <- function(dataset, data_name, CTdata, yaxis_title, are
     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
 
   if(include_vline){
-    # Fraction of plot which is since 01 Dec 2021 (where we want to place text)
-    frac <- as.numeric(as.Date("2021-12-25") - min(trend_data$week_ending))/as.numeric(
-      max(trend_data$week_ending - min(trend_data$week_ending)))
 
-    annotation <- list(yref = "paper",
-                       xref = "paper",
-                       y = 0.6,
-                       x = frac,
-                       text = "<b>From 5 Jan \n cases include \n PCR + LFD</b>",
-                       bordercolor = phs_colours("phs-magenta"),
-                       borderwidth = 2,
-                       textcolor = "red",
-                       showarrow=FALSE)
+    xs <- c("2022-01-06", "2022-05-01")
 
-    p %<>% add_vline("2022-01-06", color=phs_colours("phs-magenta"), width=3.0) %>%
-      layout(annotations=annotation)
+    p %<>% add_lines_and_notes(dataframe = trend_data,
+                               xcol = "week_ending",
+                               ycol = "Number of Index Cases",
+                               xs=xs,
+                               notes=c("<b>From 5 Jan \n cases include \n PCR + LFD</b>",
+                                       "<b>Change in \n testing policy \n on 1 May</b>"),
+                               colors=c(phs_colours("phs-magenta"), phs_colours("phs-teal"))
+    )
 
   }
 
@@ -1069,22 +1055,17 @@ p <- plot_ly(data = trend_data, x = ~`Week Ending`) %>%
   config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
 
 if(include_vline){
-  # Fraction of plot which is since 01 Dec 2021 (where we want to place text)
-  frac <- as.numeric(as.Date("2021-12-25") - min(trend_data$`Week Ending`))/as.numeric(
-    max(trend_data$`Week Ending` - min(trend_data$`Week Ending`)))
 
-  annotation <- list(yref = "paper",
-                     xref = "paper",
-                     y = 0.6,
-                     x = frac,
-                     text = "<b>From 5 Jan \n cases include \n PCR + LFD</b>",
-                     bordercolor = phs_colours("phs-magenta"),
-                     borderwidth = 2,
-                     textcolor = "red",
-                     showarrow=FALSE)
+  xs <- c("2022-01-06", "2022-05-01")
 
-  p %<>% add_vline("2022-01-06", color=phs_colours("phs-magenta"), width=3.0) %>%
-    layout(annotations=annotation)
+  p %<>% add_lines_and_notes(dataframe = trend_data,
+                             xcol = "Week Ending",
+                             ycol = "Average Number of Contacts",
+                             xs=xs,
+                             notes=c("<b>From 5 Jan \n cases include \n PCR + LFD</b>",
+                                     "<b>Change in \n testing policy \n on 1 May</b>"),
+                             colors=c(phs_colours("phs-magenta"), phs_colours("phs-teal"))
+  )
 
 
 
@@ -1298,22 +1279,17 @@ plot_prox_contacts_chart <- function(dataset, yaxis_title, xaxis_title, area = T
 
 
   if(include_vline){
-    # Fraction of plot which is since 01 Dec 2021 (where we want to place text)
-    frac <- as.numeric(as.Date("2021-12-01") - min(trend_data$`Week beginning`))/as.numeric(
-      max(trend_data$`Week beginning` - min(trend_data$`Week beginning`)))
 
-    annotation <- list(yref = "paper",
-                       xref = "paper",
-                       y = 0.6,
-                       x = frac,
-                       text = "<b>From 5 Jan \n cases include \n PCR + LFD</b>",
-                       bordercolor = phs_colours("phs-magenta"),
-                       borderwidth = 2,
-                       textcolor = "red",
-                       showarrow=FALSE)
+    xs <- c("2022-01-06", "2022-05-01")
 
-    p %<>% add_vline("2022-01-06", color=phs_colours("phs-magenta"), width=3.0) %>%
-      layout(annotations=annotation)
+    p %<>% add_lines_and_notes(dataframe = trend_data,
+                               xcol = "Week beginning",
+                               ycol = "Contact notifications",
+                               xs=xs,
+                               notes=c("<b>From 5 Jan \n cases include \n PCR + LFD</b>",
+                                       "<b>Change in \n testing policy \n on 1 May</b>"),
+                               colors=c(phs_colours("phs-magenta"), phs_colours("phs-teal"))
+    )
 
 
   }
@@ -1359,22 +1335,17 @@ plot_prox_uploads_chart <- function(dataset, yaxis_title, xaxis_title, area = T,
 
 
   if(include_vline){
-    # Fraction of plot which is since 01 Dec 2021 (where we want to place text)
-    frac <- as.numeric(as.Date("2021-12-01") - min(trend_data$`Week beginning`))/as.numeric(
-      max(trend_data$`Week beginning` - min(trend_data$`Week beginning`)))
 
-    annotation <- list(yref = "paper",
-                       xref = "paper",
-                       y = 0.6,
-                       x = frac,
-                       text = "<b>From 5 Jan \n cases include \n PCR + LFD</b>",
-                       bordercolor = phs_colours("phs-magenta"),
-                       borderwidth = 2,
-                       textcolor = "red",
-                       showarrow=FALSE)
+    xs <- c("2022-01-06", "2022-05-01")
 
-    p %<>% add_vline("2022-01-06", color=phs_colours("phs-magenta"), width=3.0) %>%
-      layout(annotations=annotation)
+    p %<>% add_lines_and_notes(dataframe = trend_data,
+                               xcol = "Week beginning",
+                               ycol = "Exposure key uploads",
+                               xs=xs,
+                               notes=c("<b>From 5 Jan \n cases include \n PCR + LFD</b>",
+                                       "<b>Change in \n testing policy \n on 1 May</b>"),
+                               colors=c(phs_colours("phs-magenta"), phs_colours("phs-teal"))
+    )
 
   }
 
