@@ -5,17 +5,60 @@
 # Three parameters: pal_chose - what palette of colours you want
 # dataset - what data to use for the chart formatted as required
 
-## Function for overall charts ----
+## Functions to add lines and notes to charts -----
 
-add_vline = function(p, x, ...) {
+vline = function(x, width=3.0, color="black", ...) {
   l_shape = list(
     type = "line",
     y0 = 0, y1 = 1, yref = "paper", # i.e. y as a proportion of visible region
     x0 = x, x1 = x,
-    line = list(...)
+    line = list(color = color)
   )
+  return(l_shape)
+}
+
+annotation = function(frac, y, note, ax, ay, color){
+  ann = list(yref = "paper",
+             xref = "paper",
+             y = y,
+             x = frac,
+             text = note,
+             arrowhead = 6,
+             arrowsize = .8,
+             ax = ax,
+             ay = ay,
+             # Styling annotations' text:
+             font = list(color = color,
+                         size = 14),
+             showarrow=FALSE)
+  return(ann)
+}
+
+add_vline = function(p, x, ...){
+  l_shape <- vline(x, ...)
   p %>% layout(shapes=list(l_shape))
 }
+
+add_lines_and_notes <- function(p, xs, ys, fracs, notes, axs, ays, colors, widths=NULL){
+
+  shapes <- list()
+  annotations <- list()
+  # Create vlines
+  for(i in seq(length(xs))){
+    new_vline <- vline(as.Date(xs[i]), color=colors[i])
+    new_annotation <- annotation(fracs[i], ys[i], notes[i], axs[i], ays[i], colors[i])
+    shapes[[i]] <- new_vline
+    annotations[[i]] <- new_annotation
+
+  }
+
+ # browser()
+  p %>% layout(annotations=annotations, shapes=shapes)
+
+}
+
+
+## Functions for overall charts -----
 
 plot_overall_chart <- function(dataset, data_name,  area = T, include_vline=F) {
 
@@ -46,7 +89,7 @@ plot_overall_chart <- function(dataset, data_name,  area = T, include_vline=F) {
   #Text for tooltip
   tooltip_trend <- c(paste0("Date: ", format(trend_data$Date, "%d %b %y"),
                             "<br>", measure_name, trend_data$Count,
-                            "<br>", "7 Day Average: ", trend_data$Average7))
+                            "<br>", "7 Day Average: ", format(trend_data$Average7, nsmall=0, digits=3)))
 
   #Creating time trend plot
   p <- plot_ly(data = trend_data, x = ~Date) %>%
@@ -64,21 +107,22 @@ plot_overall_chart <- function(dataset, data_name,  area = T, include_vline=F) {
     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
 
   if(include_vline){
-    # Fraction of plot which is since 01 Dec 2021 (where we want to place text)
-    frac <- as.numeric(as.Date("2021-12-01") - min(trend_data$Date))/as.numeric(max(trend_data$Date - min(trend_data$Date)))
 
-    annotation <- list(yref = "paper",
-                       xref = "paper",
-                       y = 0.8,
-                       x = frac,
-                       text = "<b>From 5 Jan \n cases include \n PCR + LFD</b>",
-                       bordercolor = phs_colours("phs-magenta"),
-                       borderwidth = 2,
-                       textcolor = "red",
-                       showarrow=FALSE)
+    xs <- c("2022-01-06", "2022-05-01")
+    fracs <- unlist(purrr::map(.x=xs,
+                               .f= ~ as.numeric(as.Date(.x) - min(trend_data$Date))/as.numeric(max(trend_data$Date - min(trend_data$Date)))))
 
-    p %<>% add_vline("2022-01-06", color=phs_colours("phs-magenta"), width=3.0) %>%
-      layout(annotations=annotation)
+    p %<>% add_lines_and_notes(xs=xs,
+                               ys=c(0.9, 0.6),
+                               fracs=fracs,
+                               notes=c("<b>From 5 Jan \n cases include \n PCR + LFD</b>",
+                                       "<b>Change in \n testing policy \n on 1 May</b>"),
+                               axs=c(-100, -50),
+                               ays=c(40, -40),
+                               colors=c(phs_colours("phs-magenta"), phs_colours("phs-teal"))
+                               )
+
+
   }
 
   return(p)
@@ -377,21 +421,20 @@ plot_singletrace_chart <- function(dataset, data_name, yaxis_title, xaxis_title,
 
  if(include_vline){
 
-   # Fraction of plot which is since 01 Dec 2021 (where we want to place text)
-   frac <- as.numeric(as.Date("2021-12-01") - min(trend_data$date))/as.numeric(max(trend_data$date - min(trend_data$date)))
+   xs <- c("2022-01-06", "2022-05-01")
+   fracs <- unlist(purrr::map(.x=xs,
+                              .f= ~ as.numeric(as.Date(.x) - min(trend_data$date))/as.numeric(max(trend_data$date - min(trend_data$date)))))
 
-   annotation <- list(yref = "paper",
-                      xref = "paper",
-                      y = 0.8,
-                      x = frac,
-                      text = "<b>From 5 Jan \n cases include \n PCR + LFD</b>",
-                      bordercolor = phs_colours("phs-magenta"),
-                      borderwidth = 2,
-                      textcolor = "red",
-                      showarrow=FALSE)
+   p %<>% add_lines_and_notes(xs=xs,
+                              ys=c(0.9, 0.6),
+                              fracs=fracs,
+                              notes=c("<b>From 5 Jan \n cases include \n PCR + LFD</b>",
+                                      "<b>Change in \n testing policy \n on 1 May</b>"),
+                              axs=c(-100, -50),
+                              ays=c(40, -40),
+                              colors=c(phs_colours("phs-magenta"), phs_colours("phs-teal"))
+   )
 
-   p %<>% add_vline("2022-01-05", color=phs_colours("phs-magenta"), width=3.0) %>%
-     layout(annotations=annotation)
  }
 
  return(p)
@@ -418,7 +461,7 @@ plot_singlerate_chart <- function(dataset, data_name, yaxis_title, area = T, inc
 
   #Text for tooltip
   tooltip_trend <- glue("Date: {format(trend_data$Date, '%d %b %y')}<br>",
-                        "{measure_name}: {trend_data$CumulativeRatePer100000}")
+                        "{measure_name}: {format(trend_data$CumulativeRatePer100000, nsmall=0, digits=2)}")
 
   #Creating time trend plot
   p <- plot_ly(data = trend_data, x = ~Date) %>%
@@ -432,21 +475,21 @@ plot_singlerate_chart <- function(dataset, data_name, yaxis_title, area = T, inc
     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
 
   if(include_vline){
-    # Fraction of plot which is since 01 Dec 2021 (where we want to place text)
-    frac <- as.numeric(as.Date("2021-12-01") - min(trend_data$Date))/as.numeric(max(trend_data$Date - min(trend_data$Date)))
 
-    annotation <- list(yref = "paper",
-                       xref = "paper",
-                       y = 0.8,
-                       x = frac,
-                       text = "<b>From 5 Jan \n cases include \n PCR + LFD</b>",
-                       bordercolor = phs_colours("phs-magenta"),
-                       borderwidth = 2,
-                       textcolor = "red",
-                       showarrow=FALSE)
+    xs <- c("2022-01-06", "2022-05-01")
+    fracs <- unlist(purrr::map(.x=xs,
+                               .f= ~ as.numeric(as.Date(.x) - min(trend_data$Date))/as.numeric(max(trend_data$Date - min(trend_data$Date)))))
 
-    p %<>% add_vline("2022-01-06", color=phs_colours("phs-magenta"), width=3.0) %>%
-      layout(annotations=annotation)
+    p %<>% add_lines_and_notes(xs=xs,
+                               ys=c(0.9, 0.6),
+                               fracs=fracs,
+                               notes=c("<b>From 5 Jan \n cases include \n PCR + LFD</b>",
+                                       "<b>Change in \n testing policy \n on 1 May</b>"),
+                               axs=c(-100, -50),
+                               ays=c(40, -40),
+                               colors=c(phs_colours("phs-magenta"), phs_colours("phs-teal"))
+    )
+
   }
 
   return(p)
@@ -799,7 +842,7 @@ plot_contacttrace_Per_graph <- function(dataset, data_name, CTdata, yaxis_title,
 
     annotation <- list(yref = "paper",
                        xref = "paper",
-                       y = 0.9,
+                       y = 0.6,
                        x = frac,
                        text = "<b>From 5 Jan \n cases include \n PCR + LFD</b>",
                        bordercolor = phs_colours("phs-magenta"),
@@ -809,6 +852,7 @@ plot_contacttrace_Per_graph <- function(dataset, data_name, CTdata, yaxis_title,
 
     p %<>% add_vline("2022-01-06", color=phs_colours("phs-magenta"), width=3.0) %>%
       layout(annotations=annotation)
+
   }
 
   return(p)
@@ -854,7 +898,7 @@ plot_contacttrace_graph <- function(dataset, data_name, CTdata, yaxis_title, are
 
     annotation <- list(yref = "paper",
                        xref = "paper",
-                       y = 0.9,
+                       y = 0.6,
                        x = frac,
                        text = "<b>From 5 Jan \n cases include \n PCR + LFD</b>",
                        bordercolor = phs_colours("phs-magenta"),
@@ -864,6 +908,7 @@ plot_contacttrace_graph <- function(dataset, data_name, CTdata, yaxis_title, are
 
     p %<>% add_vline("2022-01-06", color=phs_colours("phs-magenta"), width=3.0) %>%
       layout(annotations=annotation)
+
   }
 
   return(p)
@@ -989,7 +1034,7 @@ if(include_vline){
 
   annotation <- list(yref = "paper",
                      xref = "paper",
-                     y = 0.9,
+                     y = 0.6,
                      x = frac,
                      text = "<b>From 5 Jan \n cases include \n PCR + LFD</b>",
                      bordercolor = phs_colours("phs-magenta"),
@@ -999,6 +1044,9 @@ if(include_vline){
 
   p %<>% add_vline("2022-01-06", color=phs_colours("phs-magenta"), width=3.0) %>%
     layout(annotations=annotation)
+
+
+
 }
 
 return(p)
@@ -1215,7 +1263,7 @@ plot_prox_contacts_chart <- function(dataset, yaxis_title, xaxis_title, area = T
 
     annotation <- list(yref = "paper",
                        xref = "paper",
-                       y = 0.9,
+                       y = 0.6,
                        x = frac,
                        text = "<b>From 5 Jan \n cases include \n PCR + LFD</b>",
                        bordercolor = phs_colours("phs-magenta"),
@@ -1225,6 +1273,8 @@ plot_prox_contacts_chart <- function(dataset, yaxis_title, xaxis_title, area = T
 
     p %<>% add_vline("2022-01-06", color=phs_colours("phs-magenta"), width=3.0) %>%
       layout(annotations=annotation)
+
+
   }
 
   return(p)
@@ -1274,7 +1324,7 @@ plot_prox_uploads_chart <- function(dataset, yaxis_title, xaxis_title, area = T,
 
     annotation <- list(yref = "paper",
                        xref = "paper",
-                       y = 0.9,
+                       y = 0.6,
                        x = frac,
                        text = "<b>From 5 Jan \n cases include \n PCR + LFD</b>",
                        bordercolor = phs_colours("phs-magenta"),
@@ -1284,6 +1334,7 @@ plot_prox_uploads_chart <- function(dataset, yaxis_title, xaxis_title, area = T,
 
     p %<>% add_vline("2022-01-06", color=phs_colours("phs-magenta"), width=3.0) %>%
       layout(annotations=annotation)
+
   }
 
   return(p)
@@ -1506,7 +1557,7 @@ plot_VaccineWastage <- function(dataset, area = T) {
 
   annotation1 <- list(yref = "paper",
                      xref = "paper",
-                     y = 0.8,
+                     y = 0.7,
                      x = frac1,
                      text = "<b>Doses 1 & 2</b>",
                      bordercolor = phs_colours("phs-purple"),
@@ -1515,7 +1566,7 @@ plot_VaccineWastage <- function(dataset, area = T) {
 
   annotation2 <- list(yref = "paper",
                       xref = "paper",
-                      y = 0.8,
+                      y = 0.7,
                       x = frac2,
                       text = "<b>All Doses</b>",
                       bordercolor = phs_colours("phs-purple"),

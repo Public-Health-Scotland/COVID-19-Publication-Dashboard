@@ -105,8 +105,7 @@ saveRDS(LFD_TestGroup, "data/LFD_TestGroup.rds")
 LabCases_AgeSex <- read_csv("data/LabCases_AgeSex.csv")
 saveRDS(LabCases_AgeSex, "data/LabCases_AgeSex.rds")
 
-LabCases_SIMD <- read_csv("data/LabCases_SIMD.csv") %>%
-  mutate(cases_pc = cases_pc * 100)
+LabCases_SIMD <- read_csv("data/LabCases_SIMD.csv")
 saveRDS(LabCases_SIMD, "data/LabCases_SIMD.rds")
 
 LabCases_Age <- read_csv("data/LabCases_Age.csv") %>%

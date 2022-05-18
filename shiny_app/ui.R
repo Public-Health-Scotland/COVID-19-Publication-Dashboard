@@ -872,7 +872,9 @@ tagList(  #needed for shinyjs
                   uiOutput("Setting_explorer")
         )# mainPanel bracket
 
+
       )# tabpanel bracket
+
 
     )
 ###########################################################################
