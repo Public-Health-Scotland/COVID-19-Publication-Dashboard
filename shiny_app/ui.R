@@ -803,7 +803,6 @@ tagList(  #needed for shinyjs
         tags$li("Check the vaccine certification scheme guidance for ", tags$a(href="https://www.gov.scot/publications/coronavirus-covid-19-certification-businesses-event-organisers/", "businesses and event organisers", class="externallink"),  " and for ",
                 tags$a(href="https://www.gov.scot/publications/coronavirus-covid-19-certification-information-for-customers/", "customers.", class="externallink")),
         tags$li("For further information, you can refer to ", tags$a(href="https://www.gov.scot/news/living-safely-with-covid/", "https://www.gov.scot/news/living-safely-with-covid/.", class="externallink")),
-        tags$li(glue("The figures in the table below are for up to midnight on {vaccine_cert_date}.")),
         hr(),
         downloadButton('download_vaccine_cert_data', 'Download data', class="down"),
         mainPanel(width = 12,
