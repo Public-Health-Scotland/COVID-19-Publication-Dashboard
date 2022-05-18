@@ -57,7 +57,7 @@ tagList(  #needed for shinyjs
                # Vaccinations
                column(6, class="landing-page-column",
                                lp_main_box(button_name = 'jump_to_vaccinations', title_box = "Vaccinations",
-                                           description = 'Vaccine wastage information'))
+                                           description = 'Vaccine certification and wastage information'))
                       ),
                # Surveillance
                column(4, class="landing-page-column",
@@ -87,8 +87,8 @@ tagList(  #needed for shinyjs
                                lp_about_box(button_name = 'jump_to_mtu',
                                             title_box = "Targeted community testing")),
                         column(3, class="landing-page-column",
-                               lp_about_box(button_name = 'jump_to_vaccine',
-                                            title_box = "Vaccine certification"),
+                               lp_about_box(button_name = 'jump_to_surveillance_archive',
+                                            title_box = "Community hubs and assessment"),
                                lp_about_box(button_name = 'jump_to_travel',
                                             title_box = "Travel outside Scotland"))
              ), #Fluidrow bracket
@@ -486,6 +486,27 @@ tagList(  #needed for shinyjs
     navbarMenu(
       title = "Vaccinations",
       icon = icon("syringe"),
+      ### Vaccines
+      tabPanel(
+        title = "Vaccine certification",
+        icon = icon("passport"),
+        value = "vaccinetab",
+
+        h3("COVID-19 vaccine certification"),
+        tags$li("The NHS Covid Status App was launched on 30 September 2021. It is free and offers digital proof of vaccination via a QR code for each vaccination received."),
+        tags$li("You can request a vaccine certificate if you are aged 12 and over and have been vaccinated in Scotland. The record will not show any vaccinations given outside of Scotland."),
+        tags$li("You can show your COVID-19 vaccine status by using the", tags$a(href= "https://www.nhsinform.scot/covid-status", "NHS Scotland Covid Status app,", class ="externallink"),
+                " download a PDF copy of your status from the app or ", tags$a(href="https://www.nhsinform.scot/nhs-scotland-covid-status/", "get a paper record of your vaccine status from NHS Inform.", class="externallink")),
+        tags$li("Vaccine certifications are no longer legally required in Scotland. The app will remain available so any business that wishes to continue certification on a voluntary basis to reassure customers will be able to do so."),
+        tags$li("Check the vaccine certification scheme guidance for ", tags$a(href="https://www.gov.scot/publications/coronavirus-covid-19-certification-businesses-event-organisers/", "businesses and event organisers", class="externallink"),  " and for ",
+                tags$a(href="https://www.gov.scot/publications/coronavirus-covid-19-certification-information-for-customers/", "customers.", class="externallink")),
+        tags$li("For further information, you can refer to ", tags$a(href="https://www.gov.scot/news/living-safely-with-covid/", "https://www.gov.scot/news/living-safely-with-covid/.", class="externallink")),
+        tags$li(glue("The figures in the table below are for up to midnight on {vaccine_cert_date}.")),
+        hr(),
+        downloadButton('download_vaccine_cert_data', 'Download data', class="down"),
+        mainPanel(width = 12,
+                  DT::dataTableOutput("vaccine_cert_table"))
+      ),
       tabPanel(
         title = "Vaccine wastage",
         icon = icon("dumpster", verify_fa=F),
@@ -851,29 +872,7 @@ tagList(  #needed for shinyjs
                   uiOutput("Setting_explorer")
         )# mainPanel bracket
 
-      ),# tabpanel bracket
-
-      ### Vaccines
-      tabPanel(
-        title = "Vaccine certification",
-        icon = icon("passport"),
-        value = "vaccinetab",
-
-        h3("COVID-19 vaccine certification"),
-        tags$li("The NHS Covid Status App was launched on 30 September 2021. It is free and offers digital proof of vaccination via a QR code for each vaccination received."),
-        tags$li("You can request a vaccine certificate if you are aged 12 and over and have been vaccinated in Scotland. The record will not show any vaccinations given outside of Scotland."),
-        tags$li("You can show your COVID-19 vaccine status by using the", tags$a(href= "https://www.nhsinform.scot/covid-status", "NHS Scotland Covid Status app,", class ="externallink"),
-                " download a PDF copy of your status from the app or ", tags$a(href="https://www.nhsinform.scot/nhs-scotland-covid-status/", "get a paper record of your vaccine status from NHS Inform.", class="externallink")),
-        tags$li("Vaccine certifications are no longer legally required in Scotland. The app will remain available so any business that wishes to continue certification on a voluntary basis to reassure customers will be able to do so."),
-        tags$li("Check the vaccine certification scheme guidance for ", tags$a(href="https://www.gov.scot/publications/coronavirus-covid-19-certification-businesses-event-organisers/", "businesses and event organisers", class="externallink"),  " and for ",
-                tags$a(href="https://www.gov.scot/publications/coronavirus-covid-19-certification-information-for-customers/", "customers.", class="externallink")),
-        tags$li("For further information, you can refer to ", tags$a(href="https://www.gov.scot/news/living-safely-with-covid/", "https://www.gov.scot/news/living-safely-with-covid/.", class="externallink")),
-        tags$li(glue("The figures in the table below are for up to midnight on {vaccine_cert_date}.")),
-        hr(),
-        downloadButton('download_vaccine_cert_data', 'Download data', class="down"),
-        mainPanel(width = 12,
-                  DT::dataTableOutput("vaccine_cert_table"))
-        )
+      )# tabpanel bracket
 
     )
 ###########################################################################
