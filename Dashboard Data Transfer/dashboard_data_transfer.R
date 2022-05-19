@@ -65,98 +65,80 @@ i_population$age_group <- sapply(i_population$age_group, function(x) str_remove_
 # g: generated in this script - for replainscing output
 
 ##### 1. NHS24
-
 source("Transfer scripts/transfer_NHS24.R")
 
 ##### 2. ICU
-
 source("Transfer scripts/transfer_ICU.R")
 
-##### 3. Community Hubs and Assessment
-
-source("Transfer scripts/transfer_commhubsassessment.R")
-
 ##### 4. SAS
-
 source("Transfer scripts/transfer_SAS.R")
 
 ##### 5. Admissions
-
 source("Transfer scripts/transfer_admissions.R")
 
 ##### 6. Lab Data
-
 source("Transfer scripts/transfer_labdata.R")
 
 ##### 7. NHS24 Community
-
 source("Transfer scripts/transfer_NHS24community.R")
 
 ##### 8. NHS Inform
-
 source("Transfer scripts/transfer_NHSInform.R")
 
 ##### 9. Community Testing
-
 source("Transfer scripts/transfer_communitytesting.R")
 
-##### 10. Health Care Workers
-
-#source("Transfer scripts/transfer_HCW.R")
-
 ##### 11. Care Homes
-
 source("Transfer scripts/transfer_carehomes.R")
 
-##### 12. Contact Tracing
-
-source("Transfer scripts/transfer_CT.R")
-
 ##### 13. Hospital Admissions
-
 source("Transfer scripts/transfer_cases.R")
 
 ##### 14. Self Help Guides
-
 source("Transfer scripts/transfer_selfhelp.R")
 
 ##### 15. Ethnicity
 # NB often not updated week on week
 #source("Transfer scripts/transfer_ethnicity.R")
 
-##### 16. Quarantine
-
-#source("Transfer scripts/transfer_quarantine.R")
-
 ##### 17. NHS Proximity app
-
 source("Transfer scripts/transfer_proximityapp.R")
 
 ##### 18. LFD
-
 source("Transfer scripts/transfer_LFD.R")
 
-##### 19. Travel
-
-#source("Transfer scripts/transfer_travel.R")
-
-##### 20. Settings
-
-# Hasn't been updated on the dashboard since August so leaving blank here for now
-
-##### 21. Vaccine certification
-
-source("Transfer scripts/transfer_vaccinecert.R")
-
-
 ##### 22. Length of Stay
-
 source("Transfer scripts/transfer_los.R")
-
 
 ##### 23. Vaccine Wastage
 
 source("Transfer scripts/transfer_vaccinewaste.R")
 
+
+##### Archived -----
+
+##### 3. Community Hubs and Assessment
+#source("Transfer scripts/transfer_commhubsassessment.R")
+
+##### 10. Health Care Workers
+#source("Transfer scripts/transfer_HCW.R")
+
+##### 11. Care Homes
+#source("Transfer scripts/transfer_carehomes_archive.R")
+
+##### 12. Contact Tracing
+#source("Transfer scripts/transfer_CT.R")
+
+##### 16. Quarantine
+#source("Transfer scripts/transfer_quarantine.R")
+
+##### 19. Travel
+#source("Transfer scripts/transfer_travel.R")
+
+##### 20. Settings
+# Hasn't been updated on the dashboard since August so leaving blank here for now
+
+##### 21. Vaccine certification
+#source("Transfer scripts/transfer_vaccinecert.R")
 
 

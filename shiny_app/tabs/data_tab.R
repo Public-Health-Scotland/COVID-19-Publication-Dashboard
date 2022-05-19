@@ -270,6 +270,7 @@ ui_content_data <- reactive({
 output$infcases_table <- renderUI({ui_content_data()})
 output$severe_illness_table <- renderUI({ui_content_data()})
 output$surveillance_table <- renderUI({ui_content_data()})
+output$surveillance_archive_table <- renderUI({ui_content_data()})
 
 
 table_params_data <- reactive({
@@ -386,7 +387,7 @@ maxrows <- reactive({
 
 # Data download of data table.
 
-output$download_infcases_table_csv <- output$download_severe_illness_table_csv <- output$download_surveillance_table_csv <- downloadHandler(
+output$download_infcases_table_csv <- output$download_severe_illness_table_csv <- output$download_surveillance_table_csv <- output$download_surveillance_archive_table_csv <- downloadHandler(
 
   filename ="data_extract.csv",
 

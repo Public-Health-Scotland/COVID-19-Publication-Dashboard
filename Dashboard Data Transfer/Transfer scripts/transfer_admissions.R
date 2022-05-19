@@ -6,7 +6,9 @@
 adm_path <- "/conf/PHSCOVID19_Analysis/RAPID Reporting/RAPID CHI & DOA"
 
 i_adm <- read_all_excel_sheets(glue("{adm_path}/Pubs {format(report_date-2, format='%d%m')}/12_Admissions_Positives_{format(report_date-2, format='%Y-%d-%m')}.xlsx"))
-i_chiadm <- read_excel_with_options(glue("{adm_path}/Pubs {format(report_date-2, format='%d%m')}/CHI_Admissions_Positives_{format(report_date-2, format='%Y-%d-%m')}.xlsx"))
+
+read_rds_with_options <- create_loader_with_options(readRDS)
+i_chiadm <- read_rds_with_options(glue("{adm_path}/Pubs {format(report_date-2, format='%d%m')}/CHI_Admissions_Positives_{format(report_date-2, format='%Y-%d-%m')}.rds"))
 
 
 o_adm <- read.csv(glue("{output_folder}/Admissions.csv"), header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)
@@ -134,7 +136,7 @@ g_adm_agesex$number <- as.numeric(g_adm_agesex$number)
 g_adm_agesex %<>% left_join(i_population, by=c("age_group", "sex")) %>%
   mutate(rate = 100000*number/pop_number) %>%
   select(-c("pop_number")) %>%
-  arrange(factor(age_group, levels= c("0-4", "5-14", "15-19", "20-24", "25-44","45-64", "65-74", "75-84", "85+"))) %>%
+  arrange(factor(age_group, levels= c("0-4", "5-14", "15-19", "20-24", "25-44","45-64", "65-74", "75-84", "85+", "Unknown"))) %>%
   arrange(factor(sex, levels = c("Male", "Female", "Unknown")))
 
 write.csv(g_adm_agesex, glue(test_output, "Admissions_AgeSex.csv"), row.names = FALSE)
