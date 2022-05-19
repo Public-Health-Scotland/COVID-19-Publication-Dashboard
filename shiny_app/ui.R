@@ -67,7 +67,7 @@ tagList(  #needed for shinyjs
              # End of second row
              br(),
              br(),
-             h4("Archived information (no longer updated)"),
+             h3("Archived information (no longer updated)"),
              br(),
              # 3rd row is split into two boxes per space
              fluidRow(

@@ -299,17 +299,17 @@ ui_content <-  reactive({
   agesex_title <- paste0(dataset, " per 100,000 population by age \n(", start_date, " to ", end_date, ")")
   simd_title <- paste0(dataset, " by deprivation category (SIMD) \n(", start_date, " to ", end_date, ")")
 
-  subheading <- case_when(data_explorer_selection() == "Admissions" ~ "These admissions are identified from Rapid and Preliminary Inpatient Data (RAPID) and defined as the following: A positive PCR or LFD test of the episode of infection (including reinfections at 90 days or more after their last positive test) for COVID-19 up to 14 days prior to admission to hospital, on the day of their admission or during their stay in hospital. If a patient's first positive PCR or LFD test of the episode of infection is after their date of discharge from hospital, they are not included in the analysis.",
-                          data_explorer_selection() == "NHS24" ~ paste0("The launch of the Redesign of Urgent Care programme will see an increase in NHS 24 activity from the 1st December 2020 onwards as a result of the launch of the programme. For more information see: https://www.gov.scot/policies/healthcare-standards/unscheduled-care/
-                                             Since 15th September 2020, figures for the COVID helpline include calls made to the new flu helpline.
-                                             In late September, the first batch of flu vaccination letters sent to those eligible by NHS Health Boards included the coronavirus number.
-                                             The peaks in calls are consistent with the timing of those letters being sent."),
-                          data_explorer_selection() == "AssessmentHub" ~  paste0("Please note that data are provisional and may be updated in future publications as further information is supplied and validated from health boards."),
-                          data_explorer_selection() == "SAS" ~ paste0(""),
+  subheading <- case_when(#data_explorer_selection() == "Admissions" ~ "These admissions are identified from Rapid and Preliminary Inpatient Data (RAPID) and defined as the following: A positive PCR or LFD test of the episode of infection (including reinfections at 90 days or more after their last positive test) for COVID-19 up to 14 days prior to admission to hospital, on the day of their admission or during their stay in hospital. If a patient's first positive PCR or LFD test of the episode of infection is after their date of discharge from hospital, they are not included in the analysis.",
+                          #data_explorer_selection() == "NHS24" ~ paste0("The launch of the Redesign of Urgent Care programme will see an increase in NHS 24 activity from the 1st December 2020 onwards as a result of the launch of the programme. For more information see: https://www.gov.scot/policies/healthcare-standards/unscheduled-care/
+                          #                   Since 15th September 2020, figures for the COVID helpline include calls made to the new flu helpline.
+                          #                   In late September, the first batch of flu vaccination letters sent to those eligible by NHS Health Boards included the coronavirus number.
+                           #                  The peaks in calls are consistent with the timing of those letters being sent."),
+                         # data_explorer_selection() == "AssessmentHub" ~  paste0("Please note that data are provisional and may be updated in future publications as further information is supplied and validated from health boards."),
+                         # data_explorer_selection() == "SAS" ~ paste0(""),
                           TRUE ~ paste0(""))
 
-  notes <- case_when(data_explorer_selection() %in% c("NHS24", "AssessmentHub")~ paste0("As of the 31st of March 2022 the COVID-19 Community Pathway will be closed. From this date patients who contact NHS24 with COVID-19 symptoms during the in-hours period will be advised to contact their own GP practice.",
-                   " For the out of hours period, the Out of Hours services will continue to manage COVID-19 patients directed by NHS 24 as a matter of course. This will have an impact on the NHS 24 data and COVID Hub/Assessment data contained in the dashboard."),
+  notes <- case_when(#data_explorer_selection() %in% c("NHS24", "AssessmentHub")~ paste0("As of the 31st of March 2022 the COVID-19 Community Pathway will be closed. From this date patients who contact NHS24 with COVID-19 symptoms during the in-hours period will be advised to contact their own GP practice.",
+                  # " For the out of hours period, the Out of Hours services will continue to manage COVID-19 patients directed by NHS 24 as a matter of course. This will have an impact on the NHS 24 data and COVID Hub/Assessment data contained in the dashboard."),
                    TRUE ~ paste0(""))
 
   # data sources

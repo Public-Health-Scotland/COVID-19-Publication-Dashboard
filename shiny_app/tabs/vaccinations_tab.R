@@ -38,7 +38,7 @@ output$VaccineWastage_output <-renderUI({
           #   of reasons including logistical issues, storage failure and specific clinical situations."),
           # tags$li("The initial planning assumption for the vaccination programme was that there would be around 5% vaccine wastage.
           #   The chart and table below show the trend of the percentage of vaccines wasted by calendar month."),
-          tags$li("The data can be downloaded using the button above the table."),
+         # tags$li("The data can be downloaded using the button above the table."),
            plot_box("", plot_output = "VaccineWastage_trend"),
           downloadButton('download_VaccineWastage_data', 'Download vaccine wastage data'),
           DT::dataTableOutput("VaccineWastage_table")#,
