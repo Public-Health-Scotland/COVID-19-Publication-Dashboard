@@ -91,6 +91,7 @@ function(input, output, session) {
   observeEvent(input$jump_to_CH, {updateTabsetPanel(session, "intabset", selected = "CHData")})
   observeEvent(input$jump_to_mtu, {updateTabsetPanel(session, "intabset", selected = "MTUtab")})
   observeEvent(input$jump_to_vaccine, {updateTabsetPanel(session, "intabset", selected = "vaccinetab")})
+  observeEvent(input$jump_to_surveillance_archive, {updateTabsetPanel(session, "intabset", selected = "SurveillanceArchive")})
 
 
 } # server end

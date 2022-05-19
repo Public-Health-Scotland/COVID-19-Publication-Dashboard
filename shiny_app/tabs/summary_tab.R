@@ -7,6 +7,7 @@ data_explorer_selection <- reactive({
   case_when(input$intabset == "SevereIllness" ~ input$measure_select_severe_illness,
             input$intabset == "InfCases" ~ input$measure_select_infcases,
             input$intabset == "Surveillance" ~ input$measure_select_surveillance,
+            input$intabset == "SurveillanceArchive" ~ input$measure_select_surveillance_archive,
             TRUE ~ "LabCases")
   })
 
@@ -245,7 +246,7 @@ overall_data_download <- reactive({
 # Note that we have to pass the downloadHandler through to multiple different objects
 # because we can't repeat the same object in shiny ui as this will lead to
 # corrupted HTML
-output$download_infcases_data <- output$download_severe_illness_data <- output$download_surveillance_data <- downloadHandler(
+output$download_infcases_data <- output$download_severe_illness_data <- output$download_surveillance_data <- output$download_surveillance_archive_data <- downloadHandler(
   filename ="data_extract.csv",
   content = function(file) {
     write_csv(overall_data_download(),
@@ -498,4 +499,5 @@ if (data_explorer_selection() == "LabCases") { #Positive Cases
 output$data_explorer_severe_illness <- renderUI({ui_content()})
 output$data_explorer_infcases <-  renderUI({ui_content()})
 output$data_explorer_surveillance <- renderUI({ui_content()})
+output$data_explorer_surveillance_archive <- renderUI({ui_content()})
 

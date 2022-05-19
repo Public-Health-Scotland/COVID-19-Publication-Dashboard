@@ -57,7 +57,7 @@ tagList(  #needed for shinyjs
                # Vaccinations
                column(6, class="landing-page-column",
                                lp_main_box(button_name = 'jump_to_vaccinations', title_box = "Vaccinations",
-                                           description = 'Vaccine wastage information'))
+                                           description = 'Vaccine certification and wastage information'))
                       ),
                # Surveillance
                column(4, class="landing-page-column",
@@ -87,8 +87,8 @@ tagList(  #needed for shinyjs
                                lp_about_box(button_name = 'jump_to_mtu',
                                             title_box = "Targeted community testing")),
                         column(3, class="landing-page-column",
-                               lp_about_box(button_name = 'jump_to_vaccine',
-                                            title_box = "Vaccine certification"),
+                               lp_about_box(button_name = 'jump_to_surveillance_archive',
+                                            title_box = "Community hubs and assessment"),
                                lp_about_box(button_name = 'jump_to_travel',
                                             title_box = "Travel outside Scotland"))
              ), #Fluidrow bracket
@@ -430,15 +430,15 @@ tagList(  #needed for shinyjs
 
         )# mainPanel bracket
 
-      ),
-      tabPanel(
-        title = "Healthcare workers",
-        icon = icon("user-doctor", verify_fa=F),
-        value = "HCW",
-
-        h3('Number of COVID-19 cases for healthcare workers')
-
-      )
+      )#,
+      # tabPanel(
+      #   title = "Healthcare workers",
+      #   icon = icon("user-doctor", verify_fa=F),
+      #   value = "HCW",
+      #
+      #   h3('Number of COVID-19 cases for healthcare workers')
+      #
+      # )
       ## End -----------
 
     ), # page bracket
@@ -520,6 +520,27 @@ tagList(  #needed for shinyjs
     navbarMenu(
       title = "Vaccinations",
       icon = icon("syringe"),
+      ### Vaccines
+      tabPanel(
+        title = "Vaccine certification",
+        icon = icon("passport"),
+        value = "vaccinetab",
+
+        h3("COVID-19 vaccine certification"),
+        tags$li("The NHS Covid Status App was launched on 30 September 2021. It is free and offers digital proof of vaccination via a QR code for each vaccination received."),
+        tags$li("You can request a vaccine certificate if you are aged 12 and over and have been vaccinated in Scotland. The record will not show any vaccinations given outside of Scotland."),
+        tags$li("You can show your COVID-19 vaccine status by using the", tags$a(href= "https://www.nhsinform.scot/covid-status", "NHS Scotland Covid Status app,", class ="externallink"),
+                " download a PDF copy of your status from the app or ", tags$a(href="https://www.nhsinform.scot/nhs-scotland-covid-status/", "get a paper record of your vaccine status from NHS Inform.", class="externallink")),
+        tags$li("Vaccine certifications are no longer legally required in Scotland. The app will remain available so any business that wishes to continue certification on a voluntary basis to reassure customers will be able to do so."),
+        tags$li("Check the vaccine certification scheme guidance for ", tags$a(href="https://www.gov.scot/publications/coronavirus-covid-19-certification-businesses-event-organisers/", "businesses and event organisers", class="externallink"),  " and for ",
+                tags$a(href="https://www.gov.scot/publications/coronavirus-covid-19-certification-information-for-customers/", "customers.", class="externallink")),
+        tags$li("For further information, you can refer to ", tags$a(href="https://www.gov.scot/news/living-safely-with-covid/", "https://www.gov.scot/news/living-safely-with-covid/.", class="externallink")),
+        tags$li(glue("The figures in the table below are for up to midnight on {vaccine_cert_date}.")),
+        hr(),
+        downloadButton('download_vaccine_cert_data', 'Download data', class="down"),
+        mainPanel(width = 12,
+                  DT::dataTableOutput("vaccine_cert_table"))
+      ),
       tabPanel(
         title = "Vaccine wastage",
         icon = icon("dumpster", verify_fa=F),
@@ -541,6 +562,71 @@ tagList(  #needed for shinyjs
     navbarMenu(
       title = "Archive",
       icon = icon("floppy-disk", verify_fa=F),
+      #################### Surveillance -----
+        tabPanel(
+          title = "Community hubs & assessment",
+          icon = icon("chart-area"),
+          value = "SurveillanceArchive",
+          wellPanel(
+            column(4,
+                   div(title = "Select the data you want to explore.", # tooltip
+                       radioGroupButtons("measure_select_surveillance_archive",
+                                         label = "Select the data you want to explore.",
+                                         choices = surveillance_archive_list,
+                                         status = "primary",
+                                         selected = surveillance_archive_list[[1]],
+                                         direction = "vertical",
+                                         justified = T))),
+            column(4,
+                   downloadButton('download_surveillance_archive_data', 'Download data'),
+                   fluidRow(br()),
+                   actionButton(inputId='ab1', label='Metadata',
+                                icon = icon("th"),
+                                onclick ="window.open('https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/',
+                                '_blank')"))
+
+            ), #wellPanel bracket
+
+          mainPanel(width = 12,
+                    uiOutput("data_explorer_surveillance_archive")
+          )# mainPanel bracket
+
+        ),
+        #################### Data ----
+        tabPanel(
+          title = "Community hubs & assessment data",
+          icon = icon("table"),
+          value = "SurveillanceArchiveData",
+          p("This section allows you to view the data in table format.
+          You can use the filters to select the data you are interested in.
+          You can also download the data as a csv using the download button.
+          The data are also hosted in the",
+            tags$a(href = "https://www.opendata.nhs.scot/dataset?groups=covid-19",
+                   "Scottish Health and Social Care Open Data portal",
+                   class = "externallink"),"."),
+
+          tags$li("On 05 January 2022, the Scottish Government",
+                  tags$a(href= "https://www.gov.scot/news/self-isolation-and-testing-changes/",
+                         "announced",
+                         class = "externallink"),
+                  "that asymptomatic people who return a positive lateral flow device (LFD) no longer have to confirm their positive result with a PCR test."),
+          tags$li(strong(style="color:black", "From 01 March 2022, PHS now include episodes of reinfection within COVID-19 reporting.
+                       Prior to this date COVID-19 cases were based on an individual’s first positive test result only.
+                       The new daily calculation includes both new infections and possible reinfections.
+                       Possible reinfections are defined as individuals who test positive, by PCR (polymerase chain reaction) or LFD (lateral flow device), 90 days or more after their last positive test.",
+                         "More information available on the Public Health Scotland website",
+                         tags$a(href="https://publichealthscotland.scot/news/2022/february/covid-19-reporting-to-include-further-data-on-reinfections/",
+                                "here.", class="externallink"))),
+          tags$li("Please note that the data on hospital admissions by ethnicity only refers to laboratory confirmed (PCR) COVID-19 tests."),
+          br(),
+          br(),
+          column(6,
+                 selectInput("data_select_surveillance_archive", "Select the data you want to explore.",
+                             choices = surveillance_archive_data_list)),
+          column(6, downloadButton('download_surveillance_archive_table_csv', 'Download data')),
+          mainPanel(width = 12,
+                    uiOutput("surveillance_archive_table"))
+        ), # tabpanel bracket
       tabPanel(
         title = "Contact tracing",
         icon = icon("address-book"),
@@ -822,29 +908,9 @@ tagList(  #needed for shinyjs
                   uiOutput("Setting_explorer")
         )# mainPanel bracket
 
-      ),# tabpanel bracket
 
-      ### Vaccines
-      tabPanel(
-        title = "Vaccine certification",
-        icon = icon("passport"),
-        value = "vaccinetab",
+      )# tabpanel bracket
 
-        h3("COVID-19 vaccine certification"),
-        tags$li("The NHS Covid Status App was launched on 30 September 2021. It is free and offers digital proof of vaccination via a QR code for each vaccination received."),
-        tags$li("You can request a vaccine certificate if you are aged 12 and over and have been vaccinated in Scotland. The record will not show any vaccinations given outside of Scotland."),
-        tags$li("You can show your COVID-19 vaccine status by using the", tags$a(href= "https://www.nhsinform.scot/covid-status", "NHS Scotland Covid Status app,", class ="externallink"),
-                " download a PDF copy of your status from the app or ", tags$a(href="https://www.nhsinform.scot/nhs-scotland-covid-status/", "get a paper record of your vaccine status from NHS Inform.", class="externallink")),
-        tags$li("Vaccine certifications are no longer legally required in Scotland. The app will remain available so any business that wishes to continue certification on a voluntary basis to reassure customers will be able to do so."),
-        tags$li("Check the vaccine certification scheme guidance for ", tags$a(href="https://www.gov.scot/publications/coronavirus-covid-19-certification-businesses-event-organisers/", "businesses and event organisers", class="externallink"),  " and for ",
-                tags$a(href="https://www.gov.scot/publications/coronavirus-covid-19-certification-information-for-customers/", "customers.", class="externallink")),
-        tags$li("For further information, you can refer to ", tags$a(href="https://www.gov.scot/news/living-safely-with-covid/", "https://www.gov.scot/news/living-safely-with-covid/.", class="externallink")),
-        tags$li(glue("The figures in the table below are for up to midnight on {vaccine_cert_date}.")),
-        hr(),
-        downloadButton('download_vaccine_cert_data', 'Download data', class="down"),
-        mainPanel(width = 12,
-                  DT::dataTableOutput("vaccine_cert_table"))
-        )
 
     )
 ###########################################################################
