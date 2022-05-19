@@ -25,23 +25,24 @@ output$cases_inf_notes <-renderUI({
     tags$li("The number of daily confirmed cases may differ slightly from data published on the ",
             tags$a("COVID-19 Dashboard",
                    href = "https://public.tableau.com/app/profile/phs.covid.19/viz/COVID-19DailyDashboard_15960160643010/Dailyupdate"),
-            " on Monday's and Thursday's, because the data has some cases added retrospectively and assigned to days based on the most up to date records.
+            " on Mondays and Thursdays, because the data has some cases added retrospectively and assigned to days based on the most up to date records.
             Overall number of confirmed cases should not be affected."),
     tags$li("The total number of people within Scotland who have, or have had, COVID-19 since the coronavirus outbreak began is unknown.
             The number of confirmed cases is likely to be an underestimate."),
     # This point will need removed when case data goes from daily to weekly
-    tags$li("The drop in the number of confirmed cases as weekends likely reflects that laboratories are doing fewer tests at the weekend."),
+    tags$li("The drop in the number of confirmed cases at weekends likely reflects that laboratories are doing fewer tests at the weekend."),
     tags$li("Reported cases prior to 01 March 2022 were based on an individual's first positive test result only."),
-    tags$li("Due to changes in testing strategy outlined above, acution is advised when comparing trends over time."),
+    tags$li("Due to changes in testing strategy outlined above, caution is advised when comparing trends over time."),
     br(),
     h4("Reinfections"),
-    p("From 01 March 2022, episodes of reinfection are included in COVID-19 reprting. Prior to this date, COVID-19 cases were based on an individual's
+    p("From 01 March 2022, episodes of reinfection are included in COVID-19 reporting. Prior to this date, COVID-19 cases were based on an individual's
       first positive test only. The new daily calculation includes both new infections and possible reinfections. Possible reinfections are defined as
       individuals who test positive, by PCR or LFD, 90 days or more after their last positive test."),
       p("More information is available on the ",
         tags$a("Public Health Scotland website", href = "https://publichealthscotland.scot/news/2022/february/covid-19-reporting-to-include-further-data-on-reinfections/"),
         "."),
     #p(strong("Source: ")),
+    br(),
     bsButton("jump_to_inf_cases_n", label = "Go to tab"),
     bsButton("jump_to_inf_cases_data_n", label = "Go to data")
     )
@@ -55,7 +56,7 @@ output$LFD_notes <-renderUI({
       From November 2020, LFD tests were made available across a wide range of workforces and universally to the public. From 26 April 2021, LFD testing expanded
       to include asymptomatic testing."),
     p("As of 01 May 2022, LFDs are no longer distributed for universal offer, but are still available for those visiting a hospital or care home, unpaid carers,
-      those eligible for COVID treatetns and those applying for the self-isolation support grant."),
+      those eligible for COVID treatments and those applying for the self-isolation support grant."),
     p("For information regarding LFD testing during term time as part of the Schools Asymptomatic Testing Programme, please visit the ",
       tags$a("COVID-19 Education Surveillance Report", href = "https://scotland.shinyapps.io/phs-covid19-education/_w_f53417bb/#tab-9333-2"), "."),
     #p(strong("Source: ")),
@@ -71,7 +72,7 @@ output$LFD_notes <-renderUI({
       Data are available by age, gender and Scottish Index of Multiple Deprivation (SIMD) quintile (where 1 represents the most deprived and 5 represents the least deprived).
       Please see ", tags$a("here", href = "https://www.gov.scot/collections/scottish-index-of-multiple-deprivation-2020/?utm_source=redirect&utm_medium=shorturl&utm_campaign=simd"),
       " for more information on SIMD."),
-
+    br(),
     bsButton("jump_to_LFD_n", label = "Go to tab"),
     bsButton("jump_to_LFDdemo_n", label = "Go to demographics tab")
     )
@@ -115,8 +116,8 @@ output$severe_illness_notes <-renderUI({
       measure of the severity of COVID-19."),
     #p("Counts include any patient with a confirmed positive COVID-19 test taken prior to discharge from an ICU in Scotland."),
     p("Includes any patient admitted to ICU with:"),
-    tags$li("a valid linkage to laboratory data AND"),
-    tags$li("with laboratory confirmation for COVID-19 during the 21 days before the date of ICU admission OR"),
+    tags$li("a valid linkage to laboratory data ", strong("AND")),
+    tags$li("with laboratory confirmation for COVID-19 during the 21 days before the date of ICU admission ", strong("OR")),
     tags$li("with laboratory confirmation for COVID-19 during their ICU stay, from the date of ICU admission up to and including the date of ICU discharge."),
     p(strong("Source: SICSAG")),
     br(),
@@ -130,6 +131,7 @@ output$severe_illness_notes <-renderUI({
     tags$li("On 30 October 2020, Public Health Scotland became aware of an ongoing issue when linking ICU data to laboratory data for COVID-19 test results.
             Any COVID-19 positive patients with a missing a CHI number that had a first positive test in the community are unable to be linked to ICU data.
             As a result, the COVID-19 positive ICU patients could be underreported by up to 10%."),
+    br(),
     bsButton("jump_to_severe_illness_n", label = "Go to tab"),
     bsButton("jump_to_severe_illness_data_n", label = "Go to data")
     )
@@ -144,8 +146,9 @@ output$population_int_notes <-renderUI({
       tags$a("Scottish Government", href = "https://www.gov.scot/publications/coronavirus-covid-19-data-for-scotland/"),
       ". A positive case includes both new infections and possible reinfections, which are defined as individuals who test positive by PCR or LFD, 90 or more
       clear days after their last positive test.",
-      p("etc")),
+      p("")),
     #p(strong("Source: ")),
+    br(),
     bsButton("jump_to_pop_interest_n", label = "Go to tab")
     )
 }) # render UI close bracket
@@ -160,10 +163,10 @@ output$surveillance_notes <-renderUI({
       tags$a("here", href = "https://www.gov.scot/policies/healthcare-standards/unscheduled-care/")),
     #p(strong("Source:")),
     br(),
-    p("Please note:"),
-    tags$li(""),
-    tags$li(""),
-    br(),
+   # p("Please note:"),
+   # tags$li(""),
+   # tags$li(""),
+   # br(),
     h4("Scottish Ambulance Service (SAS)"),
     p("SAS currently publish weekly unscheduled care operational statistics", tags$a("here.",
                                                                                      href = "https://www.scottishambulance.com/publications/unscheduled-care-operational-statistics/")),
@@ -176,6 +179,7 @@ output$surveillance_notes <-renderUI({
             to gain further insight into patient flow through unscheduled care. "),
     tags$li("Data for the most recent 3 weeks should be treated as provisional."),
     tags$li("From 01 April 2022, the definition of SAS response times has changed. For more information, see the link above."),
+    br(),
     bsButton("jump_to_surveillance_n", label = "Go to tab"),
     bsButton("jump_to_surveillance_data_n", label = "Go to data")
     )
@@ -195,6 +199,7 @@ output$vaccinations_notes <-renderUI({
     p("Please note:"),
     tags$li("The vaccine wastage form is populated by health board clinicians which can impact the timeliness and accuracy of the data."),
     tags$li("Data excludes GP practice information and wastage from clinical trials"),
+    br(),
     bsButton("jump_to_vaccinations_n", label = "Go to tab")
     )
 }) # render UI close bracket
