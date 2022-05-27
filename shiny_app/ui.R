@@ -410,21 +410,25 @@ tagList(  #needed for shinyjs
          tags$li("PHS now report on the visiting status of Care Homes in Scotland, previously reported by the ",
            tags$a(href = "https://www.gov.scot/publications/coronavirus-covid-19-additional-data-about-adult-care-homes-in-scotland/",
                   "Scottish Government",
-                  class = "externallink"),"."),
-         tags$li("The following data tables provide a snapshot of care home visiting status. For all caveats, please refer to the notes page."),
-         tags$li("The below data tables provide a snapshot of the week ending ", CareHomeVisitsDate, "."),
-
-         downloadButton('care_home_visits_data_download', 'Download by visiting status by health board data'),
-         downloadButton('care_home_outbreak_data_download', 'Download visiting status by outbreak data', class="down"),
-         downloadButton('care_home_visits_older_data_download', 'Download older adult care home data', class="down"),
-         downloadButton('download_care_home_visits_not_older_data', 'Download not older adult care home data'),
-
+                  class = "externallink")),
+         tags$li("The following data tables provide a snapshot of care home visiting status. For all caveats, please refer to the notes page"),
 
          mainPanel(width = 12,
+                   h3("Table 1: Visiting status of adult care homes by NHS board, week ending ", CareHomeVisitsDate),
+                   downloadButton('care_home_visits_data_download', 'Download by visiting status by health board data'),
                    withSpinner(DT::dataTableOutput('CareHomeVisitsBoardTable')),
+
+                   h3("Table 2: Visiting status of adult care homes by COVID-19 outbreak status, week ending ", CareHomeVisitsDate),
+                   downloadButton('care_home_outbreak_data_download', 'Download visiting status by outbreak data', class="down"),
                    withSpinner(DT::dataTableOutput('CareHomeVisitsOutbreakTable')),
+
+                   h3("Table 3a: Visiting status of care homes registered as for older adults by NHS Board, week ending ", CareHomeVisitsDate),
+                   downloadButton('care_home_visits_older_data_download', 'Download older adult care home data', class="down"),
                    withSpinner(DT::dataTableOutput('CareHomeVisitsBoardOlderTable')),
-                   withSpinner(DT::dataTableOutput('CareHomeVisitsOutbreakOlderTable'))
+
+                   h3("Table 3b: Visiting status of care homes NOT registered as for older adults by NHS Board, week ending ", CareHomeVisitsDate),
+                   downloadButton('download_care_home_visits_not_older_data', 'Download not older adult care home data'),
+                   withSpinner(DT::dataTableOutput('CareHomeVisitsNotOlderTable'))
 
 
          )
