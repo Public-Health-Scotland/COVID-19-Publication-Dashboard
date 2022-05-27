@@ -107,6 +107,11 @@ Ethnicity_Chart <- readRDS("data/Ethnicity_Chart.rds")
 
 CareHomeTimeSeries <- readRDS('data/CareHomeTimeSeries.rds')
 
+CareHomeVisitsNotes <- readRDS("data/CareHomeVisitsNotes.rds")
+CareHomeVisitsBoard <- readRDS("data/CareHomeVisitsBoard.rds")
+CareHomeVisitsOutbreak <- readRDS("data/CareHomeVisitsOutbreak.rds")
+CareHomeVisitsBoardOlder <- readRDS("data/CareHomeVisitsBoardOlder.rds")
+CareHomeVisitsOutbreakOlder <- readRDS("data/CareHomeVisitsOutbreakOlder.rds")
 
 # Surveillance ----
 
