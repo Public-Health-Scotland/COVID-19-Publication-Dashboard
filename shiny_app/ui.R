@@ -401,7 +401,7 @@ tagList(  #needed for shinyjs
 
       ),
        tabPanel(
-         title = "Care Homes Visitors",
+         title = "Care homes visitors",
          icon = icon("user", verify_fa=F),
          value = "CareHomesVisitors",
 
