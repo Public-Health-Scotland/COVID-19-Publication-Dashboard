@@ -53,7 +53,7 @@ tagList(  #needed for shinyjs
                column(8, style = "padding-left: 0px; padding-right: 0px;",
                         column(6, class="landing-page-column",
                                lp_main_box(button_name = 'jump_to_pop_interest', title_box = "Populations of Interest",
-                                           description = 'Monitoring of care homes and healthcare workers')),
+                                           description = 'Care home testing and visiting status')),
                # Vaccinations
                column(6, class="landing-page-column",
                                lp_main_box(button_name = 'jump_to_vaccinations', title_box = "Vaccinations",
@@ -67,7 +67,7 @@ tagList(  #needed for shinyjs
              # End of second row
              br(),
              br(),
-             h4("Archived information (no longer updated)"),
+             h3("Archived information (no longer updated)"),
              br(),
              # 3rd row is split into two boxes per space
              fluidRow(
