@@ -371,7 +371,7 @@ tagList(  #needed for shinyjs
       title = "Populations of interest",
       icon = icon("people-group", verify_fa=F),
       tabPanel(
-        title = "Care homes",
+        title = "Care homes COVID-19 cases",
         icon = icon("home"),
         value = "PopInterest",
 
@@ -399,7 +399,24 @@ tagList(  #needed for shinyjs
 
         )# mainPanel bracket
 
-      )#,
+      ),
+       tabPanel(
+         title = "Care Homes Visitors",
+         icon = icon("user", verify_fa=F),
+         value = "CareHomesVisitors",
+
+         mainPanel(width = 12,
+                   withSpinner(DT::dataTableOutput('CareHomeVisitsBoardTable')),
+                   withSpinner(DT::dataTableOutput('CareHomeVisitsOutbreakTable')),
+                   withSpinner(DT::dataTableOutput('CareHomeVisitsBoardOlderTable')),
+                   withSpinner(DT::dataTableOutput('CareHomeVisitsOutbreakOlderTable'))
+
+
+         )
+
+       ) #,
+
+
       # tabPanel(
       #   title = "Healthcare workers",
       #   icon = icon("user-doctor", verify_fa=F),
