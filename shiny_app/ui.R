@@ -401,9 +401,24 @@ tagList(  #needed for shinyjs
 
       ),
        tabPanel(
-         title = "Care homes visitors",
+         title = "Care homes visiting status",
          icon = icon("user", verify_fa=F),
          value = "CareHomesVisitors",
+
+         h3("Care homes visiting status in Scotland, by Health Board and Outbreak Status"),
+
+         tags$li("PHS now report on the visiting status of Care Homes in Scotland, previously reported by the ",
+           tags$a(href = "https://www.gov.scot/publications/coronavirus-covid-19-additional-data-about-adult-care-homes-in-scotland/",
+                  "Scottish Government",
+                  class = "externallink"),"."),
+         tags$li("The following data tables provide a snapshot of care home visiting status. For all caveats, please refer to the notes page."),
+         tags$li("The below data tables provide a snapshot of the week ending ", CareHomeVisitsDate, "."),
+
+         downloadButton('care_home_visits_data_download', 'Download by visiting status by health board data'),
+         downloadButton('care_home_outbreak_data_download', 'Download visiting status by outbreak data', class="down"),
+         downloadButton('care_home_visits_older_data_download', 'Download older adult care home data', class="down"),
+         downloadButton('download_care_home_visits_not_older_data', 'Download not older adult care home data'),
+
 
          mainPanel(width = 12,
                    withSpinner(DT::dataTableOutput('CareHomeVisitsBoardTable')),
