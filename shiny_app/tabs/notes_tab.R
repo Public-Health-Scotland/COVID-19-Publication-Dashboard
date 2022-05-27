@@ -6,7 +6,7 @@ output$cases_inf_notes <-renderUI({
   tagList(
     h4("Reported cases"),
     p("From 05 January 2022, reported cases included both polymerase chain reaction (PCR) and lateral flow device (LFD) positive test results.
-      Prior to this, cases consisted only of positive PCR tests."),
+      Prior to this, cases consist only of positive PCR tests."),
     p("From 01 March 2022, reported cases included episodes of reinfection at least 90 days after initial infection."),
     p("From mid-April 2022, asymptomatic testing was no longer recommended. PCR testing continued for those with symptoms and LFD testing for hospital and care home visitors,
       close contacts of an index case and for early release from isolation after 7 days."),
