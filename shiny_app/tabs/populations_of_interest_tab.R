@@ -61,9 +61,9 @@ output$CareHomeVisitsBoardOlderTable <- DT::renderDataTable({
 
 })
 
-output$CareHomeVisitsOutbreakOlderTable <- DT::renderDataTable({
+output$CareHomeVisitsNotOlderTable <- DT::renderDataTable({
 
-  byboard_data_table(CareHomeVisitsOutbreakOlder,
+  byboard_data_table(CareHomeVisitsNotOlder,
                      board_name_column = "NHS Board",
                      add_separator_cols= c(2:10),
                      add_percentage_cols = c(11,12),
@@ -73,3 +73,55 @@ output$CareHomeVisitsOutbreakOlderTable <- DT::renderDataTable({
 
 })
 
+## Data downloads ----
+
+# Table 1 download
+care_home_visits_data_download <- reactive({
+  CareHomeVisitsBoard
+})
+
+output$care_home_visits_data_download <- downloadHandler(
+  filename ="Care_Home_Visits_by_Board_Data.csv",
+  content = function(file) {
+    write_csv(care_home_visits_data_download(),
+              file)
+  })
+
+
+# Table 2 download
+care_home_outbreak_data_download <- reactive({
+  CareHomeVisitsOutbreak
+})
+
+output$care_home_outbreak_data_download <- downloadHandler(
+  filename ="Care_Home_Outbreak_by_Board_Data.csv",
+  content = function(file) {
+    write_csv(care_home_outbreak_data_download(),
+              file)
+  })
+
+
+# Table 3a
+care_home_visits_older_data_download <- reactive({
+  CareHomeVisitsBoardOlder
+})
+
+output$care_home_visits_older_data_download <- downloadHandler(
+  filename ="Care_Home_Visits_Older_CH_Data.csv",
+  content = function(file) {
+    write_csv(care_home_visits_older_data_download(),
+              file)
+  })
+
+
+# Table 3b
+care_home_visits_not_older_data_download <- reactive({
+  CareHomeVisitsNotOlder
+})
+
+output$download_care_home_visits_not_older_data <- downloadHandler(
+  filename ="Care_Home_Visits_Not_Older_CH_Data.csv",
+  content = function(file) {
+    write_csv(care_home_visits_not_older_data_download(),
+              file)
+  })
