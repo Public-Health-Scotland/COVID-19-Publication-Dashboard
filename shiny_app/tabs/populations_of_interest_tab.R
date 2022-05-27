@@ -26,3 +26,50 @@ output$download_care_home_timeseries_data <- downloadHandler(
     write_csv(care_home_timeseries_data_download(),
               file)
   })
+
+### Care Home Visitors
+
+output$CareHomeVisitsBoardTable <- DT::renderDataTable({
+
+  byboard_data_table(CareHomeVisitsBoard,
+                     board_name_column = "NHS Board",
+                     add_separator_cols= c(2:10),
+                     add_percentage_cols = c(11,12),
+                     rows_to_display=15,
+                     flip_order=FALSE)
+
+
+})
+
+output$CareHomeVisitsOutbreakTable <- DT::renderDataTable({
+
+  datatab_table(CareHomeVisitsOutbreak,
+                     add_separator_cols= c(2:10))
+
+
+})
+
+output$CareHomeVisitsBoardOlderTable <- DT::renderDataTable({
+
+  byboard_data_table(CareHomeVisitsBoardOlder,
+                     board_name_column = "NHS Board",
+                     add_separator_cols= c(2:10),
+                     add_percentage_cols = c(11,12),
+                     rows_to_display=15,
+                     flip_order=FALSE)
+
+
+})
+
+output$CareHomeVisitsOutbreakOlderTable <- DT::renderDataTable({
+
+  byboard_data_table(CareHomeVisitsOutbreakOlder,
+                     board_name_column = "NHS Board",
+                     add_separator_cols= c(2:10),
+                     add_percentage_cols = c(11,12),
+                     rows_to_display=15,
+                     flip_order=FALSE)
+
+
+})
+
