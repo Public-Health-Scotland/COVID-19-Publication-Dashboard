@@ -149,12 +149,23 @@ tagList(  #needed for shinyjs
                 class = "externallink")),".")
              ), #tabPanel bracket
     #################### Notes  ----
-  #  tabPanel("Notes",
-  #           icon = icon("file-lines", verify_fa=F),
-  #           value = "Notes",
-  #           h3("Notes and additional information")
-#
-#             ), #tabPanel bracket
+    tabPanel("Notes",
+             icon = icon("file-lines", verify_fa=F),
+             value = "Notes",
+             h3("Notes and additional information"),
+             wellPanel(
+                       column(12,
+                              p("Select a tab topic to see notes on the data."),
+                              bsCollapse(id = "collapse_notes", open = "Panel 1",
+                                         bsCollapsePanel("Cases & infection levels", uiOutput("cases_inf_notes")),
+                                         bsCollapsePanel("Lateral Flow Devices (LFDs)", uiOutput("LFD_notes")),
+                                         bsCollapsePanel("Severe illness", uiOutput("severe_illness_notes")),
+                                         bsCollapsePanel("Populations of interest", uiOutput("population_int_notes")),
+                                         bsCollapsePanel("Surveillance", uiOutput("surveillance_notes")),
+                                         bsCollapsePanel("Vaccinations", uiOutput("vaccinations_notes"))
+                                         )))
+
+             ), #tabPanel bracket
 
 
     #################### Infection levels and cases -----
@@ -183,7 +194,9 @@ tagList(  #needed for shinyjs
                  actionButton(inputId='ab1', label='Metadata',
                               icon = icon("th"),
                               onclick ="window.open('https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/',
-                              '_blank')"))
+                              '_blank')"),
+                 fluidRow(br()),
+                 actionButton('jump_to_notes_inf_cases', 'Go to data notes'))
 
           ), #wellPanel bracket
 
@@ -206,20 +219,20 @@ tagList(  #needed for shinyjs
                  "Scottish Health and Social Care Open Data portal",
                  class = "externallink"),"."),
 
-        tags$li("On 05 January 2022, the Scottish Government",
-                tags$a(href= "https://www.gov.scot/news/self-isolation-and-testing-changes/",
-                       "announced",
-                       class = "externallink"),
-                "that asymptomatic people who return a positive lateral flow device (LFD) no longer have to confirm their positive result with a PCR test."),
-        tags$li(strong(style="color:black", "From 01 March 2022, PHS now include episodes of reinfection within COVID-19 reporting.
-                       Prior to this date COVID-19 cases were based on an individual’s first positive test result only.
-                       The new daily calculation includes both new infections and possible reinfections.
-                       Possible reinfections are defined as individuals who test positive, by PCR (polymerase chain reaction) or LFD (lateral flow device), 90 days or more after their last positive test.",
-                       "More information available on the Public Health Scotland website",
-                       tags$a(href="https://publichealthscotland.scot/news/2022/february/covid-19-reporting-to-include-further-data-on-reinfections/",
-                              "here.", class="externallink"))),
-         tags$li("Please note that the data on hospital admissions by ethnicity only refers to laboratory confirmed (PCR) COVID-19 tests."),
-        br(),
+        # tags$li("On 05 January 2022, the Scottish Government",
+        #         tags$a(href= "https://www.gov.scot/news/self-isolation-and-testing-changes/",
+        #                "announced",
+        #                class = "externallink"),
+        #         "that asymptomatic people who return a positive lateral flow device (LFD) no longer have to confirm their positive result with a PCR test."),
+        # tags$li(strong(style="color:black", "From 01 March 2022, PHS now include episodes of reinfection within COVID-19 reporting.
+        #                Prior to this date COVID-19 cases were based on an individual’s first positive test result only.
+        #                The new daily calculation includes both new infections and possible reinfections.
+        #                Possible reinfections are defined as individuals who test positive, by PCR (polymerase chain reaction) or LFD (lateral flow device), 90 days or more after their last positive test.",
+        #                "More information available on the Public Health Scotland website",
+        #                tags$a(href="https://publichealthscotland.scot/news/2022/february/covid-19-reporting-to-include-further-data-on-reinfections/",
+        #                       "here.", class="externallink"))),
+        #  tags$li("Please note that the data on hospital admissions by ethnicity only refers to laboratory confirmed (PCR) COVID-19 tests."),
+        # br(),
         br(),
         column(6,
                selectInput("data_select_infcases", "Select the data you want to explore.",
@@ -243,17 +256,19 @@ tagList(  #needed for shinyjs
         value = "LFDData",
 
         h3("Lateral Flow Device testing"),
-        tags$li("Across Scotland, there are numerous testing pathways being rolled out using Lateral Flow Devices (LFD) - a clinically validated swab antigen test taken that does not require a laboratory for processing."),
-        tags$li(" This test can produce rapid results within 45 minutes at the location of the test. "),
-        tags$li("Some of the areas using LFD tests are: schools, health and social care workers, care homes and more."),
-        tags$li(" Public Health Scotland has collected the information on the number of LFD tests carried out across Scotland and will now publish this information weekly. "),
-        tags$li("LFD testing in Scotland expanded from 26 April 2021, with everyone able to access rapid COVID-19 testing even if they had no symptoms."),
-        tags$li(" Any individual who receives a positive test result using a Lateral Flow Device is advised to self-isolate and arrange for a confirmatory PCR test."),
-        tags$li("The PCR result will determine the number of cases of COVID-19 in Scotland."),
-        hr(),
+        # tags$li("Across Scotland, there are numerous testing pathways being rolled out using Lateral Flow Devices (LFD) - a clinically validated swab antigen test taken that does not require a laboratory for processing."),
+        # tags$li(" This test can produce rapid results within 45 minutes at the location of the test. "),
+        # tags$li("Some of the areas using LFD tests are: schools, health and social care workers, care homes and more."),
+        # tags$li(" Public Health Scotland has collected the information on the number of LFD tests carried out across Scotland and will now publish this information weekly. "),
+        # tags$li("LFD testing in Scotland expanded from 26 April 2021, with everyone able to access rapid COVID-19 testing even if they had no symptoms."),
+        # tags$li(" Any individual who receives a positive test result using a Lateral Flow Device is advised to self-isolate and arrange for a confirmatory PCR test."),
+        # tags$li("The PCR result will determine the number of cases of COVID-19 in Scotland."),
+        # hr(),
         downloadButton('download_LFD_weekly_data', 'Download weekly totals', class="down"),
         downloadButton('download_LFD_data', 'Download cumulative Health Board data', class="down"),
         downloadButton('download_LFD_testgroup', 'Download test group data', class="down"),
+        fluidRow(br()),
+        actionButton('jump_to_notes_LFD', 'Go to data notes'),
         mainPanel(width = 12,
                   uiOutput("LFD_output"),
                   br3(), br3(), br3()
@@ -273,7 +288,9 @@ tagList(  #needed for shinyjs
             href = "https://www.gov.scot/collections/scottish-index-of-multiple-deprivation-2020/?utm_source=redirect&utm_medium=shorturl&utm_campaign=simd",
             "here for more information.)",
             class = "externallink") ),
-        p(glue("Data were extracted on {LFD_demo_date}. The data in this tab only cover submissions with a valid CHI.")),
+       # p(glue("Data were extracted on {LFD_demo_date}. The data in this tab only cover submissions with a valid CHI.")),
+       fluidRow(br()),
+       actionButton('jump_to_notes_LFD', 'Go to data notes'),
 
         hr(),
         fluidRow(
@@ -319,7 +336,10 @@ tagList(  #needed for shinyjs
                  actionButton(inputId='ab1', label='Metadata',
                               icon = icon("th"),
                               onclick ="window.open('https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/',
-                              '_blank')"))
+                              '_blank')"),
+                 fluidRow(br()),
+                 actionButton('jump_to_notes_severe_illness', 'Go to data notes')
+                 )
 
         ), #wellPanel bracket
 
@@ -341,19 +361,19 @@ tagList(  #needed for shinyjs
                  "Scottish Health and Social Care Open Data portal",
                  class = "externallink"),"."),
 
-        tags$li("On 05 January 2022, the Scottish Government",
-                tags$a(href= "https://www.gov.scot/news/self-isolation-and-testing-changes/",
-                       "announced",
-                       class = "externallink"),
-                "that asymptomatic people who return a positive lateral flow device (LFD) no longer have to confirm their positive result with a PCR test."),
-        tags$li(strong(style="color:black", "From 01 March 2022, PHS now include episodes of reinfection within COVID-19 reporting.
-                       Prior to this date COVID-19 cases were based on an individual’s first positive test result only.
-                       The new daily calculation includes both new infections and possible reinfections.
-                       Possible reinfections are defined as individuals who test positive, by PCR (polymerase chain reaction) or LFD (lateral flow device), 90 days or more after their last positive test.",
-                       "More information available on the Public Health Scotland website",
-                       tags$a(href="https://publichealthscotland.scot/news/2022/february/covid-19-reporting-to-include-further-data-on-reinfections/",
-                              "here.", class="externallink"))),
-        tags$li("Please note that the data on hospital admissions by ethnicity only refers to laboratory confirmed (PCR) COVID-19 tests."),
+        # tags$li("On 05 January 2022, the Scottish Government",
+        #         tags$a(href= "https://www.gov.scot/news/self-isolation-and-testing-changes/",
+        #                "announced",
+        #                class = "externallink"),
+        #         "that asymptomatic people who return a positive lateral flow device (LFD) no longer have to confirm their positive result with a PCR test."),
+        # tags$li(strong(style="color:black", "From 01 March 2022, PHS now include episodes of reinfection within COVID-19 reporting.
+        #                Prior to this date COVID-19 cases were based on an individual’s first positive test result only.
+        #                The new daily calculation includes both new infections and possible reinfections.
+        #                Possible reinfections are defined as individuals who test positive, by PCR (polymerase chain reaction) or LFD (lateral flow device), 90 days or more after their last positive test.",
+        #                "More information available on the Public Health Scotland website",
+        #                tags$a(href="https://publichealthscotland.scot/news/2022/february/covid-19-reporting-to-include-further-data-on-reinfections/",
+        #                       "here.", class="externallink"))),
+        # tags$li("Please note that the data on hospital admissions by ethnicity only refers to laboratory confirmed (PCR) COVID-19 tests."),
         br(),
         br(),
         column(6,
@@ -374,23 +394,25 @@ tagList(  #needed for shinyjs
         title = "Care homes COVID-19 cases",
         icon = icon("home"),
         value = "PopInterest",
+        fluidRow(br()),
+        actionButton('jump_to_notes_pop_interest', 'Go to data notes'),
 
         h3('Number of COVID-19 cases for care home residents and staff'),
-        tags$li('As of 06 April 2022, Public Health Scotland are reporting weekly data on COVID-19 ',
-                'cases in adult Care Homes in Scotland, previously reported by the ',
-                tags$a(href="https://www.gov.scot/publications/coronavirus-covid-19-daily-data-for-scotland/",
-                       "Scottish Government.",
-                       class = "externallink")),
-        tags$li(' A positive case includes both new infections and ',
-                'possible reinfections.'),
-        tags$li('Possible reinfections are defined as individuals who test positive ',
-                'by PCR (polymerase chain reaction) or LFD (lateral flow device), 90 or more clear days ',
-                'after their last positive test. '),
-        tags$li('Data Sources: PCR - UK Gov and NHS Labs; LFD – Self ',
-                'reporting NSS portal and UK Gov.'),
-        tags$li(' The source data are dynamic, and additional test results ',
-                'received will be reflected in future calculations of cases, which may affect figures ',
-                'retrospectively.'),
+        # tags$li('As of 06 April 2022, Public Health Scotland are reporting weekly data on COVID-19 ',
+        #         'cases in adult Care Homes in Scotland, previously reported by the ',
+        #         tags$a(href="https://www.gov.scot/publications/coronavirus-covid-19-daily-data-for-scotland/",
+        #                "Scottish Government.",
+        #                class = "externallink")),
+        # tags$li(' A positive case includes both new infections and ',
+        #         'possible reinfections.'),
+        # tags$li('Possible reinfections are defined as individuals who test positive ',
+        #         'by PCR (polymerase chain reaction) or LFD (lateral flow device), 90 or more clear days ',
+        #         'after their last positive test. '),
+        # tags$li('Data Sources: PCR - UK Gov and NHS Labs; LFD – Self ',
+        #         'reporting NSS portal and UK Gov.'),
+        # tags$li(' The source data are dynamic, and additional test results ',
+        #         'received will be reflected in future calculations of cases, which may affect figures ',
+        #         'retrospectively.'),
         downloadButton('download_care_home_timeseries_data', 'Download time series data', class="down"),
         mainPanel(width = 12,
                   withSpinner(DT::dataTableOutput('CareHomeSeriesTable')),
@@ -412,6 +434,7 @@ tagList(  #needed for shinyjs
                   "Scottish Government",
                   class = "externallink")),
          tags$li("The following data tables provide a snapshot of care home visiting status. For all caveats, please refer to the notes page"),
+         actionButton('jump_to_notes_pop_interest', 'Go to data notes'),
 
          mainPanel(width = 12,
                    h3("Table 1: Visiting status of adult care homes by NHS board, week ending ", CareHomeVisitsDate),
@@ -471,7 +494,10 @@ tagList(  #needed for shinyjs
                  actionButton(inputId='ab1', label='Metadata',
                               icon = icon("th"),
                               onclick ="window.open('https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/',
-                              '_blank')"))
+                              '_blank')"),
+                 fluidRow(br()),
+                 actionButton('jump_to_notes_surveillance', 'Go to data notes')
+          )
 
         ), #wellPanel bracket
 
@@ -493,19 +519,19 @@ tagList(  #needed for shinyjs
                  "Scottish Health and Social Care Open Data portal",
                  class = "externallink"),"."),
 
-        tags$li("On 05 January 2022, the Scottish Government",
-                tags$a(href= "https://www.gov.scot/news/self-isolation-and-testing-changes/",
-                       "announced",
-                       class = "externallink"),
-                "that asymptomatic people who return a positive lateral flow device (LFD) no longer have to confirm their positive result with a PCR test."),
-        tags$li(strong(style="color:black", "From 01 March 2022, PHS now include episodes of reinfection within COVID-19 reporting.
-                       Prior to this date COVID-19 cases were based on an individual’s first positive test result only.
-                       The new daily calculation includes both new infections and possible reinfections.
-                       Possible reinfections are defined as individuals who test positive, by PCR (polymerase chain reaction) or LFD (lateral flow device), 90 days or more after their last positive test.",
-                       "More information available on the Public Health Scotland website",
-                       tags$a(href="https://publichealthscotland.scot/news/2022/february/covid-19-reporting-to-include-further-data-on-reinfections/",
-                              "here.", class="externallink"))),
-        tags$li("Please note that the data on hospital admissions by ethnicity only refers to laboratory confirmed (PCR) COVID-19 tests."),
+        # tags$li("On 05 January 2022, the Scottish Government",
+        #         tags$a(href= "https://www.gov.scot/news/self-isolation-and-testing-changes/",
+        #                "announced",
+        #                class = "externallink"),
+        #         "that asymptomatic people who return a positive lateral flow device (LFD) no longer have to confirm their positive result with a PCR test."),
+        # tags$li(strong(style="color:black", "From 01 March 2022, PHS now include episodes of reinfection within COVID-19 reporting.
+        #                Prior to this date COVID-19 cases were based on an individual’s first positive test result only.
+        #                The new daily calculation includes both new infections and possible reinfections.
+        #                Possible reinfections are defined as individuals who test positive, by PCR (polymerase chain reaction) or LFD (lateral flow device), 90 days or more after their last positive test.",
+        #                "More information available on the Public Health Scotland website",
+        #                tags$a(href="https://publichealthscotland.scot/news/2022/february/covid-19-reporting-to-include-further-data-on-reinfections/",
+        #                       "here.", class="externallink"))),
+        # tags$li("Please note that the data on hospital admissions by ethnicity only refers to laboratory confirmed (PCR) COVID-19 tests."),
         br(),
         br(),
         column(6,
@@ -549,6 +575,8 @@ tagList(  #needed for shinyjs
         value = "Vaccinations",
 
         h3("COVID-19 vaccine wastage"),
+        fluidRow(br()),
+        actionButton('jump_to_notes_vaccinations', 'Go to data notes'),
         mainPanel(width = 12,
                   uiOutput("VaccineWastage_output"),
                   br3(), br3(), br3()

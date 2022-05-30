@@ -12,6 +12,8 @@ function(input, output, session) {
   ###############################################.
   # Sourcing individual tabs
   ###############################################.
+  # Notes
+  source(file.path("tabs/notes_tab.R"), local = TRUE)$value
   # Summary info
   source(file.path("tabs/summary_tab.R"), local = TRUE)$value
   source(file.path("tabs/data_tab.R"), local = TRUE)$value
@@ -36,7 +38,7 @@ function(input, output, session) {
   source(file.path("tabs/archived_tabs/vaccine_certification_tab.R"), local = TRUE)$value
 
   ## Observe events to improve navigation between tabs of the app
-  # To jump to data pages
+  # To jump to tabs and data pages
   observeEvent(input$jump_to_notes, {updateTabsetPanel(session, "intabset", selected = "Notes")})
   observeEvent(input$jump_to_inf_cases, {updateTabsetPanel(session, "intabset", selected = "InfCases")})
   observeEvent(input$jump_to_inf_cases_data, {updateTabsetPanel(session, "intabset", selected = "InfCasesData")})
@@ -45,10 +47,42 @@ function(input, output, session) {
   observeEvent(input$jump_to_severe_illness, {updateTabsetPanel(session, "intabset", selected = "SevereIllness")})
   observeEvent(input$jump_to_severe_illness_data, {updateTabsetPanel(session, "intabset", selected = "SevereIllnessData")})
   observeEvent(input$jump_to_pop_interest, {updateTabsetPanel(session, "intabset", selected = "PopInterest")})
+  observeEvent(input$jump_to_care_homes_testing, {updateTabsetPanel(session, "intabset", selected = "CareHomesTesting")})
   observeEvent(input$jump_to_care_homes_visitors, {updateTabsetPanel(session, "intabset", selected = "CareHomesVisitors")})
   observeEvent(input$jump_to_surveillance, {updateTabsetPanel(session, "intabset", selected = "Surveillance")})
   observeEvent(input$jump_to_surveillance_data, {updateTabsetPanel(session, "intabset", selected = "SurveillanceData")})
   observeEvent(input$jump_to_vaccinations, {updateTabsetPanel(session, "intabset", selected = "Vaccinations")})
+  observeEvent(input$jump_to_vax_cert, {updateTabsetPanel(session, "intabset", selected = "vaccinetab")})
+
+  # To jump to tabs and data pages for notes tab
+  observeEvent(input$jump_to_notes_n, {updateTabsetPanel(session, "intabset", selected = "Notes")})
+  observeEvent(input$jump_to_inf_cases_n, {updateTabsetPanel(session, "intabset", selected = "InfCases")})
+  observeEvent(input$jump_to_inf_cases_data_n, {updateTabsetPanel(session, "intabset", selected = "InfCasesData")})
+  observeEvent(input$jump_to_LFD_n, {updateTabsetPanel(session, "intabset", selected = "LFDData")})
+  observeEvent(input$jump_to_LFDdemo_n, {updateTabsetPanel(session, "intabset", selected = "LFDdemoData")})
+  observeEvent(input$jump_to_severe_illness_n, {updateTabsetPanel(session, "intabset", selected = "SevereIllness")})
+  observeEvent(input$jump_to_severe_illness_data_n, {updateTabsetPanel(session, "intabset", selected = "SevereIllnessData")})
+  observeEvent(input$jump_to_pop_interest_n, {updateTabsetPanel(session, "intabset", selected = "PopInterest")})
+  observeEvent(input$jump_to_surveillance_n, {updateTabsetPanel(session, "intabset", selected = "Surveillance")})
+  observeEvent(input$jump_to_surveillance_data_n, {updateTabsetPanel(session, "intabset", selected = "SurveillanceData")})
+  observeEvent(input$jump_to_vaccinations_n, {updateTabsetPanel(session, "intabset", selected = "Vaccinations")})
+
+  # To jump to commentary tab from and ensures correct panel is expanded
+  #requires multiple lines because action buttons must have unique ID
+  observeEvent(input$jump_to_notes_inf_cases, {updateTabsetPanel(session, "intabset", selected = "Notes")
+    updateCollapse(session, "collapse_notes", open = "Cases & infection levels")})
+  observeEvent(input$jump_to_notes_LFD, {updateTabsetPanel(session, "intabset", selected = "Notes")
+    updateCollapse(session, "collapse_notes", open = "Lateral Flow Devices (LFDs)")})
+  observeEvent(input$jump_to_notes_LFDdemo, {updateTabsetPanel(session, "intabset", selected = "Notes")
+    updateCollapse(session, "collapse_notes", open = "Lateral Flow Devices (LFDs)")})
+  observeEvent(input$jump_to_notes_severe_illness, {updateTabsetPanel(session, "intabset", selected = "Notes")
+    updateCollapse(session, "collapse_notes", open = "Severe illness")})
+  observeEvent(input$jump_to_notes_pop_interest, {updateTabsetPanel(session, "intabset", selected = "Notes")
+    updateCollapse(session, "collapse_notes", open = "Populations of interest")})
+  observeEvent(input$jump_to_notes_surveillance, {updateTabsetPanel(session, "intabset", selected = "Notes")
+    updateCollapse(session, "collapse_notes", open = "Surveillance")})
+  observeEvent(input$jump_to_notes_vaccinations, {updateTabsetPanel(session, "intabset", selected = "Notes")
+    updateCollapse(session, "collapse_notes", open = "Vaccinations")})
 
   # Archived
   observeEvent(input$jump_to_CT, {updateTabsetPanel(session, "intabset", selected = "CT")})
