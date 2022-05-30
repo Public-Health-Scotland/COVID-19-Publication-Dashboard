@@ -168,7 +168,8 @@ output$population_int_notes <-renderUI({
     tags$li("Where care homes have submitted data on multiple days within the time period, the latest status is reported. Therefore data are to be interpreted as a snapshot from within the reporting week"),
     tags$li("“Other visiting status” represents outdoor visits only"),
     tags$li("Data for individual NHS Health Boards reflect local circumstances. Therefore, caution is advised when drawing comparisons between boards"),
-    bsButton("jump_to_pop_interest_n", label = "Go to tab")
+    bsButton("jump_to_care_homes_testing", label = "Go to care home COVID-19 cases"),
+    bsButton("jump_to_care_homes_visitors", label = "Go to care home visiting status")
     )
 }) # render UI close bracket
 
