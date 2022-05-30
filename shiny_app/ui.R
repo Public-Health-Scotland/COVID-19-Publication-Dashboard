@@ -434,6 +434,7 @@ tagList(  #needed for shinyjs
                   "Scottish Government",
                   class = "externallink")),
          tags$li("The following data tables provide a snapshot of care home visiting status. For all caveats, please refer to the notes page"),
+         actionButton('jump_to_notes_pop_interest', 'Go to data notes'),
 
          mainPanel(width = 12,
                    h3("Table 1: Visiting status of adult care homes by NHS board, week ending ", CareHomeVisitsDate),
