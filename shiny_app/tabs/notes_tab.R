@@ -241,7 +241,7 @@ output$vaccinations_notes <-renderUI({
     tags$li("Data excludes GP practice information and wastage from clinical trials"),
     br(),
     bsButton("jump_to_vax_cert", label = "Go to vaccine certification tab"),
-    bsButton("jump_to_vaccinations_n", label = "Go to vaccine wasteage tab")
+    bsButton("jump_to_vaccinations_n", label = "Go to vaccine wastage tab")
     )
 }) # render UI close bracket
 
