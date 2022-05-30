@@ -7,13 +7,13 @@ output$cases_inf_notes <-renderUI({
     h4("Reported cases"),
     p("From 05 January 2022, reported cases included both polymerase chain reaction (PCR) and lateral flow device (LFD) positive test results.
       Prior to this, cases consist only of positive PCR tests."),
-    p("From 01 March 2022, reported cases included episodes of reinfection at least 90 days after initial infection."),
+    p("From 01 March 2022, reported cases include episodes of reinfection at least 90 days after initial infection."),
     p("From mid-April 2022, asymptomatic testing was no longer recommended. PCR testing continued for those with symptoms and LFD testing for hospital and care home visitors,
       close contacts of an index case and for early release from isolation after 7 days."),
     p("The purpose of COVID-19 testing has shifted from population-wide testing to reduce transmission, to targeted testing and surveillance. The ",
       tags$a("Scottish Government Test and Protect Transition Plan", href = "https://www.gov.scot/publications/test-protect-transition-plan/"),
-      " came into effect on 01 May 2022, which set out changes to testing, contact tracing and isolation. Therefore, testing remains in place
-      only for certain groups to protect high risk settings and support clinical care, and will no longer be representative of all COVID-19 cases in Scotland"),
+      " came into effect on 01 May 2022, which sets out changes to testing, contact tracing and isolation. Therefore, testing only remains in place
+      for certain groups to protect high risk settings and support clinical care, and will no longer be representative of all COVID-19 cases in Scotland"),
     p("This data is published on Mondays and Thursdays on the ",
       tags$a("COVID-19 Dashboard", href = "https://public.tableau.com/app/profile/phs.covid.19/viz/COVID-19DailyDashboard_15960160643010/Dailyupdate"),
       ". The number of daily confirmed cases may differ slightly from data published on this dashboard because the data has some
@@ -42,8 +42,8 @@ output$cases_inf_notes <-renderUI({
         tags$a("Public Health Scotland website", href = "https://publichealthscotland.scot/news/2022/february/covid-19-reporting-to-include-further-data-on-reinfections/"),
         "."),
     br(),
-    bsButton("jump_to_inf_cases_n", label = "Go to tab"),
-    bsButton("jump_to_inf_cases_data_n", label = "Go to data")
+    bsButton("jump_to_inf_cases_n", label = "Go to cases and infection levels charts"),
+    bsButton("jump_to_inf_cases_data_n", label = "Go to cases and infection levels data")
     )
   }) # render UI close bracket
 
@@ -72,8 +72,8 @@ output$LFD_notes <-renderUI({
       Please see ", tags$a("here", href = "https://www.gov.scot/collections/scottish-index-of-multiple-deprivation-2020/?utm_source=redirect&utm_medium=shorturl&utm_campaign=simd"),
       " for more information on SIMD."),
     br(),
-    bsButton("jump_to_LFD_n", label = "Go to tab"),
-    bsButton("jump_to_LFDdemo_n", label = "Go to demographics tab")
+    bsButton("jump_to_LFD_n", label = "Go to LFD testing tab"),
+    bsButton("jump_to_LFDdemo_n", label = "Go to LFD demographics tab")
     )
 }) # render UI close bracket
 
@@ -104,13 +104,6 @@ output$severe_illness_notes <-renderUI({
     tags$li("LOS can be influenced by a variety of factors including age, reason for admission, co-morbidities and hospital pressures. The LOS analysis
             presented in the hospital admissions tab has not been adjusted to account for these factors."),
     br(),
-
-    h4("Ethnicity"),
-    # p(""),
-    # p(strong("Source:")),
-    # br(),
-    # p("Please note:"),
-    # tags$li(""),
     br(),
     h4("ICU admissions"),
     p("COVID-19 varies in severity from very mild symptoms through to those requiring hospital admission and the most ill who require intensive care treatment and
@@ -134,8 +127,8 @@ output$severe_illness_notes <-renderUI({
             Any COVID-19 positive patients with a missing a CHI number that had a first positive test in the community are unable to be linked to ICU data.
             As a result, the COVID-19 positive ICU patients could be underreported by up to 10%."),
     br(),
-    bsButton("jump_to_severe_illness_n", label = "Go to tab"),
-    bsButton("jump_to_severe_illness_data_n", label = "Go to data")
+    bsButton("jump_to_severe_illness_n", label = "Go to severe illness charts"),
+    bsButton("jump_to_severe_illness_data_n", label = "Go to severe illness data")
     )
 }) # render UI close bracket
 
@@ -165,16 +158,16 @@ output$population_int_notes <-renderUI({
     p(strong("Source: Turas Care Home Management System")),
     br(),
     p("Please note:"),
-    tags$li("Data should be treated as provisional."),
+    tags$li("Data should be treated as provisional"),
     tags$li("There may be a lag between a change in care home visiting guidance and a care home updating their corresponding visiting status in the tool. Therefore,
-            these data are to be interpreted as a guide, and may not be representative of current visiting status. For this reason, weekly data is not comparable."),
-    tags$li("As these data are self-reported, quality of information is dependent on accurate data entry, although there are some data checks for robustness."),
-    tags$li("Outbreak status reported may not match information from the Care Inspectorate (link) as timely data entry can be impacted by external factors."),
-    tags$li("Not all care homes submit information on a daily basis so there will be care homes where no information is available on a certain day, and this can vary considerably daily and weekly."),
-    tags$li("A small number of homes have not submitted outbreak data for an extended period, so data presented only include care homes that have submitted data in the last 30 days."),
-    tags$li("Where care homes have submitted data on multiple days within the time period, the latest status is reported."),
-    tags$li("“Other visiting status” represents outdoor visits only."),
-    tags$li("Data for individual NHS Health Boards reflect local circumstances. Therefore, caution is advised when drawing comparisons between boards."),
+            these data are to be interpreted as a guide, and may not be representative of current visiting status. For this reason, weekly data is not comparable"),
+    tags$li("As these data are self-reported, quality of information is dependent on accurate data entry, although there are some data checks for robustness"),
+    tags$li("Outbreak status reported may not match information from the Care Inspectorate (link) as timely data entry can be impacted by external factors"),
+    tags$li("Not all care homes submit information on a daily basis so there will be care homes where no information is available on a certain day, and this can vary considerably daily and weekly"),
+    tags$li("A small number of homes have not submitted outbreak data for an extended period, so data presented only include care homes that have submitted data in the last 30 days"),
+    tags$li("Where care homes have submitted data on multiple days within the time period, the latest status is reported. Therefore data are to be interpreted as a snapshot from within the reporting week"),
+    tags$li("“Other visiting status” represents outdoor visits only"),
+    tags$li("Data for individual NHS Health Boards reflect local circumstances. Therefore, caution is advised when drawing comparisons between boards"),
     bsButton("jump_to_pop_interest_n", label = "Go to tab")
     )
 }) # render UI close bracket
