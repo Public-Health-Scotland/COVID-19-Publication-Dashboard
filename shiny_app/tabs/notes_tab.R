@@ -136,7 +136,7 @@ output$severe_illness_notes <-renderUI({
 output$population_int_notes <-renderUI({
 
   tagList(
-    h3("Care homes"),
+    h3("COVID-19 in care homes"),
     h4("Cases"),
     p("As of 06 April 2022, Public Health Scotland are reporting weekly data on COVID-19 cases in adult Care Homes in Scotland, previously reported by the ",
       tags$a("Scottish Government",
@@ -150,7 +150,7 @@ output$population_int_notes <-renderUI({
     p("Please note:"),
     tags$li("The source data are dynamic, and additional test results received will be reflected in future calculations of cases, which may affect figures retrospectively."),
     br(),
-    h4("Care home visiting status in Scotland"),
+    h4("Care home visiting status by Health Board and outbreak status"),
     p("As of 24 February 2021, care home visiting guidance was updated to allow care homes to update their own visiting plans depending on COVID-19 outbreak status.
       Outbreak status is self-reported by care homes and capture status at the time of data extraction."),
     p("Care homes report indoor visiting level as one of the following: Up to two visits per week, Daily visits, or Multiple visitors. Where indoor visiting is not possible,
