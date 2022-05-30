@@ -224,6 +224,9 @@ output$vaccinations_notes <-renderUI({
     #                                                                                                href = ""), "."),
     p("For further information, you can refer to the ", tags$a("Scottish Government website",
                                                            href = "https://www.gov.scot/news/living-safely-with-covid/"), "."),
+    br(),
+    p("The app downloads figure refers to the combined number of downloads of the NHS Scotland Covid Status App from Google Play and Apple App Store. The number of PDFs and Letters
+      are taken from the citizen portal where users can choose to request a paper copy or download a PDF of their vaccination certificate."),
     #p(strong("Source: ")), #tbc
     br(),
     p("Please note:"),
