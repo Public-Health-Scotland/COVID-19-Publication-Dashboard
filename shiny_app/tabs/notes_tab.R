@@ -202,8 +202,8 @@ output$surveillance_notes <-renderUI({
     tags$li("Data for the most recent 3 weeks should be treated as provisional."),
     tags$li("From 01 April 2022, the definition of SAS response times has changed. For more information, see the link above."),
     br(),
-    bsButton("jump_to_surveillance_n", label = "Go to tab"),
-    bsButton("jump_to_surveillance_data_n", label = "Go to data")
+    bsButton("jump_to_surveillance_n", label = "Go to surveillance charts"),
+    bsButton("jump_to_surveillance_data_n", label = "Go to surveillance data")
     )
 }) # render UI close bracket
 
@@ -239,7 +239,8 @@ output$vaccinations_notes <-renderUI({
     tags$li("The vaccine wastage form is populated by health board clinicians which can impact the timeliness and accuracy of the data."),
     tags$li("Data excludes GP practice information and wastage from clinical trials"),
     br(),
-    bsButton("jump_to_vaccinations_n", label = "Go to tab")
+    bsButton("jump_to_vaccinations_n", label = "Go to vaccine wasteage tab"),
+    bsButton("jump_to_vax_cert", label = "Go to vaccine certification tab")
     )
 }) # render UI close bracket
 

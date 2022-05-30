@@ -50,6 +50,7 @@ function(input, output, session) {
   observeEvent(input$jump_to_surveillance, {updateTabsetPanel(session, "intabset", selected = "Surveillance")})
   observeEvent(input$jump_to_surveillance_data, {updateTabsetPanel(session, "intabset", selected = "SurveillanceData")})
   observeEvent(input$jump_to_vaccinations, {updateTabsetPanel(session, "intabset", selected = "Vaccinations")})
+  observeEvent(input$jump_to_vax_cert, {updateTabsetPanel(session, "intabset", selected = "vaccinetab")})
 
   # To jump to tabs and data pages for notes tab
   observeEvent(input$jump_to_notes_n, {updateTabsetPanel(session, "intabset", selected = "Notes")})
