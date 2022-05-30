@@ -240,8 +240,8 @@ output$vaccinations_notes <-renderUI({
     tags$li("The vaccine wastage form is populated by health board clinicians which can impact the timeliness and accuracy of the data."),
     tags$li("Data excludes GP practice information and wastage from clinical trials"),
     br(),
-    bsButton("jump_to_vaccinations_n", label = "Go to vaccine wasteage tab"),
-    bsButton("jump_to_vax_cert", label = "Go to vaccine certification tab")
+    bsButton("jump_to_vax_cert", label = "Go to vaccine certification tab"),
+    bsButton("jump_to_vaccinations_n", label = "Go to vaccine wasteage tab")
     )
 }) # render UI close bracket
 
