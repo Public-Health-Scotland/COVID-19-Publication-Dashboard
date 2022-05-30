@@ -107,6 +107,15 @@ Ethnicity_Chart <- readRDS("data/Ethnicity_Chart.rds")
 
 CareHomeTimeSeries <- readRDS('data/CareHomeTimeSeries.rds')
 
+CareHomeVisitsNotes <- readRDS("data/CareHomeVisitsNotes.rds")
+CareHomeVisitsDate <- CareHomeVisitsNotes %>%
+  slice(1) %>%
+  .$Meaning
+CareHomeVisitsDate <- format(ymd(CareHomeVisitsDate), "%d %B %Y")
+CareHomeVisitsBoard <- readRDS("data/CareHomeVisitsBoard.rds")
+CareHomeVisitsOutbreak <- readRDS("data/CareHomeVisitsOutbreak.rds")
+CareHomeVisitsBoardOlder <- readRDS("data/CareHomeVisitsBoardOlder.rds")
+CareHomeVisitsNotOlder <- readRDS("data/CareHomeVisitsOutbreakOlder.rds")
 
 # Surveillance ----
 

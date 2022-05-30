@@ -53,7 +53,7 @@ tagList(  #needed for shinyjs
                column(8, style = "padding-left: 0px; padding-right: 0px;",
                         column(6, class="landing-page-column",
                                lp_main_box(button_name = 'jump_to_pop_interest', title_box = "Populations of Interest",
-                                           description = 'Monitoring of care homes and healthcare workers')),
+                                           description = 'Care home testing and visiting status')),
                # Vaccinations
                column(6, class="landing-page-column",
                                lp_main_box(button_name = 'jump_to_vaccinations', title_box = "Vaccinations",
@@ -153,18 +153,9 @@ tagList(  #needed for shinyjs
              icon = icon("file-lines", verify_fa=F),
              value = "Notes",
              h3("Notes and additional information"),
-             wellPanel(column(12,
-                              p("Select a tab topic to find notes on the data."))),
-             wellPanel(column(2,
-                              p("Select topic:"),
-                              actionLink("cases_inf_button", "Cases & infection levels", width = "150px"),br(),
-                              actionLink("LFD_button", "Lateral Flow Devices (LFDs)", width = "150px"), br(),
-                              actionLink("severe_illness_button", "Severe illness", width = "150px"), br(),
-                              actionLink("population_int_button", "Populations of interest", width = "150px"), br(),
-                              actionLink("surveillance_button", "Surveillance", width = "150px"), br(),
-                              actionLink("vaccinations_button", "Vaccinations", width = "150px"), br()
-                              ),
-                       column(10,
+             wellPanel(
+                       column(12,
+                              p("Select a tab topic to see notes on the data."),
                               bsCollapse(id = "collapse_notes", open = "Panel 1",
                                          bsCollapsePanel("Cases & infection levels", uiOutput("cases_inf_notes")),
                                          bsCollapsePanel("Lateral Flow Devices (LFDs)", uiOutput("LFD_notes")),
@@ -400,11 +391,11 @@ tagList(  #needed for shinyjs
       title = "Populations of interest",
       icon = icon("people-group", verify_fa=F),
       tabPanel(
-        title = "Care homes",
+        title = "Care homes COVID-19 cases",
         icon = icon("home"),
         value = "PopInterest",
         fluidRow(br()),
-        actionButton('jump_to_notes_LFD', 'Go to data notes'),
+        actionButton('jump_to_notes_pop_interest', 'Go to data notes'),
 
         h3('Number of COVID-19 cases for care home residents and staff'),
         # tags$li('As of 06 April 2022, Public Health Scotland are reporting weekly data on COVID-19 ',
@@ -430,7 +421,44 @@ tagList(  #needed for shinyjs
 
         )# mainPanel bracket
 
-      )#,
+      ),
+       tabPanel(
+         title = "Care homes visiting status",
+         icon = icon("user", verify_fa=F),
+         value = "CareHomesVisitors",
+
+         h3("Care homes visiting status in Scotland, by Health Board and Outbreak Status"),
+
+         tags$li("PHS now report on the visiting status of Care Homes in Scotland, previously reported by the ",
+           tags$a(href = "https://www.gov.scot/publications/coronavirus-covid-19-additional-data-about-adult-care-homes-in-scotland/",
+                  "Scottish Government",
+                  class = "externallink")),
+         tags$li("The following data tables provide a snapshot of care home visiting status. For all caveats, please refer to the notes page"),
+         actionButton('jump_to_notes_pop_interest', 'Go to data notes'),
+
+         mainPanel(width = 12,
+                   h3("Table 1: Visiting status of adult care homes by NHS board, week ending ", CareHomeVisitsDate),
+                   downloadButton('care_home_visits_data_download', 'Download by visiting status by health board data'),
+                   withSpinner(DT::dataTableOutput('CareHomeVisitsBoardTable')),
+
+                   h3("Table 2: Visiting status of adult care homes by COVID-19 outbreak status, week ending ", CareHomeVisitsDate),
+                   downloadButton('care_home_outbreak_data_download', 'Download visiting status by outbreak data', class="down"),
+                   withSpinner(DT::dataTableOutput('CareHomeVisitsOutbreakTable')),
+
+                   h3("Table 3a: Visiting status of care homes registered as for older adults by NHS Board, week ending ", CareHomeVisitsDate),
+                   downloadButton('care_home_visits_older_data_download', 'Download older adult care home data', class="down"),
+                   withSpinner(DT::dataTableOutput('CareHomeVisitsBoardOlderTable')),
+
+                   h3("Table 3b: Visiting status of care homes NOT registered as for older adults by NHS Board, week ending ", CareHomeVisitsDate),
+                   downloadButton('download_care_home_visits_not_older_data', 'Download not older adult care home data'),
+                   withSpinner(DT::dataTableOutput('CareHomeVisitsNotOlderTable'))
+
+
+         )
+
+       ) #,
+
+
       # tabPanel(
       #   title = "Healthcare workers",
       #   icon = icon("user-doctor", verify_fa=F),

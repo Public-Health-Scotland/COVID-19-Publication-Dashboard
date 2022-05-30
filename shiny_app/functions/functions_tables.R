@@ -98,13 +98,14 @@ datatab_table <- function(input_data_table,
 byboard_data_table <- function(input_data_table,
                                board_name_column,  # Name of the column with board names e.g. "NHS Board"
                                add_separator_cols=NULL, # Column indices to add thousand separators to
+                               add_percentage_cols = NULL, # with % symbol and 2dp
                                rows_to_display=14,
                                flip_order=FALSE){ # Number of Boards + 1 for Scotland
 
   if(flip_order){
     tab_order <- list(list(0, "asc"))
   } else {
-    tab_order <- list(list(0, "desc"))
+    tab_order <- NULL
   }
 
   # Remove the underscore from column names in the table
@@ -114,6 +115,10 @@ byboard_data_table <- function(input_data_table,
 
   for (i in add_separator_cols){
     input_data_table[i] <- apply(input_data_table[i], MARGIN=1, FUN=format_entry)
+  }
+
+  for (i in add_percentage_cols){
+    input_data_table[i] <- apply(input_data_table[i], MARGIN=1, FUN=format_entry, dp=1, perc=T)
   }
 
   dt <- DT::datatable(input_data_table, style = 'bootstrap',

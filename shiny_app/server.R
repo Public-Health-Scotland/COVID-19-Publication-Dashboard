@@ -47,9 +47,12 @@ function(input, output, session) {
   observeEvent(input$jump_to_severe_illness, {updateTabsetPanel(session, "intabset", selected = "SevereIllness")})
   observeEvent(input$jump_to_severe_illness_data, {updateTabsetPanel(session, "intabset", selected = "SevereIllnessData")})
   observeEvent(input$jump_to_pop_interest, {updateTabsetPanel(session, "intabset", selected = "PopInterest")})
+  observeEvent(input$jump_to_care_homes_testing, {updateTabsetPanel(session, "intabset", selected = "CareHomesTesting")})
+  observeEvent(input$jump_to_care_homes_visitors, {updateTabsetPanel(session, "intabset", selected = "CareHomesVisitors")})
   observeEvent(input$jump_to_surveillance, {updateTabsetPanel(session, "intabset", selected = "Surveillance")})
   observeEvent(input$jump_to_surveillance_data, {updateTabsetPanel(session, "intabset", selected = "SurveillanceData")})
   observeEvent(input$jump_to_vaccinations, {updateTabsetPanel(session, "intabset", selected = "Vaccinations")})
+  observeEvent(input$jump_to_vax_cert, {updateTabsetPanel(session, "intabset", selected = "vaccinetab")})
 
   # To jump to tabs and data pages for notes tab
   observeEvent(input$jump_to_notes_n, {updateTabsetPanel(session, "intabset", selected = "Notes")})
