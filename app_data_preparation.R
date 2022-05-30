@@ -355,6 +355,24 @@ saveRDS(care_homes, "data/Care_Homes.rds")
 CareHomeTimeSeries <- read_csv("data/CareHomeTimeSeries.csv")
 saveRDS(CareHomeTimeSeries, "data/CareHomeTimeSeries.rds")
 
+### Care home SG visit outbreak status -----------------------------------------
+
+CareHomeVisitsNotes <- read_csv("data/CareHomeVisitsNotes.csv")
+saveRDS(CareHomeVisitsNotes, "data/CareHomeVisitsNotes.rds")
+
+CareHomeVisitsBoard <- read_csv("data/CareHomeVisitsBoard.csv")
+saveRDS(CareHomeVisitsBoard, "data/CareHomeVisitsBoard.rds")
+
+CareHomeVisitsOutbreak <- read_csv("data/CareHomeVisitsOutbreak.csv")
+saveRDS(CareHomeVisitsOutbreak, "data/CareHomeVisitsOutbreak.rds")
+
+CareHomeVisitsBoardOlder <- read_csv("data/CareHomeVisitsBoardOlder.csv")
+saveRDS(CareHomeVisitsBoardOlder, "data/CareHomeVisitsBoardOlder.rds")
+
+CareHomeVisitsOutbreakOlder <- read_csv("data/CareHomeVisitsOutbreakOlder.csv")
+saveRDS(CareHomeVisitsOutbreakOlder, "data/CareHomeVisitsOutbreakOlder.rds")
+
+
 ### Vaccine Wastage
 
 VaccineWastage <- read_csv("data/VaccineWastage.csv")
