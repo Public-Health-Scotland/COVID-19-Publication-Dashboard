@@ -423,7 +423,7 @@ tagList(  #needed for shinyjs
 
       ),
        tabPanel(
-         title = "Care homes visiting status",
+         title = "Care homes visiting status by Health Board and outbreak status",
          icon = icon("user", verify_fa=F),
          value = "CareHomesVisitors",
 
