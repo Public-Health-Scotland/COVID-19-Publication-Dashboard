@@ -44,7 +44,10 @@ output$CareHomeVisitsBoardTable <- DT::renderDataTable({
 output$CareHomeVisitsOutbreakTable <- DT::renderDataTable({
 
   datatab_table(CareHomeVisitsOutbreak,
-                     add_separator_cols= c(2:10))
+                add_separator_cols= c(2:10),
+                highlight_column = "Outbreak status",
+                flip_order=TRUE
+                )
 
 
 })
