@@ -82,10 +82,10 @@ datatab_table <- function(input_data_table,
                 colnames = table_colnames) %>%
     formatStyle(
       highlight_column, target="row",
-      backgroundColor = styleEqual(c("Cumulative"),
-                                   c(phs_colours("phs-magenta"))), # highlight Scotland rows in phs-magenta
-      fontWeight = styleEqual(c("Cumulative"), c("bold")),
-      color = styleEqual(c("Cumulative"), c("white"))
+      backgroundColor = styleEqual(c("Cumulative", "Total"),
+                                   c(phs_colours("phs-magenta"), phs_colours("phs-magenta"))),
+      fontWeight = styleEqual(c("Cumulative", "Total"), c("bold", "bold")),
+      color = styleEqual(c("Cumulative", "Total"), c("white", "white"))
     )
 
   return(dt)
