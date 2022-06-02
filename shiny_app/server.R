@@ -81,7 +81,9 @@ function(input, output, session) {
     updateCollapse(session, "collapse_notes", open = "Populations of interest")})
   observeEvent(input$jump_to_notes_surveillance, {updateTabsetPanel(session, "intabset", selected = "Notes")
     updateCollapse(session, "collapse_notes", open = "Surveillance")})
-  observeEvent(input$jump_to_notes_vaccinations, {updateTabsetPanel(session, "intabset", selected = "Notes")
+  observeEvent(input$jump_to_notes_vaccinations_waste, {updateTabsetPanel(session, "intabset", selected = "Notes")
+    updateCollapse(session, "collapse_notes", open = "Vaccinations")})
+  observeEvent(input$jump_to_notes_vaccinations_cert, {updateTabsetPanel(session, "intabset", selected = "Notes")
     updateCollapse(session, "collapse_notes", open = "Vaccinations")})
 
   # Archived
