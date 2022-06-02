@@ -5,34 +5,23 @@ output$cases_inf_notes <-renderUI({
 
   tagList(
     h4("Reported cases"),
-    p("From 05 January 2022, reported cases included both polymerase chain reaction (PCR) and lateral flow device (LFD) positive test results.
-      Prior to this, cases consist only of positive PCR tests."),
-    p("From 01 March 2022, reported cases include episodes of reinfection at least 90 days after initial infection."),
-    p("From mid-April 2022, asymptomatic testing was no longer recommended. PCR testing continued for those with symptoms and LFD testing for hospital and care home visitors,
-      close contacts of an index case and for early release from isolation after 7 days."),
-    p("The purpose of COVID-19 testing has shifted from population-wide testing to reduce transmission, to targeted testing and surveillance. The ",
-      tags$a("Scottish Government Test and Protect Transition Plan", href = "https://www.gov.scot/publications/test-protect-transition-plan/"),
-      " came into effect on 01 May 2022, which sets out changes to testing, contact tracing and isolation. Therefore, testing only remains in place
-      for certain groups to protect high risk settings and support clinical care, and will no longer be representative of all COVID-19 cases in Scotland"),
-    p("This data is published on Mondays and Thursdays on the ",
+    p("Reported cases include both polymerase chain reaction (PCR) and lateral flow device (LFD) positive test results."),
+    p("These data are published on Mondays and Thursdays on the ",
       tags$a("COVID-19 Dashboard", href = "https://public.tableau.com/app/profile/phs.covid.19/viz/COVID-19DailyDashboard_15960160643010/Dailyupdate"),
-      ". The number of daily confirmed cases may differ slightly from data published on this dashboard because the data has some
-            cases added retrospectively and assigned to days based on the most up to date records. This has no impact on the overall
-            number of confirmed cases."),
+      ". The number of daily confirmed cases may differ slightly from data published on this dashboard because some
+            cases are added retrospectively and assigned to days based on the most up to date records. Overall
+            number of confirmed cases should not be affected."),
     p(strong("Source: PCR - Electronic Communication of Surveillance in Scotland (ECOSS); LFD - UK Government self-reported / NSS Portal")),
     br(),
     p("Please note:"),
-    tags$li("The number of daily confirmed cases may differ slightly from data published on the ",
-            tags$a("COVID-19 Dashboard",
-                   href = "https://public.tableau.com/app/profile/phs.covid.19/viz/COVID-19DailyDashboard_15960160643010/Dailyupdate"),
-            " on Mondays and Thursdays, because the data has some cases added retrospectively and assigned to days based on the most up to date records.
-            Overall number of confirmed cases should not be affected."),
     tags$li("The total number of people within Scotland who have, or have had, COVID-19 since the coronavirus outbreak began is unknown.
             The number of confirmed cases is likely to be an underestimate."),
+    tags$li("The purpose of COVID-19 testing has shifted from population-wide testing to reduce transmission, to targeted testing and surveillance. Therefore, testing only remains in place
+      for certain groups to protect high risk settings and support clinical care, and will no longer be representative of all COVID-19 cases in Scotland"),
     # This point will need removed when case data goes from daily to weekly
     tags$li("The drop in the number of confirmed cases at weekends likely reflects that laboratories are doing fewer tests at the weekend."),
     tags$li("Reported cases prior to 01 March 2022 were based on an individual's first positive test result only."),
-    tags$li("Due to changes in testing strategy outlined above, caution is advised when comparing trends over time."),
+    tags$li("Due to changes in testing strategy outlined below, caution is advised when comparing trends over time."),
     br(),
     h4("Reinfections"),
     p("From 01 March 2022, episodes of reinfection are included in COVID-19 reporting. Prior to this date, COVID-19 cases were based on an individual's
@@ -42,10 +31,29 @@ output$cases_inf_notes <-renderUI({
         tags$a("Public Health Scotland website", href = "https://publichealthscotland.scot/news/2022/february/covid-19-reporting-to-include-further-data-on-reinfections/"),
         "."),
     br(),
+    bsButton("jump_to_timeline", label = "Go to timeline of changes in testing policy"),
     bsButton("jump_to_inf_cases_n", label = "Go to cases and infection levels charts"),
     bsButton("jump_to_inf_cases_data_n", label = "Go to cases and infection levels data")
     )
   }) # render UI close bracket
+
+# Cases & infection levels
+output$timeline_notes <-renderUI({
+
+  tagList(
+    p("Please note the following changes to testing policy in 2022:"),
+    tags$li("From 05 January 2022, reported cases included both PCR and LFD positive test results. Prior to this, cases consist only of positive PCR tests."),
+    tags$li("From 01 March 2022, reported cases include episodes of reinfection at least 90 days after initial infection."),
+    tags$li("From mid-April 2022, asymptomatic testing was no longer recommended. PCR testing continued for those with symptoms and LFD testing for hospital and care home visitors,
+      close contacts of an index case and to allow cases to finish their isolation after 7 days."),
+    tags$li("01 May 2022 marked the beginning of The ", tags$a("Scottish Government Test and Protect Transition Plan",
+                                                               href = "https://www.gov.scot/publications/test-protect-transition-plan/"),
+      ", which set out a shift in COVID-19 testing priorities, from population-wide testing to reduce transmission to targeted testing and surveillance. Therefore, reported cases will
+      primarily include clinical care settings, health and social care workforce, surveillance and outbreak response."),
+    bsButton("jump_to_inf_cases_n2", label = "Go to cases and infection levels charts"),
+    bsButton("jump_to_inf_cases_data_n2", label = "Go to cases and infection levels data")
+    )
+}) # render UI close bracket
 
 # LFDs
 output$LFD_notes <-renderUI({
