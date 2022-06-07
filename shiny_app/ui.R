@@ -434,8 +434,9 @@ tagList(  #needed for shinyjs
            tags$a(href = "https://www.gov.scot/publications/coronavirus-covid-19-additional-data-about-adult-care-homes-in-scotland/",
                   "Scottish Government",
                   class = "externallink")),
+         tags$li("These data are updated every 4 weeks."),
          tags$li("The following data tables provide a snapshot of care home visiting status. For all caveats, please refer to the notes page"),
-         actionButton('jump_to_notes_pop_interest', 'Go to data notes'),
+         actionButton('jump_to_notes_pop_interest_outbreak', 'Go to data notes'),
 
          mainPanel(width = 12,
                    h3("Table 1: Visiting status of adult care homes by NHS board, week ending ", CareHomeVisitsDate),

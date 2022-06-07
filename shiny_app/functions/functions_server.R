@@ -1478,14 +1478,22 @@ los_chart_fn = function(data) {
       mutate(`Length of Stay` = factor(`Length of Stay`,
                           levels = c("< 24 Hours",
                                      "24-48 Hours",
-                                     ">= 48 Hours")))
+                                     ">= 48 Hours"))) %>%
+      mutate(Percent = (prop * 100))
+    
+    tooltip_trend <- glue("Week Ending: {table$`Week Ending`}<br>", 
+                          "Length of Stay: {table$`Length of Stay`}<br>",
+                          "Percent: {round(table$Percent, 1)}%"
+                          )
 
     table %>%
       plot_ly(x = ~`Week Ending`,
-              y = ~prop*100,
+              y = ~Percent,
               color = ~`Length of Stay`,
               type = 'bar',
               colors = phs_blues,
+              text = tooltip_trend,
+              hoverinfo = "text",
               marker = list(line = list(width=.5,
                                         color = 'rgb(0,0,0)'))) %>%
       layout(barmode = "stack",
@@ -1494,8 +1502,7 @@ los_chart_fn = function(data) {
              xaxis = list(title = 'Admission Date by Week Ending')) %>%
       # leaving only save plot button
       config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
-  }
-
+}
 
 #### Care Homes Time Series Chart
 
