@@ -58,6 +58,8 @@ function(input, output, session) {
   observeEvent(input$jump_to_notes_n, {updateTabsetPanel(session, "intabset", selected = "Notes")})
   observeEvent(input$jump_to_inf_cases_n, {updateTabsetPanel(session, "intabset", selected = "InfCases")})
   observeEvent(input$jump_to_inf_cases_data_n, {updateTabsetPanel(session, "intabset", selected = "InfCasesData")})
+  observeEvent(input$jump_to_inf_cases_n2, {updateTabsetPanel(session, "intabset", selected = "InfCases")})
+  observeEvent(input$jump_to_inf_cases_data_n2, {updateTabsetPanel(session, "intabset", selected = "InfCasesData")})
   observeEvent(input$jump_to_LFD_n, {updateTabsetPanel(session, "intabset", selected = "LFDData")})
   observeEvent(input$jump_to_LFDdemo_n, {updateTabsetPanel(session, "intabset", selected = "LFDdemoData")})
   observeEvent(input$jump_to_severe_illness_n, {updateTabsetPanel(session, "intabset", selected = "SevereIllness")})
@@ -67,10 +69,12 @@ function(input, output, session) {
   observeEvent(input$jump_to_surveillance_data_n, {updateTabsetPanel(session, "intabset", selected = "SurveillanceData")})
   observeEvent(input$jump_to_vaccinations_n, {updateTabsetPanel(session, "intabset", selected = "Vaccinations")})
 
-  # To jump to commentary tab from and ensures correct panel is expanded
-  #requires multiple lines because action buttons must have unique ID
+  # To jump to commentary tab and ensures correct panel is expanded
+  # action buttons must have unique ID
   observeEvent(input$jump_to_notes_inf_cases, {updateTabsetPanel(session, "intabset", selected = "Notes")
     updateCollapse(session, "collapse_notes", open = "Cases & infection levels")})
+  observeEvent(input$jump_to_timeline, {updateTabsetPanel(session, "intabset", selected = "Notes")
+    updateCollapse(session, "collapse_notes", open = "Changes in COVID-19 testing policy")})
   observeEvent(input$jump_to_notes_LFD, {updateTabsetPanel(session, "intabset", selected = "Notes")
     updateCollapse(session, "collapse_notes", open = "Lateral Flow Devices (LFDs)")})
   observeEvent(input$jump_to_notes_LFDdemo, {updateTabsetPanel(session, "intabset", selected = "Notes")
@@ -81,7 +85,9 @@ function(input, output, session) {
     updateCollapse(session, "collapse_notes", open = "Populations of interest")})
   observeEvent(input$jump_to_notes_surveillance, {updateTabsetPanel(session, "intabset", selected = "Notes")
     updateCollapse(session, "collapse_notes", open = "Surveillance")})
-  observeEvent(input$jump_to_notes_vaccinations, {updateTabsetPanel(session, "intabset", selected = "Notes")
+  observeEvent(input$jump_to_notes_vaccinations_waste, {updateTabsetPanel(session, "intabset", selected = "Notes")
+    updateCollapse(session, "collapse_notes", open = "Vaccinations")})
+  observeEvent(input$jump_to_notes_vaccinations_cert, {updateTabsetPanel(session, "intabset", selected = "Notes")
     updateCollapse(session, "collapse_notes", open = "Vaccinations")})
 
   # Archived
