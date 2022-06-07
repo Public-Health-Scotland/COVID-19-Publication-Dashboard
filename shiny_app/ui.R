@@ -394,7 +394,7 @@ tagList(  #needed for shinyjs
       tabPanel(
         title = "Care homes COVID-19 cases",
         icon = icon("home"),
-        value = "PopInterest",
+        value = "CareHomesTesting",
         fluidRow(br()),
         actionButton('jump_to_notes_pop_interest', 'Go to data notes'),
 
