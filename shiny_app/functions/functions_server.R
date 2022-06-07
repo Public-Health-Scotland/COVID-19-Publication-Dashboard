@@ -7,7 +7,7 @@
 
 ## Functions to add lines and notes to charts -----
 
-vline = function(x, width=3.0, color="black", ...) {
+vline <- function(x, width=3.0, color="black", ...) {
   l_shape = list(
     type = "line",
     y0 = 0, y1 = 1, yref = "paper", # i.e. y as a proportion of visible region
@@ -17,8 +17,8 @@ vline = function(x, width=3.0, color="black", ...) {
   return(l_shape)
 }
 
-annotation = function(frac, y, note, ax, ay, color){
-  ann = list(yref = "paper",
+annotation <- function(frac, y, note, ax, ay, color){
+  ann <- list(yref = "paper",
              xref = "paper",
              y = y,
              x = frac,
@@ -34,9 +34,25 @@ annotation = function(frac, y, note, ax, ay, color){
   return(ann)
 }
 
-add_vline = function(p, x, ...){
+add_vline <- function(p, x, ...){
   l_shape <- vline(x, ...)
   p %>% layout(shapes=list(l_shape))
+}
+
+
+gety <- function(x, df, xcol, ycol){
+  y <- df[df[[xcol]] == x, ][[ycol]]/
+    max(df[[ycol]])
+
+  return(y)
+
+}
+
+getfrac <- function(x, df, xcol){
+  frac <- as.numeric(as.Date(x) - min(df[[xcol]]))/
+    as.numeric(max(df[[xcol]]) - min(df[[xcol]]))
+
+  return(frac)
 }
 
 add_lines_and_notes <- function(p, dataframe, xcol, ycol, xs, notes, colors, axs=NULL, ays=NULL,
@@ -45,25 +61,11 @@ add_lines_and_notes <- function(p, dataframe, xcol, ycol, xs, notes, colors, axs
   # Infer fracs and ys from xs
   if (is.null(ys)){
 
-    gety <- function(x, df){
-      y <- df[df[[xcol]] == x, ][[ycol]]/
-        max(df[[ycol]])
-
-      return(y)
-
-    }
-    ys <- unlist(purrr::map(.x=xs, .f= gety, df=dataframe))
+    ys <- purrr::map_dbl(.x=xs, .f= gety, df=dataframe, xcol=xcol, ycol=ycol)
   }
   if (is.null(fracs)){
 
-    getfrac <- function(x, df){
-      frac <- as.numeric(as.Date(x) - min(df[[xcol]]))/
-        as.numeric(max(df[[xcol]]) - min(df[[xcol]]))
-
-      return(frac)
-    }
-
-    fracs <- unlist(purrr::map(.x=xs, .f=getfrac, df=dataframe))
+    fracs <- purrr::map_dbl(.x=xs, .f=getfrac, df=dataframe, xcol=xcol)
   }
 
   # Set sensible axs and ays based off fracs and ys
@@ -77,8 +79,7 @@ add_lines_and_notes <- function(p, dataframe, xcol, ycol, xs, notes, colors, axs
   # If y placement is less than half way up, put
   plusorminus <- function(y){ ifelse(y<0.5, 5000, -5000) }
 
-  ays = unlist(purrr::map(ys, plusorminus))
-
+  ays = purrr::map_dbl(ys, plusorminus)
 
   shapes <- list()
   annotations <- list()
