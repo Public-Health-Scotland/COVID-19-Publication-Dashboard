@@ -404,7 +404,7 @@ plot_singletrace_chart <- function(dataset, data_name, yaxis_title, xaxis_title,
   #Creating time trend plot
  p <-  plot_ly(data = trend_data, x = ~date) %>%
     add_lines(y = ~count, line = list(color = pal_overall[1]),
-              text = tooltip_trend, hoverinfo = "text") %>%
+              text = tooltip_trend, hoverinfo = "text", showlegend=FALSE) %>%
     #Layout
     layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
            yaxis = yaxis_plots, xaxis = xaxis_plots,
