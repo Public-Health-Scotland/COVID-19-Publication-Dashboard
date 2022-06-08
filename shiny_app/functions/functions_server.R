@@ -23,14 +23,16 @@ annotation <- function(frac, y, note, ax, ay, color){
              y = y,
              x = frac,
              text = note,
-             arrowhead = 6,
+             arrowhead = 2,
              arrowsize = .8,
              ax = ax,
              ay = ay,
+             axref = "paper",
+             ayref = "paper",
              # Styling annotations' text:
              font = list(color = color,
                          size = 14),
-             showarrow=FALSE)
+             showarrow=TRUE)
   return(ann)
 }
 
@@ -71,15 +73,28 @@ add_lines_and_notes <- function(p, dataframe, xcol, ycol, xs, notes, colors, axs
   # Set sensible axs and ays based off fracs and ys
 
   if(is.null(axs)){
-    axs=c(-120, -120) # set axs to left as default
-    ays=c(40,40)
+    axs = fracs - 0.1 # set axs to left as default
+    ays = ys
   }
 
 
   # If y placement is less than half way up, put
-  plusorminus <- function(y){ ifelse(y<0.5, 5000, -5000) }
+  plusorminus <- function(y){ ifelse(y<0.5, 1, -1) }
+  plusorminuses <- purrr::map_dbl(ys, plusorminus)
 
-  ays = purrr::map_dbl(ys, plusorminus)
+  # Add new column to dataframe which is fractional location of each y data point
+  datafracs = dataframe[[ycol]]/max(dataframe[[ycol]])
+
+
+  browser()
+
+  # while loop to set axs and ays so they don't overlap with data
+  for (i in seq(length(axs))){
+    while(min(abs(datafracs - axs[[i]])) < 0.05){
+      axs[[i]] <- axs[[i]] - 0.05
+      ays[[i]] <- ays[[i]] + plusorminuses[[i]]*0.05
+      }
+  }
 
   shapes <- list()
   annotations <- list()
