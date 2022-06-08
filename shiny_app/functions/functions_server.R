@@ -111,8 +111,8 @@ plot_overall_chart <- function(dataset, data_name,  area = T, include_vline=F) {
                                xcol = "Date",
                                ycol = "Count",
                                xs=xs,
-                               notes=c("From 5 Jan cases \n include PCR + LFD",
-                                       "Change in testing \n policy on 1 May"),
+                               notes=c("From 5 Jan cases  include PCR + LFD",
+                                       "Change in testing policy on 1 May"),
                                colors=c(phs_colours("phs-magenta"), phs_colours("phs-teal"))
                                )
 
@@ -423,8 +423,8 @@ plot_singletrace_chart <- function(dataset, data_name, yaxis_title, xaxis_title,
                               xcol = "date",
                               ycol = "count",
                               xs=xs,
-                              notes=c("From 5 Jan \n cases include \n PCR + LFD",
-                                      "Change in \n testing policy \n on 1 May"),
+                              notes=c("From 5 Jan cases include PCR + LFD",
+                                      "Change in testing policy on 1 May"),
                               colors=c(phs_colours("phs-magenta"), phs_colours("phs-teal"))
    )
 
@@ -477,8 +477,8 @@ plot_singlerate_chart <- function(dataset, data_name, yaxis_title, area = T, inc
                                xcol="Date",
                                ycol="CumulativeRatePer100000",
                                xs=xs,
-                               notes=c("From 5 Jan \n cases include \n PCR + LFD",
-                                       "Change in \n testing policy \n on 1 May"),
+                               notes=c("From 5 Jan cases include PCR + LFD",
+                                       "Change in testing policy on 1 May"),
                                colors=c(phs_colours("phs-magenta"), phs_colours("phs-teal"))
     )
 
@@ -835,8 +835,8 @@ plot_contacttrace_Per_graph <- function(dataset, data_name, CTdata, yaxis_title,
                                xcol = "week_ending",
                                ycol = "% of Total Index Cases",
                                xs=xs,
-                               notes=c("From 5 Jan \n cases include \n PCR + LFD",
-                                       "Change in \n testing policy \n on 1 May"),
+                               notes=c("From 5 Jan cases include PCR + LFD",
+                                       "Change in testing policy on 1 May"),
                                colors=c(phs_colours("phs-magenta"), phs_colours("phs-teal"))
     )
 
@@ -887,8 +887,8 @@ plot_contacttrace_graph <- function(dataset, data_name, CTdata, yaxis_title, are
                                xcol = "week_ending",
                                ycol = "Number of Index Cases",
                                xs=xs,
-                               notes=c("From 5 Jan \n cases include \n PCR + LFD",
-                                       "Change in \n testing policy \n on 1 May"),
+                               notes=c("From 5 Jan cases include PCR + LFD",
+                                       "Change in testing policy on 1 May"),
                                colors=c(phs_colours("phs-magenta"), phs_colours("phs-teal"))
     )
 
@@ -1018,8 +1018,8 @@ if(include_vline){
                              xcol = "Week Ending",
                              ycol = "Average Number of Contacts",
                              xs=xs,
-                             notes=c("From 5 Jan \n cases include \n PCR + LFD",
-                                     "Change in \n testing policy \n on 1 May"),
+                             notes=c("From 5 Jan cases include PCR + LFD",
+                                     "Change in testing policy on 1 May"),
                              colors=c(phs_colours("phs-magenta"), phs_colours("phs-teal"))
   )
 
@@ -1242,8 +1242,8 @@ plot_prox_contacts_chart <- function(dataset, yaxis_title, xaxis_title, area = T
                                xcol = "Week beginning",
                                ycol = "Contact notifications",
                                xs=xs,
-                               notes=c("From 5 Jan \n cases include \n PCR + LFD",
-                                       "Change in \n testing policy \n on 1 May"),
+                               notes=c("From 5 Jan cases include PCR + LFD",
+                                       "Change in testing policy on 1 May"),
                                colors=c(phs_colours("phs-magenta"), phs_colours("phs-teal"))
     )
 
@@ -1298,8 +1298,8 @@ plot_prox_uploads_chart <- function(dataset, yaxis_title, xaxis_title, area = T,
                                xcol = "Week beginning",
                                ycol = "Exposure key uploads",
                                xs=xs,
-                               notes=c("From 5 Jan \n cases include \n PCR + LFD",
-                                       "Change in \n testing policy \n on 1 May"),
+                               notes=c("From 5 Jan cases include PCR + LFD",
+                                       "Change in testing policy on 1 May"),
                                colors=c(phs_colours("phs-magenta"), phs_colours("phs-teal"))
     )
 
