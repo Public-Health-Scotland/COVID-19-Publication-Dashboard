@@ -17,22 +17,16 @@ vline <- function(x, width=3.0, color="black", ...) {
   return(l_shape)
 }
 
-annotation <- function(frac, y, note, ax, ay, color){
+annotation <- function(frac, y, note, color){
   ann <- list(yref = "paper",
              xref = "paper",
              y = y,
              x = frac,
              text = note,
-             arrowhead = 2,
-             arrowsize = .8,
-             ax = ax,
-             ay = ay,
-             axref = "paper",
-             ayref = "paper",
              # Styling annotations' text:
              font = list(color = color,
                          size = 14),
-             showarrow=TRUE)
+             showarrow=FALSE)
   return(ann)
 }
 
@@ -42,74 +36,22 @@ add_vline <- function(p, x, ...){
 }
 
 
-gety <- function(x, df, xcol, ycol){
-  y <- df[df[[xcol]] == x, ][[ycol]]/
-    max(df[[ycol]])
-
-  return(y)
-
-}
-
-getfrac <- function(x, df, xcol){
-  frac <- as.numeric(as.Date(x) - min(df[[xcol]]))/
-    as.numeric(max(df[[xcol]]) - min(df[[xcol]]))
-
-  return(frac)
-}
-
-add_lines_and_notes <- function(p, dataframe, xcol, ycol, xs, notes, colors, axs=NULL, ays=NULL,
-                                widths=NULL, fracs=NULL, ys=NULL){
-
-  # Infer fracs and ys from xs
-  if (is.null(ys)){
-
-    ys <- purrr::map_dbl(.x=xs, .f= gety, df=dataframe, xcol=xcol, ycol=ycol)
-  }
-  if (is.null(fracs)){
-
-    fracs <- purrr::map_dbl(.x=xs, .f=getfrac, df=dataframe, xcol=xcol)
-  }
-
-  # Set sensible axs and ays based off fracs and ys
-
-  if(is.null(axs)){
-    axs = fracs - 0.1 # set axs to left as default
-    ays = ys
-  }
+add_lines_and_notes <- function(p, dataframe, xcol, ycol, xs, notes, colors){
 
 
-  # If y placement is less than half way up, put
-  plusorminus <- function(y){ ifelse(y<0.5, 1, -1) }
-  plusorminuses <- purrr::map_dbl(ys, plusorminus)
 
-  # Add new column to dataframe which is fractional location of each y data point
-  datafracs = dataframe[[ycol]]/max(dataframe[[ycol]])
+  for (i in seq(length(xs))){
 
-
-  browser()
-
-  # while loop to set axs and ays so they don't overlap with data
-  for (i in seq(length(axs))){
-    while(min(abs(datafracs - axs[[i]])) < 0.05){
-      axs[[i]] <- axs[[i]] - 0.05
-      ays[[i]] <- ays[[i]] + plusorminuses[[i]]*0.05
-      }
-  }
-
-  shapes <- list()
-  annotations <- list()
-  # Create vlines
-  for(i in seq(length(xs))){
-    new_vline <- vline(as.Date(xs[i]), color=colors[i])
-    new_annotation <- annotation(fracs[i], ys[i], notes[i], axs[i], ays[i], colors[i])
-    shapes[[i]] <- new_vline
-    annotations[[i]] <- new_annotation
+    p %<>% add_segments(x = xs[i], xend = xs[i],
+                       y = 0,
+                       yend = max(dataframe[[ycol]]),
+                       name = c(notes[i]),
+                       line = list(color = colors[i], width = 3)
+                       )
 
   }
 
- # browser()
-  p %>% layout(annotations=annotations, shapes=shapes)
-
+  return(p)
 }
 
 
@@ -169,8 +111,8 @@ plot_overall_chart <- function(dataset, data_name,  area = T, include_vline=F) {
                                xcol = "Date",
                                ycol = "Count",
                                xs=xs,
-                               notes=c("<b>From 5 Jan \n cases include \n PCR + LFD</b>",
-                                       "<b>Change in \n testing policy \n on 1 May</b>"),
+                               notes=c("From 5 Jan cases \n include PCR + LFD",
+                                       "Change in testing \n policy on 1 May"),
                                colors=c(phs_colours("phs-magenta"), phs_colours("phs-teal"))
                                )
 
@@ -477,13 +419,12 @@ plot_singletrace_chart <- function(dataset, data_name, yaxis_title, xaxis_title,
    fracs <- unlist(purrr::map(.x=xs,
                               .f= ~ as.numeric(as.Date(.x) - min(trend_data$date))/as.numeric(max(trend_data$date - min(trend_data$date)))))
 
-   p %<>% add_lines_and_notes(xs=xs,
-                              ys=c(0.9, 0.6),
-                              fracs=fracs,
-                              notes=c("<b>From 5 Jan \n cases include \n PCR + LFD</b>",
-                                      "<b>Change in \n testing policy \n on 1 May</b>"),
-                              axs=c(-100, -50),
-                              ays=c(40, -40),
+   p %<>% add_lines_and_notes(dataframe = trend_data,
+                              xcol = "date",
+                              ycol = "count",
+                              xs=xs,
+                              notes=c("From 5 Jan \n cases include \n PCR + LFD",
+                                      "Change in \n testing policy \n on 1 May"),
                               colors=c(phs_colours("phs-magenta"), phs_colours("phs-teal"))
    )
 
@@ -518,7 +459,7 @@ plot_singlerate_chart <- function(dataset, data_name, yaxis_title, area = T, inc
   #Creating time trend plot
   p <- plot_ly(data = trend_data, x = ~Date) %>%
     add_lines(y = ~CumulativeRatePer100000, line = list(color = pal_overall[1]),
-              text = tooltip_trend, hoverinfo = "text") %>%
+              text = tooltip_trend, hoverinfo = "text", showlegend=FALSE) %>%
     #Layout
     layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
            yaxis = yaxis_plots, xaxis = xaxis_plots,
@@ -532,13 +473,12 @@ plot_singlerate_chart <- function(dataset, data_name, yaxis_title, area = T, inc
     fracs <- unlist(purrr::map(.x=xs,
                                .f= ~ as.numeric(as.Date(.x) - min(trend_data$Date))/as.numeric(max(trend_data$Date - min(trend_data$Date)))))
 
-    p %<>% add_lines_and_notes(xs=xs,
-                               ys=c(0.9, 0.6),
-                               fracs=fracs,
-                               notes=c("<b>From 5 Jan \n cases include \n PCR + LFD</b>",
-                                       "<b>Change in \n testing policy \n on 1 May</b>"),
-                               axs=c(-100, -50),
-                               ays=c(40, -40),
+    p %<>% add_lines_and_notes(dataframe=trend_data,
+                               xcol="Date",
+                               ycol="CumulativeRatePer100000",
+                               xs=xs,
+                               notes=c("From 5 Jan \n cases include \n PCR + LFD",
+                                       "Change in \n testing policy \n on 1 May"),
                                colors=c(phs_colours("phs-magenta"), phs_colours("phs-teal"))
     )
 
@@ -895,8 +835,8 @@ plot_contacttrace_Per_graph <- function(dataset, data_name, CTdata, yaxis_title,
                                xcol = "week_ending",
                                ycol = "% of Total Index Cases",
                                xs=xs,
-                               notes=c("<b>From 5 Jan \n cases include \n PCR + LFD</b>",
-                                       "<b>Change in \n testing policy \n on 1 May</b>"),
+                               notes=c("From 5 Jan \n cases include \n PCR + LFD",
+                                       "Change in \n testing policy \n on 1 May"),
                                colors=c(phs_colours("phs-magenta"), phs_colours("phs-teal"))
     )
 
@@ -947,8 +887,8 @@ plot_contacttrace_graph <- function(dataset, data_name, CTdata, yaxis_title, are
                                xcol = "week_ending",
                                ycol = "Number of Index Cases",
                                xs=xs,
-                               notes=c("<b>From 5 Jan \n cases include \n PCR + LFD</b>",
-                                       "<b>Change in \n testing policy \n on 1 May</b>"),
+                               notes=c("From 5 Jan \n cases include \n PCR + LFD",
+                                       "Change in \n testing policy \n on 1 May"),
                                colors=c(phs_colours("phs-magenta"), phs_colours("phs-teal"))
     )
 
@@ -1078,8 +1018,8 @@ if(include_vline){
                              xcol = "Week Ending",
                              ycol = "Average Number of Contacts",
                              xs=xs,
-                             notes=c("<b>From 5 Jan \n cases include \n PCR + LFD</b>",
-                                     "<b>Change in \n testing policy \n on 1 May</b>"),
+                             notes=c("From 5 Jan \n cases include \n PCR + LFD",
+                                     "Change in \n testing policy \n on 1 May"),
                              colors=c(phs_colours("phs-magenta"), phs_colours("phs-teal"))
   )
 
@@ -1302,8 +1242,8 @@ plot_prox_contacts_chart <- function(dataset, yaxis_title, xaxis_title, area = T
                                xcol = "Week beginning",
                                ycol = "Contact notifications",
                                xs=xs,
-                               notes=c("<b>From 5 Jan \n cases include \n PCR + LFD</b>",
-                                       "<b>Change in \n testing policy \n on 1 May</b>"),
+                               notes=c("From 5 Jan \n cases include \n PCR + LFD",
+                                       "Change in \n testing policy \n on 1 May"),
                                colors=c(phs_colours("phs-magenta"), phs_colours("phs-teal"))
     )
 
@@ -1358,8 +1298,8 @@ plot_prox_uploads_chart <- function(dataset, yaxis_title, xaxis_title, area = T,
                                xcol = "Week beginning",
                                ycol = "Exposure key uploads",
                                xs=xs,
-                               notes=c("<b>From 5 Jan \n cases include \n PCR + LFD</b>",
-                                       "<b>Change in \n testing policy \n on 1 May</b>"),
+                               notes=c("From 5 Jan \n cases include \n PCR + LFD",
+                                       "Change in \n testing policy \n on 1 May"),
                                colors=c(phs_colours("phs-magenta"), phs_colours("phs-teal"))
     )
 
@@ -1587,7 +1527,7 @@ plot_VaccineWastage <- function(dataset, area = T) {
                      xref = "paper",
                      y = 0.7,
                      x = frac1,
-                     text = "<b>Doses 1 & 2</b>",
+                     text = "Doses 1 & 2",
                      bordercolor = phs_colours("phs-purple"),
                      borderwidth = 2,
                      showarrow=FALSE)
@@ -1596,10 +1536,12 @@ plot_VaccineWastage <- function(dataset, area = T) {
                       xref = "paper",
                       y = 0.7,
                       x = frac2,
-                      text = "<b>All Doses</b>",
+                      text = "All Doses",
                       bordercolor = phs_colours("phs-purple"),
                       borderwidth = 2,
                       showarrow=FALSE)
+
+
 
   p %<>% add_vline("2021-12-01", color=phs_colours("phs-purple"), width=3.0) %>%
     layout(annotations=list(annotation1, annotation2))
