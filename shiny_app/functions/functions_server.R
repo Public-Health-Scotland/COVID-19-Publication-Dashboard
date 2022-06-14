@@ -1515,7 +1515,7 @@ plot_VaccineWastage <- function(dataset, area = T) {
                         "Percentage Wasted: {dataset$`% Wasted`}%")
 
   p <- plot_ly(data = dataset, x = ~`Month Beginning`) %>%
-    add_lines(y = ~`% Wasted`, line = list(color = pal_overall[3]),
+    add_bars(y = ~`% Wasted`, color = I(phs_colours("phs-teal-80")),
               text = tooltip_trend, hoverinfo = "text",
               name = "% Wasted") %>%
     #Layout
