@@ -36,10 +36,11 @@ setwd(path_main_script_location)
 report_date <- floor_date(today(), "week", 1) + 2
 
 
-dashboard_folder <- "/conf/PHSCOVID19_Analysis/COVID-19-Publication-Dashboard/"
-output_folder <- glue(dashboard_folder, "shiny_app/data/")
-input_data <- glue(dashboard_folder, "Dashboard Data Transfer/Input data/")
-test_output <- glue(dashboard_folder, "Dashboard Data Transfer/Test output/")
+# Dashboard main folder is located one up from data transfer
+dashboard_folder <- "../"
+# Output to weekly dashboard data folder (shared)
+input_data <- "/conf/C19_Test_and_Protect/Test & Protect - Warehouse/Weekly Dashboard Data/Input/"
+output_folder <- "/conf/C19_Test_and_Protect/Test & Protect - Warehouse/Weekly Dashboard Data/Output/"
 
 
 # Getting useful functions

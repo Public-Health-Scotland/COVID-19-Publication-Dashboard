@@ -24,7 +24,7 @@ g_cha %<>%
                 Total = `Sum:`)
 
 
-write.csv(g_cha, glue(test_output, "AssessmentHub.csv"), row.names = FALSE)
+write.csv(g_cha, glue(output_folder, "AssessmentHub.csv"), row.names = FALSE)
 
 rm(g_cha)
 
@@ -61,7 +61,7 @@ g_agesexdata %<>% left_join(i_population, by=c("age_group", "sex")) %>%
 # Rename All <- all in age_group column to match output
 g_agesexdata$age_group[g_agesexdata$age_group == "All"] <- "all"
 
-write.csv(g_agesexdata, glue(test_output, "AssessmentHub_AgeSex.csv"), row.names = FALSE)
+write.csv(g_agesexdata, glue(output_folder, "AssessmentHub_AgeSex.csv"), row.names = FALSE)
 
 rm(g_agesexdata)
 
@@ -78,7 +78,7 @@ deprivation$cases <- as.numeric(deprivation$cases)
 deprivation %<>% transform(cases_pc = cases/sum(cases))
 
 
-write.csv(deprivation, glue(test_output, "AssessmentHub_SIMD.csv"), row.names = FALSE)
+write.csv(deprivation, glue(output_folder, "AssessmentHub_SIMD.csv"), row.names = FALSE)
 
 rm(deprivation, o_cha_simd, i_sitrep)
 

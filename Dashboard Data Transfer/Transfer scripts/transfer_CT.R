@@ -42,7 +42,7 @@ dates <- seq(start_date, (start_date + 7*(length(`Week Ending`)-1)), by="week")
 g_a$`Week Ending` <- dates
 
 
-write.csv(g_a, glue(test_output, "ContactTracing_Average.csv"), row.names = FALSE)
+write.csv(g_a, glue(output_folder, "ContactTracing_Average.csv"), row.names = FALSE)
 
 #rm(extract, `Week Ending`, `Average Number of Contacts`, g_a, o_a, start_date, dates)
 
@@ -50,7 +50,7 @@ write.csv(g_a, glue(test_output, "ContactTracing_Average.csv"), row.names = FALS
 
 g_tp <- i_ctp$`Sheet 1`
 
-write.csv(g_tp, glue(test_output, "ContactTracing_Testing_Positive.csv"), row.names = FALSE)
+write.csv(g_tp, glue(output_folder, "ContactTracing_Testing_Positive.csv"), row.names = FALSE)
 
 ### c) Contact Time
 
@@ -77,7 +77,7 @@ g_cccc$week_ending <- format(as.Date(g_cccc$week_ending, format= "%Y%m%d"), form
 
 g_ct <- rbind(g_teic, g_ccic) %>% rbind(g_cccc)
 
-write.csv(g_ct, glue(test_output, "ContactTime.csv"), row.names = FALSE)
+write.csv(g_ct, glue(output_folder, "ContactTime.csv"), row.names = FALSE)
 
 #rm(g_tp, g_teic, g_ccic, g_cccc, g_ct, i_ccic, i_teic, i_cccc)
 
@@ -92,7 +92,7 @@ g_f <- i_wfr$`Sheet 1` %>%
 g_f$`Week Ending` <- format(as.Date(g_f$`Week Ending`, format= "%Y%m%d"), format="%Y-%m-%d")
 
 
-write.csv(g_f, glue(test_output, "ContactTracingFail.csv"), row.names = FALSE)
+write.csv(g_f, glue(output_folder, "ContactTracingFail.csv"), row.names = FALSE)
 
 #rm(g_f, i_wfr)
 
@@ -116,7 +116,7 @@ g_wc$`Week ending` <- dates
 g_wc %<>% dplyr::rename(`Incomplete Cases` = `Failed Cases`,
                         `Percentage Incomplete` = `Percentage Failed`)
 
-write.csv(g_wc, glue(test_output, "ContactTracingWeeklyCases.csv"), row.names = FALSE)
+write.csv(g_wc, glue(output_folder, "ContactTracingWeeklyCases.csv"), row.names = FALSE)
 
 #rm(g_wc, o_wc, start_date, dates)
 
@@ -129,7 +129,7 @@ g_wcum$Outputs[g_wcum$Outputs == "Distinct Deduplicated Contacts"] <- "Distinct 
 g_wcum$Outputs[g_wcum$Outputs == "Contacts"] <- "Total Contacts"
 g_wcum$Outputs[g_wcum$Outputs == "Failed Cases"] <- "Incomplete Cases"
 
-write.csv(g_wcum, glue(test_output, "ContactTracingWeeklyCumulative.csv"), row.names = FALSE)
+write.csv(g_wcum, glue(output_folder, "ContactTracingWeeklyCumulative.csv"), row.names = FALSE)
 
 #rm(g_wcum, i_ct, i_wco, i_whbo, i_wlao, i_ctp, i_coe, i_caso, o_f, o_tp, o_wcum, o_ct, i_casi)
 

@@ -11,7 +11,7 @@ i_lfd <- read_all_excel_sheets(glue(input_data, "{format(report_date -2,'%Y%m%d'
 ### a) Breakdown by HB
 g_lfd <- i_lfd$`NHS Board`
 
-write.csv(g_lfd, glue(test_output, "LFD_Board.csv"), row.names = FALSE)
+write.csv(g_lfd, glue(output_folder, "LFD_Board.csv"), row.names = FALSE)
 
 ### b) Weekly trend
 
@@ -19,7 +19,7 @@ g_lfdtrend <- i_lfd$`Number of Tests Weekly` %>%
   dplyr::rename(`Week Ending` = week_ending,
                 `Number of LFD Tests` = n) %>% head(-1) # Removing last entry as not complete
 
-write.csv(g_lfdtrend, glue(test_output, "LFD_Weekly.csv"), row.names = FALSE)
+write.csv(g_lfdtrend, glue(output_folder, "LFD_Weekly.csv"), row.names = FALSE)
 
 ### c) Weekly trend by test group
 
@@ -35,6 +35,6 @@ g_lfdtestgroup <- i_lfd$`Test Groups Dashboard` %>%
                                             `Percentage LFD positive`))
 
 
-write.csv(g_lfdtestgroup, glue(test_output, "LFD_TestGroup.csv"), row.names = FALSE)
+write.csv(g_lfdtestgroup, glue(output_folder, "LFD_TestGroup.csv"), row.names = FALSE)
 
 rm(i_lfd, g_lfd, g_lfdtestgroup)

@@ -93,7 +93,7 @@ hcw_transfer <- function(i_file, o_file, tag){
 
   g_file <- rbind(o_file, g_file)
 
-  write.csv(g_file, glue(test_output, "HCW_{tag}.csv"), row.names = FALSE)
+  write.csv(g_file, glue(output_folder, "HCW_{tag}.csv"), row.names = FALSE)
 
 
 }

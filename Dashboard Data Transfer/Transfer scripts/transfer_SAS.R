@@ -32,7 +32,7 @@ g_sasall <- o_sasall %>%
   filter(date < min(recent_sasall_info$date)) %>%
   rbind(recent_sasall_info)
 
-write.csv(g_sasall, glue(test_output, "SAS_all.csv"), row.names = FALSE)
+write.csv(g_sasall, glue(output_folder, "SAS_all.csv"), row.names = FALSE)
 
 rm(g_sasall, recent_sasall_info)
 
@@ -48,7 +48,7 @@ g_sas <- o_sas %>%
   filter(Date < min(recent_sas_info$Date)) %>%
   rbind(recent_sas_info)
 
-write.csv(g_sas, glue("Test output/SAS.csv"), row.names = FALSE)
+write.csv(g_sas, glue(output_folder, "SAS.csv"), row.names = FALSE)
 
 rm(g_sas, o_sas, recent_sas_info)
 
@@ -78,7 +78,7 @@ g_sas_agesex %<>% left_join(i_population, by=c("age_group", "sex")) %>%
   select(sex, age_group, number, rate) %>%
   arrange(factor(sex, levels = c("Male", "Female", "Unknown")))
 
-write.csv(g_sas_agesex, glue("Test output/SAS_AgeSex.csv"), row.names = FALSE)
+write.csv(g_sas_agesex, glue(output_folder, "SAS_AgeSex.csv"), row.names = FALSE)
 
 rm(g_sas_agesex, o_sas_agesex)
 
@@ -94,7 +94,7 @@ g_simd$cases <- as.numeric(g_simd$cases)
 
 g_simd %<>% mutate(cases_pc = cases/sum(cases))
 
-write.csv(g_simd, glue("Test output/SAS_SIMD.csv"), row.names = FALSE)
+write.csv(g_simd, glue(output_folder, "SAS_SIMD.csv"), row.names = FALSE)
 
 rm(g_simd, o_sas_simd)
 

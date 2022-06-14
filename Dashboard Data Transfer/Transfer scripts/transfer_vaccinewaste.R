@@ -7,6 +7,6 @@ i_vaccine_wastage <- read_all_excel_sheets(glue(input_data, "{format(report_date
 
 g_vaccine_wastage <- i_vaccine_wastage$Sheet1
 
-write.csv(g_vaccine_wastage, glue(test_output, "VaccineWastage.csv"), row.names = FALSE)
+write.csv(g_vaccine_wastage, glue(output_folder, "VaccineWastage.csv"), row.names = FALSE)
 
 rm(i_vaccine_wastage, g_vaccine_wastage)

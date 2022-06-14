@@ -16,7 +16,7 @@ g_cadm <- i_cadm %>%
   dplyr::rename(Date = week_ending,
                 Percent = p.admissions)
 
-write.csv(g_cadm, glue(test_output, "Cases_Adm.csv"), row.names = FALSE)
+write.csv(g_cadm, glue(output_folder, "Cases_Adm.csv"), row.names = FALSE)
 
 rm(i_cadm, g_cadm, o_cadm)
 
@@ -28,7 +28,7 @@ g_cag <- i_cag %>%
                 Age = age_band,
                 Cases = cases)
 
-write.csv(g_cag, glue(test_output, "Cases_AgeGrp.csv"), row.names = FALSE)
+write.csv(g_cag, glue(output_folder, "Cases_AgeGrp.csv"), row.names = FALSE)
 
 rm(g_cag, o_cag)
 
@@ -64,7 +64,7 @@ prop_adm = i_cag %>%
                 Admissions = admissions,
                 "Proportion Admitted" = p.admissions)
 
-write.csv(prop_adm, glue(test_output, "Prop_Admitted_AgeGrp.csv"), row.names=FALSE)
+write.csv(prop_adm, glue(output_folder, "Prop_Admitted_AgeGrp.csv"), row.names=FALSE)
 
 ### d) Cases by Age Group
 
@@ -74,6 +74,6 @@ adm_agegrp <- i_cag %>%
                 Age = age_band,
                 Admissions = admissions)
 
-write.csv(adm_agegrp, glue(test_output, "Admissions_AgeGrp.csv"), row.names = FALSE)
+write.csv(adm_agegrp, glue(output_folder, "Admissions_AgeGrp.csv"), row.names = FALSE)
 
 rm(prop_adm, i_cag, adm_agegrp)

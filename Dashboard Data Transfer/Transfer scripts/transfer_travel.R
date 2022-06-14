@@ -14,7 +14,7 @@ g_ctr <- i_t$`Region Totals` %>%
   dplyr::rename(Region = region,
                 Cases = cases)
 
-write.csv(g_ctr, glue(test_output, "ContactTracingRegions.csv"), row.names = FALSE)
+write.csv(g_ctr, glue(output_folder, "ContactTracingRegions.csv"), row.names = FALSE)
 
 ### b) Contact Tracing Interviews
 
@@ -22,6 +22,6 @@ g_cti <- i_t$`Number Cases`
 
 names(g_cti) <- c("CMS Outputs", "Number")
 
-write.csv(g_cti, glue(test_output, "ContactTracingInterviews.csv"), row.names = FALSE)
+write.csv(g_cti, glue(output_folder, "ContactTracingInterviews.csv"), row.names = FALSE)
 
 rm(g_cti, g_ctr, o_cti, o_ctr, i_t)
