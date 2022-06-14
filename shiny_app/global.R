@@ -170,7 +170,9 @@ VaccineWastage <- readRDS("data/VaccineWastage.rds") %>%
 
 VaccineWastageReason <- readRDS("data/VaccineWastageReason.rds") %>%
   dplyr::rename(`Reason for Wastage` = reason,
-                `% Wasted` = percentage)
+                `% Wasted` = percentage) %>%
+  mutate(`% Wasted` = 100*`% Wasted`) %>%
+  arrange(desc(`% Wasted`))
 
 mtu_heatmap_data <- readRDS("data/TCT_TestCentres.rds")
 mtu_heatmap_data2 <- mtu_heatmap_data %>%
