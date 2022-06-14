@@ -10,10 +10,6 @@ i_adm <- read_all_excel_sheets(glue("{adm_path}/Pubs {format(report_date-2, form
 read_rds_with_options <- create_loader_with_options(readRDS)
 i_chiadm <- read_rds_with_options(glue("{adm_path}/Pubs {format(report_date-2, format='%d%m')}/CHI_Admissions_Positives_{format(report_date-2, format='%Y-%d-%m')}.rds"))
 
-
-o_adm <- read.csv(glue("{output_folder}/Admissions.csv"), header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)
-o_adm_agesex <- read.csv(glue("{output_folder}/Admissions_AgeSex.csv"), header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)
-#o_adm_agebd <- read.csv(glue("{output_folder}/Admissions_AgeBD.csv"), header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)
 o_adm_simd <- read.csv(glue("{output_folder}/Admissions_SIMD.csv"), header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)
 
 
