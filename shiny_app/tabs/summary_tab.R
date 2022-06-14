@@ -265,7 +265,7 @@ ui_content <-  reactive({
   # text for titles of cut charts
   datasettrend <- case_when(data_explorer_selection() == "LabCases" ~ "Positive COVID-19 cases",
                             data_explorer_selection() == "LabCasesReinfections" ~ "COVID-19 Reinfections",
-                            data_explorer_selection() == "Admissions" ~ "COVID-19 admissions to hospital",
+                            data_explorer_selection() == "Admissions" ~ "Admissions to hospital 'with' COVID-19",
                             data_explorer_selection() == "ICU" ~ "COVID-19 admissions to ICU",
                             data_explorer_selection() == "NHS24" ~ "NHS 24 111 COVID-19 Contacts and COVID-19 Advice Helpline calls",
                             data_explorer_selection() == "AssessmentHub" ~ "Consultations",
@@ -274,7 +274,7 @@ ui_content <-  reactive({
   # text for titles of cut charts
   dataset <- case_when(data_explorer_selection() == "LabCases" ~ "Positive COVID-19 cases",
                        data_explorer_selection() == "LabCasesReinfections" ~ "COVID-19 Reinfections",
-                       data_explorer_selection() == "Admissions" ~ "COVID-19 admissions to hospital",
+                       data_explorer_selection() == "Admissions" ~ "Admissions to hospital 'with' COVID-19",
                        data_explorer_selection() == "ICU" ~ "COVID-19 admissions to ICU",
                        data_explorer_selection() == "NHS24" ~ "COVID-19 related NHS24 contacts",
                        data_explorer_selection() == "AssessmentHub" ~ "Individuals",
@@ -383,7 +383,7 @@ if (data_explorer_selection() == "LabCases") { #Positive Cases
           #          "More information available on the Public Health Scotland website",
           #          tags$a(href="https://publichealthscotland.scot/news/2022/february/covid-19-reporting-to-include-further-data-on-reinfections/",
           #                 "here.", class="externallink"))),
-    cut_charts_subheading(title = "Daily number of COVID-19 admissions to hospital",
+    cut_charts_subheading(title = "Daily number of admissions to hospital 'with' COVID-19",
                         source = data_source, data_name = "Admissions",
                         notes = notes,
                         subheading = subheading,
@@ -481,7 +481,7 @@ if (data_explorer_selection() == "LabCases") { #Positive Cases
                           simd_title = simd_title),
     plot_box_values("SAS - all incidents", valuename = "SAS_all"))
 }  else if (data_explorer_selection() == "Ethnicity_Chart") { # Ethnicity data
-  tagList(h3("COVID-19 admissions to hospital by ethnicity"),
+  tagList(h3("Admissions to hospital 'with' COVID-19 by ethnicity"),
           # p("COVID-19 related admissions have been identified as the following: A patient may have tested positive for COVID-19 14 days prior to admission to hospital,
           #   on the day of their admission or during their stay in hospital."),
           # p("Please note that the data on hospital admissions by ethnicity only refers to laboratory confirmed (PCR) COVID-19 tests."),
@@ -490,8 +490,8 @@ if (data_explorer_selection() == "LabCases") { #Positive Cases
           tags$li("Single click on an item in the legend to remove it from the plot"),
           tags$li("Double click on an item in the legend to view only that line"),
           actionButton("btn_dataset_modal", paste0("Data source: ", "RAPID"), icon = icon('question-circle')),
-          plot_box_values("COVID-19 admissions to hospital by ethnicity - Cases", valuename = "EthnicityChart"),
-          plot_box_values("COVID-19 admissions to hospital by ethnicity - Percentage", valuename = "EthnicityChartPercentage"))
+          plot_box_values("Admissions to hospital 'with' COVID-19 by ethnicity - Cases", valuename = "EthnicityChart"),
+          plot_box_values("Admissions to hospital 'with' COVID-19 by ethnicity - Percentage", valuename = "EthnicityChartPercentage"))
 }
 
 })
