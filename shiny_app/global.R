@@ -1,6 +1,6 @@
 ## Uncomment the line below if you are running the app locally from a different directory to the one given
 ## Make sure it is commented out before deploying the app
-#setwd("/conf/PHSCOVID19_Analysis/COVID-19-Publication-Dashboard/shiny_app")
+setwd("/conf/PHSCOVID19_Analysis/COVID-19-Publication-Dashboard/shiny_app")
 
 # Global
 ###############################################
@@ -167,6 +167,10 @@ VaccineWastage <- readRDS("data/VaccineWastage.rds") %>%
                 `Doses Administered` = number_of_doses_administered,
                 `Doses Wasted` = number_of_doses_wasted,
                 `% Wasted` = percentage_wasted)
+
+VaccineWastageReason <- readRDS("data/VaccineWastageReason.rds") %>%
+  dplyr::rename(`Reason for Wastage` = reason,
+                `% Wasted` = percentage)
 
 mtu_heatmap_data <- readRDS("data/TCT_TestCentres.rds")
 mtu_heatmap_data2 <- mtu_heatmap_data %>%

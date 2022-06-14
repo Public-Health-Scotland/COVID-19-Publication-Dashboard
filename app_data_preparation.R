@@ -378,6 +378,11 @@ saveRDS(CareHomeVisitsOutbreakOlder, "data/CareHomeVisitsOutbreakOlder.rds")
 VaccineWastage <- read_csv("data/VaccineWastage.csv")
 saveRDS(VaccineWastage, "data/VaccineWastage.rds")
 
+### Vaccine Wastage Reason
+
+VaccineWastageReason <- read_csv("data/VaccineWastageReason.csv")
+saveRDS(VaccineWastageReason, "data/VaccineWastageReason.rds")
+
 #### Community Testing ---------------------------------------------------------
 replace_zero <- function(x){
   case_when(x == 0 ~ NA_real_,
