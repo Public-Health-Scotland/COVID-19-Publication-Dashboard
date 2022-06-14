@@ -85,9 +85,6 @@ source("Transfer scripts/transfer_NHS24community.R")
 ##### 8. NHS Inform
 source("Transfer scripts/transfer_NHSInform.R")
 
-##### 9. Community Testing
-source("Transfer scripts/transfer_communitytesting.R")
-
 ##### 11. Care Homes
 source("Transfer scripts/transfer_carehomes.R")
 
@@ -101,9 +98,6 @@ source("Transfer scripts/transfer_selfhelp.R")
 # NB often not updated week on week
 #source("Transfer scripts/transfer_ethnicity.R")
 
-##### 17. NHS Proximity app
-source("Transfer scripts/transfer_proximityapp.R")
-
 ##### 18. LFD
 source("Transfer scripts/transfer_LFD.R")
 
@@ -111,11 +105,9 @@ source("Transfer scripts/transfer_LFD.R")
 source("Transfer scripts/transfer_los.R")
 
 ##### 23. Vaccine Wastage
-
 source("Transfer scripts/transfer_vaccinewaste.R")
 
-#### 24. Care Homes SG
-
+#### 24. Care Homes SG NB updated every 4 weeks
 source("Transfer scripts/transfer_carehomes_sg.R")
 
 
@@ -123,6 +115,9 @@ source("Transfer scripts/transfer_carehomes_sg.R")
 
 ##### 3. Community Hubs and Assessment
 #source("Transfer scripts/transfer_commhubsassessment.R")
+
+##### 9. Community Testing
+#source("Transfer scripts/transfer_communitytesting.R")
 
 ##### 10. Health Care Workers
 #source("Transfer scripts/transfer_HCW.R")
@@ -135,6 +130,9 @@ source("Transfer scripts/transfer_carehomes_sg.R")
 
 ##### 16. Quarantine
 #source("Transfer scripts/transfer_quarantine.R")
+
+##### 17. NHS Proximity app
+#source("Transfer scripts/transfer_proximityapp.R")
 
 ##### 19. Travel
 #source("Transfer scripts/transfer_travel.R")
