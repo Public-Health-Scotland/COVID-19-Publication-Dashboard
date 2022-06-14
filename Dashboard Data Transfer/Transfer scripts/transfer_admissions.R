@@ -12,6 +12,10 @@ i_chiadm <- read_rds_with_options(glue("{adm_path}/Pubs {format(report_date-2, f
 
 o_adm_simd <- read.csv(glue("{output_folder}/Admissions_SIMD.csv"), header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)
 
+# Filter CHI and 12 files down to last Tuesday
+i_chiadm %<>%filter(admission_date <= (report_date - 8))
+i_adm$`12 Admissions Positives` %<>% filter(admission_date <= (report_date - 8))
+
 
 ### a) Admissions
 
