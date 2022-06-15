@@ -62,7 +62,7 @@ datatab_table <- function(input_data_table,
   if(flip_order){
     tab_order <- list(list(0, "asc"))
   } else {
-    tab_order <- list(list(0, "desc"))
+    tab_order <- NULL
   }
 
   dt <- DT::datatable(input_data_table, style = 'bootstrap',
