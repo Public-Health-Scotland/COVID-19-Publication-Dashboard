@@ -38,3 +38,25 @@ g_lfdtestgroup <- i_lfd$`Test Groups Dashboard` %>%
 write.csv(g_lfdtestgroup, glue(output_folder, "LFD_TestGroup.csv"), row.names = FALSE)
 
 rm(i_lfd, g_lfd, g_lfdtestgroup)
+
+### d) Demographics file
+
+copy_bool = file.copy(
+  from="/conf/C19_Test_and_Protect/Test & Protect - Warehouse/LFD_demographics_extract/data/Demographics.csv",
+  to=glue("{output_folder}/Demographics.csv"))
+
+if (copy_bool == FALSE){
+  stop("Failed to copy Demographics.csv to input data. Check that Demographics.csv is in
+       \\nssstats01\C19_Test_and_Protect\Test & Protect - Warehouse\LFD_demographics_extract\data")
+}
+
+# Check modified time
+
+modified_time <- file.info(glue("{output_folder}/Demographics.csv"))$mtime
+
+if (mtime < report_date - weeks(1)){
+  stop("Demographics.csv file is out of date. Was last modified at {modified_time}.")
+}
+
+
+
