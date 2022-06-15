@@ -50,11 +50,12 @@ source("data_transfer_functions.R")
 # ------------------------------
 copy_bool <- file.copy(
   from="/conf/C19_Test_and_Protect/Test & Protect - Warehouse/Weekly Dashboard Data/population.csv",
-  to=glue("{input_data}/population.csv"))
+  to=glue("{input_data}/population.csv"),
+  overwrite=TRUE)
 
 if (copy_bool == FALSE){
   stop("Failed to copy population.csv to input data. Check that population.csv is in
-       \\nssstats01\C19_Test_and_Protect\Test & Protect - Warehouse\Weekly Dashboard Data")
+       /conf/C19_Test_and_Protect/Test & Protect - Warehouse/Weekly Dashboard Data/")
 }
 
 i_population <- read_csv_with_options(glue(input_data, "population.csv"))
