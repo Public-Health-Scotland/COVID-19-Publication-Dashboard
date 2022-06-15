@@ -385,6 +385,11 @@ saveRDS(CareHomeVisitsOutbreakOlder, "../shiny_app/data/CareHomeVisitsOutbreakOl
 VaccineWastage <- read_csv(glue("{output_folder}/VaccineWastage.csv"))
 saveRDS(VaccineWastage, "../shiny_app/data/VaccineWastage.rds")
 
+### Vaccine Wastage Reason
+
+VaccineWastageReason <- read_csv("data/VaccineWastageReason.csv")
+saveRDS(VaccineWastageReason, "data/VaccineWastageReason.rds")
+
 #### Community Testing ---------------------------------------------------------
 replace_zero <- function(x){
   case_when(x == 0 ~ NA_real_,
