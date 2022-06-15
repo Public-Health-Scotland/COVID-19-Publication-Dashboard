@@ -387,8 +387,8 @@ saveRDS(VaccineWastage, "../shiny_app/data/VaccineWastage.rds")
 
 ### Vaccine Wastage Reason
 
-VaccineWastageReason <- read_csv("data/VaccineWastageReason.csv")
-saveRDS(VaccineWastageReason, "data/VaccineWastageReason.rds")
+VaccineWastageReason <- read_csv(glue("{output_folder}/VaccineWastageReason.csv"))
+saveRDS(VaccineWastageReason, "../shiny_app/data/VaccineWastageReason.rds")
 
 #### Community Testing ---------------------------------------------------------
 replace_zero <- function(x){
