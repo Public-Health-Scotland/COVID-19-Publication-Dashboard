@@ -22,6 +22,10 @@ week_start <- format( floor_date( today()+1, unit='week', week_start=1 ), "%d%m%
 
 output_folder <- "/conf/C19_Test_and_Protect/Test & Protect - Warehouse/Weekly Dashboard Data/Output/"
 
+# Demographics
+Demographics <- read_csv(glue("{output_folder}/Demographics.csv"))
+saveRDS(Demographics, "../shiny_app/data/Demographics.rds")
+
 # Lab Cases
 LabCases <- read_csv(glue("{output_folder}/LabCases.csv")) %>%
   select_if(non_empty_cols)
