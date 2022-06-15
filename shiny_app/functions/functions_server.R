@@ -1512,6 +1512,7 @@ plot_VaccineWastage <- function(dataset, area = T) {
   yaxis_plots[["title"]] <- "Percentage of Doses Wasted"
 
   tooltip_trend <- glue("Month Beginning: {dataset$`Month Beginning`}<br>",
+                        "Doses Wasted: {format(dataset$`Doses Wasted`, big.mark=',')}<br>",
                         "Percentage Wasted: {dataset$`% Wasted`}%")
 
   p <- plot_ly(data = dataset, x = ~`Month Beginning`) %>%
