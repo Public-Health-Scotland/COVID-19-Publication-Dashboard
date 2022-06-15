@@ -48,6 +48,15 @@ source("data_transfer_functions.R")
 
 # Getting population information
 # ------------------------------
+copy_bool <- file.copy(
+  from="/conf/C19_Test_and_Protect/Test & Protect - Warehouse/Weekly Dashboard Data/population.csv",
+  to=glue("{input_data}/population.csv"))
+
+if (copy_bool == FALSE){
+  stop("Failed to copy population.csv to input data. Check that population.csv is in
+       \\nssstats01\C19_Test_and_Protect\Test & Protect - Warehouse\Weekly Dashboard Data")
+}
+
 i_population <- read_csv_with_options(glue(input_data, "population.csv"))
 
 i_population %<>% dplyr::rename(age_group = contains("MYE")) %>%
@@ -110,6 +119,7 @@ source("Transfer scripts/transfer_vaccinewaste.R")
 
 #### 24. Care Homes SG NB updated every 4 weeks
 source("Transfer scripts/transfer_carehomes_sg.R")
+
 
 
 ##### Archived -----
