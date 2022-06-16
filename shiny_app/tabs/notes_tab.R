@@ -35,24 +35,6 @@ output$cases_inf_notes <-renderUI({
     )
   }) # render UI close bracket
 
-# Cases & infection levels
-output$timeline_notes <-renderUI({
-
-  tagList(
-    p("Please note the following changes to testing policy in 2022:"),
-    tags$li("From 05 January 2022, reported cases included both PCR and LFD positive test results. Prior to this, cases consist only of positive PCR tests."),
-    tags$li("From 01 March 2022, reported cases include episodes of reinfection at least 90 days after initial infection."),
-    tags$li("From mid-April 2022, asymptomatic testing was no longer recommended. PCR testing continued for those with symptoms and LFD testing for hospital and care home visitors,
-      close contacts of an index case and to allow cases to finish their isolation after 7 days."),
-    tags$li("01 May 2022 marked the beginning of The ", tags$a("Scottish Government Test and Protect Transition Plan",
-                                                               href = "https://www.gov.scot/publications/test-protect-transition-plan/"),
-      ", which set out a shift in COVID-19 testing priorities, from population-wide testing to reduce transmission to targeted testing and surveillance. Therefore, reported cases will
-      primarily include clinical care settings, health and social care workforce, surveillance and outbreak response."),
-    bsButton("jump_to_inf_cases_n2", label = "Go to cases and infection levels charts"),
-    bsButton("jump_to_inf_cases_data_n2", label = "Go to cases and infection levels data")
-    )
-}) # render UI close bracket
-
 # LFDs
 output$LFD_notes <-renderUI({
 
@@ -78,8 +60,28 @@ output$LFD_notes <-renderUI({
       Please see ", tags$a("here", href = "https://www.gov.scot/collections/scottish-index-of-multiple-deprivation-2020/?utm_source=redirect&utm_medium=shorturl&utm_campaign=simd"),
       " for more information on SIMD."),
     br(),
+    bsButton("jump_to_timeline_2", label = "Go to timeline of changes in testing policy"),
     bsButton("jump_to_LFD_n", label = "Go to LFD testing tab"),
     bsButton("jump_to_LFDdemo_n", label = "Go to LFD demographics tab")
+  )
+}) # render UI close bracket
+
+# Testing policy timeline
+output$timeline_notes <-renderUI({
+
+  tagList(
+    p("Please note the following changes to testing policy in 2022:"),
+    tags$li("From 05 January 2022, reported cases included both PCR and LFD positive test results. Prior to this, cases consist only of positive PCR tests."),
+    tags$li("From 01 March 2022, reported cases include episodes of reinfection at least 90 days after initial infection."),
+    tags$li("From mid-April 2022, asymptomatic testing was no longer recommended. PCR testing continued for those with symptoms and LFD testing for hospital and care home visitors,
+      close contacts of an index case and to allow cases to finish their isolation after 7 days."),
+    tags$li("01 May 2022 marked the beginning of The ", tags$a("Scottish Government Test and Protect Transition Plan",
+                                                               href = "https://www.gov.scot/publications/test-protect-transition-plan/"),
+      ", which set out a shift in COVID-19 testing priorities, from population-wide testing to reduce transmission to targeted testing and surveillance. Therefore, reported cases will
+      primarily include clinical care settings, health and social care workforce, surveillance and outbreak response."),
+    br(),
+    bsButton("jump_to_inf_cases_n2", label = "Go to cases and infection levels charts"),
+    bsButton("jump_to_inf_cases_data_n2", label = "Go to cases and infection levels data")
     )
 }) # render UI close bracket
 
