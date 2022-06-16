@@ -27,6 +27,8 @@ library(readxl)
 # read_all_sheets
 library(friendlyloader)
 
+# Setting permisisons for files outputted
+Sys.umask("006")
 
 # Getting main script location for working directory
 path_main_script_location = dirname(rstudioapi::getActiveDocumentContext()$path)
