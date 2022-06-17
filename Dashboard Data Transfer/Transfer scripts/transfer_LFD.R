@@ -43,7 +43,7 @@ rm(i_lfd, g_lfd, g_lfdtestgroup)
 
 copy_bool = file.copy(
   from="/conf/C19_Test_and_Protect/Test & Protect - Warehouse/LFD_demographics_extract/data/Demographics.csv",
-  to=glue("{output_folder}/Demographics.csv"),
+  to=glue("{output_folder}Demographics.csv"),
   overwrite=TRUE)
 
 if (copy_bool == FALSE){
