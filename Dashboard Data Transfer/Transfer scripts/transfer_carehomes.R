@@ -31,6 +31,6 @@ g_carehome_timeseries <- read_excel_with_options(
   distinct()
 
 
-write.csv(g_carehome_timeseries, glue(test_output, "CareHomeTimeSeries.csv"), row.names = FALSE)
+write.csv(g_carehome_timeseries, glue(output_folder, "CareHomeTimeSeries.csv"), row.names = FALSE)
 
 rm(g_carehome_timeseries)

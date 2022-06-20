@@ -29,7 +29,7 @@ o_carehomes %<>% filter(`Week Ending` < week_ending_recent)
 g_carehomes <- rbind(o_carehomes, maintable)
 
 
-write.csv(g_carehomes, glue(test_output, "CareHomes.csv"), row.names = FALSE)
+write.csv(g_carehomes, glue(output_folder, "CareHomes.csv"), row.names = FALSE)
 
 rm(o_carehomes, i_carehomes, g_carehomes, summaryfigs, maintable, week_ending_recent)
 

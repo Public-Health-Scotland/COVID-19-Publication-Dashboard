@@ -3,8 +3,8 @@
 
 ##### 1. NHS24
 
-i_nhs24 <- read_all_excel_sheets(glue(dashboard_folder, "Dashboard Data Transfer/Input data/2.1 NHS24 Covid-19 Advice.xlsx"))
-i_sitrep <- read_all_excel_sheets(glue(dashboard_folder, "Dashboard Data Transfer/Input data/CoronavirusSitRep_{format(report_date -3,'%Y%m%d')}.xlsx"))
+i_nhs24 <- read_all_excel_sheets(glue(input_data, "2.1 NHS24 Covid-19 Advice.xlsx"))
+i_sitrep <- read_all_excel_sheets(glue(input_data, "CoronavirusSitRep_{format(report_date -3,'%Y%m%d')}.xlsx"))
 
 
 o_nhs24 <- read.csv(glue("{output_folder}/NHS24.csv"), header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)
@@ -32,7 +32,7 @@ helpline <- rbind(helpline_previousweeks, helpline_lastweek) %>%
 
 g_nhs24 %<>% left_join(helpline, by="Date")
 
-write.csv(g_nhs24, glue(dashboard_folder, "Dashboard Data Transfer/Test output/NHS24.csv"), row.names = FALSE)
+write.csv(g_nhs24, glue(output_folder, "NHS24.csv"), row.names = FALSE)
 
 rm(g_nhs24, helpline, helpline_lastweek, helpline_previousweeks, o_nhs24)
 
@@ -58,7 +58,7 @@ g_agesexdata %<>% left_join(i_population, by=c("age_group", "sex")) %>%
   select(sex, age_group, number, rate) %>%
   arrange(factor(sex, levels = c("Male", "Female", "Unknown")))
 
-write.csv(g_agesexdata, glue(dashboard_folder, "Dashboard Data Transfer/Test output/NHS24_AgeSex.csv"), row.names = FALSE)
+write.csv(g_agesexdata, glue(output_folder, "NHS24_AgeSex.csv"), row.names = FALSE)
 
 rm(g_agesexdata)
 
@@ -71,6 +71,6 @@ g_simd <- o_nhs24_simd %>%
   transform(cases_pc = cases/sum(cases))
 
 
-write.csv(g_simd, glue(dashboard_folder, "Dashboard Data Transfer/Test output/NHS24_SIMD.csv"), row.names = FALSE)
+write.csv(g_simd, glue(output_folder, "NHS24_SIMD.csv"), row.names = FALSE)
 
 rm(g_simd, deprivation, i_nhs24, i_sitrep, o_nhs24_agesex, o_nhs24_simd)

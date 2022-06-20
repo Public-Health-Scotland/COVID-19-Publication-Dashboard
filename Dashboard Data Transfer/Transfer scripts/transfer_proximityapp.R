@@ -12,6 +12,6 @@ g_ps <- i_ps$Weekly %>%
   dplyr::rename(`Contact notifications` = CONTACT_NOTIFICATION,
                 `Exposure key uploads` = UPLOAD)
 
-write.csv(g_ps, glue(test_output, "ProximityApp.csv"), row.names = FALSE)
+write.csv(g_ps, glue(output_folder, "ProximityApp.csv"), row.names = FALSE)
 
 rm(i_ps, o_ps, g_ps)

@@ -27,19 +27,22 @@ library(readxl)
 # read_all_sheets
 library(friendlyloader)
 
+# Setting permisisons for files outputted
+Sys.umask("006")
 
 # Getting main script location for working directory
 path_main_script_location = dirname(rstudioapi::getActiveDocumentContext()$path)
 
 setwd(path_main_script_location)
 
-report_date <- floor_date(today()-7, "week", 1) + 2
+report_date <- floor_date(today(), "week", 1) + 2
 
 
-dashboard_folder <- "/conf/PHSCOVID19_Analysis/COVID-19-Publication-Dashboard/"
-output_folder <- glue(dashboard_folder, "shiny_app/data/")
-input_data <- glue(dashboard_folder, "Dashboard Data Transfer/Input data/")
-test_output <- glue(dashboard_folder, "Dashboard Data Transfer/Test output/")
+# Dashboard main folder is located one up from data transfer
+dashboard_folder <- "../"
+# Output to weekly dashboard data folder (shared)
+input_data <- "/conf/C19_Test_and_Protect/Test & Protect - Warehouse/Weekly Dashboard Data/Input/"
+output_folder <- "/conf/C19_Test_and_Protect/Test & Protect - Warehouse/Weekly Dashboard Data/Output/"
 
 
 # Getting useful functions
@@ -47,7 +50,18 @@ source("data_transfer_functions.R")
 
 # Getting population information
 # ------------------------------
-i_population <- read_csv_with_options(glue(input_data, "population.csv")) %>%
+
+copy_bool <- file.copy(
+  from="/conf/C19_Test_and_Protect/Test & Protect - Warehouse/Weekly Dashboard Data/population.csv",
+  to=glue("{input_data}/population.csv"),
+  overwrite=TRUE)
+
+if (copy_bool == FALSE){
+  stop("Failed to copy population.csv to input data. Check that population.csv is in
+       /conf/C19_Test_and_Protect/Test & Protect - Warehouse/Weekly Dashboard Data/")
+}
+
+i_population <- read_csv_with_options(glue(input_data, "population.csv"))  %>%
   dplyr::rename(age_group = contains("MYE"))
 
 i_population %<>%
@@ -110,6 +124,7 @@ source("Transfer scripts/transfer_vaccinewaste.R")
 
 #### 24. Care Homes SG NB updated every 4 weeks
 source("Transfer scripts/transfer_carehomes_sg.R")
+
 
 
 ##### Archived -----

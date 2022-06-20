@@ -22,6 +22,6 @@ o_sh %<>% filter(Date < min(g_sh$Date))
 
 g_sh <- rbind(o_sh, g_sh)
 
-write.csv(g_sh, glue(test_output, "SelfHelpGuides.csv"), row.names = FALSE)
+write.csv(g_sh, glue(output_folder, "SelfHelpGuides.csv"), row.names = FALSE)
 
 rm(i_sitrep, o_sh, g_sh)

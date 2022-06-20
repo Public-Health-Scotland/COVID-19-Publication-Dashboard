@@ -25,6 +25,6 @@ o_nhs24community %<>%
 
 g_nhs24community <- rbind(o_nhs24community, g_nhs24community)
 
-write.csv(g_nhs24community, glue(test_output, "NHS24_community.csv"), row.names = FALSE)
+write.csv(g_nhs24community, glue(output_folder, "NHS24_community.csv"), row.names = FALSE)
 
 rm(o_nhs24community, g_nhs24community, i_endpoints)
