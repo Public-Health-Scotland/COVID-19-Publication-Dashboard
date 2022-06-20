@@ -47,10 +47,11 @@ source("data_transfer_functions.R")
 
 # Getting population information
 # ------------------------------
-i_population <- read_csv_with_options(glue(input_data, "population.csv"))
+i_population <- read_csv_with_options(glue(input_data, "population.csv")) %>%
+  dplyr::rename(age_group = contains("MYE"))
 
-i_population %<>% dplyr::rename(age_group = contains("MYE")) %>%
-  melt(id=c("age_group"), variable="sex") %>%
+i_population %<>%
+  pivot_longer(cols=c("Male", "Female", "Total"), values_to="value") %>%
   dplyr::rename(pop_number=value)
 
 i_population[i_population == "May-14"] <- "5-14"
