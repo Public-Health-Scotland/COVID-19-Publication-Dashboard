@@ -45,7 +45,6 @@ g_agesexdata <- i_nhs24$`Agegroup - gender` %>%
          age_group = X1) %>%
   adorn_totals(where=c("row", "col")) %>%
   pivot_longer(cols=c("Female", "Male", "Unknown", "Total"), values_to="number", names_to="sex") %>%
-  dplyr::rename(number=value) %>%
   select(sex, age_group, number) %>%
   arrange(factor(sex, levels = c("Male", "Female", "Unknown")))
 
