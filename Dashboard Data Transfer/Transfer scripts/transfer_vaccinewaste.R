@@ -8,7 +8,7 @@ i_vaccine_wastage <- read_all_excel_sheets(glue(input_data, "{format(report_date
 g_vaccine_wastage <- i_vaccine_wastage$Sheet1
 g_vaccine_wastage_reason <- i_vaccine_wastage$Sheet2
 
-write.csv(g_vaccine_wastage, glue(test_output, "VaccineWastage.csv"), row.names = FALSE)
-write.csv(g_vaccine_wastage_reason, glue(test_output, "VaccineWastageReason.csv"), row.names = FALSE)
+write.csv(g_vaccine_wastage, glue(output_folder, "VaccineWastage.csv"), row.names = FALSE)
+write.csv(g_vaccine_wastage_reason, glue(output_folder, "VaccineWastageReason.csv"), row.names = FALSE)
 
 rm(i_vaccine_wastage, g_vaccine_wastage, g_vaccine_wastage_reason)

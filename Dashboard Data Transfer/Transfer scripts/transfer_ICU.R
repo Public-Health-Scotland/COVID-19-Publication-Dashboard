@@ -3,8 +3,8 @@
 
 ###### 2. ICU
 
-i_icu_newpatient <- read_all_excel_sheets(glue(dashboard_folder, "Dashboard Data Transfer/Input data/{(report_date -2)}_ICU_newpatientadmissions_bydate.xlsx"))
-i_icu_cp_agesex_rate <- read_all_excel_sheets(glue(dashboard_folder, "Dashboard Data Transfer/Input data/{(report_date -2)}_ICU_cumulativepos_agesex_ratedata.xlsx"))
+i_icu_newpatient <- read_all_excel_sheets(glue(input_data, "{(report_date -2)}_ICU_newpatientadmissions_bydate.xlsx"))
+i_icu_cp_agesex_rate <- read_all_excel_sheets(glue(input_data, "{(report_date -2)}_ICU_cumulativepos_agesex_ratedata.xlsx"))
 
 ### a) ICU
 
@@ -12,7 +12,7 @@ g_icu <- i_icu_newpatient$Sheet1 %>%
   dplyr::rename(Date = `Date of First ICU Admission`,
                 Count = `Count of New COVID-19 Admissions per Day`)
 
-write.csv(g_icu, glue(dashboard_folder, "Dashboard Data Transfer/Test output/ICU.csv"), row.names = FALSE)
+write.csv(g_icu, glue(output_folder, "ICU.csv"), row.names = FALSE)
 
 ### b) ICU_AgeSex
 
@@ -63,6 +63,6 @@ for(agegroup in agegroups){
 
 g_icu_agesex %<>% arrange(factor(sex, levels = c("Male", "Female", "Total"))) %>% select(-c(population))
 
-write.csv(g_icu_agesex, glue(dashboard_folder, "Dashboard Data Transfer/Test output/ICU_AgeSex.csv"), row.names = FALSE)
+write.csv(g_icu_agesex, glue(output_folder, "ICU_AgeSex.csv"), row.names = FALSE)
 
 rm(g_icu, g_icu_agesex, i_icu_cp_agesex_rate, i_icu_newpatient)

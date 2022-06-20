@@ -11,7 +11,7 @@ o_ethnicitychart <- read.csv(glue("{output_folder}/Ethnicity_Chart.csv"), header
 ### a) Ethnicity
 
 g_ethnicity <- i_ethnicity %>%
-  mutate(Month_begining=(as.Date(Month_begining, format = "%d/%m/%Y"))) %>% 
+  mutate(Month_begining=(as.Date(Month_begining, format = "%d/%m/%Y"))) %>%
   dplyr::rename(Admissions = count,
                 Percentage = percentage) %>%
   mutate(Percentage = Percentage*100) %>%
@@ -20,7 +20,7 @@ g_ethnicity <- i_ethnicity %>%
 g_ethnicity$Admissions[g_ethnicity$Admissions < 5] <- "*"
 g_ethnicity$Percentage[g_ethnicity$Admissions == "*"] <- "*"
 
-write.csv(g_ethnicity, glue(test_output, "Ethnicity.csv"), row.names = FALSE)
+write.csv(g_ethnicity, glue(output_folder, "Ethnicity.csv"), row.names = FALSE)
 
 ### b) Ethnicity Chart
 
@@ -30,7 +30,7 @@ g_ethnicitychart <- g_ethnicity %>%
   clean_names()
 
 
-write.csv(g_ethnicitychart, glue(test_output, "Ethnicity_Chart.csv"), row.names = FALSE)
+write.csv(g_ethnicitychart, glue(output_folder, "Ethnicity_Chart.csv"), row.names = FALSE)
 
 rm(g_ethnicity, o_ethnicity, g_ethnicitychart, o_ethnicitychart, i_ethnicity)
 

@@ -29,7 +29,7 @@ g_adm %<>%
   mutate(Average7 = zoo::rollmean(TESTEDIN, k = 7, fill = NA, align="right"))
 
 
-write.csv(g_adm, glue(test_output, "Admissions.csv"), row.names = FALSE)
+write.csv(g_adm, glue(output_folder, "Admissions.csv"), row.names = FALSE)
 
 rm(g_adm)
 
@@ -69,7 +69,7 @@ g_adm_agebd <- suppress_rowwise(g_adm_agebd,
                                 constraints = 1)
 
 
-write.csv(g_adm_agebd, glue(test_output, "Admissions_AgeBD.csv"), row.names = FALSE)
+write.csv(g_adm_agebd, glue(output_folder, "Admissions_AgeBD.csv"), row.names = FALSE)
 
 rm(g_adm_agebd,i,selection, mask, num_stars, minloc)
 
@@ -139,7 +139,7 @@ g_adm_agesex %<>% left_join(i_population, by=c("age_group", "sex")) %>%
   arrange(factor(age_group, levels= c("0-4", "5-14", "15-19", "20-24", "25-44","45-64", "65-74", "75-84", "85+", "Unknown"))) %>%
   arrange(factor(sex, levels = c("Male", "Female", "Unknown")))
 
-write.csv(g_adm_agesex, glue(test_output, "Admissions_AgeSex.csv"), row.names = FALSE)
+write.csv(g_adm_agesex, glue(output_folder, "Admissions_AgeSex.csv"), row.names = FALSE)
 
 rm(g_adm_agesex, num, pop, newline, agegroups, male, female)
 
@@ -154,7 +154,7 @@ g_adm_simd <- i_chiadm %>%
 
 g_adm_simd$SIMD <- o_adm_simd$SIMD
 
-write.csv(g_adm_simd, glue(test_output, "Admissions_SIMD.csv"), row.names = FALSE)
+write.csv(g_adm_simd, glue(output_folder, "Admissions_SIMD.csv"), row.names = FALSE)
 
 rm(g_adm_simd, adm_path)
 

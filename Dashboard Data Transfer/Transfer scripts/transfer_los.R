@@ -7,4 +7,4 @@ los = read_csv_with_options(glue(input_data, "Hospital Admissions/{format(report
 names(los) = c("Age Group", "Week Ending", "Length of Stay", "n", "prop")
 
 
-write.csv(los, glue(test_output, "Length_of_Stay.csv"), row.names=FALSE)
+write.csv(los, glue(output_folder, "Length_of_Stay.csv"), row.names=FALSE)

@@ -32,7 +32,7 @@ g_labcases %<>%
   mutate(Average7 = zoo::rollmean(NumberCasesperDay, k = 7, fill = NA, align="right")) %>%
   mutate(CumulativeRatePer100000 = 100000 * Cumulative / pop_grandtotal)
 
-write.csv(g_labcases, glue(test_output, "LabCases.csv"), row.names = FALSE)
+write.csv(g_labcases, glue(output_folder, "LabCases.csv"), row.names = FALSE)
 
 ### b) Reinfections
 
@@ -47,7 +47,7 @@ g_reinf %<>%
   mutate(Average7 = zoo::rollmean(NumberCasesperDay, k = 7, fill = NA, align="right")) %>%
   mutate(CumulativeRatePer100000 = 100000 * Cumulative / pop_grandtotal)
 
-write.csv(g_reinf, glue(test_output, "LabCasesReinfections.csv"), row.names = FALSE)
+write.csv(g_reinf, glue(output_folder, "LabCasesReinfections.csv"), row.names = FALSE)
 
 rm(g_labcases, pop_grandtotal, g_reinf)
 
@@ -81,7 +81,7 @@ g_lagesex %<>%
 
 g_lagesex$age_group[g_lagesex$age_group == "All"] <- "All Ages"
 
-write.csv(g_lagesex, glue(test_output, "LabCases_AgeSex.csv"), row.names = FALSE)
+write.csv(g_lagesex, glue(output_folder, "LabCases_AgeSex.csv"), row.names = FALSE)
 
 rm(g_lagesex)
 
@@ -103,7 +103,7 @@ g_lsimd %<>%
                 SIMD = `SIMD Quintile`)
 
 
-write.csv(g_lsimd, glue(test_output, "LabCases_SIMD.csv"), row.names = FALSE)
+write.csv(g_lsimd, glue(output_folder, "LabCases_SIMD.csv"), row.names = FALSE)
 
 rm(g_lsimd)
 
@@ -116,6 +116,6 @@ o_barchart <- i_barchart %>%
                 Date = `Week ending`) %>%
   select(Date, Age, Cases)
 
-write.csv(o_barchart, glue(test_output, "LabCases_Age.csv"), row.names=FALSE)
+write.csv(o_barchart, glue(output_folder, "LabCases_Age.csv"), row.names=FALSE)
 
 

@@ -16,6 +16,6 @@ o_inform %<>% filter(date < min(last_week_data$date))
 
 g_inform <- rbind(o_inform, last_week_data)
 
-write.csv(g_inform, glue(test_output, "NHSInform.csv"), row.names = FALSE)
+write.csv(g_inform, glue(output_folder, "NHSInform.csv"), row.names = FALSE)
 
 rm(g_inform, o_inform, last_week_data, i_sitrep)
