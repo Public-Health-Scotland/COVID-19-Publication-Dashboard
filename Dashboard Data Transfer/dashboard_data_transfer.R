@@ -11,8 +11,8 @@ library(glue)
 library(openxlsx)
 library(lubridate)
 library(janitor)
-library(reshape)
-library(reshape2)
+#library(reshape)
+#library(reshape2)
 library(stringr)
 library(data.table)
 library(stats)
@@ -33,7 +33,7 @@ path_main_script_location = dirname(rstudioapi::getActiveDocumentContext()$path)
 
 setwd(path_main_script_location)
 
-report_date <- floor_date(today(), "week", 1) + 2
+report_date <- floor_date(today()-7, "week", 1) + 2
 
 
 dashboard_folder <- "/conf/PHSCOVID19_Analysis/COVID-19-Publication-Dashboard/"
@@ -51,7 +51,7 @@ i_population <- read_csv_with_options(glue(input_data, "population.csv")) %>%
   dplyr::rename(age_group = contains("MYE"))
 
 i_population %<>%
-  pivot_longer(cols=c("Male", "Female", "Total"), values_to="value") %>%
+  pivot_longer(cols=c("Male", "Female", "Total"), values_to="value", names_to="sex") %>%
   dplyr::rename(pop_number=value)
 
 i_population[i_population == "May-14"] <- "5-14"
