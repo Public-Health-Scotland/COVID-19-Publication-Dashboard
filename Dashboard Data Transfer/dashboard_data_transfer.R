@@ -117,10 +117,15 @@ source("Transfer scripts/transfer_LFD.R")
 ##### 22. Length of Stay
 source("Transfer scripts/transfer_los.R")
 
+
+#############################
+###### Updated monthly ######
+#############################
+
 ##### 23. Vaccine Wastage
 source("Transfer scripts/transfer_vaccinewaste.R")
 
-#### 24. Care Homes SG NB updated every 4 weeks
+##### 24. Care Homes SG
 source("Transfer scripts/transfer_carehomes_sg.R")
 
 
