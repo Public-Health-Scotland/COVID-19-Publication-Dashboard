@@ -52,8 +52,7 @@ Admissions <- read_csv(glue("{output_folder}/Admissions.csv")) %>%
   select_if(non_empty_cols)
 Admissions <- Admissions %>%
   dplyr::rename(Date = ADMISSION_DATE1,
-                Count = TESTEDIN)%>%
-  mutate(Date = ymd(Date))
+                Count = TESTEDIN)
 
 saveRDS(Admissions, "shiny_app/data/Admissions.rds")
 
