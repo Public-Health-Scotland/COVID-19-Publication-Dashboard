@@ -75,6 +75,8 @@ function(input, output, session) {
     updateCollapse(session, "collapse_notes", open = "Cases & infection levels")})
   observeEvent(input$jump_to_timeline, {updateTabsetPanel(session, "intabset", selected = "Notes")
     updateCollapse(session, "collapse_notes", open = "Changes in COVID-19 testing policy")})
+  observeEvent(input$jump_to_timeline_2, {updateTabsetPanel(session, "intabset", selected = "Notes")
+    updateCollapse(session, "collapse_notes", open = "Changes in COVID-19 testing policy")})
   observeEvent(input$jump_to_notes_LFD, {updateTabsetPanel(session, "intabset", selected = "Notes")
     updateCollapse(session, "collapse_notes", open = "Lateral Flow Devices (LFDs)")})
   observeEvent(input$jump_to_notes_LFDdemo, {updateTabsetPanel(session, "intabset", selected = "Notes")

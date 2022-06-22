@@ -6,7 +6,7 @@ output$cases_inf_notes <-renderUI({
   tagList(
     h4("Reported cases"),
     p("Reported cases include both polymerase chain reaction (PCR) and lateral flow device (LFD) positive test results."),
-    p("These data are published on Mondays and Thursdays on the ",
+    p("These data are published on Wednesdays on the ",
       tags$a("COVID-19 Dashboard", href = "https://public.tableau.com/app/profile/phs.covid.19/viz/COVID-19DailyDashboard_15960160643010/Dailyupdate"),
       ". The number of daily confirmed cases may differ slightly from data published on this dashboard because some
             cases are added retrospectively and assigned to days based on the most up to date records. Overall
@@ -20,12 +20,10 @@ output$cases_inf_notes <-renderUI({
       for certain groups to protect high risk settings and support clinical care, and will no longer be representative of all COVID-19 cases in Scotland"),
     # This point will need removed when case data goes from daily to weekly
     tags$li("The drop in the number of confirmed cases at weekends likely reflects that laboratories are doing fewer tests at the weekend."),
-    tags$li("Reported cases prior to 01 March 2022 were based on an individual's first positive test result only."),
     tags$li("Due to changes in testing strategy outlined below, caution is advised when comparing trends over time."),
     br(),
     h4("Reinfections"),
-    p("From 01 March 2022, episodes of reinfection are included in COVID-19 reporting. Prior to this date, COVID-19 cases were based on an individual's
-      first positive test only. The new daily calculation includes both new infections and possible reinfections. Possible reinfections are defined as
+    p("Possible reinfections are defined as
       individuals who test positive, by PCR or LFD, 90 days or more after their last positive test."),
       p("More information is available on the ",
         tags$a("Public Health Scotland website", href = "https://publichealthscotland.scot/news/2022/february/covid-19-reporting-to-include-further-data-on-reinfections/"),
@@ -37,36 +35,18 @@ output$cases_inf_notes <-renderUI({
     )
   }) # render UI close bracket
 
-# Cases & infection levels
-output$timeline_notes <-renderUI({
-
-  tagList(
-    p("Please note the following changes to testing policy in 2022:"),
-    tags$li("From 05 January 2022, reported cases included both PCR and LFD positive test results. Prior to this, cases consist only of positive PCR tests."),
-    tags$li("From 01 March 2022, reported cases include episodes of reinfection at least 90 days after initial infection."),
-    tags$li("From mid-April 2022, asymptomatic testing was no longer recommended. PCR testing continued for those with symptoms and LFD testing for hospital and care home visitors,
-      close contacts of an index case and to allow cases to finish their isolation after 7 days."),
-    tags$li("01 May 2022 marked the beginning of The ", tags$a("Scottish Government Test and Protect Transition Plan",
-                                                               href = "https://www.gov.scot/publications/test-protect-transition-plan/"),
-      ", which set out a shift in COVID-19 testing priorities, from population-wide testing to reduce transmission to targeted testing and surveillance. Therefore, reported cases will
-      primarily include clinical care settings, health and social care workforce, surveillance and outbreak response."),
-    bsButton("jump_to_inf_cases_n2", label = "Go to cases and infection levels charts"),
-    bsButton("jump_to_inf_cases_data_n2", label = "Go to cases and infection levels data")
-    )
-}) # render UI close bracket
-
 # LFDs
 output$LFD_notes <-renderUI({
 
   tagList(
     p("LFDs are clinically validated swab antigen tests that do not require a laboratory for processing, producing rapid results at the location of the test.
-      From November 2020, LFD tests were made available across a wide range of workforces and universally to the public. From 26 April 2021, LFD testing expanded
+      From November 2020, LFD tests were made available across a wide range of workforces and universally to the public, and from 26 April 2021, LFD testing expanded
       to include asymptomatic testing."),
-    p("As of 01 May 2022, LFDs are no longer distributed for universal offer, but are still available for those visiting a hospital or care home, unpaid carers,
+    p("Although LFDs are no longer distributed for universal offer, they are still available for those visiting a hospital or care home, unpaid carers,
       those eligible for COVID treatments and those applying for the self-isolation support grant."),
     p("For information regarding LFD testing during term time as part of the Schools Asymptomatic Testing Programme, please visit the ",
       tags$a("COVID-19 Education Surveillance Report", href = "https://scotland.shinyapps.io/phs-covid19-education/_w_f53417bb/#tab-9333-2"), "."),
-    p(strong("Source: UK Government self-reported / NSS Portal (health and social care cohorts)")),
+    p(strong("Source: UK Government self-reported / NSS Portal")),
     br(),
     p("Please note:"),
     tags$li("Test results and test group are self-reported, so numbers of tests and positives do not include tests which have not been registered on the UK Gov Portal."),
@@ -80,8 +60,28 @@ output$LFD_notes <-renderUI({
       Please see ", tags$a("here", href = "https://www.gov.scot/collections/scottish-index-of-multiple-deprivation-2020/?utm_source=redirect&utm_medium=shorturl&utm_campaign=simd"),
       " for more information on SIMD."),
     br(),
+    bsButton("jump_to_timeline_2", label = "Go to timeline of changes in testing policy"),
     bsButton("jump_to_LFD_n", label = "Go to LFD testing tab"),
     bsButton("jump_to_LFDdemo_n", label = "Go to LFD demographics tab")
+  )
+}) # render UI close bracket
+
+# Testing policy timeline
+output$timeline_notes <-renderUI({
+
+  tagList(
+    p("Please note the following changes to testing policy in 2022:"),
+    tags$li("From 05 January 2022, reported cases included both PCR and LFD positive test results. Prior to this, cases consist only of positive PCR tests."),
+    tags$li("From 01 March 2022, reported cases include episodes of reinfection at least 90 days after initial infection."),
+    tags$li("From mid-April 2022, asymptomatic testing was no longer recommended. PCR testing continued for those with symptoms and LFD testing for hospital and care home visitors,
+      close contacts of an index case and to allow cases to finish their isolation after 7 days."),
+    tags$li("01 May 2022 marked the beginning of The ", tags$a("Scottish Government Test and Protect Transition Plan",
+                                                               href = "https://www.gov.scot/publications/test-protect-transition-plan/"),
+      ", which set out a shift in COVID-19 testing priorities, from population-wide testing to reduce transmission to targeted testing and surveillance. Therefore, reported cases will
+      primarily include clinical care settings, health and social care workforce, surveillance and outbreak response."),
+    br(),
+    bsButton("jump_to_inf_cases_n2", label = "Go to cases and infection levels charts"),
+    bsButton("jump_to_inf_cases_data_n2", label = "Go to cases and infection levels data")
     )
 }) # render UI close bracket
 
