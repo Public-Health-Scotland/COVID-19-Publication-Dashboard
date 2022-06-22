@@ -26,7 +26,11 @@ g_adm[is.na(g_adm)] <- 0
 g_adm %<>%
   dplyr::rename(ADMISSION_DATE1 = admission_date,
                 TESTEDIN = TestDIn) %>%
-  mutate(Average7 = zoo::rollmean(TESTEDIN, k = 7, fill = NA, align="right"))
+  mutate(Average7 = zoo::rollmean(TESTEDIN, k = 7, fill = NA, align="right")) %>%
+  mutate(ADMISSION_DATE1 = case_when(
+    ADMISSION_DATE1 > (report_date-10) ~ paste0(as.character(ADMISSION_DATE1), "p"),
+    TRUE ~ as.character(ADMISSION_DATE1))
+    )
 
 
 write.csv(g_adm, glue(output_folder, "Admissions.csv"), row.names = FALSE)
@@ -36,8 +40,8 @@ rm(g_adm)
 ### b) Admissions_AgeBD
 
 g_adm_agebd <- i_chiadm %>%
-  mutate(Admission_date_week_ending_Tuesday = ceiling_date(
-    as.Date(admission_date),unit="week",week_start=2, change_on_boundary=FALSE)
+  mutate(Admission_date_week_ending_Sunday = ceiling_date(
+    as.Date(admission_date),unit="week",week_start=7, change_on_boundary=FALSE)
   ) %>%
   mutate(
     age_year = as.numeric(age_year),
@@ -53,12 +57,12 @@ g_adm_agebd <- i_chiadm %>%
                                       age_year < 80 ~ '75-79',
                                       age_year < 200 ~ '80+',
                                       is.na(age_year) ~ 'Unknown')) %>%
-  group_by(Admission_date_week_ending_Tuesday, custom_age_group) %>%
+  group_by(Admission_date_week_ending_Sunday, custom_age_group) %>%
   summarise(count_by_agegroup = n()) %>%
   ungroup() %>%
   pivot_wider(names_from = custom_age_group, values_from = count_by_agegroup) %>%
   adorn_totals(where=c("col")) %>%
-  select(Admission_date_week_ending_Tuesday,
+  select(Admission_date_week_ending_Sunday,
          `Under 18`, `18-29`, `30-39`, `40-49`, `50-54`, `55-59`, `60-64`, `65-69`, `70-74`, `75-79`, `80+`, Total)
 
 # Apply suppression
@@ -66,7 +70,11 @@ g_adm_agebd <- suppress_rowwise(g_adm_agebd,
                                 suppress_under = 5,
                                 cols_to_ignore = 1,
                                 replace_with = "*",
-                                constraints = 1)
+                                constraints = 1)  %>%
+  mutate(Admission_date_week_ending_Sunday = case_when(
+    Admission_date_week_ending_Sunday > (report_date-10) ~ paste0(as.character(Admission_date_week_ending_Sunday), "p"),
+    TRUE ~ as.character(Admission_date_week_ending_Sunday))
+  )
 
 
 write.csv(g_adm_agebd, glue(output_folder, "Admissions_AgeBD.csv"), row.names = FALSE)
