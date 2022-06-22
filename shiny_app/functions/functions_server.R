@@ -61,6 +61,7 @@ plot_overall_chart <- function(dataset, data_name,  area = T, include_vline=F) {
 
   # Filtering dataset to include only overall figures
   trend_data <- dataset
+  trend_data$Date<- ymd(trend_data$Date)
 
   ###############################################.
   # Creating objects that change depending on dataset
@@ -1448,8 +1449,8 @@ los_chart_fn = function(data) {
                                      "24-48 Hours",
                                      ">= 48 Hours"))) %>%
       mutate(Percent = (prop * 100))
-    
-    tooltip_trend <- glue("Week Ending: {table$`Week Ending`}<br>", 
+
+    tooltip_trend <- glue("Week Ending: {table$`Week Ending`}<br>",
                           "Length of Stay: {table$`Length of Stay`}<br>",
                           "Percent: {round(table$Percent, 1)}%"
                           )
