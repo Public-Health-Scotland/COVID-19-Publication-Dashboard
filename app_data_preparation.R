@@ -368,21 +368,13 @@ saveRDS(CareHomeTimeSeries, "shiny_app/data/CareHomeTimeSeries.rds")
 
 ### Care home SG visit outbreak status -----------------------------------------
 
-CareHomeVisitsNotes <- read_csv(glue("{output_folder}/CareHomeVisitsNotes.csv"))
-saveRDS(CareHomeVisitsNotes, "shiny_app/data/CareHomeVisitsNotes.rds")
+# Find all care home visits files
+CareHomeVisitsFiles <- list.files(path=output_folder, pattern="CareHomeVisits*")
 
-CareHomeVisitsBoard <- read_csv(glue("{output_folder}/CareHomeVisitsBoard.csv"))
-saveRDS(CareHomeVisitsBoard, "shiny_app/data/CareHomeVisitsBoard.rds")
-
-CareHomeVisitsOutbreak <- read_csv(glue("{output_folder}/CareHomeVisitsOutbreak.csv"))
-saveRDS(CareHomeVisitsOutbreak, "shiny_app/data/CareHomeVisitsOutbreak.rds")
-
-CareHomeVisitsBoardOlder <- read_csv(glue("{output_folder}/CareHomeVisitsBoardOlder.csv"))
-saveRDS(CareHomeVisitsBoardOlder, "shiny_app/data/CareHomeVisitsBoardOlder.rds")
-
-CareHomeVisitsOutbreakOlder <- read_csv(glue("{output_folder}/CareHomeVisitsOutbreakOlder.csv"))
-saveRDS(CareHomeVisitsOutbreakOlder, "shiny_app/data/CareHomeVisitsOutbreakOlder.rds")
-
+for(file in CareHomeVisitsFiles){
+  readfile <- read_csv(paste0(output_folder, "/",file))
+  saveRDS(readfile, paste0("shiny_app/data/", gsub(".csv", ".rds", file)))
+}
 
 ### Vaccine Wastage
 
