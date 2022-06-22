@@ -31,7 +31,9 @@ output$download_care_home_timeseries_data <- downloadHandler(
 
 output$CareHomeVisitsBoardTable <- DT::renderDataTable({
 
-  byboard_data_table(CareHomeVisitsBoard,
+  col_select <- paste0("date_", format(as.Date(input$care_home_visits_date_table1, format="%d %B %Y")+1, "%Y%m%d"))
+
+  byboard_data_table(CareHomeVisitsBoard[[col_select]],
                      board_name_column = "NHS Board",
                      add_separator_cols= c(2:10),
                      add_percentage_cols = c(11,12),
@@ -43,7 +45,9 @@ output$CareHomeVisitsBoardTable <- DT::renderDataTable({
 
 output$CareHomeVisitsOutbreakTable <- DT::renderDataTable({
 
-  datatab_table(CareHomeVisitsOutbreak,
+  col_select <- paste0("date_", format(as.Date(input$care_home_visits_date_table2, format="%d %B %Y")+1, "%Y%m%d"))
+
+  datatab_table(CareHomeVisitsOutbreak[[col_select]],
                 add_separator_cols= c(2:10),
                 highlight_column = "Outbreak status",
                 flip_order=TRUE
@@ -54,7 +58,9 @@ output$CareHomeVisitsOutbreakTable <- DT::renderDataTable({
 
 output$CareHomeVisitsBoardOlderTable <- DT::renderDataTable({
 
-  byboard_data_table(CareHomeVisitsBoardOlder,
+  col_select <- paste0("date_", format(as.Date(input$care_home_visits_date_table3a, format="%d %B %Y")+1, "%Y%m%d"))
+
+  byboard_data_table(CareHomeVisitsBoardOlder[[col_select]],
                      board_name_column = "NHS Board",
                      add_separator_cols= c(2:10),
                      add_percentage_cols = c(11,12),
@@ -66,7 +72,9 @@ output$CareHomeVisitsBoardOlderTable <- DT::renderDataTable({
 
 output$CareHomeVisitsNotOlderTable <- DT::renderDataTable({
 
-  byboard_data_table(CareHomeVisitsNotOlder,
+  col_select <- paste0("date_", format(as.Date(input$care_home_visits_date_table3b, format="%d %B %Y")+1, "%Y%m%d"))
+
+  byboard_data_table(CareHomeVisitsOutbreakOlder[[col_select]],
                      board_name_column = "NHS Board",
                      add_separator_cols= c(2:10),
                      add_percentage_cols = c(11,12),
@@ -80,7 +88,9 @@ output$CareHomeVisitsNotOlderTable <- DT::renderDataTable({
 
 # Table 1 download
 care_home_visits_data_download <- reactive({
-  CareHomeVisitsBoard
+
+  col_select <- paste0("date_", format(as.Date(input$care_home_visits_date_table1, format="%d %B %Y")+1, "%Y%m%d"))
+  CareHomeVisitsBoard[[col_select]]
 })
 
 output$care_home_visits_data_download <- downloadHandler(
@@ -93,7 +103,9 @@ output$care_home_visits_data_download <- downloadHandler(
 
 # Table 2 download
 care_home_outbreak_data_download <- reactive({
-  CareHomeVisitsOutbreak
+
+  col_select <- paste0("date_", format(as.Date(input$care_home_visits_date_table2, format="%d %B %Y")+1, "%Y%m%d"))
+  CareHomeVisitsOutbreak[[col_select]]
 })
 
 output$care_home_outbreak_data_download <- downloadHandler(
@@ -106,7 +118,9 @@ output$care_home_outbreak_data_download <- downloadHandler(
 
 # Table 3a
 care_home_visits_older_data_download <- reactive({
-  CareHomeVisitsBoardOlder
+
+  col_select <- paste0("date_", format(as.Date(input$care_home_visits_date_table3a, format="%d %B %Y")+1, "%Y%m%d"))
+  CareHomeVisitsBoardOlder[[col_select]]
 })
 
 output$care_home_visits_older_data_download <- downloadHandler(
@@ -119,7 +133,9 @@ output$care_home_visits_older_data_download <- downloadHandler(
 
 # Table 3b
 care_home_visits_not_older_data_download <- reactive({
-  CareHomeVisitsNotOlder
+
+  col_select <- paste0("date_", format(as.Date(input$care_home_visits_date_table3b, format="%d %B %Y")+1, "%Y%m%d"))
+  CareHomeVisitsOutbreakOlder[[col_select]]
 })
 
 output$download_care_home_visits_not_older_data <- downloadHandler(

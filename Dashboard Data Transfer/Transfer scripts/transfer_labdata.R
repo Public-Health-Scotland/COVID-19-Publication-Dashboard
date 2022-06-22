@@ -53,22 +53,18 @@ rm(g_labcases, pop_grandtotal, g_reinf)
 
 ### c) LabCases_AgeSex
 
-#g_lagesex <- i_labdata[5:16,7:11]
-
 g_lagesex <- i_labdata$`Age group and sex` %>% head(-4)
-
-#names(g_lagesex) <- g_lagesex[1,]
 
 g_lagesex %<>%
   dplyr::rename(Total = `All Sex`,
                 age_group = `Age group (years)`) %>%
-  select(-`%agegroup`)
+  select(-`%agegroup`) %>%
+  mutate(Unknown = as.character(Unknown))
 
 g_lagesex$age_group[g_lagesex$age_group == "Total"] <- "All"
 
 g_lagesex %<>%
-  reshape2::melt(id=c("age_group"), variable="sex") %>%
-  dplyr::rename(number = value) %>%
+  pivot_longer(cols=c("Female", "Male", "Unknown", "Total"), values_to="number", names_to="sex") %>%
   select(sex, age_group, number)
 
 g_lagesex$number <- as.numeric(g_lagesex$number)

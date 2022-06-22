@@ -103,15 +103,29 @@ Ethnicity_Chart <- readRDS("data/Ethnicity_Chart.rds")
 
 CareHomeTimeSeries <- readRDS('data/CareHomeTimeSeries.rds')
 
-CareHomeVisitsNotes <- readRDS("data/CareHomeVisitsNotes.rds")
-CareHomeVisitsDate <- CareHomeVisitsNotes %>%
-  slice(1) %>%
-  .$Meaning
-CareHomeVisitsDate <- format(ymd(CareHomeVisitsDate), "%d %B %Y")
-CareHomeVisitsBoard <- readRDS("data/CareHomeVisitsBoard.rds")
-CareHomeVisitsOutbreak <- readRDS("data/CareHomeVisitsOutbreak.rds")
-CareHomeVisitsBoardOlder <- readRDS("data/CareHomeVisitsBoardOlder.rds")
-CareHomeVisitsNotOlder <- readRDS("data/CareHomeVisitsOutbreakOlder.rds")
+# Initialise lists for each object
+CareHomeVisitsBoard <- list()
+CareHomeVisitsOutbreak <- list()
+CareHomeVisitsBoardOlder <- list()
+CareHomeVisitsOutbreakOlder <- list()
+
+# Filling lists from each file
+for(file in list.files(path="data", pattern="CareHomeVisitsBoard_")){
+  CareHomeVisitsBoard[[paste0("date_",as.character(as.numeric(str_extract_all(file, "[0-9]+")[[1]])))]] <- readRDS(paste0("data/", file))
+}
+# Filling lists from each file
+for(file in list.files(path="data", pattern="CareHomeVisitsOutbreak_")){
+  CareHomeVisitsOutbreak[[paste0("date_",as.character(as.numeric(str_extract_all(file, "[0-9]+")[[1]])))]] <- readRDS(paste0("data/", file))
+}
+# Filling lists from each file
+for(file in list.files(path="data", pattern="CareHomeVisitsBoardOlder_")){
+  CareHomeVisitsBoardOlder[[paste0("date_",as.character(as.numeric(str_extract_all(file, "[0-9]+")[[1]])))]] <- readRDS(paste0("data/", file))
+}
+# Filling lists from each file
+for(file in list.files(path="data", pattern="CareHomeVisitsOutbreakOlder_")){
+  CareHomeVisitsOutbreakOlder[[paste0("date_",as.character(as.numeric(str_extract_all(file, "[0-9]+")[[1]])))]] <- readRDS(paste0("data/", file))
+}
+
 
 # Surveillance ----
 

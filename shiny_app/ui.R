@@ -13,7 +13,8 @@ tagList(  #needed for shinyjs
     windowTitle = "PHS Weekly COVID-19 report",    #title for browser tab
     header = tags$head(includeCSS("www/styles.css"),  # CSS styles
                        tags$link(rel = "shortcut icon", href = "favicon_phs.ico"), #Icon for browser tab
-                       #includeHTML("www/google-analytics.html"), #Including Google analytics
+                       includeHTML("www/google-analytics.html"), #Including Google analytics
+                     #  includeScript("google-analytics.js"),
                        HTML("<html lang='en'>")
                        ),
 
@@ -158,8 +159,8 @@ tagList(  #needed for shinyjs
                               p("Select a tab topic to see notes on the data."),
                               bsCollapse(id = "collapse_notes", open = "Panel 1",
                                          bsCollapsePanel("Cases & infection levels", uiOutput("cases_inf_notes")),
-                                         bsCollapsePanel("Changes in COVID-19 testing policy", uiOutput("timeline_notes")),
                                          bsCollapsePanel("Lateral Flow Devices (LFDs)", uiOutput("LFD_notes")),
+                                         bsCollapsePanel("Changes in COVID-19 testing policy", uiOutput("timeline_notes")),
                                          bsCollapsePanel("Severe illness", uiOutput("severe_illness_notes")),
                                          bsCollapsePanel("Populations of interest", uiOutput("population_int_notes")),
                                          bsCollapsePanel("Surveillance", uiOutput("surveillance_notes")),
@@ -439,19 +440,31 @@ tagList(  #needed for shinyjs
          actionButton('jump_to_notes_pop_interest_outbreak', 'Go to data notes'),
 
          mainPanel(width = 12,
-                   h3("Table 1: Visiting status of adult care homes by NHS board, week ending ", CareHomeVisitsDate),
+                   h3("Table 1: Visiting status of adult care homes by NHS board"),
+                   selectInput("care_home_visits_date_table1", "Select week ending",
+                               choices = format(as.Date(gsub("date_", "",names(CareHomeVisitsBoard)), "%Y%m%d")-1, "%d %B %Y"),
+                               selected = format(max(as.Date(gsub("date_", "",names(CareHomeVisitsBoard)), "%Y%m%d")-1), "%d %B %Y")),
                    downloadButton('care_home_visits_data_download', 'Download by visiting status by health board data'),
                    withSpinner(DT::dataTableOutput('CareHomeVisitsBoardTable')),
 
-                   h3("Table 2: Visiting status of adult care homes by COVID-19 outbreak status, week ending ", CareHomeVisitsDate),
+                   h3("Table 2: Visiting status of adult care homes by COVID-19 outbreak status"),
+                   selectInput("care_home_visits_date_table2", "Select week ending",
+                               choices = format(as.Date(gsub("date_", "",names(CareHomeVisitsOutbreak)), "%Y%m%d")-1, "%d %B %Y"),
+                               selected = format(max(as.Date(gsub("date_", "",names(CareHomeVisitsOutbreak)), "%Y%m%d")-1), "%d %B %Y")),
                    downloadButton('care_home_outbreak_data_download', 'Download visiting status by outbreak data', class="down"),
                    withSpinner(DT::dataTableOutput('CareHomeVisitsOutbreakTable')),
 
-                   h3("Table 3a: Visiting status of care homes registered as for older adults by NHS Board, week ending ", CareHomeVisitsDate),
+                   h3("Table 3a: Visiting status of care homes registered as for older adults by NHS Board"),
+                   selectInput("care_home_visits_date_table3a", "Select week ending",
+                               choices = format(as.Date(gsub("date_", "",names(CareHomeVisitsBoardOlder)), "%Y%m%d")-1, "%d %B %Y"),
+                               format(max(as.Date(gsub("date_", "",names(CareHomeVisitsBoardOlder)), "%Y%m%d")-1), "%d %B %Y")),
                    downloadButton('care_home_visits_older_data_download', 'Download older adult care home data', class="down"),
                    withSpinner(DT::dataTableOutput('CareHomeVisitsBoardOlderTable')),
 
-                   h3("Table 3b: Visiting status of care homes NOT registered as for older adults by NHS Board, week ending ", CareHomeVisitsDate),
+                   h3("Table 3b: Visiting status of care homes NOT registered as for older adults by NHS Board"),
+                   selectInput("care_home_visits_date_table3b", "Select week ending",
+                               choices = format(as.Date(gsub("date_", "",names(CareHomeVisitsOutbreakOlder)), "%Y%m%d")-1, "%d %B %Y"),
+                               format(max(as.Date(gsub("date_", "",names(CareHomeVisitsOutbreakOlder)), "%Y%m%d")-1), "%d %B %Y")),
                    downloadButton('download_care_home_visits_not_older_data', 'Download not older adult care home data'),
                    withSpinner(DT::dataTableOutput('CareHomeVisitsNotOlderTable'))
 

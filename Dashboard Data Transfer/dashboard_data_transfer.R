@@ -11,8 +11,6 @@ library(glue)
 library(openxlsx)
 library(lubridate)
 library(janitor)
-library(reshape)
-library(reshape2)
 library(stringr)
 library(data.table)
 library(stats)
@@ -50,6 +48,7 @@ source("data_transfer_functions.R")
 
 # Getting population information
 # ------------------------------
+
 copy_bool <- file.copy(
   from="/conf/C19_Test_and_Protect/Test & Protect - Warehouse/Weekly Dashboard Data/population.csv",
   to=glue("{input_data}/population.csv"),
@@ -60,10 +59,11 @@ if (copy_bool == FALSE){
        /conf/C19_Test_and_Protect/Test & Protect - Warehouse/Weekly Dashboard Data/")
 }
 
-i_population <- read_csv_with_options(glue(input_data, "population.csv"))
+i_population <- read_csv_with_options(glue(input_data, "population.csv"))  %>%
+  dplyr::rename(age_group = contains("MYE"))
 
-i_population %<>% dplyr::rename(age_group = contains("MYE")) %>%
-  melt(id=c("age_group"), variable="sex") %>%
+i_population %<>%
+  pivot_longer(cols=c("Male", "Female", "Total"), values_to="value", names_to="sex") %>%
   dplyr::rename(pop_number=value)
 
 i_population[i_population == "May-14"] <- "5-14"
@@ -117,10 +117,15 @@ source("Transfer scripts/transfer_LFD.R")
 ##### 22. Length of Stay
 source("Transfer scripts/transfer_los.R")
 
+
+#############################
+###### Updated monthly ######
+#############################
+
 ##### 23. Vaccine Wastage
 source("Transfer scripts/transfer_vaccinewaste.R")
 
-#### 24. Care Homes SG NB updated every 4 weeks
+##### 24. Care Homes SG
 source("Transfer scripts/transfer_carehomes_sg.R")
 
 
