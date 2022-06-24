@@ -4,7 +4,7 @@
 ## Data extraction dates ----
 
 #publication date
-pub_date <- as.Date("2022-06-14")
+pub_date <- as.Date("2022-06-22")
 
 Labcases_date <- format(pub_date - 3, "%d %B %Y")
 ICU_date <- format(pub_date - 4, "%d %B %Y")
@@ -91,10 +91,6 @@ ICU_AgeSex <- readRDS("data/ICU_AgeSex.rds")
 
 LOS_Data = readRDS("data/Length_of_Stay.rds")%>%
   filter(`Age Group` != "Unknown")
-
-Cases_Adm <- readRDS("data/Cases_Adm.rds")
-Cases_AgeGrp <- readRDS("data/Cases_AgeGrp.rds")
-Prop_Adm_AgeGrp = readRDS("data/Prop_Admitted_AgeGrp.rds")
 
 Ethnicity <- readRDS("data/Ethnicity.rds")
 Ethnicity_Chart <- readRDS("data/Ethnicity_Chart.rds")
@@ -249,8 +245,6 @@ severe_illness_data_list <- c("Hospital admissions" = "Admissions",
                               "Hospital admissions by age and sex" = "Admissions_AgeSex",
                               "Hospital admissions by deprivation" = "Admissions_SIMD",
                               "Weekly hospital admissions by age" = 'Admissions_AgeBD',
-                              "Proportion of weekly cases admitted to hospital within 14 days of a first positive test" = "Cases_Adm",
-                              "Proportion of weekly cases admitted to hospital by age group" = "Prop_Adm_AgeGrp",
                               "Hospital admissions by ethnicity" = "Ethnicity",
                               "Length of stay of acute hospital admissions by age group" = "LOS_Data",
                               "ICU admissions" = "ICU",
