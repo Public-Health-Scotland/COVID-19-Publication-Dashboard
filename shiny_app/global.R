@@ -13,7 +13,7 @@ NHS24_date <- format(pub_date - 3, "%d %B %Y")
 SAS_date <- format(pub_date - 5, "%d %B %Y")
 
 AssessmentHub_date <- format(pub_date - 7, "%d %B %Y")
-Admissions_date <- format(pub_date -4, "%d %B %Y")
+Admissions_date <- format(pub_date -3, "%d %B %Y")
 
 #ECOSS, for LabCases
 labcases_extract_date <- format(pub_date - 3, "%d %B %Y") #format date
