@@ -52,8 +52,7 @@ Admissions <- read_csv(glue("{output_folder}/Admissions.csv")) %>%
   select_if(non_empty_cols)
 Admissions <- Admissions %>%
   dplyr::rename(Date = ADMISSION_DATE1,
-                Count = TESTEDIN)%>%
-  mutate(Date = ymd(Date))
+                Count = TESTEDIN)
 
 saveRDS(Admissions, "shiny_app/data/Admissions.rds")
 
@@ -127,24 +126,6 @@ saveRDS(LabCases_Age, "shiny_app/data/LabCases_Age.rds")
 Admissions_AgeSex <- read_csv(glue("{output_folder}/Admissions_AgeSex.csv")) %>%
   select(1:4)
 saveRDS(Admissions_AgeSex, "shiny_app/data/Admissions_AgeSex.rds")
-
-Cases_Adm <- read_csv(glue("{output_folder}/Cases_Adm.csv")) %>%
-  dplyr::rename(date = Date, count = Percent) %>%
-  mutate(count = round_half_up(count,2))
-saveRDS(Cases_Adm, "shiny_app/data/Cases_Adm.rds")
-
-Cases_Age <- read_csv(glue("{output_folder}/Cases_AgeGrp.csv")) %>%
-  group_by(Date) %>%
-  mutate(Percent = round_half_up(100*Cases/sum(Cases), 2)) %>%
-  select(-Cases) %>%
-  # Removing square brackets
-  dplyr::mutate(Age = gsub(pattern = "\\[|\\]",
-                                   replacement = "",
-                                   Age))
-saveRDS(Cases_Age, "shiny_app/data/Cases_AgeGrp.rds")
-
-Prop_Adm_AgeGrp = read_csv(glue("{output_folder}/Prop_Admitted_AgeGrp.csv"))
-saveRDS(Prop_Adm_AgeGrp, "shiny_app/data/Prop_Admitted_AgeGrp.rds")
 
 
 Admissions_AgeBD <- read_csv(glue("{output_folder}/Admissions_AgeBD.csv"))
