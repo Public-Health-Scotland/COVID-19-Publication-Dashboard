@@ -164,5 +164,31 @@ g_adm_simd$SIMD <- o_adm_simd$SIMD
 
 write.csv(g_adm_simd, glue(output_folder, "Admissions_SIMD.csv"), row.names = FALSE)
 
-rm(g_adm_simd, adm_path)
+rm(g_adm_simd)
+
+
+### e) Admissions by age group
+
+g_adm_agegroup  <- i_chiadm %>%
+  mutate(custom_age_group_2 = case_when(age_year < 5 ~ '0-4',
+                                        age_year < 15 ~ '5-14',
+                                        age_year < 20 ~ '15-19',
+                                        age_year < 25 ~ '20-24',
+                                        age_year < 45 ~ '25-44',
+                                        age_year < 65 ~ '45-64',
+                                        age_year < 75 ~ '65-74',
+                                        age_year < 85 ~ '75-84',
+                                        age_year < 200 ~ '85+',
+                                        is.na(age_year) ~ 'Unknown')) %>%
+  mutate(week_ending = ceiling_date(admission_date, unit = "week", change_on_boundary = F)) %>%
+  group_by(week_ending, custom_age_group_2) %>%
+  summarise(number = n()) %>%
+  dplyr::rename(Age = custom_age_group_2,
+                Date = week_ending,
+                Admissions = number)
+
+write.csv(g_adm_agegroup, glue(output_folder, "Admissions_AgeGrp.csv"), row.names = FALSE)
+
+rm(g_adm_agegroup, adm_path)
+
 
