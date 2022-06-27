@@ -11,8 +11,7 @@ output$LFD_table <- DT::renderDataTable({
   byboard_data_table(LFD,
                      "NHS Board of Residence",  # Name of the column with board names e.g. "NHS Board"
                      add_separator_cols=c(2,3), # Column indices to add thousand separators to
-                     rows_to_display=16,
-                     flip_order=TRUE)
+                     rows_to_display=16)
 
 })
 
