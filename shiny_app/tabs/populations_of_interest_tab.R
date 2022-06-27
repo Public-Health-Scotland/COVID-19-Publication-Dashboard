@@ -5,7 +5,8 @@
 output$CareHomeSeriesTable <- DT::renderDataTable({
 
   datatab_table(CareHomeTimeSeries,
-                add_separator_cols = c(2,3,4) )
+                add_separator_cols = c(2,3,4),
+                order_by_firstcol="desc")
 
 })
 
@@ -37,8 +38,7 @@ output$CareHomeVisitsBoardTable <- DT::renderDataTable({
                      board_name_column = "NHS Board",
                      add_separator_cols= c(2:10),
                      add_percentage_cols = c(11,12),
-                     rows_to_display=15,
-                     flip_order=FALSE)
+                     rows_to_display=15)
 
 
 })
@@ -49,8 +49,7 @@ output$CareHomeVisitsOutbreakTable <- DT::renderDataTable({
 
   datatab_table(CareHomeVisitsOutbreak[[col_select]],
                 add_separator_cols= c(2:10),
-                highlight_column = "Outbreak status",
-                flip_order=TRUE
+                highlight_column = "Outbreak status"
                 )
 
 
@@ -64,8 +63,7 @@ output$CareHomeVisitsBoardOlderTable <- DT::renderDataTable({
                      board_name_column = "NHS Board",
                      add_separator_cols= c(2:10),
                      add_percentage_cols = c(11,12),
-                     rows_to_display=15,
-                     flip_order=FALSE)
+                     rows_to_display=15)
 
 
 })
@@ -78,8 +76,7 @@ output$CareHomeVisitsNotOlderTable <- DT::renderDataTable({
                      board_name_column = "NHS Board",
                      add_separator_cols= c(2:10),
                      add_percentage_cols = c(11,12),
-                     rows_to_display=15,
-                     flip_order=FALSE)
+                     rows_to_display=15)
 
 
 })

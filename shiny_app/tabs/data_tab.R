@@ -257,7 +257,8 @@ ui_content_data <- reactive({
                   add_separator_cols = table_params_data()$separator_cols,
                   add_separator_cols_1dp = table_params_data()$separator_cols_1dp,
                   add_percentage_cols = table_params_data()$percentage_cols,
-                  maxrows = table_params_data()$maxrows
+                  maxrows = table_params_data()$maxrows,
+                  order_by_firstcol = table_params_data()$order_by_firstcol
     ) # from functions_tables.R
 
 })
