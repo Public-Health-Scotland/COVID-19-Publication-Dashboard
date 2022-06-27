@@ -417,8 +417,8 @@ tagList(  #needed for shinyjs
         #         'retrospectively.'),
         downloadButton('download_care_home_timeseries_data', 'Download time series data', class="down"),
         mainPanel(width = 12,
-                  withSpinner(DT::dataTableOutput('CareHomeSeriesTable')),
-                  plot_box("", 'CareHomeSeriesGraph')
+                  plot_box("", 'CareHomeSeriesGraph'),
+                  withSpinner(DT::dataTableOutput('CareHomeSeriesTable'))
 
 
         )# mainPanel bracket
