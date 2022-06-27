@@ -123,6 +123,11 @@ LabCases_Age <- read_csv(glue("{output_folder}/LabCases_Age.csv")) %>%
   select(-Cases)
 saveRDS(LabCases_Age, "shiny_app/data/LabCases_Age.rds")
 
+LabCases_Age_All <- read_csv(glue("{output_folder}/LabCases_Age_All.csv")) %>%
+  dplyr::rename("Age group" = "Age", "Cases" = "cases") %>%
+  arrange("Week ending")
+saveRDS(LabCases_Age_All, "shiny_app/data/LabCases_Age_All.rds")
+
 Admissions_AgeSex <- read_csv(glue("{output_folder}/Admissions_AgeSex.csv")) %>%
   select(1:4)
 saveRDS(Admissions_AgeSex, "shiny_app/data/Admissions_AgeSex.rds")
@@ -134,12 +139,6 @@ saveRDS(Admissions_AgeBD, "shiny_app/data/Admissions_AgeBD.rds")
 Admissions_SIMD <- read_csv(glue("{output_folder}/Admissions_SIMD.csv")) %>%
   mutate(cases_pc = cases_pc * 100) %>% select(1:3)
 saveRDS(Admissions_SIMD, "shiny_app/data/Admissions_SIMD.rds")
-
-Admissions_AgeGrp = read_csv(glue("{output_folder}/Admissions_AgeGrp.csv")) %>%
-  group_by(Date) %>%
-  mutate(Percent = round_half_up(100*Admissions/sum(Admissions), 2)) %>%
-  select(-Admissions)
-saveRDS(Admissions_AgeGrp, "shiny_app/data/Admissions_AgeGrp.rds")
 
 ICU_AgeSex <- read_csv(glue("{output_folder}/ICU_AgeSex.csv"))
 saveRDS(ICU_AgeSex, "shiny_app/data/ICU_AgeSex.rds")

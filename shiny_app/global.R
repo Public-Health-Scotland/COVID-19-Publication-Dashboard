@@ -66,6 +66,7 @@ LabCasesReinfections <-readRDS("data/LabCasesReinfections.rds")
 LabCases_AgeSex <- readRDS("data/LabCases_AgeSex.rds")
 LabCases_Age <- readRDS("data/LabCases_Age.rds")
 LabCases_SIMD <- readRDS("data/LabCases_SIMD.rds")
+LabCases_Age_All <- readRDS("data/LabCases_Age_All.rds")
 
 
 # LFDs ----
@@ -239,7 +240,7 @@ inf_levels_cases_data_list <- c("Positive cases" = "LabCases",
                                 "Reinfections" = "LabCasesReinfections",
                                 "Positive cases by age and sex" = "LabCases_AgeSex",
                                 "Positive cases by deprivation" = "LabCases_SIMD",
-                                "Distribution of COVID-19 cases by age group" = "Cases_AgeGrp")
+                                "Distribution of COVID-19 cases by age group" = "LabCases_Age_All")
 
 severe_illness_data_list <- c("Hospital admissions" = "Admissions",
                               "Hospital admissions by age and sex" = "Admissions_AgeSex",
@@ -248,7 +249,7 @@ severe_illness_data_list <- c("Hospital admissions" = "Admissions",
                               "Hospital admissions by ethnicity" = "Ethnicity",
                               "Length of stay of acute hospital admissions by age group" = "LOS_Data",
                               "ICU admissions" = "ICU",
-                              "ICU admissions by age" = "ICU_AgeSex")
+                              "ICU admissions by age and sex" = "ICU_AgeSex")
 
 surveillance_data_list <- c("NHS24 contacts" = "NHS24",
                             "NHS24 contacts by age and sex" = "NHS24_AgeSex",
