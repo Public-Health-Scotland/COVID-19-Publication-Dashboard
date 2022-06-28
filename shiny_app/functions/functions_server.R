@@ -627,17 +627,20 @@ plot_reinfections_barchart <- function(casesdata, reinfdata) {
                    "Reinfections" = "Count Reinfections",
                    "Date" = "Date Cases") %>%
      select(c("Date", "Cases", "Reinfections")) %>%
-     dplyr::mutate(`First Infections Proportion` = (Cases-Reinfections)/Cases,
-                   `Reinfections Proportion` = Reinfections/Cases) %>%
-     select(c("Date", "First Infections Proportion", "Reinfections Proportion")) %>%
-     dplyr::rename("First Infections" = "First Infections Proportion",
-                   "Reinfections" = "Reinfections Proportion") %>%
-     gather(key="reinfection_flag", value="count", -`Date`) %>%
      dplyr::mutate(`Week Ending` = ceiling_date(Date, unit="week", change_on_boundary = FALSE)) %>%
      select(-Date) %>%
+     group_by(`Week Ending`) %>%
+     summarise(Cases= sum(Cases), Reinfections=sum(Reinfections)) %>%
+     dplyr::mutate(`First Infections Proportion` = (Cases-Reinfections)/Cases,
+                   `Reinfections Proportion` = Reinfections/Cases) %>%
+     replace_na(list(`First Infections Proportion`=0, `Reinfections Proportion`=0)) %>%
+     select(c("Week Ending", "First Infections Proportion", "Reinfections Proportion")) %>%
+     dplyr::rename("First Infections" = "First Infections Proportion",
+                   "Reinfections" = "Reinfections Proportion") %>%
+     gather(key="reinfection_flag", value="count", -`Week Ending`) %>%
      group_by(`Week Ending`, reinfection_flag) %>%
      summarise(total_count = sum(count)) %>%
-     dplyr::mutate(total_count = 100/7 * total_count) %>% # get as percentage
+     dplyr::mutate(total_count = 100 * total_count) %>% # get as percentage
      arrange(`Week Ending`) %>%
      tail(40)
 
