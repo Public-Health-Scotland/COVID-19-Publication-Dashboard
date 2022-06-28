@@ -8,8 +8,8 @@ output$VaccineWastage_table <- DT::renderDataTable({
   datatab_table(VaccineWastage,
                      add_separator_cols=c(2,3), # Column indices to add thousand separators to
                      add_percentage_cols=c(4),
-                     maxrows=16,
-                     flip_order=FALSE)
+                     order_by_firstcol="desc",
+                     maxrows=16)
 
 })
 
@@ -18,8 +18,7 @@ output$VaccineWastageReason_table <- DT::renderDataTable({
 
 
   datatab_table(VaccineWastageReason,
-                add_percentage_cols=c(2),
-                flip_order=FALSE)
+                add_percentage_cols=c(2))
 
 })
 

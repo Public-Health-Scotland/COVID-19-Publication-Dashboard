@@ -101,9 +101,6 @@ source("Transfer scripts/transfer_NHSInform.R")
 ##### 11. Care Homes
 source("Transfer scripts/transfer_carehomes.R")
 
-##### 13. Hospital Admissions
-source("Transfer scripts/transfer_cases.R")
-
 ##### 14. Self Help Guides
 source("Transfer scripts/transfer_selfhelp.R")
 
@@ -161,5 +158,8 @@ source("Transfer scripts/transfer_carehomes_sg.R")
 
 ##### 21. Vaccine certification
 #source("Transfer scripts/transfer_vaccinecert.R")
+
+##### 13. Outdated Hospital Admissions
+#source("Transfer scripts/transfer_cases.R")
 
 

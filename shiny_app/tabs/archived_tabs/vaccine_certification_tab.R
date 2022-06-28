@@ -4,7 +4,7 @@ output$vaccine_cert_table <- DT::renderDataTable({
 
   datatab_table(VaccineCertification,
                 maxrows=20,
-                flip_order = FALSE,
+                order_by_firstcol = NULL,
                 add_separator_cols = c(2) # with , separator and 0dp
   )
 })

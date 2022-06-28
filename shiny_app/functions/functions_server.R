@@ -491,10 +491,23 @@ plot_singlerate_chart <- function(dataset, data_name, yaxis_title, area = T, inc
 
 
 cases_age_chart_3_week <- function(dataset, data_name, area = T, type = "cases"){
+
   if (type == "cases") {
     yaxis_title <- "Percent of Cases"
+    levels =     c("0-17",
+                   "18-29",
+                   "30-39",
+                   "40-49",
+                   "50-54",
+                   "55-59",
+                   "60-64",
+                   "65-69",
+                   "70-74",
+                   "75-79",
+                   "80+")
   } else if (type == "admissions") {
     yaxis_title <- "Percent of Admissions"
+    levels = c("0-4", "5-14", "15-19", "20-24", "25-44", "45-64", "65-74", "75-84", "85+", "Unknown")
   }
 
   xaxis_title <- "Age Group"
@@ -505,17 +518,7 @@ cases_age_chart_3_week <- function(dataset, data_name, area = T, type = "cases")
   trend_data <- dataset %>%
     filter(Date > (latest_date - 20)) %>%   # filter last 3 weeks
     mutate(Age = gsub('\\[|\\]','', Age) ) %>%
-    mutate(Age = factor(Age,levels =     c("0-17",
-                                           "18-29",
-                                           "30-39",
-                                           "40-49",
-                                           "50-54",
-                                           "55-59",
-                                           "60-64",
-                                           "65-69",
-                                           "70-74",
-                                           "75-79",
-                                           "80+")))
+    mutate(Age = factor(Age, levels=levels))
 
 
   #Modifying standard layout

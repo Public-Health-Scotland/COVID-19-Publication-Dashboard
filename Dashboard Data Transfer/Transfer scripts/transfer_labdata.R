@@ -104,14 +104,25 @@ write.csv(g_lsimd, glue(output_folder, "LabCases_SIMD.csv"), row.names = FALSE)
 rm(g_lsimd)
 
 
-### e) LabCases_Age
+### e) LabCases_Age (3 weeks)
 
-o_barchart <- i_barchart %>%
+g_barchart <- i_barchart %>%
   dplyr::rename(Age = age_group,
                 Cases = count,
                 Date = `Week ending`) %>%
   select(Date, Age, Cases)
 
-write.csv(o_barchart, glue(output_folder, "LabCases_Age.csv"), row.names=FALSE)
+write.csv(g_barchart, glue(output_folder, "LabCases_Age.csv"), row.names=FALSE)
+
+
+### f) LabCases_Age (all time)
+
+g_lab_age <- i_labdata$`Age breakdown` %>%
+  dplyr::rename(Age = age_group,
+                `Week ending` = week_ending)
+
+write.csv(g_lab_age, glue(output_folder, "LabCases_Age_All.csv"), row.names=FALSE)
+
+
 
 

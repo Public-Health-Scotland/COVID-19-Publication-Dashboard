@@ -51,8 +51,7 @@ data_table <- reactive({  # Change dataset depending on what user selected
                                                                   Percent = cases_pc),
 
 
-                       "Cases_AgeGrp" = Cases_AgeGrp %>% dplyr::rename('Week ending' = 'Date',
-                                                                       'Percentage of weekly cases' = 'Percent'),
+                       "LabCases_Age_All" = LabCases_Age_All,
 
 
                        "Admissions" = Admissions %>%  dplyr::rename (`Number of Admissions` = Count,
@@ -258,7 +257,8 @@ ui_content_data <- reactive({
                   add_separator_cols = table_params_data()$separator_cols,
                   add_separator_cols_1dp = table_params_data()$separator_cols_1dp,
                   add_percentage_cols = table_params_data()$percentage_cols,
-                  maxrows = table_params_data()$maxrows
+                  maxrows = table_params_data()$maxrows,
+                  order_by_firstcol = table_params_data()$order_by_firstcol
     ) # from functions_tables.R
 
 })
@@ -280,6 +280,7 @@ table_params_data <- reactive({
                            "LabCasesReinfections" = c(2,3),
                            "LabCases_AgeSex" = c(3),
                            "LabCases_SIMD" = c(2),
+                           "LabCases_Age_All" = c(3),
                            "Admissions" = c(2),
                            "Admissions_AgeSex" = c(3),
                            "Admissions_SIMD" = c(2),
@@ -323,7 +324,6 @@ table_params_data <- reactive({
   percentage_cols = switch(data_select_combined(),
 
                             "LabCases_SIMD" = c(3),
-                            "Cases_AgeGrp" = c(3),
                             "Cases_Adm" = c(2),
                             "Admissions_SIMD" = c(3),
                             "Ethnicity" = c(4),
@@ -337,45 +337,42 @@ table_params_data <- reactive({
   maxrows = switch(data_select_combined(),
 
                     "LabCases_AgeSex" = 44,
-                    "Cases_AgeGrp" = 11,
+                    "LabCases_Age_All" = 10,
                     "Admissions_AgeSex" = 30,
-                    "Ethnicity" = 6,
+                    "Ethnicity" = 7,
                     "NHS24_community" = 6,
                     "ICU_AgeSex" = 18,
                     "NHS24_AgeSex" = 32,
                     "AssessmentHub_AgeSex" = 32,
                     "SAS_AgeSex" = 36,
+                    "LOS_Data" = 36,
                     14 #default
 
   )
 
+  order_by_firstcol = switch(data_select_combined(),
+                             "LabCases_AgeSex" = NULL,
+                             "LabCases_SIMD" = NULL,
+                             "Admissions_AgeSex" = NULL,
+                             "Admissions_SIMD" = NULL,
+                             "ICU" = "desc",
+                             "ICU_AgeSex" = "asc",
+                             "NHS24_AgeSex" = "asc",
+                             "NHS24_SIMD" = "asc",
+                             "SAS_AgeSex" = "asc",
+                             "SAS_SIMD" = "asc",
+                             "desc")
+
   list("separator_cols" = separator_cols,
        "separator_cols_1dp" = separator_cols_1dp,
        "percentage_cols" = percentage_cols,
-       "maxrows" = maxrows)
+       "maxrows" = maxrows,
+       "order_by_firstcol" = order_by_firstcol)
 
 
 })
 
 
-# Number of max rows per page for each table (default is 10 if unlisted)
-maxrows <- reactive({
-  maxrows <- switch(data_select_combined(),
-
-                         "LabCases_AgeSex" = 44,
-                         "Cases_AgeGrp" = 11,
-                         "Admissions_AgeSex" = 30,
-                         "Ethnicity" = 6,
-                         "NHS24_community" = 6,
-                         "ICU_AgeSex" = 18,
-                         "NHS24_AgeSex" = 32,
-                         "AssessmentHub_AgeSex" = 32,
-                         "SAS_AgeSex" = 36,
-                          14 #default
-
-  )
-
-})
 
 ###############################################.
 

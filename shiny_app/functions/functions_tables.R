@@ -36,7 +36,7 @@ datatab_table <- function(input_data_table,
                           add_separator_cols_1dp = NULL, # with , separator and 1dp
                           add_percentage_cols = NULL, # with % symbol and 2dp
                           maxrows = 14, # max rows displayed on page
-                          flip_order = FALSE, # Flip order of rows
+                          order_by_firstcol = NULL, # asc, desc or NULL
                           highlight_column = NULL # Column to highlight specific entries based off
                           ){
 
@@ -59,8 +59,8 @@ datatab_table <- function(input_data_table,
       input_data_table[i] <- apply(input_data_table[i], MARGIN=1, FUN=format_entry, dp=1, perc=T)
     }
 
-  if(flip_order){
-    tab_order <- list(list(0, "asc"))
+  if(!is.null(order_by_firstcol)){
+    tab_order <- list(list(0, order_by_firstcol))
   } else {
     tab_order <- NULL
   }
@@ -100,10 +100,10 @@ byboard_data_table <- function(input_data_table,
                                add_separator_cols=NULL, # Column indices to add thousand separators to
                                add_percentage_cols = NULL, # with % symbol and 2dp
                                rows_to_display=14,
-                               flip_order=FALSE){ # Number of Boards + 1 for Scotland
+                               order_by_firstcol=NULL){ # Number of Boards + 1 for Scotland
 
-  if(flip_order){
-    tab_order <- list(list(0, "asc"))
+  if(!is.null(order_by_firstcol)){
+    tab_order <- list(list(0, order_by_firstcol))
   } else {
     tab_order <- NULL
   }
