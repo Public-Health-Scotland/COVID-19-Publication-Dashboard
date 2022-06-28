@@ -46,8 +46,7 @@ data_table <- reactive({  # Change dataset depending on what user selected
 
                                                                        `Rate per 100,000 population` = rate),
 
-                       "LabCases_SIMD" = LabCases_SIMD %>% mutate(cases_pc = cases_pc/100) %>%
-                                                           dplyr::rename(`Number of Cases` = cases,
+                       "LabCases_SIMD" = LabCases_SIMD %>% dplyr::rename(`Number of Cases` = cases,
                                                                   Percent = cases_pc),
 
 
