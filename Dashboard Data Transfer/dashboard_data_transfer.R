@@ -100,6 +100,7 @@ source("Transfer scripts/transfer_NHSInform.R")
 
 ##### 11. Care Homes
 source("Transfer scripts/transfer_carehomes.R")
+source("Transfer scripts/transfer_carehomes_sg.R")
 
 ##### 14. Self Help Guides
 source("Transfer scripts/transfer_selfhelp.R")
