@@ -38,4 +38,4 @@ Imports:
   tidytable
 Suggests:
   shinytest,
-testthat
+  testthat
