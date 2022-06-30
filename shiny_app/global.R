@@ -4,7 +4,7 @@
 ## Data extraction dates ----
 
 #publication date
-pub_date <- as.Date("2022-06-22")
+pub_date <- as.Date("2022-06-29")
 
 Labcases_date <- format(pub_date - 3, "%d %B %Y")
 ICU_date <- format(pub_date - 4, "%d %B %Y")
@@ -208,10 +208,10 @@ severe_illness_list <- c("Hospital Admissions" = "Admissions",
                          "Hospital Admissions by Ethnicity" = "Ethnicity_Chart",
                          "ICU Admissions" = "ICU")
 
-surveillance_list <- c("NHS24 Contacts" = "NHS24",
-                       "Scottish Ambulance Service" = "SAS")
+surveillance_list <- c("Scottish Ambulance Service" = "SAS")
 
-surveillance_archive_list <- c("Community Hubs and Assessment Centres" = "AssessmentHub")
+surveillance_archive_list <- c("NHS24 Contacts" = "NHS24",
+                               "Community Hubs and Assessment Centres" = "AssessmentHub")
 
 CTdata_list_chart_tab <- c("Contact Tracing time performance %",
                             "Contact Tracing time performance cases",
@@ -251,18 +251,18 @@ severe_illness_data_list <- c("Hospital admissions" = "Admissions",
                               "ICU admissions" = "ICU",
                               "ICU admissions by age and sex" = "ICU_AgeSex")
 
-surveillance_data_list <- c("NHS24 contacts" = "NHS24",
-                            "NHS24 contacts by age and sex" = "NHS24_AgeSex",
-                            "NHS24 contacts by deprivation" = "NHS24_SIMD",
-                            "NHS Inform hits" = "NHS24_inform",
-                            "NHS24 self help guides" = "NHS24_selfhelp",
-                            "NHS24 community outcomes"  = "NHS24_community",
-                            "Scottish Ambulance Service" = "SAS",
+surveillance_data_list <- c("Scottish Ambulance Service" = "SAS",
                             "Scottish Ambulance Service by age and sex" = "SAS_AgeSex",
                             "Scottish Ambulance Service by deprivation" = "SAS_SIMD",
                             "Scottish Ambulance Service - all incidents" = "SAS_all")
 
-surveillance_archive_data_list <- c("Community hubs and assessment centres" = "AssessmentHub",
+surveillance_archive_data_list <- c("NHS24 contacts" = "NHS24",
+                                    "NHS24 contacts by age and sex" = "NHS24_AgeSex",
+                                    "NHS24 contacts by deprivation" = "NHS24_SIMD",
+                                    "NHS Inform hits" = "NHS24_inform",
+                                    "NHS24 self help guides" = "NHS24_selfhelp",
+                                    "NHS24 community outcomes"  = "NHS24_community",
+                                    "Community hubs and assessment centres" = "AssessmentHub",
                                     "Community hubs and assessment centres by age" = "AssessmentHub_AgeSex",
                                     "Community hubs and assessment centres by deprivation" = "AssessmentHub_SIMD")
 
