@@ -62,8 +62,8 @@ tagList(  #needed for shinyjs
                       ),
                # Surveillance
                column(4, class="landing-page-column",
-                     lp_main_box(button_name = 'jump_to_surveillance', title_box = "Surveillance",
-                                    description = 'Statistics from NHS24 and Scottish Ambulance Service'))
+                     lp_main_box(button_name = 'jump_to_surveillance', title_box = "SAS",
+                                    description = 'Statistics from Scottish Ambulance Service'))
              ), # fluid row close
              # End of second row
              br(),
@@ -89,7 +89,7 @@ tagList(  #needed for shinyjs
                                             title_box = "Targeted community testing")),
                         column(3, class="landing-page-column",
                                lp_about_box(button_name = 'jump_to_surveillance_archive',
-                                            title_box = "Community hubs and assessment"),
+                                            title_box = "Archived surveillance"),
                                lp_about_box(button_name = 'jump_to_travel',
                                             title_box = "Travel outside Scotland"))
              ), #Fluidrow bracket
@@ -487,8 +487,8 @@ tagList(  #needed for shinyjs
     ), # page bracket
     #################### Surveillance -----
     navbarMenu(
-      title = "Surveillance",
-      icon = icon("desktop"),
+      title = "Scottish Ambulance Service",
+      icon = icon("truck-medical", verify_fa=FALSE),
       tabPanel(
         title = "Charts",
         icon = icon("chart-area"),
@@ -600,7 +600,7 @@ tagList(  #needed for shinyjs
       icon = icon("floppy-disk", verify_fa=F),
       #################### Surveillance -----
         tabPanel(
-          title = "Community hubs & assessment",
+          title = "Archived surveillance",
           icon = icon("chart-area"),
           value = "SurveillanceArchive",
           wellPanel(
@@ -609,7 +609,7 @@ tagList(  #needed for shinyjs
                        radioGroupButtons("measure_select_surveillance_archive",
                                          label = "Select the data you want to explore.",
                                          choices = surveillance_archive_list,
-                                         status = "primary",
+                                         status = "btn",
                                          selected = surveillance_archive_list[[1]],
                                          direction = "vertical",
                                          justified = T))),
@@ -630,7 +630,7 @@ tagList(  #needed for shinyjs
         ),
         #################### Data ----
         tabPanel(
-          title = "Community hubs & assessment data",
+          title = "Archived surveillance data",
           icon = icon("table"),
           value = "SurveillanceArchiveData",
           p("This section allows you to view the data in table format.
