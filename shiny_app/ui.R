@@ -26,6 +26,9 @@ tagList(  #needed for shinyjs
              p("Since the start of the COVID-19 outbreak Public Health Scotland (PHS) has been working closely
                with Scottish Government and health and care colleagues in supporting the surveillance and monitoring
                of COVID-19 amongst the population."),
+             p(strong("Please note: we are aware that this week's figures are likely to be an under
+                      report and cover less than a 7-day period. This is due to a data processing issue
+                      since 9am on 25 June 2022.")),
              h3("What's on the dashboard?"),
              p("You can navigate around the dashboard using the tabs on the top banner, or by clicking one of the boxes below."),
              # 1st row of boxes
@@ -62,8 +65,8 @@ tagList(  #needed for shinyjs
                       ),
                # Surveillance
                column(4, class="landing-page-column",
-                     lp_main_box(button_name = 'jump_to_surveillance', title_box = "Surveillance",
-                                    description = 'Statistics from NHS24 and Scottish Ambulance Service'))
+                     lp_main_box(button_name = 'jump_to_surveillance', title_box = "SAS",
+                                    description = 'Statistics from Scottish Ambulance Service'))
              ), # fluid row close
              # End of second row
              br(),
@@ -89,7 +92,7 @@ tagList(  #needed for shinyjs
                                             title_box = "Targeted community testing")),
                         column(3, class="landing-page-column",
                                lp_about_box(button_name = 'jump_to_surveillance_archive',
-                                            title_box = "Community hubs and assessment"),
+                                            title_box = "Archived surveillance"),
                                lp_about_box(button_name = 'jump_to_travel',
                                             title_box = "Travel outside Scotland"))
              ), #Fluidrow bracket
@@ -395,7 +398,7 @@ tagList(  #needed for shinyjs
       tabPanel(
         title = "Care homes COVID-19 cases",
         icon = icon("home"),
-        value = "CareHomesTesting",
+        value = "PopInterest",
         fluidRow(br()),
         actionButton('jump_to_notes_pop_interest', 'Go to data notes'),
 
@@ -487,8 +490,8 @@ tagList(  #needed for shinyjs
     ), # page bracket
     #################### Surveillance -----
     navbarMenu(
-      title = "Surveillance",
-      icon = icon("desktop"),
+      title = "Scottish Ambulance Service",
+      icon = icon("truck-medical", verify_fa=FALSE),
       tabPanel(
         title = "Charts",
         icon = icon("chart-area"),
@@ -600,7 +603,7 @@ tagList(  #needed for shinyjs
       icon = icon("floppy-disk", verify_fa=F),
       #################### Surveillance -----
         tabPanel(
-          title = "Community hubs & assessment",
+          title = "Archived surveillance",
           icon = icon("chart-area"),
           value = "SurveillanceArchive",
           wellPanel(
@@ -609,7 +612,7 @@ tagList(  #needed for shinyjs
                        radioGroupButtons("measure_select_surveillance_archive",
                                          label = "Select the data you want to explore.",
                                          choices = surveillance_archive_list,
-                                         status = "primary",
+                                         status = "btn",
                                          selected = surveillance_archive_list[[1]],
                                          direction = "vertical",
                                          justified = T))),
@@ -630,7 +633,7 @@ tagList(  #needed for shinyjs
         ),
         #################### Data ----
         tabPanel(
-          title = "Community hubs & assessment data",
+          title = "Archived surveillance data",
           icon = icon("table"),
           value = "SurveillanceArchiveData",
           p("This section allows you to view the data in table format.

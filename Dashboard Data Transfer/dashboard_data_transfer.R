@@ -77,9 +77,6 @@ i_population$age_group <- sapply(i_population$age_group, function(x) str_remove_
 # o: output - dashboard output folder updated last week
 # g: generated in this script - for replainscing output
 
-##### 1. NHS24
-source("Transfer scripts/transfer_NHS24.R")
-
 ##### 2. ICU
 source("Transfer scripts/transfer_ICU.R")
 
@@ -91,12 +88,6 @@ source("Transfer scripts/transfer_admissions.R")
 
 ##### 6. Lab Data
 source("Transfer scripts/transfer_labdata.R")
-
-##### 7. NHS24 Community
-source("Transfer scripts/transfer_NHS24community.R")
-
-##### 8. NHS Inform
-source("Transfer scripts/transfer_NHSInform.R")
 
 ##### 11. Care Homes
 source("Transfer scripts/transfer_carehomes.R")
@@ -130,8 +121,17 @@ source("Transfer scripts/transfer_carehomes_sg.R")
 
 ##### Archived -----
 
+##### 1. NHS24
+#source("Transfer scripts/transfer_NHS24.R")
+
 ##### 3. Community Hubs and Assessment
 #source("Transfer scripts/transfer_commhubsassessment.R")
+
+##### 7. NHS24 Community
+#source("Transfer scripts/transfer_NHS24community.R")
+
+##### 8. NHS Inform
+#source("Transfer scripts/transfer_NHSInform.R")
 
 ##### 9. Community Testing
 #source("Transfer scripts/transfer_communitytesting.R")
