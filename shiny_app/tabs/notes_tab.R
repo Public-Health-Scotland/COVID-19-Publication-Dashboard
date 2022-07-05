@@ -51,7 +51,6 @@ output$LFD_notes <-renderUI({
     p("Please note:"),
     tags$li("Test results and test group are self-reported, so numbers of tests and positives do not include tests which have not been registered on the UK Gov Portal."),
     tags$li("Before 28 July 2021, tests for Universal Offer were entered on the system as 'Other'."),
-    #tags$li("The data in this tab only cover submissions with a valid CHI."),
     tags$li("Test results may still be uploaded by those who have a stock of tests ordered before the changes in testing guidance."),
     br(),
     h4("Demographics"),
