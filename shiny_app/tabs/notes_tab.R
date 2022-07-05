@@ -51,7 +51,6 @@ output$LFD_notes <-renderUI({
     p("Please note:"),
     tags$li("Test results and test group are self-reported, so numbers of tests and positives do not include tests which have not been registered on the UK Gov Portal."),
     tags$li("Before 28 July 2021, tests for Universal Offer were entered on the system as 'Other'."),
-    #tags$li("The data in this tab only cover submissions with a valid CHI."),
     tags$li("Test results may still be uploaded by those who have a stock of tests ordered before the changes in testing guidance."),
     br(),
     h4("Demographics"),
@@ -188,20 +187,6 @@ output$population_int_notes <-renderUI({
 output$surveillance_notes <-renderUI({
 
   tagList(
-    h4("NHS24"),
-    p("NHS24 is a phone line which provided support and medical advice to those concerned about coronavirus symptoms. The launch of the Redesign of Urgent Care programme
-      has seen an increase in NHS24 activity from 01 December 2020 onwards. For more information on this programme, see ",
-      tags$a("here", href = "https://www.gov.scot/policies/healthcare-standards/unscheduled-care/")),
-    p(strong("Source: NHS24 Systems Applications and Products Business Warehouse")),
-    br(),
-    p("Please note:"),
-    tags$li("From 15 September 2020, figures for the COVID helplineinclude calls made to the flu helpline. In late September, the first batch of flu vaccination letters
-            sent to those eligible identified by NHS Health Boards included the coronavirus number. The peaks in calls are consistent with the timing of those letters being
-            sent."),
-    tags$li("As of the 31 March 2022, the COVID-19 Community Pathway has closed. From this date, patients who contact NHS24 with COVID-19 symptoms during the in-hours period
-            will be advised to contact their own GP practice. This change will have an impact on the NHS24 data contained on the dashboard."),
-    br(),
-    h4("Scottish Ambulance Service (SAS)"),
     p("SAS currently publish weekly unscheduled care operational statistics", tags$a("here.",
                                                                                      href = "https://www.scottishambulance.com/publications/unscheduled-care-operational-statistics/")),
       p("This publication details unscheduled care demand, response times and turnaround times."),
@@ -214,8 +199,8 @@ output$surveillance_notes <-renderUI({
     tags$li("Data for the most recent 3 weeks should be treated as provisional."),
     tags$li("From 01 April 2022, the definition of SAS response times has changed. For more information, see the link above."),
     br(),
-    bsButton("jump_to_surveillance_n", label = "Go to surveillance charts"),
-    bsButton("jump_to_surveillance_data_n", label = "Go to surveillance data")
+    bsButton("jump_to_surveillance_n", label = "Go to SAS charts"),
+    bsButton("jump_to_surveillance_data_n", label = "Go to SAS data")
     )
 }) # render UI close bracket
 

@@ -166,7 +166,7 @@ tagList(  #needed for shinyjs
                                          bsCollapsePanel("Changes in COVID-19 testing policy", uiOutput("timeline_notes")),
                                          bsCollapsePanel("Severe illness", uiOutput("severe_illness_notes")),
                                          bsCollapsePanel("Populations of interest", uiOutput("population_int_notes")),
-                                         bsCollapsePanel("Surveillance", uiOutput("surveillance_notes")),
+                                         bsCollapsePanel("Scottish Ambulance Service (SAS)", uiOutput("surveillance_notes")),
                                          bsCollapsePanel("Vaccinations", uiOutput("vaccinations_notes"))
                                          )))
 
