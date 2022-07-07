@@ -109,13 +109,30 @@ plot_overall_chart <- function(dataset, data_name,  area = T, include_vline=F) {
               name = "Count") %>%
     add_lines(y = ~Average7, line = list(color = pal_overall[1]),
               text = tooltip_trend, hoverinfo = "text",
-              name = "7 Day Average") %>%
+              name = "7 day average") %>%
     #Layout
     layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
            yaxis = yaxis_plots, xaxis = xaxis_plots,
            legend = list(x = 100, y = 0.5)) %>% #position of legend
     # leaving only save plot button
     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
+
+  # Adding provisional points for admissions data
+  if(data_name=="Admissions"){
+
+    tooltip_trend_prov <- c(paste0("Provisional data: ",
+                              "<br>", "Date: ", format(prov_data$Date, "%d %b %y"),
+                              "<br>", measure_name, prov_data$Count,
+                              "<br>", "7 Day Average: ", format(prov_data$Average7, nsmall=0, digits=3)))
+
+
+    p %<>% add_lines(data=prov_data, x=~Date, y=~Count, line=list(color="#5c6164", width=0.8),
+                     text = tooltip_trend_prov, hoverinfo = "text",
+                     name = "Count (provisional)") %>%
+      add_lines(data=prov_data, y=~Average7, line=list(color="#434343"),
+                text = tooltip_trend_prov, hoverinfo = "text",
+                name = "7 day average (provisional)")
+  }
 
   if(include_vline){
 
