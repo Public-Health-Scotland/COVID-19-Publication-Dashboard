@@ -61,7 +61,20 @@ plot_overall_chart <- function(dataset, data_name,  area = T, include_vline=F) {
 
   # Filtering dataset to include only overall figures
   trend_data <- dataset
-  trend_data$Date<- ymd(trend_data$Date)
+
+  if (data_name =="Admissions"){
+    # Get provisional dates
+    prov_dates <- gsub("p", "", grep("p", trend_data$Date, value = TRUE))
+    trend_data$Date<- ymd(trend_data$Date)
+    prov_dates <- ymd(prov_dates)
+    # Adding date below provisional so lines join up
+    prov_dates <- c((min(prov_dates)-1), prov_dates)
+    prov_data <- trend_data %>% dplyr::filter(Date %in% prov_dates)
+    trend_data <- trend_data %>% dplyr::filter(!(Date %in% prov_dates))
+  } else{
+    # Make sure all dates in date format
+    trend_data$Date<- ymd(trend_data$Date)
+  }
 
   ###############################################.
   # Creating objects that change depending on dataset
