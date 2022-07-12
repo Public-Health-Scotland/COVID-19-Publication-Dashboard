@@ -61,7 +61,20 @@ plot_overall_chart <- function(dataset, data_name,  area = T, include_vline=F) {
 
   # Filtering dataset to include only overall figures
   trend_data <- dataset
-  trend_data$Date<- ymd(trend_data$Date)
+
+  if (data_name =="Admissions"){
+    # Get provisional dates
+    prov_dates <- gsub("p", "", grep("p", trend_data$Date, value = TRUE))
+    trend_data$Date<- ymd(trend_data$Date)
+    prov_dates <- ymd(prov_dates)
+    # Adding date below provisional so lines join up
+    prov_dates <- c((min(prov_dates)-1), prov_dates)
+    prov_data <- trend_data %>% dplyr::filter(Date %in% prov_dates)
+    trend_data <- trend_data %>% dplyr::filter(!(Date %in% prov_dates))
+  } else{
+    # Make sure all dates in date format
+    trend_data$Date<- ymd(trend_data$Date)
+  }
 
   ###############################################.
   # Creating objects that change depending on dataset
@@ -96,13 +109,30 @@ plot_overall_chart <- function(dataset, data_name,  area = T, include_vline=F) {
               name = "Count") %>%
     add_lines(y = ~Average7, line = list(color = pal_overall[1]),
               text = tooltip_trend, hoverinfo = "text",
-              name = "7 Day Average") %>%
+              name = "7 day average") %>%
     #Layout
     layout(margin = list(b = 80, t = 5), #to avoid labels getting cut out
            yaxis = yaxis_plots, xaxis = xaxis_plots,
            legend = list(x = 100, y = 0.5)) %>% #position of legend
     # leaving only save plot button
     config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
+
+  # Adding provisional points for admissions data
+  if(data_name=="Admissions"){
+
+    tooltip_trend_prov <- c(paste0("Provisional data: ",
+                              "<br>", "Date: ", format(prov_data$Date, "%d %b %y"),
+                              "<br>", measure_name, prov_data$Count,
+                              "<br>", "7 Day Average: ", format(prov_data$Average7, nsmall=0, digits=3)))
+
+
+    p %<>% add_lines(data=prov_data, x=~Date, y=~Count, line=list(color="#5c6164", width=0.8),
+                     text = tooltip_trend_prov, hoverinfo = "text",
+                     name = "Count (provisional)") %>%
+      add_lines(data=prov_data, y=~Average7, line=list(color="#434343"),
+                text = tooltip_trend_prov, hoverinfo = "text",
+                name = "7 day average (provisional)")
+  }
 
   if(include_vline){
 
