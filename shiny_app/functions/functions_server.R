@@ -401,6 +401,69 @@ plot_simd_chart <- function(dataset, data_name, yaxis_title, area = T) {
 }
 
 
+############ Chart for Hospital Admissions SIMD trend
+hosp_adm_SIMD_trend <- function(adm_simd_weekly){
+
+  # adm_simd_shaped <- adm_simd_weekly %>%
+    # mutate(`SIMD` = as.factor(`SIMD`),
+    #        `n` = as.numeric(`n`)) %>%
+  #   pivot_wider(names_from = (week_ending), values_from = n)
+
+  # tooltip_trend <- c(paste0("Week Ending: ", format(adm_simd_weekly$`week_ending`, "%d %b %y"),
+  #                           "<br>", "1 (most deprived): ", format(as.numeric(adm_simd_weekly$`1`), big.mark=","),
+  #                           "<br>", "2: ", format(as.numeric(adm_simd_weekly$`2`), big.mark=","),
+  #                           "<br>", "3: ", format(as.numeric(adm_simd_weekly$`3`), big.mark=","),
+  #                           "<br>", "4: ", format(as.numeric(adm_simd_weekly$`4`), big.mark=","),
+  #                           "<br>", "5 (least deprived): ", format(as.numeric(adm_simd_weekly$`5`), big.mark=",")))
+
+  yaxis_plots[["title"]] <- "Number of Admissions"
+  xaxis_plots[["title"]] <- "Admission Date by Week Ending"
+
+  p <- adm_simd_weekly %>%
+    mutate(`SIMD` = as.factor(`SIMD`),
+           `n` = as.numeric(`n`)) %>%
+    group_by(`SIMD`) %>%
+    #select(week_ending, `SIMD`) %>%
+    #pivot_wider(names_from = (week_ending), values_from = n) %>%
+    plot_ly( x = ~`week_ending` ) %>%
+    add_lines( y = ~`n`
+    #            ) %>%
+    # add_lines( y = ~`2`) %>%
+    # add_lines( y = ~`3`) %>%
+    # add_lines( y = ~`4`) %>%
+    # add_lines( y = ~`5`
+    #   y = ~`1`, line=list(color=phs_colours('phs-magenta-80')),
+    #   name='1 (most deprived)',
+    #   mode='lines',
+    #   text = tooltip_trend, hoverinfo="text"
+    # ) %>%
+    # add_lines(
+    #   y = ~`2`, line=list(color=phs_colours('phs-blue-80')), name='2', mode='lines',
+    #   text = tooltip_trend, hoverinfo="text"
+    # ) %>%
+    # add_lines(
+    #   y = ~`3`, line=list(color=phs_colours('phs-green-80')), name='3', mode='lines',
+    #   text = tooltip_trend, hoverinfo="text"
+    # ) %>%
+    # add_lines(
+    #   y = ~`4`, line=list(color=phs_colours('phs-purple-80')), name='4', mode='lines',
+    #   text = tooltip_trend, hoverinfo="text"
+    # ) %>%
+    # add_lines(
+    #   y = ~`5`, line=list(color=phs_colours('phs-teal-80')), name='5 (least deprived)', mode='lines',
+    #   text = tooltip_trend, hoverinfo="text"
+    ) %>%
+    layout(margin = list(b = 80, t = 5),
+           yaxis = yaxis_plots, xaxis = xaxis_plots,
+           legend = list(x = 100, y = 0.5)) %>% #commented out to check function works
+    config(displaylogo = F, displayModeBar = TRUE, modeBarButtonsToRemove = bttn_remove )
+
+  return(p)
+
+
+}
+
+
 ## Function for other charts -----------------------------------------------
 
 plot_singletrace_chart <- function(dataset, data_name, yaxis_title, xaxis_title, area = T, include_vline=F) {

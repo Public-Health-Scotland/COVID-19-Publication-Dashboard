@@ -166,8 +166,22 @@ write.csv(g_adm_simd, glue(output_folder, "Admissions_SIMD.csv"), row.names = FA
 
 rm(g_adm_simd)
 
+### e) Admissions_SIMD_weekly
 
-### e) Admissions by age group
+g_adm_simd_weekly <- i_chiadm %>%
+  group_by(simd2020v2_sc_quintile) %>%
+  mutate(week_ending = ceiling_date(admission_date, unit="week",
+                                    change_on_boundary = FALSE)) %>%
+  filter(simd2020v2_sc_quintile != "NA") %>%
+  dplyr::rename(SIMD = simd2020v2_sc_quintile) %>%
+  count(SIMD, week_ending)
+
+write.csv(g_adm_simd_weekly, glue(output_folder, "Admissions_SIMD_weekly.csv"), row.names = FALSE)
+
+rm(g_adm_simd_weekly)
+
+
+### f) Admissions by age group
 
 g_adm_agegroup  <- i_chiadm %>%
   mutate(custom_age_group_2 = case_when(age_year < 5 ~ '0-4',

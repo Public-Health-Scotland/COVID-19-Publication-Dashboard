@@ -211,6 +211,7 @@ values$admissions_age_groups <- renderPlotly({cases_age_chart_3_week(Admissions_
 values$EthnicityChart <- renderPlotly({plot_overall_chartEthnicity(Ethnicity_Chart, data_name = "Ethnicity_Chart")})
 values$EthnicityChartPercentage <- renderPlotly({plot_overall_chartEthnicityPercent(Ethnicity_Chart, data_name = "Ethnicity_Chart")})
 values$LOSChart <- renderPlotly({los_chart_fn(LOS_Data)})
+values$hospSIMDchart <- renderPlotly({hosp_adm_SIMD_trend(Admissions_SIMD_weekly)})
 
 # Extra surveillance charts
 values$NHS24_inform <- renderPlotly({plot_singletrace_chart(NHS24_inform, data_name = "NHS24_inform")})
@@ -408,7 +409,10 @@ if (data_explorer_selection() == "LabCases") { #Positive Cases
       ),
 
   plot_box_values("Weekly cases admitted to hospital within 14 days of a first positive test, by age group",
-           valuename="admissions_age_groups")
+           valuename="admissions_age_groups"),
+
+  plot_box_values("Weekly hospital admissions, by deprivation",
+                  valuename="hospSIMDchart")
 )
 
 } else if (data_explorer_selection() == "ICU") {# ICU

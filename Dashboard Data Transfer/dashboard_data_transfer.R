@@ -42,7 +42,6 @@ dashboard_folder <- "../"
 input_data <- "/conf/C19_Test_and_Protect/Test & Protect - Warehouse/Weekly Dashboard Data/Input/"
 output_folder <- "/conf/C19_Test_and_Protect/Test & Protect - Warehouse/Weekly Dashboard Data/Output/"
 
-
 # Getting useful functions
 source("data_transfer_functions.R")
 
