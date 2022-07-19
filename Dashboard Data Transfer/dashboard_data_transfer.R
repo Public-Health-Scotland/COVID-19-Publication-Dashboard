@@ -111,10 +111,6 @@ source("Transfer scripts/transfer_los.R")
 ##### 9. Vaccine Wastage
 source("Transfer scripts/transfer_vaccinewaste.R")
 
-##### 10. Care Homes SG
-source("Transfer scripts/transfer_carehomes_sg.R")
-
-
 
 ##### Archived -----
 

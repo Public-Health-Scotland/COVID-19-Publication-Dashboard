@@ -7,7 +7,7 @@
 
 g_carehome_timeseries <- read_excel_with_options(
   glue( '//PHI_conf/Real_Time_Epi/Routine_Reporting/Time_Series/Outputs/PCR_LFD',
-        '/Care Home Time Series (PCRLFD Reinfections) {format(report_date -2,"%d%m%Y")}_all.xlsx' )
+        '/Care Home Time Series (PCRLFD Reinfections) {format(report_date -1,"%d%m%Y")}_all.xlsx' )
 ) %>%
   select( specimen_date, RESIDENT, STAFF ) %>%
   filter(specimen_date != "Total") %>%
