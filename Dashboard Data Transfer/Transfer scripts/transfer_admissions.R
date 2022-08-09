@@ -14,7 +14,7 @@ o_adm_simd <- read.csv(glue("{output_folder}/Admissions_SIMD.csv"), header = TRU
 
 # Filter CHI and 12 files down to last Tuesday
 i_chiadm %<>% filter(admission_date <= (report_date - 3))
-i_adm$`12 Admissions Positives` %<>% filter(admission_date <= (report_date - 3))
+i_adm$`12 Admissions Positives` %<>% filter(admission_date <= (report_date - 10))
 
 
 ### a) Admissions
