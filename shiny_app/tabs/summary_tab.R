@@ -385,7 +385,7 @@ if (data_explorer_selection() == "LabCases") { #Positive Cases
                         source = data_source, data_name = "Admissions",
                         notes = notes,
                         subheading = subheading,
-                        total_title = total_title,
+                        total_title = paste0("Daily number of admissions to hospital 'with' COVID-19 (week ending ", Admissions_date, ")"),
                         agesex_title = agesex_title,
                         simd_title = simd_title),
 
