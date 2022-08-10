@@ -151,7 +151,7 @@ source("Transfer scripts/transfer_vaccinewaste.R")
 # Hasn't been updated on the dashboard since August so leaving blank here for now
 
 ##### 13. Vaccine certification
-#source("Transfer scripts/transfer_vaccinecert.R")
+source("Transfer scripts/transfer_vaccinecert.R")
 
 ##### 14. Outdated Hospital Admissions
 #source("Transfer scripts/transfer_cases.R")
