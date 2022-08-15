@@ -5,21 +5,20 @@
 
 adm_path <- "/conf/PHSCOVID19_Analysis/RAPID Reporting/Daily_extracts"
 
-i_adm <- read_all_excel_sheets(glue("{adm_path}/12_Admissions_Positives_provisional.xlsx"))
+i_adm <- read_csv_with_options(glue("{adm_path}/Proxy provisional figures/12_Admissions_proxy.csv"))
 
-read_rds_with_options <- create_loader_with_options(readRDS)
-i_chiadm <- read_rds_with_options(glue("{adm_path}/CHI_Admissions_Positives_provisional.rds"))
+i_chiadm <- read_csv_with_options(glue("{adm_path}/Proxy provisional figures/CHI_Admissions_proxy.csv"))
 
 o_adm_simd <- read.csv(glue("{output_folder}/Admissions_SIMD.csv"), header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)
 
 # Filter CHI and 12 files down to last Tuesday
 i_chiadm %<>% filter(admission_date <= (report_date - 3))
-i_adm$`12 Admissions Positives` %<>% filter(admission_date <= (report_date - 3))
+i_adm %<>% filter(admission_date <= (report_date - 3))
 
 
 ### a) Admissions
 
-g_adm <- i_adm$`12 Admissions Positives`
+g_adm <- i_adm
 # Replace any NA with 0
 g_adm[is.na(g_adm)] <- 0
 
@@ -180,7 +179,7 @@ g_adm_agegroup  <- i_chiadm %>%
                                         age_year < 85 ~ '75-84',
                                         age_year < 200 ~ '85+',
                                         is.na(age_year) ~ 'Unknown')) %>%
-  mutate(week_ending = ceiling_date(admission_date, unit = "week", change_on_boundary = F)) %>%
+  mutate(week_ending = ceiling_date(as.Date(admission_date), unit = "week", change_on_boundary = F)) %>%
   group_by(week_ending, custom_age_group_2) %>%
   summarise(number = n()) %>%
   dplyr::rename(Age = custom_age_group_2,

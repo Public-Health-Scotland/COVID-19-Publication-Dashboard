@@ -130,7 +130,7 @@ byboard_data_table <- function(input_data_table,
                                autoWidth = TRUE,
                                initComplete = JS(
                                  "function(settings, json) {",
-                                 "$(this.api().table().header()).css({'background-color': '#3F3685', 'color': 'white'});",
+                                 "$(this.api().table().row().index()).css({'background-color': '#3F3685', 'color': 'white'});",
                                  "}") # Make header phs-purple
                 ),
                 filter = "top",
