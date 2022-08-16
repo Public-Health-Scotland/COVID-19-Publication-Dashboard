@@ -5,9 +5,10 @@
 
 adm_path <- "/conf/PHSCOVID19_Analysis/RAPID Reporting/Daily_extracts"
 
-i_adm <- read_csv_with_options(glue("{adm_path}/Proxy provisional figures/12_Admissions_proxy.csv"))
+i_adm <- read_csv_with_options(glue("{adm_path}/Proxy provisional figures/{report_date}_12_Admissions_proxy.csv"))
 
-i_chiadm <- read_csv_with_options(glue("{adm_path}/Proxy provisional figures/CHI_Admissions_proxy.csv"))
+read_rds_with_options <- create_loader_with_options(readRDS)
+i_chiadm <- read_rds_with_options(glue("{adm_path}/Proxy provisional figures/CHI_Admissions_proxy.rds"))
 
 o_adm_simd <- read.csv(glue("{output_folder}/Admissions_SIMD.csv"), header = TRUE, stringsAsFactors = FALSE, check.names=FALSE)
 
