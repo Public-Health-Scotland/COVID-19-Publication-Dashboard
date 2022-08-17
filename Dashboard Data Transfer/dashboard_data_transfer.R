@@ -94,7 +94,7 @@ source("Transfer scripts/transfer_carehomes.R")
 source("Transfer scripts/transfer_carehomes_sg.R")
 
 ##### 6. Ethnicity
-# NB often not updated week on week
+# Updated quarterly
 #source("Transfer scripts/transfer_ethnicity.R")
 
 ##### 7. LFD
@@ -103,12 +103,14 @@ source("Transfer scripts/transfer_LFD.R")
 ##### 8. Length of Stay
 source("Transfer scripts/transfer_los.R")
 
+##### 9. Vaccine certification
+source("Transfer scripts/transfer_vaccinecert.R")
 
 #############################
 ###### Updated monthly ######
 #############################
 
-##### 9. Vaccine Wastage
+##### 10. Vaccine Wastage
 source("Transfer scripts/transfer_vaccinewaste.R")
 
 
@@ -150,13 +152,10 @@ source("Transfer scripts/transfer_vaccinewaste.R")
 ##### 12. Settings
 # Hasn't been updated on the dashboard since August so leaving blank here for now
 
-##### 13. Vaccine certification
-#source("Transfer scripts/transfer_vaccinecert.R")
-
-##### 14. Outdated Hospital Admissions
+##### 13. Outdated Hospital Admissions
 #source("Transfer scripts/transfer_cases.R")
 
-#### 15. Self Help Guides
+#### 14. Self Help Guides
 #source("Transfer scripts/transfer_selfhelp.R")
 
 
