@@ -290,6 +290,7 @@ tagList(  #needed for shinyjs
             href = "https://www.gov.scot/collections/scottish-index-of-multiple-deprivation-2020/?utm_source=redirect&utm_medium=shorturl&utm_campaign=simd",
             "here for more information.)",
             class = "externallink") ),
+        tags$b("Please note, these data have not been refreshed since 20 July 2022 due to a technical issue."),
        # p(glue("Data were extracted on {LFD_demo_date}. The data in this tab only cover submissions with a valid CHI.")),
        fluidRow(br()),
        actionButton('jump_to_notes_LFD', 'Go to data notes'),
