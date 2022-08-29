@@ -169,12 +169,14 @@ rm(g_adm_simd)
 ### e) Admissions_SIMD_weekly
 
 g_adm_simd_weekly <- i_chiadm %>%
-  group_by(simd2020v2_sc_quintile) %>%
   mutate(week_ending = ceiling_date(admission_date, unit="week",
                                     change_on_boundary = FALSE)) %>%
   filter(simd2020v2_sc_quintile != "NA") %>%
   dplyr::rename(SIMD = simd2020v2_sc_quintile) %>%
-  count(SIMD, week_ending)
+  filter(week_ending >= "2020-03-15") %>%
+  count(SIMD, week_ending) %>%
+  group_by(week_ending) %>%
+  mutate(prop = (n/sum(n))*100)
 
 write.csv(g_adm_simd_weekly, glue(output_folder, "Admissions_SIMD_weekly.csv"), row.names = FALSE)
 

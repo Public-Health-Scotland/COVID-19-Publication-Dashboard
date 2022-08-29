@@ -147,7 +147,7 @@ Admissions_SIMD <- read_csv(glue("{output_folder}/Admissions_SIMD.csv")) %>%
 saveRDS(Admissions_SIMD, "shiny_app/data/Admissions_SIMD.rds")
 
 Admissions_SIMD_weekly <- read_csv(glue("{output_folder}/Admissions_SIMD_weekly.csv"))
-saveRDS(Admissions_SIMD, "shiny_app/data/Admissions_SIMD_weekly.rds")
+saveRDS(Admissions_SIMD_weekly, "shiny_app/data/Admissions_SIMD_weekly.rds")
 
 ICU_AgeSex <- read_csv(glue("{output_folder}/ICU_AgeSex.csv"))
 saveRDS(ICU_AgeSex, "shiny_app/data/ICU_AgeSex.rds")

@@ -291,6 +291,11 @@ pal_child <- c("#3F3685", "#9B4393", "#0078D4", "#83BB26", "#C73918", "#6B5C85")
 # Length of Stay - PHS Blues
 phs_blues <- c("#004785", "#00a2e5", "#4c7ea9")
 
+#for hospital admissions SIMD trends
+phs_graph_cols <- c(phs_colours('phs-magenta-80'), phs_colours('phs-blue-80'),
+  phs_colours('phs-green-80'), phs_colours('phs-purple-80'),
+  phs_colours('phs-teal-80'))
+
 #for contact tracing charts
 pal_CT <- c(phs_colours("phs-blue"),
             phs_colours("phs-purple"),
