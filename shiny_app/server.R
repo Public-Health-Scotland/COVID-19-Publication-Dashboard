@@ -19,13 +19,13 @@ function(input, output, session) {
   source(file.path("tabs/data_tab.R"), local = TRUE)$value
   # LFDs
   source(file.path("tabs/lfd_tab.R"),  local = TRUE)$value
-  source(file.path("tabs/lfd_demo_tab.R"), local = TRUE)$value
   # Populations of interest
   source(file.path("tabs/populations_of_interest_tab.R"), local = TRUE)$value
   # Vaccinations
   source(file.path("tabs/vaccinations_tab.R"), local = TRUE)$value
   ###############################################.
   # Archived tabs
+  source(file.path("tabs/archived_tabs/lfd_demo_tab.R"), local = TRUE)$value
   source(file.path("tabs/archived_tabs/contact_tracing_tab.R"),  local = TRUE)$value
   source(file.path("tabs/archived_tabs/contact_tracing_data_tab.R"),  local = TRUE)$value
   source(file.path("tabs/archived_tabs/travel_tab.R"),  local = TRUE)$value
