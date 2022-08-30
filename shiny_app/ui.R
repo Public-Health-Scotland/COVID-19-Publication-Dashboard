@@ -274,45 +274,8 @@ tagList(  #needed for shinyjs
         mainPanel(width = 12,
                   uiOutput("LFD_output"),
                   br3(), br3(), br3()
-        )),
+        ))
 
-      tabPanel(
-        title = "LFD demographic",
-        icon = icon("vials"),
-        value = "LFDdemoData",
-
-
-        h3("Lateral Flow Device demographics"),
-        p("This section allows you to view the total number of individuals tested and the
-          number of individuals testing positive at least once within Scotland. Data available by
-          age & gender and Scottish Index of Multiple Deprivation (SIMD) quintile (where SIMD 1 is the most deprived and SIMD 5 is the least deprived - see",
-          tags$a(
-            href = "https://www.gov.scot/collections/scottish-index-of-multiple-deprivation-2020/?utm_source=redirect&utm_medium=shorturl&utm_campaign=simd",
-            "here for more information.)",
-            class = "externallink") ),
-        tags$b("Please note, these data have not been refreshed since 20 July 2022 due to a technical issue."),
-       # p(glue("Data were extracted on {LFD_demo_date}. The data in this tab only cover submissions with a valid CHI.")),
-       fluidRow(br()),
-       actionButton('jump_to_notes_LFD', 'Go to data notes'),
-
-        hr(),
-        fluidRow(
-          column(width = 6,
-                 div(title = "people_output_select", # tooltip
-                     selectInput("people_output_selection", label = "Demographic Selection",
-                                 choices = people_output_selection))),
-          column(width = 6,
-                 div(title = "plot_output_select", # tooltip
-                     selectInput("plot_output_selection", label = "Output Selection",
-                                 choices = plot_output_selection)))
-        ), #fluidRow bracket
-
-        hr(),
-        uiOutput("people_tab"),
-
-        br3(), br3(), br3()
-
-        )
     ),
 
     #################### Severe illness -----
@@ -599,6 +562,45 @@ tagList(  #needed for shinyjs
     navbarMenu(
       title = "Archive",
       icon = icon("floppy-disk", verify_fa=F),
+      ########### LFD demo -----
+      tabPanel(
+        title = "LFD demographic",
+        icon = icon("vials"),
+        value = "LFDdemoData",
+
+
+        h3("Lateral Flow Device demographics"),
+        tags$b("The information on this tab has now been archived, and contains data up to 18 May 2022."),
+        br(),
+        p("This section allows you to view the total number of individuals tested and the
+          number of individuals testing positive at least once within Scotland. Data available by
+          age & gender and Scottish Index of Multiple Deprivation (SIMD) quintile (where SIMD 1 is the most deprived and SIMD 5 is the least deprived - see",
+          tags$a(
+            href = "https://www.gov.scot/collections/scottish-index-of-multiple-deprivation-2020/?utm_source=redirect&utm_medium=shorturl&utm_campaign=simd",
+            "here for more information.)",
+            class = "externallink") ),
+        # p(glue("Data were extracted on {LFD_demo_date}. The data in this tab only cover submissions with a valid CHI.")),
+        fluidRow(br()),
+        actionButton('jump_to_notes_LFD', 'Go to data notes'),
+
+        hr(),
+        fluidRow(
+          column(width = 6,
+                 div(title = "people_output_select", # tooltip
+                     selectInput("people_output_selection", label = "Demographic Selection",
+                                 choices = people_output_selection))),
+          column(width = 6,
+                 div(title = "plot_output_select", # tooltip
+                     selectInput("plot_output_selection", label = "Output Selection",
+                                 choices = plot_output_selection)))
+        ), #fluidRow bracket
+
+        hr(),
+        uiOutput("people_tab"),
+
+        br3(), br3(), br3()
+
+      ),
       #################### Surveillance -----
         tabPanel(
           title = "Archived surveillance",
