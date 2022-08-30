@@ -5,6 +5,9 @@ ethnicity_data_tab-copy.R
 ethnicity_tab.R
 ethnicity_data_tab.R
 
+# Ignoring google analytics files
+*google-analytics*
+
 .Rproj.user
 .Rhistory
 .RData
