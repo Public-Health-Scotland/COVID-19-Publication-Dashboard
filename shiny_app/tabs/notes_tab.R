@@ -95,7 +95,7 @@ output$severe_illness_notes <-renderUI({
     br(),
     p("Please note:"),
     tags$li("From 27 June 2022, Health Boards moved from daily to weekly submissions of RAPID data. This dashboard now reports more up to date data on hospital admissions, showing data up to week ending Sunday, which aligns with other COVID-19 measures in this dashboard (cases, hospital occupancy and ICU admissions)"),
-    tags$li("Hospital admissions for the most recent week may be incomplete for some Boards and should be treated as provisional and interpreted with caution"),
+    tags$li("Hospital admissions for the most recent week may be incomplete for some Boards and should be treated as provisional and interpreted with caution. Where no data are available at the time of publication, the number of admissions for the previous week will be rolled over for affected Boards."),
     tags$li("Please note that the proportion of weekly cases admitted into hospital chart and tables have been removed due to the change in testing policy."),
     tags$li("Episodes of reinfection were included from 01 March 2022, so care should be taken when interpreting trends over time. For more information, see ",
             tags$a("here", href = "https://publichealthscotland.scot/news/2022/february/covid-19-reporting-to-include-further-data-on-reinfections/"), "."),
