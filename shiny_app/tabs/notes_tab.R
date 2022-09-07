@@ -237,6 +237,7 @@ output$vaccinations_notes <-renderUI({
     p(strong("Source: NSS Service Now wastage form")),
     br(),
     p("Please note:"),
+    tags$li("Percent wasted is calculated as (Number of Doses Wasted x 100) / (Number of Doses Wasted + Administered)"),
     tags$li("The vaccine wastage form is populated by health board clinicians which can impact the timeliness and accuracy of the data."),
     tags$li("Data excludes GP practice information and wastage from clinical trials."),
     tags$li("Excess stock is defined: Where a vaccination team reach the end of an allotted shift or job, and have surplus vaccines that cannot be returned to stock,
