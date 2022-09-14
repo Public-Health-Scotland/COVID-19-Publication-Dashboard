@@ -1483,7 +1483,7 @@ los_chart_fn = function(data) {
       mutate(`Length of Stay` = factor(`Length of Stay`,
                           levels = c("< 24 Hours",
                                      "24-48 Hours",
-                                     ">= 48 Hours"))) %>%
+                                     "≥ 48 Hours"))) %>%
       mutate(Percent = (prop * 100))
 
     tooltip_trend <- glue("Week Ending: {table$`Week Ending`}<br>",
