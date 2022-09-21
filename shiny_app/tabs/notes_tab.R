@@ -6,6 +6,14 @@ output$cases_inf_notes <-renderUI({
   tagList(
     h4("Reported cases"),
     p("Reported cases include both polymerase chain reaction (PCR) and lateral flow device (LFD) positive test results."),
+    p("There have been changes in testing practices in ",
+      tags$a("May", href="https://www.gov.scot/publications/test-protect-transition-plan/?msclkid=69623e15ba4711ecb8a394934cbaa327"),
+      " (end of universal testing) and ",
+      tags$a("September", href="https://www.sehd.scot.nhs.uk/dl/DL(2022)32.pdf"),
+      "(end of asymptomatic testing) which make it difficult
+      to draw any conclusions from these data on community prevalence, therefore, caution is advised when comparing trends in cases over time.
+      LFD/PCR data precedes the ONS data by approximately two weeks, and therefore, can give an early estimate of the trends in infection rates in Scotland.
+      The ONS COVID-19 household survey gives robust estimates of community incidence over time."),
     p("These data are published on Wednesdays on the ",
       tags$a("COVID-19 Dashboard", href = "https://public.tableau.com/app/profile/phs.covid.19/viz/COVID-19DailyDashboard_15960160643010/Dailyupdate"),
       ". The number of daily confirmed cases may differ slightly from data published on this dashboard because some
@@ -16,8 +24,9 @@ output$cases_inf_notes <-renderUI({
     p("Please note:"),
     tags$li("The total number of people within Scotland who have, or have had, COVID-19 since the coronavirus outbreak began is unknown.
             The number of confirmed cases is likely to be an underestimate."),
-    tags$li("The purpose of COVID-19 testing has shifted from population-wide testing to reduce transmission, to targeted testing and surveillance. Therefore, testing only remains in place
-      for certain groups to protect high risk settings and support clinical care, and will no longer be representative of all COVID-19 cases in Scotland"),
+    tags$li("The purpose of COVID-19 testing has now shifted from population-wide testing to reduce transmission, to targeted, symptomatic
+            testing in clinical care settings. Data are continuously updated, therefore figures for previous weeks may differ
+            from published data in previous weeks’ reports."),
     # This point will need removed when case data goes from daily to weekly
     tags$li("The drop in the number of confirmed cases at weekends likely reflects that laboratories are doing fewer tests at the weekend."),
     tags$li("Due to changes in testing strategy outlined below, caution is advised when comparing trends over time."),
@@ -42,26 +51,28 @@ output$LFD_notes <-renderUI({
     p("LFDs are clinically validated swab antigen tests that do not require a laboratory for processing, producing rapid results at the location of the test.
       From November 2020, LFD tests were made available across a wide range of workforces and universally to the public, and from 26 April 2021, LFD testing expanded
       to include asymptomatic testing."),
-    p("Although LFDs are no longer distributed for universal offer, they are still available for those visiting a hospital or care home, unpaid carers,
-      those eligible for COVID treatments and those applying for the self-isolation support grant."),
+    p("There have been significant changes to testing policy, with the Universal Offer ending in ",
+      tags$a("May", href="https://www.gov.scot/publications/test-protect-transition-plan/?msclkid=69623e15ba4711ecb8a394934cbaa327"),
+   " and the end of asymptomatic testing in most settings in ",
+   tags$a("September", href="https://www.sehd.scot.nhs.uk/dl/DL(2022)32.pdf"),
+      " Please take caution when comparing trends over time."),
     p("For information regarding LFD testing during term time as part of the Schools Asymptomatic Testing Programme, please visit the ",
       tags$a("COVID-19 Education Surveillance Report", href = "https://scotland.shinyapps.io/phs-covid19-education/_w_f53417bb/#tab-9333-2"), "."),
     p(strong("Source: UK Government self-reported / NSS Portal")),
     br(),
     p("Please note:"),
+    tags$li("Asymptomatic testing for Health and Social Care Workers will be paused from 28 September 2022. There is consensus that we are now in a downward trajectory
+            from the most recent wave, with prevalence and other epidemiological indicators improving. Symptomatic testing of Health and Social Care Workers will continue using LFDs.
+            More information is available", tags$a("here.", href="https://www.sehd.scot.nhs.uk/dl/DL(2022)32.pdf")),
+    tags$li("Asymptomatic adult care home staff testing and visitor and visiting professional will be paused from 28 September 2022. Symptomatic care home resident testing (PCR)
+            and symptomatic staff testing (LFD) and admission testing from the community for care homes (LFD) will continue. More information is available ",
+            tags$a("here.", href="https://www.sehd.scot.nhs.uk/dl/DL(2022)32.pdf")),
     tags$li("Test results and test group are self-reported, so numbers of tests and positives do not include tests which have not been registered on the UK Gov Portal."),
     tags$li("Before 28 July 2021, tests for Universal Offer were entered on the system as 'Other'."),
     tags$li("Test results may still be uploaded by those who have a stock of tests ordered before the changes in testing guidance."),
     br(),
-    h4("Demographics"),
-    p("This section contains the total number of individuals tested and the number of individuals testing positive at least once within Scotland.
-      Data are available by age, gender and Scottish Index of Multiple Deprivation (SIMD) quintile (where 1 represents the most deprived and 5 represents the least deprived).
-      Please see ", tags$a("here", href = "https://www.gov.scot/collections/scottish-index-of-multiple-deprivation-2020/?utm_source=redirect&utm_medium=shorturl&utm_campaign=simd"),
-      " for more information on SIMD."),
-    br(),
     bsButton("jump_to_timeline_2", label = "Go to timeline of changes in testing policy"),
-    bsButton("jump_to_LFD_n", label = "Go to LFD testing tab"),
-    bsButton("jump_to_LFDdemo_n", label = "Go to LFD demographics tab")
+    bsButton("jump_to_LFD_n", label = "Go to LFD tab")
   )
 }) # render UI close bracket
 
@@ -70,14 +81,30 @@ output$timeline_notes <-renderUI({
 
   tagList(
     p("Please note the following changes to testing policy in 2022:"),
-    tags$li("From 05 January 2022, reported cases included both PCR and LFD positive test results. Prior to this, cases consist only of positive PCR tests."),
-    tags$li("From 01 March 2022, reported cases include episodes of reinfection at least 90 days after initial infection."),
-    tags$li("From mid-April 2022, asymptomatic testing was no longer recommended. PCR testing continued for those with symptoms and LFD testing for hospital and care home visitors,
-      close contacts of an index case and to allow cases to finish their isolation after 7 days."),
-    tags$li("01 May 2022 marked the beginning of The ", tags$a("Scottish Government Test and Protect Transition Plan",
-                                                               href = "https://www.gov.scot/publications/test-protect-transition-plan/"),
-      ", which set out a shift in COVID-19 testing priorities, from population-wide testing to reduce transmission to targeted testing and surveillance. Therefore, reported cases will
-      primarily include clinical care settings, health and social care workforce, surveillance and outbreak response."),
+    tags$li("From 05 January 2022, reported cases included both PCR and Lateral Flow Device (LFD) positive tests. See ",
+            tags$a("here", href="https://publichealthscotland.scot/news/2022/february/update-on-enhancements-to-covid-19-reporting/"), " for more information"),
+    tags$li("From 01 March 2022, reported cases included episodes of reinfection at least 90 days after initial infection.
+            Prior to this date, COVID-19 cases were based on an individual’s first positive test only. More information
+            is available on the PHS website ",
+            tags$a("here", href="https://www.publichealthscotland.scot/news/2022/february/covid-19-reporting-to-include-further-data-on-reinfections/")),
+    tags$li("From mid-April 2022, as part of the Scottish Government’s  ",
+            tags$a("Test and Protect transition plan", href="https://www.gov.scot/publications/test-protect-transition-plan/?msclkid=69623e15ba4711ecb8a394934cbaa327"),
+             " asymptomatic testing was no longer recommended. Symptomatic PCR testing was still available, and LFD testing was still
+            encouraged for hospital and care home visitors,
+            those who had been in close contact with a case and to allow cases to finish their isolation after 7 days"),
+    tags$li("01 May 2022 marks the beginning of updated testing policy. The purpose of COVID-19 testing has now shifted
+            from population-wide testing to reduce transmission, to targeted testing.
+            Therefore, reported cases will primarily include clinical care settings, health and social care workforce, surveillance, and outbreak response."),
+    tags$li("Asymptomatic testing for Health and Social Care Workers will be paused from 28 September 2022. There is consensus that we are now in a downward
+            trajectory from the most recent wave, with prevalence and other epidemiological indicators improving. Symptomatic testing of Health and Social
+            Care Workers will continue using LFDs. More information is available  ",
+            tags$a("here.", href="https://www.sehd.scot.nhs.uk/dl/DL(2022)32.pdf")),
+    tags$li("Admission and pre-elective surgery testing will be paused from 28 September 2022. Pre-elective surgery testing of immunocompromised patients will
+            continue (LFD), as will testing of symptomatic patients (LFD/PCR). More information is available  ",
+            tags$a("here.", href="https://www.sehd.scot.nhs.uk/dl/DL(2022)32.pdf")),
+    tags$li("Asymptomatic adult care home staff testing and visitor and visiting professional will be paused from 28 September 2022. Symptomatic care home resident testing
+            (PCR) and symptomatic staff testing (LFD) and admission testing from the community for care homes (LFD) will continue. More information is available  ",
+            tags$a("here.", href="https://www.sehd.scot.nhs.uk/dl/DL(2022)32.pdf")),
     br(),
     bsButton("jump_to_inf_cases_n2", label = "Go to cases and infection levels charts"),
     bsButton("jump_to_inf_cases_data_n2", label = "Go to cases and infection levels data")
@@ -89,14 +116,21 @@ output$severe_illness_notes <-renderUI({
 
   tagList(
     h4("Hospital admissions"),
-    p("These admissions are defined as: A patient's first positive PCR or LFD test of the episode of infection (including reinfections at 90 days or more after
-      their last positive test) for COVID-19 up to 14 days prior to admission to hospital, on the day of their admission or during their stay in hospital."),
+    p("COVID-19 hospital admissions are defined as: A patient’s first PCR or PCR confirmed test of the episode of infection (including reinfections at 90 days or more after their last positive test)
+      for COVID-19 up to 14 days prior to admission to hospital or within two days of admission. COVID-19 hospital admissions only include emergency admissions to medical or paediatric specialties,
+      excluding emergency admissions for injuries."),
     p(strong("Source: PCR - Electronic Communication of Surveillance in Scotland (ECOSS); LFD - UK Government self-reported / NSS Portal; Rapid and Preliminary Inpatient Data (RAPID)")),
     br(),
     p("Please note:"),
-    tags$li("From 27 June 2022, Health Boards moved from daily to weekly submissions of RAPID data. This dashboard now reports more up to date data on hospital admissions, showing data up to week ending Sunday, which aligns with other COVID-19 measures in this dashboard (cases, hospital occupancy and ICU admissions)"),
-    tags$li("Hospital admissions for the most recent week may be incomplete for some Boards and should be treated as provisional and interpreted with caution. Where no data are available at the time of publication, the number of admissions for the previous week will be rolled over for affected Boards."),
-    tags$li("Please note that the proportion of weekly cases admitted into hospital chart and tables have been removed due to the change in testing policy."),
+    tags$li("RAPID is a weekly submission of people who have been admitted to and discharged from hospital. Further, figures are subject to change as hospital records are updated.
+            It can take on average 6-8 weeks before a record is finalised, particularly discharge details. "),
+    tags$li("Hospital admissions for the most recent week may be incomplete for some Boards and should be treated as provisional and interpreted with caution.
+            Where no data are available at the time of publication, the number of admissions for the previous week will be rolled forward for affected Boards.
+            Missing data will either be due to a board not submitting on time or there being zero COVID-19 admissions in the latest week.
+            These provisional data will be refreshed the following week. "),
+    tags$li("These data include admissions to acute hospitals only and do not include psychiatric or maternity/obstetrics specialties.
+            In the data presented here, an admission is defined as a period of stay in a single hospital. There may be multiple admissions for a single patient
+            if they have moved between locations during a continuous inpatient stay (CIS), or if they have been admitted to hospital on separate occasions. "),
     tags$li("Episodes of reinfection were included from 01 March 2022, so care should be taken when interpreting trends over time. For more information, see ",
             tags$a("here", href = "https://publichealthscotland.scot/news/2022/february/covid-19-reporting-to-include-further-data-on-reinfections/"), "."),
     tags$li("Patients are not included in the analysis if their first positive PCR or LFD test of the episode of infection is after their date of discharge from hospital."),
@@ -111,19 +145,23 @@ output$severe_illness_notes <-renderUI({
     p(strong("Source: Rapid and Preliminary Inpatient Data (RAPID)")),
     br(),
     p("Please note:"),
-    tags$li("LOS can be influenced by a variety of factors including age, reason for admission, co-morbidities and hospital pressures. The LOS analysis
-            presented in the hospital admissions tab has not been adjusted to account for these factors."),
+    tags$li("Length of stay in hospital can be influenced by a variety of factors including age, reason for admission, co-morbidities, and hospital pressures.
+            The analysis presented in this publication has not been adjusted to account for these factors. "),
+    tags$li("This information is subject to future revisions due to the completeness of discharge information (approximately 8% of records excluded due to missing discharge information)."),
     br(),
     br(),
     h4("ICU admissions"),
     p("COVID-19 varies in severity from very mild symptoms through to those requiring hospital admission and the most ill who require intensive care treatment and
       supported ventilation in an Intensive Care Unit (ICU). Monitoring the admission frequency to critical care units in Scotland (ICU) is therefore an important
       measure of the severity of COVID-19."),
+    p("COVID-19 related ICU admissions have been identified as the following: A patient who has tested positive for COVID at any time in the 21 days prior to admission
+      to ICU, or who has tested positive from the date of admission up to and including the date of ICU discharge. "),
     #p("Counts include any patient with a confirmed positive COVID-19 test taken prior to discharge from an ICU in Scotland."),
     p("Includes any patient admitted to ICU with:"),
     tags$li("a valid linkage to laboratory data ", strong("AND")),
     tags$li("with laboratory confirmation for COVID-19 during the 21 days before the date of ICU admission ", strong("OR")),
     tags$li("with laboratory confirmation for COVID-19 during their ICU stay, from the date of ICU admission up to and including the date of ICU discharge."),
+    br(),
     p(strong("Source: Scottish Intensive Care Society Audit Group (SICSAG)")),
     br(),
     p("Please note:"),
@@ -159,6 +197,8 @@ output$population_int_notes <-renderUI({
     br(),
     p("Please note:"),
     tags$li("The source data are dynamic, and additional test results received will be reflected in future calculations of cases, which may affect figures retrospectively."),
+    tags$li("Asymptomatic adult care home staff testing and visitor and visiting professional will be paused from 28 September 2022. Symptomatic care home resident testing (PCR)
+            and symptomatic staff testing (LFD) and admission testing from the community for care homes (LFD) will continue. More information is available here. "),
     br(),
     h4("Care home visiting status by Health Board and outbreak status"),
     p("As of 24 February 2021, care home visiting guidance was updated to allow care homes to update their own visiting plans depending on COVID-19 outbreak status.
