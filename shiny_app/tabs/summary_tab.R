@@ -369,6 +369,9 @@ if (data_explorer_selection() == "LabCases") { #Positive Cases
 
   }else if (data_explorer_selection() == "Admissions") { #Admissions
   tagList(actionButton("btn_modal_simd", "What is SIMD?", icon = icon('question-circle')),
+          br(),
+          tags$b("Please note there have been significant changes to the methodology for reporting
+                 hospital admissions. Please see the notes tab for more information."),
           # p("On 05 January 2022, the Scottish Government",
           #   tags$a(href= "https://www.gov.scot/news/self-isolation-and-testing-changes/",
           #          "announced",
