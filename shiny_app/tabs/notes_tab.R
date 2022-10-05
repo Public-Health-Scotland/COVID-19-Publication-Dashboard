@@ -269,6 +269,7 @@ output$vaccinations_notes <-renderUI({
     tags$li("Vaccine certifications are no longer legally required in Scotland, but the app will remain available for any business that wishes to continue certification
             on a voluntary basis to reassure customers."),
     tags$li("The record will not show any vaccinations given outside of Scotland."),
+    tags$li("Due to a technical issue between September 16 to September 20 2022, data was not collected on the number of PDFs and letters"),
     br(),
     h4("Vaccine wastage"),
     p("Given the scale of the Covid-19 vaccination programme, some vaccine wastage has been unavoidable for a variety of reasons including logistical issues,
