@@ -263,7 +263,7 @@ ui_content <-  reactive({
   # text for titles of cut charts
   datasettrend <- case_when(data_explorer_selection() == "LabCases" ~ "Positive COVID-19 cases",
                             data_explorer_selection() == "LabCasesReinfections" ~ "COVID-19 Reinfections",
-                            data_explorer_selection() == "Admissions" ~ "Admissions to hospital 'with' COVID-19",
+                            data_explorer_selection() == "Admissions" ~ "COVID-19 hospital admissions",
                             data_explorer_selection() == "ICU" ~ "COVID-19 admissions to ICU",
                             data_explorer_selection() == "NHS24" ~ "NHS 24 111 COVID-19 Contacts and COVID-19 Advice Helpline calls",
                             data_explorer_selection() == "AssessmentHub" ~ "Consultations",
@@ -272,7 +272,7 @@ ui_content <-  reactive({
   # text for titles of cut charts
   dataset <- case_when(data_explorer_selection() == "LabCases" ~ "Positive COVID-19 cases",
                        data_explorer_selection() == "LabCasesReinfections" ~ "COVID-19 Reinfections",
-                       data_explorer_selection() == "Admissions" ~ "Admissions to hospital 'with' COVID-19",
+                       data_explorer_selection() == "Admissions" ~ "COVID-19 hospital admissions",
                        data_explorer_selection() == "ICU" ~ "COVID-19 admissions to ICU",
                        data_explorer_selection() == "NHS24" ~ "COVID-19 related NHS24 contacts",
                        data_explorer_selection() == "AssessmentHub" ~ "Individuals",
@@ -370,8 +370,6 @@ if (data_explorer_selection() == "LabCases") { #Positive Cases
   }else if (data_explorer_selection() == "Admissions") { #Admissions
   tagList(actionButton("btn_modal_simd", "What is SIMD?", icon = icon('question-circle')),
           br(),
-          tags$b("Please note there have been significant changes to the methodology for reporting
-                 hospital admissions. Please see the notes tab for more information."),
           # p("On 05 January 2022, the Scottish Government",
           #   tags$a(href= "https://www.gov.scot/news/self-isolation-and-testing-changes/",
           #          "announced",
@@ -384,7 +382,7 @@ if (data_explorer_selection() == "LabCases") { #Positive Cases
           #          "More information available on the Public Health Scotland website",
           #          tags$a(href="https://publichealthscotland.scot/news/2022/february/covid-19-reporting-to-include-further-data-on-reinfections/",
           #                 "here.", class="externallink"))),
-    cut_charts_subheading(title = "Daily number of admissions to hospital 'with' COVID-19",
+    cut_charts_subheading(title = "Daily number of COVID-19 hospital admissions",
                         source = data_source, data_name = "Admissions",
                         notes = notes,
                         subheading = subheading,
