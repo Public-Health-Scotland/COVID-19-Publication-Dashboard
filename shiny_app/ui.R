@@ -395,12 +395,7 @@ tagList(  #needed for shinyjs
 
          h3("Care homes visiting status in Scotland, by Health Board and Outbreak Status"),
 
-         tags$li("PHS now report on the visiting status of Care Homes in Scotland, previously reported by the ",
-           tags$a(href = "https://www.gov.scot/publications/coronavirus-covid-19-additional-data-about-adult-care-homes-in-scotland/",
-                  "Scottish Government",
-                  class = "externallink")),
-         tags$li("These data are updated every 4 weeks."),
-         tags$li("The following data tables provide a snapshot of care home visiting status. For all caveats, please refer to the notes page"),
+         p("Please note, there have been changes to data collection methods as of week ending 16 October 2022. For all caveats, please refer to the notes page"),
          actionButton('jump_to_notes_pop_interest_outbreak', 'Go to data notes'),
 
          mainPanel(width = 12,
