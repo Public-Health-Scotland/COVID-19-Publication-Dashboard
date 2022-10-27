@@ -1481,9 +1481,8 @@ los_chart_fn = function(data) {
     table = data %>%
       filter(`Age Group` == input$los_age) %>%
       mutate(`Length of Stay` = factor(`Length of Stay`,
-                          levels = c("< 24 Hours",
-                                     "24-48 Hours",
-                                     "≥ 48 Hours"))) %>%
+                                       levels = c("1 day or less", "2-3 days", "4-5 days",
+                                                  "6-7 days", "Greater than 8 days"))) %>%
       mutate(Percent = (prop * 100))
 
     tooltip_trend <- glue("Week Ending: {table$`Week Ending`}<br>",
@@ -1496,7 +1495,11 @@ los_chart_fn = function(data) {
               y = ~Percent,
               color = ~`Length of Stay`,
               type = 'bar',
-              colors = phs_blues,
+              colors = c(phs_colours("phs-graphite"),
+                         phs_colours("phs-green"),
+                         phs_colours("phs-purple"),
+                         phs_colours("phs-magenta"),
+                         phs_colours("phs-blue")),
               text = tooltip_trend,
               hoverinfo = "text",
               marker = list(line = list(width=.5,
