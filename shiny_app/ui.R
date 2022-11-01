@@ -88,7 +88,7 @@ tagList(  #needed for shinyjs
                                             title_box = "Archived surveillance"),
                                lp_about_box(button_name = 'jump_to_travel',
                                             title_box = "Travel outside Scotland"))
-             ), #Fluidrow bracket
+  ), #Fluidrow bracket
              br(),
           h3("Information"),
           tags$li("Metadata for this dashboard can be downloaded from the ",
@@ -440,80 +440,7 @@ tagList(  #needed for shinyjs
       ## End -----------
 
     ), # page bracket
-    #################### Surveillance -----
-    navbarMenu(
-      title = "Scottish Ambulance Service",
-      icon = icon("truck-medical", verify_fa=FALSE),
-      tabPanel(
-        title = "Charts",
-        icon = icon("chart-area"),
-        value = "Surveillance",
-        wellPanel(
-          column(4,
-                 div(title = "Select the data you want to explore.", # tooltip
-                     radioGroupButtons("measure_select_surveillance",
-                                       label = "Select the data you want to explore.",
-                                       choices = surveillance_list,
-                                       status = "btn",
-                                       selected = surveillance_list[[1]],
-                                       direction = "vertical",
-                                       justified = T))),
-          column(4,
-                 downloadButton('download_surveillance_data', 'Download data', class="down"),
-                 fluidRow(br()),
-                 actionButton(inputId='ab1', label='Metadata',
-                              icon = icon("th"),
-                              onclick ="window.open('https://beta.isdscotland.org/find-publications-and-data/population-health/covid-19/covid-19-statistical-report/',
-                              '_blank')"),
-                 fluidRow(br()),
-                 actionButton('jump_to_notes_surveillance', 'Go to data notes')
-          )
 
-        ), #wellPanel bracket
-
-        mainPanel(width = 12,
-                  uiOutput("data_explorer_surveillance")
-        )# mainPanel bracket
-
-      ),
-      #################### Data ----
-      tabPanel(
-        title = "Data",
-        icon = icon("table"),
-        value = "SurveillanceData",
-        p("This section allows you to view the data in table format.
-          You can use the filters to select the data you are interested in.
-          You can also download the data as a csv using the download button.
-          The data are also hosted in the",
-          tags$a(href = "https://www.opendata.nhs.scot/dataset?groups=covid-19",
-                 "Scottish Health and Social Care Open Data portal",
-                 class = "externallink"),"."),
-
-        # tags$li("On 05 January 2022, the Scottish Government",
-        #         tags$a(href= "https://www.gov.scot/news/self-isolation-and-testing-changes/",
-        #                "announced",
-        #                class = "externallink"),
-        #         "that asymptomatic people who return a positive lateral flow device (LFD) no longer have to confirm their positive result with a PCR test."),
-        # tags$li(strong(style="color:black", "From 01 March 2022, PHS now include episodes of reinfection within COVID-19 reporting.
-        #                Prior to this date COVID-19 cases were based on an individual’s first positive test result only.
-        #                The new daily calculation includes both new infections and possible reinfections.
-        #                Possible reinfections are defined as individuals who test positive, by PCR (polymerase chain reaction) or LFD (lateral flow device), 90 days or more after their last positive test.",
-        #                "More information available on the Public Health Scotland website",
-        #                tags$a(href="https://publichealthscotland.scot/news/2022/february/covid-19-reporting-to-include-further-data-on-reinfections/",
-        #                       "here.", class="externallink"))),
-        # tags$li("Please note that the data on hospital admissions by ethnicity only refers to laboratory confirmed (PCR) COVID-19 tests."),
-        br(),
-        br(),
-        column(6,
-               selectInput("data_select_surveillance", "Select the data you want to explore.",
-                           choices = surveillance_data_list)),
-        column(6, downloadButton('download_surveillance_table_csv', 'Download data', class="down")),
-        mainPanel(width = 12,
-                  uiOutput("surveillance_table"))
-      )# tabpanel bracket
-      ## End -----------
-
-    ), # page bracket
     #################### Vaccinations -----
     navbarMenu(
       title = "Vaccinations",
