@@ -50,15 +50,14 @@ tagList(  #needed for shinyjs
              # 2nd row of boxes
              fluidRow(
                br(),
-               # Populations of interest
-               column(8, style = "padding-left: 0px; padding-right: 0px;",
-                        column(6, class="landing-page-column",
-                               lp_main_box(button_name = 'jump_to_pop_interest', title_box = "Populations of Interest",
-                                           description = 'Care home testing and visiting status')),
-               # Vaccinations
-               column(6, class="landing-page-column",
-                               lp_main_box(button_name = 'jump_to_vaccinations', title_box = "Vaccinations",
-                                           description = 'Vaccine certification and wastage information'))
+               column(2),
+               column(4, class="landing-page-column",
+                      lp_main_box(button_name = 'jump_to_pop_interest', title_box = "Populations of Interest",
+                                  description = 'Care home testing and visiting status')
+                      ),
+               column(4, class="landing-page-column",
+                      lp_main_box(button_name = 'jump_to_vaccinations', title_box = "Vaccinations",
+                                  description = 'Vaccine certification and wastage information')
                       )
              ), # fluid row close
              # End of second row
