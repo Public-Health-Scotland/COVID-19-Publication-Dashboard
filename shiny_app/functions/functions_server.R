@@ -1482,7 +1482,7 @@ los_chart_fn = function(data) {
       filter(`Age Group` == input$los_age) %>%
       mutate(`Length of Stay` = factor(`Length of Stay`,
                                        levels = c("1 day or less", "2-3 days", "4-5 days",
-                                                  "6-7 days", "Greater than 8 days"))) %>%
+                                                  "6-7 days", "8+ days"))) %>%
       mutate(Percent = (prop * 100))
 
     tooltip_trend <- glue("Week Ending: {table$`Week Ending`}<br>",
