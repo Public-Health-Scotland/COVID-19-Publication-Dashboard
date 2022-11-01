@@ -80,37 +80,34 @@ i_population$age_group <- sapply(i_population$age_group, function(x) str_remove_
 ##### 1. ICU
 source("Transfer scripts/transfer_ICU.R")
 
-##### 2. SAS
-source("Transfer scripts/transfer_SAS.R")
-
-##### 3. Admissions
+##### 2. Admissions
 source("Transfer scripts/transfer_admissions.R")
 
-##### 4. Lab Data
+##### 3. Lab Data
 source("Transfer scripts/transfer_labdata.R")
 
-##### 5. Care Homes
+##### 4. Care Homes
 source("Transfer scripts/transfer_carehomes.R")
 source("Transfer scripts/transfer_carehomes_sg.R")
 
-##### 6. Ethnicity
+##### 5. Ethnicity
 # Updated quarterly
 #source("Transfer scripts/transfer_ethnicity.R")
 
-##### 7. LFD
+##### 6. LFD
 source("Transfer scripts/transfer_LFD.R")
 
-##### 8. Length of Stay
+##### 7. Length of Stay
 source("Transfer scripts/transfer_los.R")
 
-##### 9. Vaccine certification
+##### 8. Vaccine certification
 source("Transfer scripts/transfer_vaccinecert.R")
 
 #############################
 ###### Updated monthly ######
 #############################
 
-##### 10. Vaccine Wastage
+##### 9. Vaccine Wastage
 source("Transfer scripts/transfer_vaccinewaste.R")
 
 
@@ -158,4 +155,5 @@ source("Transfer scripts/transfer_vaccinewaste.R")
 #### 14. Self Help Guides
 #source("Transfer scripts/transfer_selfhelp.R")
 
-
+##### 15. SAS
+#source("Transfer scripts/transfer_SAS.R")
