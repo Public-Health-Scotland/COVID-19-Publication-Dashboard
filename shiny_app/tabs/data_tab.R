@@ -7,7 +7,7 @@
 data_select_combined <- reactive({
   case_when(input$intabset == "SevereIllnessData" ~ input$data_select_severe_illness,
             input$intabset == "InfCasesData" ~ input$data_select_infcases,
-            input$intabset == "SurveillanceData" ~ input$data_select_surveillance,
+            input$intabset == "SurveillanceArchive" ~ input$data_select_surveillance_archive,
             TRUE ~ "LabCases")
 })
 
