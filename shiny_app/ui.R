@@ -59,11 +59,7 @@ tagList(  #needed for shinyjs
                column(6, class="landing-page-column",
                                lp_main_box(button_name = 'jump_to_vaccinations', title_box = "Vaccinations",
                                            description = 'Vaccine certification and wastage information'))
-                      ),
-               # Surveillance
-               column(4, class="landing-page-column",
-                     lp_main_box(button_name = 'jump_to_surveillance', title_box = "SAS",
-                                    description = 'Statistics from Scottish Ambulance Service'))
+                      )
              ), # fluid row close
              # End of second row
              br(),
