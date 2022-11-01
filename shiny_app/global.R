@@ -208,10 +208,10 @@ severe_illness_list <- c("Hospital Admissions" = "Admissions",
                          "Hospital Admissions by Ethnicity" = "Ethnicity_Chart",
                          "ICU Admissions" = "ICU")
 
-surveillance_list <- c("Scottish Ambulance Service" = "SAS")
 
 surveillance_archive_list <- c("NHS24 Contacts" = "NHS24",
-                               "Community Hubs and Assessment Centres" = "AssessmentHub")
+                               "Community Hubs and Assessment Centres" = "AssessmentHub",
+                               "Scottish Ambulance Service" = "SAS")
 
 CTdata_list_chart_tab <- c("Contact Tracing time performance %",
                             "Contact Tracing time performance cases",
@@ -251,10 +251,6 @@ severe_illness_data_list <- c("Hospital admissions" = "Admissions",
                               "ICU admissions" = "ICU",
                               "ICU admissions by age and sex" = "ICU_AgeSex")
 
-surveillance_data_list <- c("Scottish Ambulance Service" = "SAS",
-                            "Scottish Ambulance Service by age and sex" = "SAS_AgeSex",
-                            "Scottish Ambulance Service by deprivation" = "SAS_SIMD",
-                            "Scottish Ambulance Service - all incidents" = "SAS_all")
 
 surveillance_archive_data_list <- c("NHS24 contacts" = "NHS24",
                                     "NHS24 contacts by age and sex" = "NHS24_AgeSex",
@@ -264,7 +260,11 @@ surveillance_archive_data_list <- c("NHS24 contacts" = "NHS24",
                                     "NHS24 community outcomes"  = "NHS24_community",
                                     "Community hubs and assessment centres" = "AssessmentHub",
                                     "Community hubs and assessment centres by age" = "AssessmentHub_AgeSex",
-                                    "Community hubs and assessment centres by deprivation" = "AssessmentHub_SIMD")
+                                    "Community hubs and assessment centres by deprivation" = "AssessmentHub_SIMD",
+                                    "Scottish Ambulance Service" = "SAS",
+                                    "Scottish Ambulance Service by age and sex" = "SAS_AgeSex",
+                                    "Scottish Ambulance Service by deprivation" = "SAS_SIMD",
+                                    "Scottish Ambulance Service - all incidents" = "SAS_all")
 
 
 
