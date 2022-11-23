@@ -56,6 +56,10 @@ Admissions <- Admissions %>%
 
 saveRDS(Admissions, "shiny_app/data/Admissions.rds")
 
+Admissions_SimdTrend <- read_csv(glue("{output_folder}/Admissions_SimdTrend.csv"))
+
+saveRDS(Admissions_SimdTrend, "shiny_app/data/Admissions_SimdTrend.rds")
+
 # ICU
 ICU <- read_csv(glue("{output_folder}/ICU.csv")) %>%
   select_if(non_empty_cols)
