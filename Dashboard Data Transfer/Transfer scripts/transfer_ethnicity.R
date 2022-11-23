@@ -32,6 +32,6 @@ g_ethnicitychart <- g_ethnicity %>%
 
 write.csv(g_ethnicitychart, glue(output_folder, "Ethnicity_Chart.csv"), row.names = FALSE)
 
-rm(g_ethnicity, o_ethnicity, g_ethnicitychart, o_ethnicitychart, i_ethnicity)
+rm(g_ethnicity, g_ethnicitychart, o_ethnicitychart, i_ethnicity)
 
 
