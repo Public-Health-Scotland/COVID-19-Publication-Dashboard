@@ -390,7 +390,7 @@ if (data_explorer_selection() == "LabCases") { #Positive Cases
                         agesex_title = agesex_title,
                         simd_title = simd_title),
 
-    h3("SIMD TITLE"),
+    h3("Trend of COVID-19 hospital admissions by deprivation category (SIMD)"),
     fluidRow(
              plot_box_values("", "Admissions_SimdTrend")
     ),
