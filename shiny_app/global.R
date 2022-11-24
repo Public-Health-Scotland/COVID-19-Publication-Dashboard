@@ -55,7 +55,6 @@ library(janitor)
 library(phsstyles)
 library(tidyr)
 library(magrittr)
-library(ggplot2)
 
 ###############################################.
 ## Data ----
