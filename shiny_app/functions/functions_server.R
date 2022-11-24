@@ -1602,8 +1602,26 @@ make_simd_trend_plot <- function(data) {
   data %<>%
     mutate(WeekEnding = as.Date(as.character(WeekEnding), format = "%Y%m%d"))
 
-  p <- plot_ly(data, x = ~WeekEnding, y = ~NumberOfAdmissions, split = ~SIMD,
-               mode="lines")
+  yaxis_plots[["title"]] <- "Number of admissions"
+  xaxis_plots[["title"]] <- "Week ending"
+
+  p <- plot_ly(data) %>%
+       add_trace(x = ~WeekEnding, y = ~NumberOfAdmissions, split = ~SIMD, text=~SIMD,
+               type="scatter", mode="lines",
+               color=~SIMD,
+               colors=phs_colours(c("phs-blue", "phs-liberty-30", "phs-liberty-30",
+                                    "phs-liberty-30", "phs-green")),
+               hovertemplate = paste0('<b>Week ending</b>: %{x}<br>',
+                                      '<b>SIMD quintile</b>: %{text}<br>',
+                                     '<b>Number of admissions</b>: %{y}')
+       ) %>%
+    layout(margin = list(b = 80, t = 5),
+           yaxis = yaxis_plots, xaxis = xaxis_plots,
+           legend = list(x = 100, y = 0.5)) %>%
+    config(displaylogo = F, displayModeBar = TRUE,
+           modeBarButtonsToRemove = bttn_remove )
+
+
 
   return(p)
 
