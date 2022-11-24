@@ -193,6 +193,7 @@ values$LabCases_AgeSex <- renderPlotly({plot_agesex_chart(LabCases_AgeSex, data_
 values$LabCases_SIMD <- renderPlotly({plot_simd_chart(LabCases_SIMD, data_name = "LabCases_SIMD")})
 values$Admissions_AgeSex <- renderPlotly({plot_agesex_chart(Admissions_AgeSex, data_name = "Admissions_AgeSex")})
 values$Admissions_SIMD <- renderPlotly({plot_simd_chart(Admissions_SIMD, data_name = "Admissions_SIMD")})
+values$Admissions_SimdTrend <- renderPlotly({make_simd_trend_plot(data = Admissions_SimdTrend)})
 values$ICU_AgeSex <- renderPlotly({plot_agesex_chart(ICU_AgeSex, data_name = "ICU_AgeSex")})
 values$NHS24_AgeSex <- renderPlotly({plot_agesex_chart(NHS24_AgeSex, data_name = "NHS24_AgeSex")})
 values$NHS24_SIMD <- renderPlotly({plot_simd_chart(NHS24_SIMD, data_name = "NHS24_SIMD")})
@@ -389,7 +390,12 @@ if (data_explorer_selection() == "LabCases") { #Positive Cases
                         agesex_title = agesex_title,
                         simd_title = simd_title),
 
-    h3("Length of stay of acute COVID-19 hospital admissions"),
+    h3("SIMD TITLE"),
+    fluidRow(
+             plot_box_values("", "Admissions_SimdTrend")
+    ),
+
+     h3("Length of stay of acute COVID-19 hospital admissions"),
     p("Use the drop-down menu to select an age group of interest."),
     p("Please note that in cases where there are no hospital admissions, there will be a gap in the chart."),
     fluidRow(

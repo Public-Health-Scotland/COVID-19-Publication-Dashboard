@@ -4,7 +4,7 @@
 ## Data extraction dates ----
 
 #publication date
-pub_date <- as.Date("2022-10-05")
+pub_date <- as.Date("2022-11-23")
 
 Labcases_date <- format(pub_date - 3, "%d %B %Y")
 ICU_date <- format(pub_date - 4, "%d %B %Y")
@@ -55,6 +55,7 @@ library(janitor)
 library(phsstyles)
 library(tidyr)
 library(magrittr)
+library(ggplot2)
 
 ###############################################.
 ## Data ----
@@ -86,6 +87,7 @@ Admissions_AgeSex <- readRDS("data/Admissions_AgeSex.rds")
 Admissions_SIMD <- readRDS("data/Admissions_SIMD.rds")
 Admissions_AgeBD <- readRDS("data/Admissions_AgeBD.rds")
 Admissions_AgeGrp <- readRDS("data/Admissions_AgeGrp.rds")
+Admissions_SimdTrend <- readRDS("data/Admissions_SimdTrend.rds")
 
 ICU <- readRDS("data/ICU.rds")
 ICU_AgeSex <- readRDS("data/ICU_AgeSex.rds")
