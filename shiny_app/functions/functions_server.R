@@ -1598,10 +1598,14 @@ plot_VaccineWastage <- function(dataset, area = T) {
 
 
 make_simd_trend_plot <- function(data) {
+
   data %<>%
     mutate(WeekEnding = as.Date(WeekEnding, format = "%Y%m%d"))
 
-  p <- plot_ly(data, x=~WeekEnding, y=~NumberOfAdmissions, type="scatter", mode="lines", color=~SIMD)
+  #p <- plot_ly(data, x=~WeekEnding, y=~NumberOfAdmissions, type="scatter", mode="lines", color=~SIMD)
+  p <- plot_ly(data, x = ~WeekEnding, y = ~NumberOfAdmissions, split = ~SIMD,
+          marker=list(color=~SIMD))
+
   return(p)
 
 
