@@ -1600,47 +1600,13 @@ plot_VaccineWastage <- function(dataset, area = T) {
 make_simd_trend_plot <- function(data) {
 
   data %<>%
-    mutate(WeekEnding = as.Date(WeekEnding, format = "%Y%m%d"))
+    mutate(WeekEnding = as.Date(as.character(WeekEnding), format = "%Y%m%d"))
 
-  #p <- plot_ly(data, x=~WeekEnding, y=~NumberOfAdmissions, type="scatter", mode="lines", color=~SIMD)
   p <- plot_ly(data, x = ~WeekEnding, y = ~NumberOfAdmissions, split = ~SIMD,
-          marker=list(color=~SIMD))
+               mode="lines")
 
   return(p)
 
-
-  # #cust_x_scale <- scale_x_date(breaks = unique("1 month"),
-  #   #                           labels = scales::label_date_short(format = c("%Y", "%b")))
-  #
-  # # phstheme <- theme(axis.title = element_text(colour="#3A3776", family = "sans"),
-  # #                   axis.text.x = element_text(size=14),
-  # #                   axis.text.y = element_text(size=14),
-  # #                   axis.title.x = element_text(size=16),
-  # #                   axis.title.y = element_text(size=16),
-  # #                   legend.title = element_text(size=14, colour="#3A3776"),
-  # #                   legend.text = element_text(size=14),
-  # #                   legend.position = "bottom",
-  # #                   panel.background = element_blank(),
-  # #                   panel.grid.major.y = element_line(colour = "light grey"),
-  # #                   axis.line.x = element_line(colour="black"),
-  # #                   axis.line.y = element_line(colour="black"))
-  #
-  #
-  # #upper_limit_covid_trend <- plyr::round_any(max(data$NumberOfAdmissions)*1.1, 10, f = ceiling)
-  # p <- ggplot(data)+
-  #   geom_line(aes(x=WeekEnding, y=NumberOfAdmissions, colour = SIMD),
-  #             size=1.5, show.legend = T)+
-  #   # scale_y_continuous(name = "Number of COVID-19 admissions",
-  #   #                    limits = c(0,upper_limit_covid_trend),
-  #   #                    #breaks=seq(0,upper_limit_covid_trend,50),
-  #   #                    labels = function(x) format(x, big.mark = ',', scientific = F),
-  #   #                    expand=c(0,0))   +
-  #  # phstheme +
-  #  # cust_x_scale +
-  #   labs(x="Week ending", colour = "SIMD")
-  #  # scale_colour_manual(values = c(phs_colours("phs-purple"), phs_colours("phs-blue"), phs_colours("phs-magenta"), phs_colours("phs-green"), phs_colours("phs-graphite")))
-  #
-  # ggplotly(p)
 }
 
 
