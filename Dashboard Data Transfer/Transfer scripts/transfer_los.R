@@ -2,7 +2,7 @@
 
 
 
-los = read_csv_with_options(glue(input_data, "Hospital Admissions/{format(report_date -2,'%Y-%m-%d')}_LOS Table Dashboard.csv"))
+los = read_csv_with_options(glue(input_data, "/{format(report_date -2,'%Y-%m-%d')}_LOS Table Dashboard.csv"))
 
 names(los) = c("Age Group", "Week Ending", "Length of Stay", "n", "prop")
 
