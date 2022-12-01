@@ -72,6 +72,18 @@ i_population$age_group[i_population$age_group == "total"] <- "All"
 i_population$age_group <- sapply(i_population$age_group, function(x) str_remove(x, "years"))
 i_population$age_group <- sapply(i_population$age_group, function(x) str_remove_all(x, " "))
 
+
+# Refresh input data folder ----
+# Clear input data
+purrr::walk(list.files(path=input_data, full.names=TRUE), unlink, recursive=TRUE)
+
+# Copy new files across from data folder
+data_folder <- glue("/conf/C19_Test_and_Protect/Test & Protect - Warehouse/",
+                                    "Weekly Data Folders/{report_date}/Data")
+
+data_files = list.files(path=data_folder, recursive=TRUE, full.names=TRUE)
+purrr::walk(data_files, file.copy, to = input_data, recursive=TRUE, overwrite=TRUE)
+
 # Key within each transfer file:
 # ------------------------------
 # i: input files - from weekly report data folder copied across

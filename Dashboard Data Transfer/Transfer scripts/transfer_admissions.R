@@ -193,7 +193,7 @@ rm(g_adm_agegroup, adm_path)
 
 ### f) simd trend
 
-i_simd_trend <- read_csv_with_options(glue(input_data, "Hospital Admissions/{format(report_date-2, format='%Y%m%d')} - simd summary_TEST.csv"))
+i_simd_trend <- read_csv_with_options(glue(input_data, "/{format(report_date-2, format='%Y%m%d')} - simd summary.csv"))
 
 g_simd_trend <- i_simd_trend %>%
   dplyr::rename(WeekEnding = date, NumberOfAdmissions = Total, SIMD = simd, ProvisionalOrStable = provisional) %>%
