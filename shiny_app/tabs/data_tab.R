@@ -252,7 +252,7 @@ ui_content_data <- reactive({
 
   DT::renderDataTable({
 
-    datatab_table(data_table(),
+    datatab_table(as_tibble(data_table()),
                   add_separator_cols = table_params_data()$separator_cols,
                   add_separator_cols_1dp = table_params_data()$separator_cols_1dp,
                   add_percentage_cols = table_params_data()$percentage_cols,

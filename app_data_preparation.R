@@ -129,7 +129,7 @@ saveRDS(LabCases_Age, "shiny_app/data/LabCases_Age.rds")
 
 LabCases_Age_All <- read_csv(glue("{output_folder}/LabCases_Age_All.csv")) %>%
   dplyr::rename("Age group" = "Age", "Cases" = "cases") %>%
-  arrange("Week ending")
+  dplyr::arrange("Week ending")
 saveRDS(LabCases_Age_All, "shiny_app/data/LabCases_Age_All.rds")
 
 Admissions_AgeSex <- read_csv(glue("{output_folder}/Admissions_AgeSex.csv")) %>%
@@ -311,7 +311,7 @@ AllSettings <- Settings %>%
 
 Settings <- Settings %>%
   full_join(AllSettings) %>%
-  arrange(desc(`Setting Type`, `Number of  Cases`)) %>%
+  dplyr::arrange(desc(`Setting Type`, `Number of  Cases`)) %>%
   mutate(week_ending = ymd(week_ending))
 
 
