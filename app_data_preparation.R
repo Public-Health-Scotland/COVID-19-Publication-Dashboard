@@ -311,7 +311,7 @@ AllSettings <- Settings %>%
 
 Settings <- Settings %>%
   full_join(AllSettings) %>%
-  dplyr::arrange(desc(`Setting Type`, `Number of  Cases`)) %>%
+  dplyr::arrange(desc(`Setting Type`), desc(`Number of  Cases`)) %>%
   mutate(week_ending = ymd(week_ending))
 
 
