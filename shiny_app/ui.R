@@ -23,9 +23,8 @@ tagList(  #needed for shinyjs
              icon = icon("info-circle"),
              value = "intro",
              h2("Welcome to the COVID-19 statistical report dashboard"),
-             p("Since the start of the COVID-19 outbreak Public Health Scotland (PHS) has been working closely
-               with Scottish Government and health and care colleagues in supporting the surveillance and monitoring
-               of COVID-19 amongst the population."),
+             p("Since the start of the outbreak, Public Health Scotland (PHS) has been monitoring a number of key indicators to
+               assess the impact of the virus, including demands on the health system."),
              h3("What's on the dashboard?"),
              p("You can navigate around the dashboard using the tabs on the top banner, or by clicking one of the boxes below."),
              # 1st row of boxes
@@ -92,7 +91,7 @@ tagList(  #needed for shinyjs
           h3("Information"),
           tags$li("Metadata for this dashboard can be downloaded from the ",
                tags$a(
-                 href = "https://publichealthscotland.scot/publications/covid-19-statistical-report",
+                 href = "https://www.publichealthscotland.scot/publications/weekly-national-respiratory-infection-and-covid-19-statistical-report/",
                  "weekly statistical report page.",
                  class = "externallink")),
 
@@ -101,7 +100,7 @@ tagList(  #needed for shinyjs
 
           tags$li("New releases will be published at the same time as the Public Health Scotland ",
                tags$a(
-                 href = "https://publichealthscotland.scot/publications/covid-19-statistical-report",
+                 href = "https://www.publichealthscotland.scot/publications/weekly-national-respiratory-infection-and-covid-19-statistical-report/",
                  "COVID-19 weekly report for Scotland.",
                  class = "externallink")),
 
